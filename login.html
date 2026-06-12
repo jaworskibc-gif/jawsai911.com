@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Login — JAWSAI911</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  height: 100%;
+  background: #000810;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  color: #eef2ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card {
+  width: 100%;
+  max-width: 400px;
+  padding: 48px 40px 44px;
+  background: #060a14;
+  border: 1px solid rgba(59,130,246,0.25);
+  border-top: 3px solid #3b82f6;
+  border-radius: 10px;
+  box-shadow: 0 0 60px rgba(0,84,202,0.15);
+  text-align: center;
+}
+.logo {
+  width: 180px;
+  margin: 0 auto 28px;
+  display: block;
+  filter: brightness(1.1) drop-shadow(0 0 16px rgba(56,189,248,0.4));
+}
+.card h1 {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: #38bdf8;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+.input-wrap {
+  position: relative;
+  margin-bottom: 16px;
+}
+input[type="password"] {
+  width: 100%;
+  padding: 14px 18px;
+  background: #0a0d14;
+  border: 1px solid rgba(59,130,246,0.3);
+  border-radius: 7px;
+  color: #eef2ff;
+  font-size: 18px;
+  font-family: inherit;
+  letter-spacing: 4px;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.2s;
+}
+input[type="password"]:focus { border-color: #3b82f6; }
+input[type="password"].error { border-color: #f85149; animation: shake 0.3s; }
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  75% { transform: translateX(8px); }
+}
+.err-msg {
+  font-size: 12px;
+  color: #f85149;
+  margin-top: 8px;
+  min-height: 18px;
+}
+button {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(180deg, #0877ff, #0052dc);
+  border: none;
+  border-radius: 7px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 800;
+  font-family: inherit;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  margin-top: 4px;
+}
+button:hover { opacity: 0.9; }
+.back {
+  display: block;
+  margin-top: 20px;
+  font-size: 12px;
+  color: #3d4f6e;
+  text-decoration: none;
+}
+.back:hover { color: #38bdf8; }
+</style>
+</head>
+<body>
+<div class="card">
+  <img class="logo" src="jawsai911-logo-dark-hero.jpeg" alt="JAWSAI911">
+  <h1>Command Center Access</h1>
+  <div class="input-wrap">
+    <input type="password" id="pw" placeholder="••••••••••" autofocus autocomplete="current-password">
+  </div>
+  <div class="err-msg" id="err"></div>
+  <button onclick="tryLogin()">Enter</button>
+  <a class="back" href="index.html">← Back to site</a>
+</div>
+
+<script>
+const HASH = 'f0d1f82a60d8332ecb4e3eaf7b779e94a251ddf2becbbddd240118d853895b35';
+
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+async function tryLogin() {
+  const pw = document.getElementById('pw').value;
+  const hash = await sha256(pw);
+  if (hash === HASH) {
+    sessionStorage.setItem('jaw_auth', 'ok');
+    const dest = sessionStorage.getItem('jaw_return') || 'tracker.html';
+    sessionStorage.removeItem('jaw_return');
+    location.href = dest;
+  } else {
+    const input = document.getElementById('pw');
+    const err = document.getElementById('err');
+    input.classList.add('error');
+    err.textContent = 'Incorrect password.';
+    setTimeout(() => { input.classList.remove('error'); }, 400);
+    input.value = '';
+    input.focus();
+  }
+}
+
+document.getElementById('pw').addEventListener('keydown', e => {
+  if (e.key === 'Enter') tryLogin();
+});
+</script>
+</body>
+</html>

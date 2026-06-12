@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Leads CRM — JAWSAI911</title>
+  <script>if(!sessionStorage.getItem('jaw_auth')){sessionStorage.setItem('jaw_return',location.href);location.href='login.html';}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #eef2ff;
+      --muted: #7b8db0;
+      --line: rgba(59,130,246,0.18);
+      --soft: #0a0d14;
+      --brand: #3b82f6;
+      --brand-ink: #38bdf8;
+      --hot: #f85149;
+      --warm: #f59e0b;
+      --cool: #38bdf8;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: #000810;
+    }
+
+    header {
+      padding: 16px clamp(16px, 4vw, 40px);
+      border-bottom: 2px solid var(--brand);
+      background: #060a14;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    header img { height: 36px; filter: brightness(1.1) drop-shadow(0 0 8px rgba(56,189,248,0.4)); }
+    header .hd-text h1 { font-size: clamp(18px, 2vw, 24px); font-weight: 900; margin: 0 0 2px; }
+    header .hd-text p { color: var(--muted); font-size: 12px; margin: 0; }
+    header .hd-actions { margin-left: auto; display: flex; gap: 10px; align-items: center; }
+    header .hd-actions a { font-size: 12px; color: var(--muted); text-decoration: none; }
+    header .hd-actions a:hover { color: var(--brand-ink); }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: clamp(24px, 3vw, 38px);
+      letter-spacing: 0;
+    }
+
+    .subhead {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    main {
+      padding: 20px clamp(16px, 4vw, 40px) 40px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+    }
+
+    .stat {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px 14px;
+      background: var(--soft);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 26px;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat span { color: var(--muted); font-size: 13px; }
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    input, select, button {
+      min-height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0 12px;
+      font: inherit;
+      background: #0a0d14;
+      color: var(--ink);
+    }
+
+    input {
+      flex: 1 1 260px;
+    }
+
+    button {
+      cursor: pointer;
+      background: var(--brand);
+      border-color: var(--brand);
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+      align-items: start;
+    }
+
+    .lane {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #060a14;
+    }
+
+    .lane h2 {
+      margin: 0;
+      padding: 12px 14px;
+      font-size: 16px;
+      background: #0a0d14;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .cards {
+      display: grid;
+      gap: 10px;
+      padding: 10px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .card h3 {
+      margin: 0;
+      font-size: 15px;
+    }
+
+    .meta, .notes {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .chip {
+      border-radius: 999px;
+      padding: 4px 8px;
+      font-size: 12px;
+      font-weight: 700;
+      background: #e7f6f4;
+      color: var(--brand-ink);
+    }
+
+    .chip.hot { background: #fee4e2; color: var(--hot); }
+    .chip.warm { background: #fef0c7; color: var(--warm); }
+    .chip.cool { background: #dbeafe; color: var(--cool); }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .actions a {
+      color: var(--brand-ink);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .empty {
+      padding: 22px;
+      color: var(--muted);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="jawsai911-logo-dark-hero.jpeg" alt="JAWSAI911">
+    <div class="hd-text">
+      <h1>AI Leads CRM</h1>
+      <p>West Palm Beach region prospects · outreach pipeline</p>
+    </div>
+    <div class="hd-actions">
+      <a href="tracker.html">Job Tracker</a>
+      <a href="index.html">← Site</a>
+      <a href="#" onclick="sessionStorage.removeItem('jaw_auth');location.href='login.html';return false;" style="color:#f85149;">Logout</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="stats" id="stats"></section>
+    <section class="toolbar">
+      <input id="search" type="search" placeholder="Search company, city, industry, opportunity">
+      <select id="industry"><option value="">All industries</option></select>
+      <select id="city"><option value="">All cities</option></select>
+      <button id="export">Export CSV</button>
+    </section>
+    <section class="board" id="board"></section>
+  </main>
+
+  <script>
+    const csvUrl = '../ai-leads-west-palm-beach.csv';
+    const priorities = new Map([
+      ['Law Firm', 'hot'],
+      ['Real Estate Agency', 'hot'],
+      ['Auto Dealership', 'hot'],
+      ['Construction & Real Estate', 'hot'],
+      ['Logistics / Distribution', 'hot'],
+      ['Food Distribution', 'hot'],
+      ['Healthcare / Medical', 'hot'],
+      ['Dental Practice', 'warm'],
+      ['Property Management', 'warm'],
+      ['Restaurant / Hospitality', 'warm'],
+      ['Spa / Wellness', 'warm'],
+      ['Marketing Agency', 'cool'],
+      ['Financial Advisors / CPA', 'cool']
+    ]);
+
+    let rows = [];
+
+    function parseCsv(text) {
+      const records = [];
+      let row = [];
+      let value = '';
+      let quoted = false;
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        const next = text[i + 1];
+        if (char === '"' && quoted && next === '"') {
+          value += '"';
+          i++;
+        } else if (char === '"') {
+          quoted = !quoted;
+        } else if (char === ',' && !quoted) {
+          row.push(value);
+          value = '';
+        } else if ((char === '\n' || char === '\r') && !quoted) {
+          if (char === '\r' && next === '\n') i++;
+          row.push(value);
+          if (row.some(cell => cell.trim())) records.push(row);
+          row = [];
+          value = '';
+        } else {
+          value += char;
+        }
+      }
+      if (value || row.length) {
+        row.push(value);
+        records.push(row);
+      }
+      const headers = records.shift();
+      return records.map(record => Object.fromEntries(headers.map((key, index) => [key, record[index] || ''])));
+    }
+
+    function priorityFor(row) {
+      return priorities.get(row.Industry) || 'cool';
+    }
+
+    function filteredRows() {
+      const q = document.querySelector('#search').value.trim().toLowerCase();
+      const industry = document.querySelector('#industry').value;
+      const city = document.querySelector('#city').value;
+      return rows.filter(row => {
+        const haystack = Object.values(row).join(' ').toLowerCase();
+        return (!q || haystack.includes(q)) &&
+          (!industry || row.Industry === industry) &&
+          (!city || row.City === city);
+      });
+    }
+
+    function renderStats(data) {
+      const phones = data.filter(row => row.Phone).length;
+      const emails = data.filter(row => row.Email).length;
+      const hot = data.filter(row => priorityFor(row) === 'hot').length;
+      document.querySelector('#stats').innerHTML = [
+        ['Total leads', data.length],
+        ['Hot priority', hot],
+        ['With phone', phones],
+        ['With email', emails]
+      ].map(([label, value]) => `<div class="stat"><strong>${value}</strong><span>${label}</span></div>`).join('');
+    }
+
+    function card(row) {
+      const priority = priorityFor(row);
+      const mail = row.Email ? `<a href="mailto:${row.Email}">${row.Email}</a>` : '';
+      const phone = row.Phone ? `<a href="tel:${row.Phone}">${row.Phone}</a>` : '';
+      return `
+        <article class="card">
+          <h3>${row['Business Name']}</h3>
+          <div class="chips">
+            <span class="chip ${priority}">${priority.toUpperCase()}</span>
+            <span class="chip">${row.Industry}</span>
+          </div>
+          <div class="meta">${row.City}, ${row.State}</div>
+          <div class="notes"><strong>Opportunity:</strong> ${row['AI Opportunity']}</div>
+          <div class="notes">${row.Notes}</div>
+          <div class="actions">
+            <a href="${row.Website}" target="_blank" rel="noreferrer">Website</a>
+            ${phone}
+            ${mail}
+          </div>
+        </article>
+      `;
+    }
+
+    function renderBoard() {
+      const data = filteredRows();
+      renderStats(data);
+      const groups = [
+        ['hot', 'Hot'],
+        ['warm', 'Warm'],
+        ['cool', 'Research']
+      ];
+      document.querySelector('#board').innerHTML = groups.map(([key, label]) => {
+        const groupRows = data.filter(row => priorityFor(row) === key);
+        return `
+          <section class="lane">
+            <h2><span>${label}</span><span>${groupRows.length}</span></h2>
+            <div class="cards">${groupRows.length ? groupRows.map(card).join('') : '<div class="empty">No matching leads.</div>'}</div>
+          </section>
+        `;
+      }).join('');
+    }
+
+    function fillSelect(id, values) {
+      const select = document.querySelector(id);
+      for (const value of [...new Set(values)].sort()) {
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = value;
+        select.append(option);
+      }
+    }
+
+    function exportCsv() {
+      const link = document.createElement('a');
+      link.href = csvUrl;
+      link.download = 'ai-leads-west-palm-beach.csv';
+      link.click();
+    }
+
+    fetch(csvUrl)
+      .then(response => response.text())
+      .then(text => {
+        rows = parseCsv(text);
+        fillSelect('#industry', rows.map(row => row.Industry));
+        fillSelect('#city', rows.map(row => row.City));
+        document.querySelector('#search').addEventListener('input', renderBoard);
+        document.querySelector('#industry').addEventListener('change', renderBoard);
+        document.querySelector('#city').addEventListener('change', renderBoard);
+        document.querySelector('#export').addEventListener('click', exportCsv);
+        renderBoard();
+      });
+  </script>
+</body>
+</html>

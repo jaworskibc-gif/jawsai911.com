@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0d1117">
+<title>Job Tracker — JAWSAI911</title>
+<script>if(!sessionStorage.getItem('jaw_auth')){sessionStorage.setItem('jaw_return',location.href);location.href='login.html';}</script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #21262d;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --teal: #39d0b2;
+    --orange: #f0883e;
+    --blue: #58a6ff;
+    --green: #3fb950;
+    --red: #f85149;
+    --purple: #bc8cff;
+    --yellow: #d29922;
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 16px;
+    overflow: hidden;
+  }
+
+  /* ── Layout ── */
+  #app { display: flex; flex-direction: column; height: 100vh; height: 100dvh; }
+
+  #header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 16px 10px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  #header h1 { font-size: 18px; font-weight: 700; color: var(--teal); letter-spacing: -0.3px; }
+  #header .subtitle { font-size: 12px; color: var(--muted); }
+
+  #import-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 8px;
+    width: 36px; height: 36px;
+    font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; flex-shrink: 0; position: relative;
+  }
+  #import-badge {
+    position: absolute; top: -5px; right: -5px;
+    background: var(--orange); color: #000;
+    border-radius: 10px; font-size: 10px; font-weight: 700;
+    padding: 1px 5px; display: none;
+  }
+
+  #search-bar {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 12px;
+    color: var(--text);
+    font-size: 14px;
+    width: 100%;
+    outline: none;
+    flex: 1;
+  }
+  #search-bar::placeholder { color: var(--muted); }
+
+  #add-btn {
+    background: var(--teal);
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    width: 36px;
+    height: 36px;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    font-weight: 300;
+  }
+
+  /* ── Filter tabs ── */
+  #filters {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    flex-shrink: 0;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+  .filter-row {
+    display: flex;
+    gap: 6px;
+    padding: 8px 16px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .filter-row:first-child { border-bottom: 1px solid var(--border); }
+  .filter-row::-webkit-scrollbar { display: none; }
+  .filter-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 13px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .filter-btn.active {
+    background: var(--teal);
+    border-color: var(--teal);
+    color: #000;
+    font-weight: 600;
+  }
+
+  /* ── Contact list ── */
+  #list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted);
+  }
+  .empty-state .icon { font-size: 48px; margin-bottom: 12px; }
+  .empty-state p { font-size: 15px; }
+
+  /* ── Contact card ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px 20px;
+    cursor: pointer;
+    transition: border-color 0.15s, transform 0.1s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card:active { transform: scale(0.98); }
+  .card:hover { border-color: var(--muted); }
+  .card.priority-high::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--teal);
+    border-radius: 12px 0 0 12px;
+  }
+
+  .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+  .card-top > div { flex: 1; min-width: 0; }
+  .card-company { font-size: 19px; font-weight: 700; color: var(--text); line-height: 1.3; white-space: normal; word-break: break-word; }
+  .card-role { font-size: 15px; color: var(--teal); font-weight: 600; margin-top: 4px; margin-bottom: 12px; line-height: 1.5; white-space: normal; word-break: break-word; }
+  .card-bottom { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+
+  .stage-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+  }
+
+  .last-activity { font-size: 12px; color: var(--muted); }
+
+  .quick-actions { display: flex; gap: 6px; }
+  .quick-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 18px;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .quick-btn:active { background: var(--border); }
+
+  /* ── Stage colors ── */
+  .stage-saved     { background: rgba(139,148,158,0.15); color: #8b949e; }
+  .stage-applied   { background: rgba(88,166,255,0.15);  color: #58a6ff; }
+  .stage-emailed   { background: rgba(57,208,178,0.15);  color: #39d0b2; }
+  .stage-called    { background: rgba(240,136,62,0.15);  color: #f0883e; }
+  .stage-screening { background: rgba(188,140,255,0.15); color: #bc8cff; }
+  .stage-interview { background: rgba(210,153,34,0.15);  color: #d29922; }
+  .stage-offer     { background: rgba(63,185,80,0.15);   color: #3fb950; }
+  .stage-rejected  { background: rgba(248,81,73,0.15);   color: #f85149; }
+
+  /* ── Stat bar ── */
+  #stats {
+    display: flex;
+    gap: 0;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .stat-item {
+    flex: 1;
+    text-align: center;
+    padding: 8px 4px;
+    border-right: 1px solid var(--border);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num { font-size: 18px; font-weight: 700; }
+  .stat-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* ── Modal overlay ── */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.2s;
+  }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .modal {
+    background: var(--surface);
+    border-radius: 20px 20px 0 0;
+    max-height: 92vh;
+    overflow-y: auto;
+    animation: slideUp 0.25s ease-out;
+    -webkit-overflow-scrolling: touch;
+  }
+  @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+  .modal-handle {
+    width: 36px; height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    margin: 10px auto 0;
+  }
+
+  .modal-header {
+    padding: 16px 16px 12px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .modal-title { font-size: 18px; font-weight: 700; }
+  .modal-close {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 8px;
+    width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 18px;
+  }
+
+  .modal-body { padding: 16px; }
+
+  /* ── Form ── */
+  .form-group { margin-bottom: 14px; }
+  .form-label { font-size: 13px; color: var(--muted); margin-bottom: 6px; display: block; font-weight: 500; }
+  .form-input, .form-select, .form-textarea {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    color: var(--text);
+    font-size: 15px;
+    outline: none;
+    font-family: inherit;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--teal); }
+  .form-select option { background: var(--surface2); }
+  .form-textarea { resize: none; min-height: 80px; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  .btn {
+    width: 100%;
+    padding: 13px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .btn:active { opacity: 0.8; }
+  .btn-primary { background: var(--teal); color: #000; }
+  .btn-danger { background: rgba(248,81,73,0.15); color: var(--red); border: 1px solid rgba(248,81,73,0.3); }
+  .btn-ghost { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+
+  /* ── Detail modal ── */
+  .detail-hero {
+    padding: 16px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface2);
+  }
+  .detail-company { font-size: 22px; font-weight: 800; margin-bottom: 2px; }
+  .detail-role { font-size: 14px; color: var(--muted); margin-bottom: 12px; }
+  .detail-meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+
+  .action-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .action-tile {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .action-tile:active { transform: scale(0.96); background: var(--border); }
+  .action-tile .icon { font-size: 24px; display: block; margin-bottom: 4px; }
+  .action-tile .label { font-size: 12px; color: var(--muted); font-weight: 500; }
+
+  /* ── Activity log ── */
+  .activity-section { padding: 14px 16px; }
+  .activity-section h3 { font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; font-weight: 600; }
+  .activity-item {
+    display: flex;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+  .activity-item:last-child { border-bottom: none; }
+  .activity-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+  .activity-text { flex: 1; }
+  .activity-type { font-size: 14px; font-weight: 600; }
+  .activity-note { font-size: 13px; color: var(--muted); margin-top: 2px; }
+  .activity-date { font-size: 12px; color: var(--muted); flex-shrink: 0; }
+
+  .no-activity { text-align: center; padding: 20px; color: var(--muted); font-size: 14px; }
+
+  .contact-info-section {
+    padding: 14px 16px;
+    border-top: 1px solid var(--border);
+  }
+  .contact-info-section h3 { font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; font-weight: 600; }
+  .info-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .info-row:last-child { border-bottom: none; }
+  .info-icon { font-size: 16px; width: 24px; text-align: center; }
+  .info-val { font-size: 14px; flex: 1; word-break: break-all; }
+  .info-val a { color: var(--blue); text-decoration: none; }
+
+  .detail-actions { padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+
+  /* ── Log note modal ── */
+  .log-modal .modal { max-height: 60vh; }
+
+  /* Salary badge */
+  .salary-badge {
+    background: rgba(63,185,80,0.12);
+    color: var(--green);
+    border: 1px solid rgba(63,185,80,0.25);
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .priority-star { font-size: 16px; cursor: pointer; }
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="header">
+    <div>
+      <h1>Job Tracker</h1>
+      <div class="subtitle" id="header-count"></div>
+    </div>
+    <div style="display:flex;gap:8px;flex-shrink:0;align-items:center">
+      <a href="crm.html" style="font-size:12px;color:#8b949e;text-decoration:none;padding:0 8px;">CRM</a>
+      <a href="index.html" style="font-size:12px;color:#8b949e;text-decoration:none;padding:0 8px;">Site</a>
+      <a href="#" onclick="sessionStorage.removeItem('jaw_auth');location.href='login.html';return false;" style="font-size:12px;color:#f85149;text-decoration:none;padding:0 8px;">Logout</a>
+      <button id="import-btn" onclick="triggerImport()" title="Import new listings from job-search">
+        ⬇️<span id="import-badge"></span>
+      </button>
+      <button id="add-btn" onclick="openAddModal()">+</button>
+    </div>
+  </div>
+  <input type="file" id="import-file" accept=".json" style="display:none" onchange="handleImport(event)">
+
+  <div id="filters">
+    <div class="filter-row" id="cat-row">
+      <button class="filter-btn active" onclick="setCat('all',this)">All</button>
+      <button class="filter-btn" onclick="setCat('ai-ops',this)">🤖 AI Ops</button>
+      <button class="filter-btn" onclick="setCat('ai-cs',this)">🎯 AI Success</button>
+      <button class="filter-btn" onclick="setCat('ai-adoption',this)">🔄 Adoption</button>
+      <button class="filter-btn" onclick="setCat('ai-impl',this)">⚙️ Implementation</button>
+      <button class="filter-btn" onclick="setCat('healthcare',this)">🏥 Healthcare</button>
+      <button class="filter-btn" onclick="setCat('moto',this)">🏍️ Moto / Apparel</button>
+      <button class="filter-btn" onclick="setCat('music',this)">🎸 AI Music</button>
+    </div>
+    <div class="filter-row" id="stage-row">
+      <button class="filter-btn active" onclick="setFilter('all', this)">All Stages</button>
+      <button class="filter-btn" onclick="setFilter('saved', this)">📋 Saved</button>
+      <button class="filter-btn" onclick="setFilter('applied', this)">📤 Applied</button>
+      <button class="filter-btn" onclick="setFilter('emailed', this)">📧 Emailed</button>
+      <button class="filter-btn" onclick="setFilter('called', this)">📞 Called</button>
+      <button class="filter-btn" onclick="setFilter('screening', this)">🗓 Screening</button>
+      <button class="filter-btn" onclick="setFilter('interview', this)">🎤 Interview</button>
+      <button class="filter-btn" onclick="setFilter('offer', this)">🏆 Offer</button>
+      <button class="filter-btn" onclick="setFilter('rejected', this)">❌ Rejected</button>
+    </div>
+  </div>
+
+  <div id="list"></div>
+
+  <div id="stats">
+    <div class="stat-item">
+      <div class="stat-num" id="stat-total" style="color:var(--teal)">0</div>
+      <div class="stat-label">Total</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" id="stat-active" style="color:var(--blue)">0</div>
+      <div class="stat-label">Active</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" id="stat-interviews" style="color:var(--orange)">0</div>
+      <div class="stat-label">Interviews</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" id="stat-offers" style="color:var(--green)">0</div>
+      <div class="stat-label">Offers</div>
+    </div>
+  </div>
+</div>
+
+<!-- ADD / EDIT MODAL -->
+<div id="add-modal" class="modal-overlay" style="display:none" onclick="closeOnOverlay(event,'add-modal')">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <span class="modal-title" id="add-modal-title">Add Opportunity</span>
+      <button class="modal-close" onclick="closeModal('add-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="edit-id">
+      <div class="form-group">
+        <label class="form-label">Company *</label>
+        <input class="form-input" id="f-company" placeholder="e.g. Devoted Health">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Role *</label>
+        <input class="form-input" id="f-role" placeholder="e.g. AI Operations Lead">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Stage</label>
+          <select class="form-select" id="f-stage">
+            <option value="saved">📋 Saved</option>
+            <option value="applied">📤 Applied</option>
+            <option value="emailed">📧 Emailed</option>
+            <option value="called">📞 Called</option>
+            <option value="screening">🗓 Screening</option>
+            <option value="interview">🎤 Interview</option>
+            <option value="offer">🏆 Offer</option>
+            <option value="rejected">❌ Rejected</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Salary</label>
+          <input class="form-input" id="f-salary" placeholder="e.g. $140k–$200k">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Contact Name</label>
+        <input class="form-input" id="f-contact-name" placeholder="Recruiter or hiring manager">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input class="form-input" id="f-email" type="email" placeholder="name@company.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone</label>
+          <input class="form-input" id="f-phone" type="tel" placeholder="(555) 000-0000">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Job URL</label>
+        <input class="form-input" id="f-url" type="url" placeholder="https://...">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Stack / Notes</label>
+        <textarea class="form-textarea" id="f-notes" placeholder="Key requirements, notes, why it fits..."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Priority</label>
+        <select class="form-select" id="f-priority">
+          <option value="high">⭐ High (Stack 1)</option>
+          <option value="normal">Normal (Stack 2)</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" onclick="saveContact()" style="margin-bottom:10px">Save</button>
+      <button class="btn btn-danger" id="delete-btn" onclick="deleteContact()" style="display:none">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- DETAIL MODAL -->
+<div id="detail-modal" class="modal-overlay" style="display:none" onclick="closeOnOverlay(event,'detail-modal')">
+  <div class="modal" id="detail-modal-content"></div>
+</div>
+
+<!-- LOG ACTION MODAL -->
+<div id="log-modal" class="modal-overlay log-modal" style="display:none" onclick="closeOnOverlay(event,'log-modal')">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <span class="modal-title" id="log-modal-title">Log Activity</span>
+      <button class="modal-close" onclick="closeModal('log-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="log-id">
+      <input type="hidden" id="log-type">
+      <div class="form-group">
+        <label class="form-label">Note (optional)</label>
+        <textarea class="form-textarea" id="log-note" placeholder="What happened? Who did you talk to? Next step?"></textarea>
+      </div>
+      <button class="btn btn-primary" onclick="saveLog()">Log It</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Data ──────────────────────────────────────────────
+const STORE_KEY = 'jt_contacts_v3';
+
+const STAGE_META = {
+  saved:     { emoji: '📋', label: 'Saved',     cls: 'stage-saved'     },
+  applied:   { emoji: '📤', label: 'Applied',   cls: 'stage-applied'   },
+  emailed:   { emoji: '📧', label: 'Emailed',   cls: 'stage-emailed'   },
+  called:    { emoji: '📞', label: 'Called',    cls: 'stage-called'    },
+  screening: { emoji: '🗓', label: 'Screening', cls: 'stage-screening' },
+  interview: { emoji: '🎤', label: 'Interview', cls: 'stage-interview' },
+  offer:     { emoji: '🏆', label: 'Offer',     cls: 'stage-offer'     },
+  rejected:  { emoji: '❌', label: 'Rejected',  cls: 'stage-rejected'  },
+};
+
+const STAGE_ORDER = ['offer','interview','screening','called','emailed','applied','saved','rejected'];
+
+function load() {
+  try { return JSON.parse(localStorage.getItem(STORE_KEY)) || []; }
+  catch { return []; }
+}
+function save(data) { localStorage.setItem(STORE_KEY, JSON.stringify(data)); }
+
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+
+function fmtDate(ts) {
+  const d = new Date(ts);
+  const now = new Date();
+  const diff = Math.floor((now - d) / 86400000);
+  if (diff === 0) return 'Today';
+  if (diff === 1) return 'Yesterday';
+  if (diff < 7) return diff + 'd ago';
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+// ── State ─────────────────────────────────────────────
+let currentFilter = 'all';
+let currentCategory = 'all';
+let currentDetailId = null;
+
+// ── Seed data ─────────────────────────────────────────
+function seedIfEmpty() {
+  if (load().length > 0) return;
+  const now = Date.now();
+  const seed = [
+
+    // ── 🤖 AI OPS & AUTOMATION ─────────────────────────
+    {
+      id: uid(), category: 'ai-ops',
+      company: 'ZipRecruiter — AI Automation', role: 'Remote AI Automation Specialist (278+ listings)',
+      stage: 'saved', priority: 'high', salary: '$86k–$142k',
+      contactName: '', email: '', phone: '',
+      url: 'https://www.ziprecruiter.com/Jobs/Remote-Ai-Automation',
+      notes: 'Broad search — filter for n8n, Make, Zapier, REST API. Your CCM platform is the portfolio. 278 live openings.',
+      activities: [], createdAt: now
+    },
+    {
+      id: uid(), category: 'ai-ops',
+      company: 'Arc.dev — Workflow Automation', role: 'Senior Remote Workflow Automation Specialist',
+      stage: 'saved', priority: 'high', salary: '$120k–$180k',
+      contactName: '', email: '', phone: '',
+      url: 'https://arc.dev/remote-jobs/workflow-automation',
+      notes: 'Curated senior remote roles only. Highest salary band in this category. Strong match on API + workflow stack.',
+      activities: [], createdAt: now - 500
+    },
+    {
+      id: uid(), category: 'ai-ops',
+      company: 'Puffy (LinkedIn)', role: 'AI Workflow Specialist — Automation & AI Integration',
+      stage: 'saved', priority: 'high', salary: 'TBD',
+      contactName: '', email: '', phone: '',
+      url: 'https://www.linkedin.com/jobs/view/ai-workflow-specialist-automation-ai-integration-at-puffy-4318992636',
+      notes: 'LIVE posting. AI + automation integration specialist. Apply directly via LinkedIn.',
+      activities: [], createdAt: now - 1000
+    },
+    {
+      id: uid(), category: 'ai-ops',
+      company: 'Indeed — AI Workflow Automation', role: 'AI Workflow Automation Specialist (various)',
+      stage: 'saved', priority: 'normal', salary: '$91k–$165k',
+      contactName: '', email: '', phone: '',
+      url: 'https://www.indeed.com/q-ai-workflow-automation-specialist-jobs.html',
+      notes: 'Broad search board. Filter by Make / Zapier / n8n keywords. Mid-tier volume plays.',
+      activities: [], createdAt: now - 1500
+    },
+    {
+      id: uid(), category: 'ai-ops',
+      company: 'Experian', role: 'Director, Agentic AI/Automation',
+      stage: 'saved', priority: 'normal', salary: 'TBD',
+      contactName: '', email: '', phone: '',
+      url: 'https://jobs.experian.com',
+      notes: 'Finance/credit bureau. Hands-on engineering leadership. Stretch — likely wants CS/engineering manager background.',
+      activities: [], createdAt: now - 2000
+    },
+    {
+      id: uid(), category: 'ai-ops',
+      company: 'Glassdoor — AI Automation Remote', role: 'AI Automations Specialist (53+ listings)',
+      stage: 'saved', priority: 'normal', salary: 'Varies',
+      contactName: '', email: '', phone: '',
+      url: 'https://www.glassdoor.com/Job/remote-ai-automations-specialist-jobs-SRCH_IL.0,6_IS12627_KO7,32.htm',
+      notes: 'Glassdoor remote-filtered list. Good for researching company reviews before applying.',
+      activities: [], createdAt: now - 2500
+    },
+
+    // ── 🎯 AI SUCCESS / CUSTOMER SUCCESS ───────────────
+    {
+      id: uid(), category: 'ai-cs',
+      company: 'Cresta', role: 'Customer Success / Implementation',
+      stage: 'saved', priority: 'high', salary: '~$100k–$150k',
+      contactName: '', email: '', phone: '',
+      url: 'https://cresta.com/careers',
+      notes: 'STACK 1 — Sells real-time AI coaching for contact center agents — THE exact product you built. CS or implementation role = helping contact centers deploy what you already ran. Most credible candidate walking in.',
+      activities: [], createdAt: now - 3000
+    },
+    {
+      id: uid(), category: 'ai-cs',
+      company: 'EliseAI', role: 'AI Operations Specialist',
+      stage: 'saved', priority: 'normal', salary: 'TBD',
+      contactName: '', email: '', phone: '',
+      url: 'https://www.linkedin.com/jobs/view/ai-operations-specialist-healthcare-at-eliseai-4181490379',
+      notes: 'Search directly on LinkedIn — link may redirect. EliseAI does AI for property management operations.',
+      activities: [], createdAt: now - 3500
+    },
+    {
+      id: uid(), category: 'ai-cs',
+      company: 'Built In — AI Customer Success', role: 'Remote Customer Success Manager at AI Companies',
+      stage: 'saved', priority: 'high', salary: '$90k–$160k',
+      contactName: '', email: '', phone: '',
+      url: 'https://builtin.com/jobs/remote/customer-success',
+      notes: 'Quality curated list — AI SaaS companies only. Filter for AI/ML company type. High signal.',
+      activities: [], createdAt: now - 4000
+    },
+    {
+      id: uid(), category: 'ai-cs',
+      company: 'Wellfound — Client Success', role: 'Client Success Manager at AI Startups',
+      stage: 'saved', priority: 'normal', salary: 'Varies',
+      contactName: '', email: '', phone: '',
+      url: 'https://wellfound.com/role/r/client-success-manager',
+      notes: 'Startup-focused job board. Lots of Series A/B AI companies hiring CS. Equity upside possible.',
+      activities: [], createdAt: now - 4500
+    },
+    {
+      id: uid(), category: 'ai-cs',
+      company: 'Remotive — AI Jobs', role: 'AI Customer Success / Support (various)',
+      stage: 'saved', priority: 'normal', salary: 'Varies',
+      contactName: '', email: '', phone: '',
+      url: 'https://remotive.com/remote-ai-jobs',
+      notes: '160k+ fully remote jobs. Filter to customer success + AI. Good pipeline of smaller AI-native companies.',
+      activities: [], createdAt: now - 5000
+    },
+
+    // ── 🔄 AI ADOPTION & CHANGE MANAGEMENT ─────────────
+    {
+      id: uid(), category: 'ai-adoption',
+      company: 'Indeed — AI Adoption Manager', role: 'AI Adoption Manager (various)',
+      stage: 'saved', priority: 'high', salary: 'TBD',
+      contactName: '', email: '', phone: '',
+      url: 'https://www.indeed.com/q-ai-adoption-manager-jobs.html',
+      notes: 'Direct title match to your AI Success Manager resume. Enterprise AI rollout roles — M365 Copilot, ChatGPT, internal tools. Apply with AISuccess resume.',
+      activities: [], createdAt: now - 5500
+    },
+    {
+      id: uid(), category: 'ai-adoption',
+      company: 'Indeed — AI Adoption Enablement', role: 'AI Adoption Enablement / ChatGPT Specialist',
+      stage: 'saved', priority: 'high', salary: 'TBD',
+      contactName: '', email: '', phone: '',
+      url: 'https://www.indeed.com/q-ai-adoption-enablement-chatgpt-jobs.html',
+      notes: 'Enterprise AI enablement — training, webinars, comms, change management. Your CCM rollout experience is perfect for this pitch.',
+      activities: [], createdAt: now - 6000
+    },
+    {
+      id: uid(), category: 'ai-adoption',
+      company: 'Remotive — AI Adoption Lead', role: 'AI Adoption Lead (remote)',
+      stage: 'saved', priority: 'normal', salary: 'Varies',
+      contactName: '', email: '', phone: '',
+      url: 'https://remotive.com/remote-jobs/o-ai-adoption-lead',
+      notes: 'Filtered directly to adoption lead roles. Fully remote. New category with fast-growing demand.',
+      activities: [], createdAt: now - 6500
+    },
+    {
+      id: uid(), category: 'ai-adoption',
+      company: 'DailyRemote — Change Manager', role: 'Remote Change Manager (AI Focus)',
+      stage: 'saved', priority: 'normal', salary: 'Varies',
+      contactName: '', email: '', phone: '',
+      url: 'https://dailyremote.com/remote-change-manager-jobs',
+      notes: '36 new postings in April 2026. Change management + AI adoption overlap. FlexJobs also has vetted version of these.',
+      activities: [], createdAt: now - 7000
+    },
+
+    // ── ⚙️ AI IMPLEMENTATION ────────────────────────────
+    {
+      id: uid(), category: 'ai-impl',
+      company: 'Cognigy (NICE)', role: 'Solutions / Implementation Specialist',
+      stage: 'saved', priority: 'high', salary: 'TBD',
+      contactName: '', email: '', phone: '',
+      url: 'https://www.cognigy.com/careers',
+      notes: 'STACK 1 — #1 enterprise conversational AI for contact centers (Forrester Leader 2026). Implementation = deploy voice/chat AI at enterprise clients. Contact center AI build directly relevant.',
+      activities: [], createdAt: now - 7500
+    },
+    {
+      id: uid(), category: 'ai-impl',
+      company: 'Glassdoor — Implementation AI', role: 'Remote AI Implementation Specialist (5,149 listings)',
+      stage: 'saved', priority: 'high', salary: 'Varies',
+      contactName: '', email: '', phone: '',
+      url: 'https://www.glassdoor.com/Job/remote-implementation-ai-jobs-SRCH_IL.0,6_IS11047_KO7,24.htm',
+      notes: '5,100+ remote implementation + AI listings. Huge opportunity pool. Filter by salary $100k+ to get quality roles.',
+      activities: [], createdAt: now - 8000
+    },
+    {
+      id: uid(), category: 'ai-impl',
+      company: 'Indeed — AI Implementation Specialist', role: 'AI Implementation Specialist Remote',
+      stage: 'saved', priority: 'normal', salary: 'Varies',
+      contactName: '', email: '', phone: '',
+      url: 'https://www.indeed.com/q-ai-implementation-specialist-remote-jobs.html',
+      notes: 'Roles deploying AI tools for clients. CCM platform build is the portfolio case study. Use AI Automation resume.',
+      activities: [], createdAt: now - 8500
+    },
+    {
+      id: uid(), category: 'ai-impl',
+      company: 'Built In — Implementation Specialist', role: 'Remote Implementation Specialist at AI Companies',
+      stage: 'saved', priority: 'normal', salary: 'Varies',
+      contactName: '', email: '', phone: '',
+      url: 'https://builtin.com/jobs/remote/customer-success/search/implementation-specialist',
+      notes: 'Curated quality companies. Tech-forward implementation roles. Good for targeting specific companies.',
+      activities: [], createdAt: now - 9000
+    },
+    {
+      id: uid(), category: 'ai-impl',
+      company: 'ZipRecruiter — AI Consultant', role: 'AI Consultant Remote',
+      stage: 'saved', priority: 'normal', salary: '$49/hr avg · up to $82/hr',
+      contactName: '', email: '', phone: '',
+      url: 'https://www.ziprecruiter.com/Jobs/Ai-Consultant-Remote',
+      notes: 'Contract/consulting roles. Good for building client base while applying for full-time. Make + Zapier experience = qualified.',
+      activities: [], createdAt: now - 9500
+    },
+
+    // ── 🏥 HEALTHCARE / INSURTECH ──────────────────────
+    {
+      id: uid(), category: 'healthcare',
+      company: 'Devoted Health', role: 'AI Transformation & Operations Lead',
+      stage: 'saved', priority: 'high', salary: '$140k–$200k + bonus + stock',
+      contactName: '', email: '', phone: '',
+      url: 'https://builtin.com/job/ai-transformation-operations-lead/8457757',
+      notes: 'STACK 1 — Remote USA. Lead claims ops into AI-native ecosystem. Multi-agent systems, human-AI collaboration, compliance monitoring. Have dedicated resume + cover letter for Devoted.',
+      activities: [], createdAt: now - 10000
+    },
+    {
+      id: uid(), category: 'healthcare',
+      company: 'Cognizant', role: 'Agentic AI Process Implementation Consultant – Healthcare',
+      stage: 'saved', priority: 'high', salary: '$135k–$170k',
+      contactName: '', email: '', phone: '',
+      url: 'https://careers.cognizant.com',
+      notes: 'STACK 1 — Remote. Deploy agentic AI inside healthcare orgs. CCM platform build is live portfolio. Walk into hospitals and payers and implement what you built.',
+      activities: [], createdAt: now - 10500
+    },
+    {
+      id: uid(), category: 'healthcare',
+      company: 'Molina Healthcare', role: 'Senior Agentic AI Engineer',
+      stage: 'saved', priority: 'normal', salary: 'TBD',
+      contactName: '', email: '', phone: '',
+      url: 'https://careers.molinahealthcare.com',
+      notes: 'Healthcare domain right but role is pure engineering (Python, ML). Stretch without hard coding background.',
+      activities: [], createdAt: now - 11000
+    },
+    {
+      id: uid(), category: 'healthcare',
+      company: 'Glassdoor — Healthcare AI', role: 'Remote Healthcare AI Specialist (137 listings)',
+      stage: 'saved', priority: 'high', salary: 'Up to $130k+',
+      contactName: '', email: '', phone: '',
+      url: 'https://www.glassdoor.com/Job/remote-healthcare-artificial-intelligence-jobs-SRCH_IL.0,6_IS11047_KO7,41.htm',
+      notes: '137 vetted remote healthcare AI roles. Some paying $130k+. Medicare compliance background = rare differentiator.',
+      activities: [], createdAt: now - 11500
+    },
+    {
+      id: uid(), category: 'healthcare',
+      company: 'Indeed — Insurtech Manager', role: 'Insurtech Manager Remote (74 openings)',
+      stage: 'saved', priority: 'normal', salary: 'Varies',
+      contactName: '', email: '', phone: '',
+      url: 'https://www.indeed.com/q-insurtech-manager-l-remote-jobs.html',
+      notes: 'Reserv (AI claims automation) is actively hiring. Insurance AI overlap with Medicare background. 74 live openings.',
+      activities: [], createdAt: now - 12000
+    },
+    {
+      id: uid(), category: 'healthcare',
+      company: 'Indeed — Healthcare AI Operations', role: 'Healthcare AI Operations Manager Remote (694 open)',
+      stage: 'saved', priority: 'high', salary: 'Varies',
+      contactName: '', email: '', phone: '',
+      url: 'https://www.indeed.com/q-healthcare-artificial-intelligence-operations-l-remote-jobs.html',
+      notes: '694 open remote roles. Medicare compliance + CCM AI platform = rare combination. High volume opportunity pool.',
+      activities: [], createdAt: now - 12500
+    },
+
+    // ── 🏍️ MOTO / APPAREL ──────────────────────────────
+    {
+      id: uid(), category: 'moto',
+      company: 'Tobacco Motorwear', role: 'Product Developer & Production Manager',
+      stage: 'saved', priority: 'high', salary: 'TBD',
+      contactName: '', email: '', phone: '',
+      url: 'https://tobaccomotorwear.com/pages/tobacco-job-post',
+      notes: 'LIVE posting. Motorcycle apparel brand. Largely remote schedule with flexible office days in LA. Apply directly on their site.',
+      activities: [], createdAt: now - 13000
+    },
+    {
+      id: uid(), category: 'moto',
+      company: 'RevZilla', role: 'Brand / Operations / Apparel Roles',
+      stage: 'saved', priority: 'normal', salary: 'Varies',
+      contactName: '', email: '', phone: '',
+      url: 'https://www.revzilla.com/careers',
+      notes: 'Motorcycle gear & apparel e-commerce. Check careers page directly for ops, brand, or product roles. Major player in the space.',
+      activities: [], createdAt: now - 13500
+    },
+    {
+      id: uid(), category: 'moto',
+      company: 'Motorcycle Industry Jobs — Apparel Dev', role: 'Apparel Development / Brand Manager',
+      stage: 'saved', priority: 'normal', salary: 'Varies',
+      contactName: '', email: '', phone: '',
+      url: 'https://www.motorcycleindustryjobs.com/job-category/apparel-development-jobs/',
+      notes: 'Industry-specific board. Harley, Yamaha, Ducati, Honda post here. Also smaller brands and gear companies.',
+      activities: [], createdAt: now - 14000
+    },
+    {
+      id: uid(), category: 'moto',
+      company: 'ZipRecruiter — Apparel Design', role: 'Remote Apparel Design (119 moto listings)',
+      stage: 'saved', priority: 'normal', salary: '$51k–$163k',
+      contactName: '', email: '', phone: '',
+      url: 'https://www.ziprecruiter.com/Jobs/Remote-Apparel-Design',
+      notes: '119 motorcycle apparel-specific listings on Indeed. ZipRecruiter has broader design range. Good for finding niche brands.',
+      activities: [], createdAt: now - 14500
+    },
+
+    // ── 🎸 AI MUSIC ─────────────────────────────────────
+    {
+      id: uid(), category: 'music',
+      company: 'Music.ai', role: 'Open Positions — AI Music Platform',
+      stage: 'saved', priority: 'high', salary: 'TBD',
+      contactName: '', email: '', phone: '',
+      url: 'https://music.ai/careers/',
+      notes: 'AI music platform hiring directly. Guitar performance background = differentiator. Check all open roles — ops, CS, and product could all fit.',
+      activities: [], createdAt: now - 15000
+    },
+    {
+      id: uid(), category: 'music',
+      company: 'Ryz Labs', role: 'Music Specialist — AI Trainer (Remote)',
+      stage: 'saved', priority: 'high', salary: 'Flexible hours',
+      contactName: '', email: '', phone: '',
+      url: 'https://www.ryzlabs.com/jobs/music-specialist-ai-trainer-remote-3f296',
+      notes: 'Fully remote, async, 5–20 hrs/week. Guitar performance background = qualified. Train AI models on music. Great side income or bridge role.',
+      activities: [], createdAt: now - 15500
+    },
+    {
+      id: uid(), category: 'music',
+      company: 'ZipRecruiter — AI Music', role: 'AI Music Jobs (207 openings)',
+      stage: 'saved', priority: 'normal', salary: '$40k–$143k',
+      contactName: '', email: '', phone: '',
+      url: 'https://www.ziprecruiter.com/Jobs/Ai-Music',
+      notes: '207 openings. Wide range from music generation to AI product roles at music tech companies. Filter $80k+ for full-time.',
+      activities: [], createdAt: now - 16000
+    },
+    {
+      id: uid(), category: 'music',
+      company: 'Upwork — AI Music Freelance', role: 'AI Music / Guitar Freelance Projects',
+      stage: 'saved', priority: 'normal', salary: 'Project-based',
+      contactName: '', email: '', phone: '',
+      url: 'https://www.upwork.com/freelance-jobs/ai-generated-music/',
+      notes: 'Freelance platform. Build portfolio with AI music projects while searching full-time. Guitar + AI knowledge = in demand.',
+      activities: [], createdAt: now - 16500
+    },
+
+  ];
+  save(seed);
+}
+
+// ── Render ────────────────────────────────────────────
+function render() {
+  const all = load();
+  let filtered = currentCategory === 'all'
+    ? all
+    : all.filter(c => c.category === currentCategory);
+  filtered = currentFilter === 'all'
+    ? filtered.filter(c => c.stage !== 'rejected')
+    : filtered.filter(c => c.stage === currentFilter);
+
+  // Sort: priority high first, then by stage order, then by last activity
+  const sorted = [...filtered].sort((a, b) => {
+    if (a.priority === 'high' && b.priority !== 'high') return -1;
+    if (b.priority === 'high' && a.priority !== 'high') return 1;
+    const ai = STAGE_ORDER.indexOf(a.stage), bi = STAGE_ORDER.indexOf(b.stage);
+    return ai - bi;
+  });
+
+  const list = document.getElementById('list');
+  if (sorted.length === 0) {
+    list.innerHTML = `<div class="empty-state"><div class="icon">🔍</div><p>No contacts here yet.<br>Tap + to add one.</p></div>`;
+  } else {
+    list.innerHTML = sorted.map(c => cardHTML(c)).join('');
+  }
+
+  // Stats
+  document.getElementById('stat-total').textContent = all.length;
+  document.getElementById('stat-active').textContent = all.filter(c => ['applied','emailed','called','screening'].includes(c.stage)).length;
+  document.getElementById('stat-interviews').textContent = all.filter(c => c.stage === 'interview').length;
+  document.getElementById('stat-offers').textContent = all.filter(c => c.stage === 'offer').length;
+  document.getElementById('header-count').textContent = all.length + ' opportunities';
+}
+
+function cardHTML(c) {
+  const meta = STAGE_META[c.stage] || STAGE_META.saved;
+  const lastAct = c.activities.length ? fmtDate(c.activities[c.activities.length-1].ts) : fmtDate(c.createdAt);
+  return `
+    <div class="card ${c.priority === 'high' ? 'priority-high' : ''}" onclick="openDetail('${c.id}')">
+      <div class="card-top">
+        <div>
+          <div class="card-company">${esc(c.company)}</div>
+          <div class="card-role">${esc(c.role)}</div>
+        </div>
+        <span class="stage-badge ${meta.cls}">${meta.emoji} ${meta.label}</span>
+      </div>
+      <div class="card-bottom">
+        <div style="display:flex;flex-direction:column;gap:4px">
+          ${c.salary ? `<span class="salary-badge" style="align-self:flex-start">${esc(c.salary)}</span>` : ''}
+          <span class="last-activity">${lastAct}</span>
+        </div>
+        <div class="quick-actions" onclick="event.stopPropagation()">
+          <button class="quick-btn" onclick="openLog('${c.id}','emailed')" title="Log email">📧</button>
+          <button class="quick-btn" onclick="openLog('${c.id}','called')" title="Log call">📞</button>
+          <button class="quick-btn" onclick="openLog('${c.id}','interview')" title="Log interview">🎤</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function esc(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Filter ────────────────────────────────────────────
+function setCat(cat, btn) {
+  currentCategory = cat;
+  document.querySelectorAll('#cat-row .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('#stage-row .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+// ── Add / Edit Modal ──────────────────────────────────
+function openAddModal() {
+  document.getElementById('add-modal-title').textContent = 'Add Opportunity';
+  document.getElementById('edit-id').value = '';
+  document.getElementById('delete-btn').style.display = 'none';
+  ['company','role','salary','contact-name','email','phone','url','notes'].forEach(id => {
+    document.getElementById('f-' + id).value = '';
+  });
+  document.getElementById('f-stage').value = 'saved';
+  document.getElementById('f-priority').value = 'normal';
+  document.getElementById('add-modal').style.display = 'flex';
+}
+
+function openEditModal(id) {
+  const c = load().find(x => x.id === id);
+  if (!c) return;
+  document.getElementById('add-modal-title').textContent = 'Edit';
+  document.getElementById('edit-id').value = id;
+  document.getElementById('f-company').value = c.company || '';
+  document.getElementById('f-role').value = c.role || '';
+  document.getElementById('f-salary').value = c.salary || '';
+  document.getElementById('f-contact-name').value = c.contactName || '';
+  document.getElementById('f-email').value = c.email || '';
+  document.getElementById('f-phone').value = c.phone || '';
+  document.getElementById('f-url').value = c.url || '';
+  document.getElementById('f-notes').value = c.notes || '';
+  document.getElementById('f-stage').value = c.stage || 'saved';
+  document.getElementById('f-priority').value = c.priority || 'normal';
+  document.getElementById('delete-btn').style.display = 'block';
+  closeModal('detail-modal');
+  document.getElementById('add-modal').style.display = 'flex';
+}
+
+function saveContact() {
+  const data = load();
+  const id = document.getElementById('edit-id').value;
+  const obj = {
+    company: document.getElementById('f-company').value.trim(),
+    role: document.getElementById('f-role').value.trim(),
+    salary: document.getElementById('f-salary').value.trim(),
+    contactName: document.getElementById('f-contact-name').value.trim(),
+    email: document.getElementById('f-email').value.trim(),
+    phone: document.getElementById('f-phone').value.trim(),
+    url: document.getElementById('f-url').value.trim(),
+    notes: document.getElementById('f-notes').value.trim(),
+    stage: document.getElementById('f-stage').value,
+    priority: document.getElementById('f-priority').value,
+  };
+  if (!obj.company) { alert('Company name is required'); return; }
+  if (id) {
+    const idx = data.findIndex(x => x.id === id);
+    if (idx >= 0) Object.assign(data[idx], obj);
+  } else {
+    data.push({ id: uid(), ...obj, activities: [], createdAt: Date.now() });
+  }
+  save(data);
+  closeModal('add-modal');
+  render();
+}
+
+function deleteContact() {
+  if (!confirm('Delete this opportunity?')) return;
+  const id = document.getElementById('edit-id').value;
+  save(load().filter(x => x.id !== id));
+  closeModal('add-modal');
+  closeModal('detail-modal');
+  render();
+}
+
+// ── Detail Modal ──────────────────────────────────────
+function openDetail(id) {
+  currentDetailId = id;
+  renderDetail(id);
+  document.getElementById('detail-modal').style.display = 'flex';
+}
+
+function renderDetail(id) {
+  const c = load().find(x => x.id === id);
+  if (!c) return;
+  const meta = STAGE_META[c.stage] || STAGE_META.saved;
+  const acts = [...(c.activities || [])].reverse();
+
+  const actHTML = acts.length
+    ? acts.map(a => `
+        <div class="activity-item">
+          <span class="activity-icon">${actIcon(a.type)}</span>
+          <div class="activity-text">
+            <div class="activity-type">${actLabel(a.type)}</div>
+            ${a.note ? `<div class="activity-note">${esc(a.note)}</div>` : ''}
+          </div>
+          <span class="activity-date">${fmtDate(a.ts)}</span>
+        </div>`).join('')
+    : '<div class="no-activity">No activity logged yet</div>';
+
+  const urlHTML = c.url ? `<div class="info-row"><span class="info-icon">🔗</span><span class="info-val"><a href="${esc(c.url)}" target="_blank">View Listing</a></span></div>` : '';
+  const emailHTML = c.email ? `<div class="info-row"><span class="info-icon">📧</span><span class="info-val"><a href="mailto:${esc(c.email)}">${esc(c.email)}</a></span></div>` : '';
+  const phoneHTML = c.phone ? `<div class="info-row"><span class="info-icon">📞</span><span class="info-val"><a href="tel:${esc(c.phone)}">${esc(c.phone)}</a></span></div>` : '';
+  const contactHTML = c.contactName ? `<div class="info-row"><span class="info-icon">👤</span><span class="info-val">${esc(c.contactName)}</span></div>` : '';
+  const notesHTML = c.notes ? `<div class="info-row" style="align-items:flex-start"><span class="info-icon">📝</span><span class="info-val" style="white-space:pre-wrap;font-size:13px;color:var(--muted)">${esc(c.notes)}</span></div>` : '';
+
+  const hasInfo = c.url || c.email || c.phone || c.contactName || c.notes;
+
+  document.getElementById('detail-modal-content').innerHTML = `
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <span class="modal-title">Details</span>
+      <button class="modal-close" onclick="closeModal('detail-modal')">✕</button>
+    </div>
+    <div class="detail-hero">
+      <div class="detail-company">${esc(c.company)}</div>
+      <div class="detail-role">${esc(c.role)}</div>
+      <div class="detail-meta">
+        <span class="stage-badge ${meta.cls}">${meta.emoji} ${meta.label}</span>
+        ${c.salary ? `<span class="salary-badge">${esc(c.salary)}</span>` : ''}
+        ${c.priority === 'high' ? '<span style="font-size:13px">⭐ Stack 1</span>' : ''}
+      </div>
+    </div>
+
+    <div class="action-grid">
+      <div class="action-tile" onclick="quickLog('${id}','emailed')">
+        <span class="icon">📧</span>
+        <span class="label">Emailed</span>
+      </div>
+      <div class="action-tile" onclick="quickLog('${id}','called')">
+        <span class="icon">📞</span>
+        <span class="label">Called</span>
+      </div>
+      <div class="action-tile" onclick="quickLog('${id}','applied')">
+        <span class="icon">📤</span>
+        <span class="label">Applied</span>
+      </div>
+      <div class="action-tile" onclick="quickLog('${id}','screening')">
+        <span class="icon">🗓</span>
+        <span class="label">Screening</span>
+      </div>
+      <div class="action-tile" onclick="quickLog('${id}','interview')">
+        <span class="icon">🎤</span>
+        <span class="label">Interview</span>
+      </div>
+      <div class="action-tile" onclick="quickLog('${id}','followup')">
+        <span class="icon">🔁</span>
+        <span class="label">Follow Up</span>
+      </div>
+      <div class="action-tile" onclick="quickLog('${id}','rejected')" style="border-color:rgba(248,81,73,0.3)">
+        <span class="icon">❌</span>
+        <span class="label" style="color:var(--red)">Reject</span>
+      </div>
+    </div>
+
+    <div class="activity-section">
+      <h3>Activity Log</h3>
+      ${actHTML}
+    </div>
+
+    ${hasInfo ? `
+    <div class="contact-info-section">
+      <h3>Info</h3>
+      ${contactHTML}${emailHTML}${phoneHTML}${urlHTML}${notesHTML}
+    </div>` : ''}
+
+    <div class="detail-actions">
+      <button class="btn btn-ghost" onclick="openEditModal('${id}')">✏️ Edit</button>
+    </div>
+  `;
+}
+
+function actIcon(type) {
+  const m = { emailed:'📧', called:'📞', applied:'📤', screening:'🗓', interview:'🎤', followup:'🔁', offer:'🏆', rejected:'❌', note:'📝' };
+  return m[type] || '📌';
+}
+function actLabel(type) {
+  const m = { emailed:'Sent Email', called:'Phone Call', applied:'Applied', screening:'Phone Screen', interview:'Interview', followup:'Follow Up', offer:'Offer Received', rejected:'Rejected', note:'Note Added' };
+  return m[type] || type;
+}
+
+function stageForAction(type) {
+  const m = { applied:'applied', emailed:'emailed', called:'called', screening:'screening', interview:'interview', offer:'offer', rejected:'rejected' };
+  return m[type] || null;
+}
+
+// Quick log from card (opens log modal with note)
+function openLog(id, type) {
+  document.getElementById('log-id').value = id;
+  document.getElementById('log-type').value = type;
+  document.getElementById('log-note').value = '';
+  document.getElementById('log-modal-title').textContent = actLabel(type);
+  document.getElementById('log-modal').style.display = 'flex';
+}
+
+// Quick log from detail (no note prompt for speed)
+function quickLog(id, type) {
+  openLog(id, type);
+}
+
+function saveLog() {
+  const id = document.getElementById('log-id').value;
+  const type = document.getElementById('log-type').value;
+  const note = document.getElementById('log-note').value.trim();
+  const data = load();
+  const c = data.find(x => x.id === id);
+  if (!c) return;
+  c.activities.push({ type, note, ts: Date.now() });
+  const newStage = stageForAction(type);
+  if (newStage) c.stage = newStage;
+  save(data);
+  closeModal('log-modal');
+  render();
+  if (currentDetailId === id && document.getElementById('detail-modal').style.display !== 'none') {
+    renderDetail(id);
+  }
+}
+
+// ── Modal helpers ─────────────────────────────────────
+function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+function closeOnOverlay(e, id) { if (e.target.id === id) closeModal(id); }
+
+// ── Search (header) ───────────────────────────────────
+// (search not shown on header but could add later)
+
+// ── Import from new-jobs.json ─────────────────────────
+function triggerImport() {
+  document.getElementById('import-file').value = '';
+  document.getElementById('import-file').click();
+}
+
+function handleImport(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const incoming = JSON.parse(e.target.result);
+      if (!Array.isArray(incoming)) throw new Error('Invalid format');
+
+      const existing = load();
+      const existingKeys = new Set(existing.map(c =>
+        (c.url || `${c.company}|${c.role}`).toLowerCase()
+      ));
+
+      let added = 0;
+      for (const job of incoming) {
+        const key = (job.url || `${job.company}|${job.role}`).toLowerCase();
+        if (existingKeys.has(key)) continue;
+        existing.push({
+          id: uid(),
+          company: job.company || 'Unknown',
+          role: job.role || 'Unknown Role',
+          salary: job.salary || '',
+          category: job.category || '',
+          contactName: '',
+          email: '',
+          phone: '',
+          url: job.url || '',
+          notes: (job.notes || '') + (job.source ? `\nSource: ${job.source}` : '') + (job.found ? `\nFound: ${job.found.slice(0,10)}` : ''),
+          stage: 'saved',
+          priority: job.priority || 'normal',
+          activities: [],
+          createdAt: Date.now(),
+        });
+        existingKeys.add(key);
+        added++;
+      }
+
+      save(existing);
+      render();
+
+      if (added > 0) {
+        showToast(`✓ ${added} new listing${added > 1 ? 's' : ''} imported!`);
+      } else {
+        showToast('No new listings — everything was already tracked.');
+      }
+    } catch (err) {
+      showToast('Import failed — make sure you picked new-jobs.json');
+    }
+  };
+  reader.readAsText(file);
+}
+
+// ── Toast notification ────────────────────────────────
+function showToast(msg) {
+  let t = document.getElementById('toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'toast';
+    t.style.cssText = `
+      position:fixed; bottom:80px; left:50%; transform:translateX(-50%);
+      background:#39d0b2; color:#000; padding:10px 20px; border-radius:20px;
+      font-size:14px; font-weight:600; z-index:999; white-space:nowrap;
+      box-shadow:0 4px 20px rgba(0,0,0,0.4); transition:opacity 0.3s;
+    `;
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.opacity = '1';
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => { t.style.opacity = '0'; }, 3000);
+}
+
+// ── Init ──────────────────────────────────────────────
+seedIfEmpty();
+render();
+</script>
+</body>
+</html>
