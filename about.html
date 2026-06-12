@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>About | JAWSAI911</title>
+<meta name="description" content="JAWSAI911.com — Your AI Incident Command Center">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#000000;
+  --bg2:#060b14;
+  --bg3:#0a1120;
+  --s1:#0d1525;
+  --s2:#111f35;
+  --border:rgba(59,130,246,0.15);
+  --border2:rgba(59,130,246,0.35);
+  --blue:#3b82f6;
+  --blue2:#60a5fa;
+  --blue3:#93c5fd;
+  --sky:#38bdf8;
+  --teal:#2dd4bf;
+  --amber:#f59e0b;
+  --text:#eef2ff;
+  --muted:#7b8db0;
+  --dim:#3d4f6e;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',-apple-system,sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.6;overflow-x:hidden}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:linear-gradient(180deg,rgba(0,0,0,0.92),rgba(0,0,0,0.66));backdrop-filter:blur(10px);border-bottom:1px solid rgba(59,130,246,0.08);padding:18px 44px 14px 52px;min-height:122px;display:flex;align-items:flex-start;justify-content:space-between}
+.nav-logo-wrap{display:flex;align-items:flex-start;text-decoration:none}
+.nav-logo-img{width:330px;height:auto;max-height:98px;object-fit:contain;object-position:left top;mix-blend-mode:screen;filter:brightness(1.16) contrast(1.08) drop-shadow(0 0 18px rgba(56,189,248,0.2))}
+.nav-logo-text{display:none}
+.nav-links{display:flex;gap:48px;list-style:none;align-items:flex-start;margin-top:18px}
+.nav-links a{font-size:15px;font-weight:600;color:#f5f7fb;text-decoration:none;letter-spacing:0;transition:color 0.2s;text-transform:uppercase;position:relative}
+.nav-links a:hover,.nav-links a.active{color:#fff}
+.nav-links a.active{color:var(--blue2)}
+.nav-links a.active::after{content:'';position:absolute;left:0;right:0;bottom:-22px;height:2px;background:var(--sky);box-shadow:0 0 10px rgba(56,189,248,0.8)}
+.nav-right{display:flex;align-items:flex-start;gap:10px;margin-top:10px}
+.nav-cta{font-size:15px;font-weight:700;padding:15px 28px;border-radius:7px;background:rgba(3,11,24,0.45);color:#fff;text-decoration:none;letter-spacing:0;transition:all 0.2s;cursor:pointer;border:1px solid rgba(56,189,248,0.65);font-family:inherit;text-transform:uppercase;box-shadow:inset 0 0 18px rgba(59,130,246,0.16),0 0 18px rgba(59,130,246,0.12)}
+.nav-cta:hover{background:rgba(59,130,246,0.18);border-color:var(--sky)}
+
+/* ── PORTAL MODAL ── */
+.portal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.82);z-index:999;align-items:center;justify-content:center}
+.portal-overlay.open{display:flex}
+.portal-box{background:#0d1525;border:1px solid var(--border2);border-top:3px solid var(--blue);border-radius:10px;padding:36px 32px;width:360px;text-align:center}
+.portal-box h3{font-size:18px;font-weight:800;color:#fff;margin-bottom:6px}
+.portal-box p{font-size:13px;color:var(--muted);margin-bottom:22px}
+.portal-input{width:100%;background:#111f35;border:1px solid var(--border);color:#fff;padding:11px 14px;border-radius:5px;font-size:14px;font-family:inherit;outline:none;margin-bottom:12px;text-align:center;letter-spacing:3px}
+.portal-input:focus{border-color:var(--blue)}
+.portal-btn{width:100%;background:var(--blue);color:#fff;border:none;padding:12px;border-radius:5px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:10px}
+.portal-btn:hover{background:#2563eb}
+.portal-cancel{font-size:12px;color:var(--dim);cursor:pointer}
+.portal-cancel:hover{color:#fff}
+.portal-error{color:#f87171;font-size:12px;margin-bottom:10px;display:none}
+
+/* ── HERO ── */
+#hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;position:relative;overflow:hidden;background:#02050b;padding:128px 44px 28px}
+#hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 34%,rgba(0,84,202,0.32),transparent 34%),radial-gradient(ellipse at 14% 62%,rgba(0,106,255,0.24),transparent 31%),radial-gradient(ellipse at 86% 64%,rgba(0,106,255,0.2),transparent 32%),linear-gradient(180deg,rgba(0,0,0,0.1),rgba(0,0,0,0.28) 58%,rgba(0,0,0,0.86));z-index:0}
+#hero::after{content:'';position:absolute;left:0;right:0;bottom:160px;height:360px;background:
+radial-gradient(circle at 16% 54%,rgba(88,166,255,0.95) 0 1px,transparent 2px),
+radial-gradient(circle at 21% 38%,rgba(88,166,255,0.85) 0 1px,transparent 2px),
+radial-gradient(circle at 74% 42%,rgba(88,166,255,0.9) 0 1px,transparent 2px),
+radial-gradient(circle at 82% 60%,rgba(88,166,255,0.85) 0 1px,transparent 2px),
+radial-gradient(ellipse at 16% 56%,rgba(0,95,255,0.34),transparent 28%),
+radial-gradient(ellipse at 82% 56%,rgba(0,95,255,0.28),transparent 31%);
+background-size:42px 34px,52px 38px,44px 32px,56px 42px,100% 100%,100% 100%;opacity:.75;filter:drop-shadow(0 0 5px rgba(59,130,246,0.8));z-index:1}
+#hero-canvas{position:absolute;inset:0;width:100%;height:100%;opacity:0.42;z-index:1}
+.hero-content{position:relative;z-index:2;text-align:center;padding:12px 40px 0;display:flex;flex-direction:column;align-items:center;width:100%}
+.hero-logo-img{width:min(760px,64vw);max-width:90vw;mix-blend-mode:screen;filter:brightness(1.2) contrast(1.08) drop-shadow(0 0 40px rgba(59,130,246,0.62)) drop-shadow(0 0 85px rgba(56,189,248,0.24));margin:0 0 18px}
+.hero-headline{font-size:clamp(24px,2.7vw,39px);font-weight:900;color:#fff;letter-spacing:1px;text-transform:uppercase;margin-bottom:1px;line-height:1.15;text-shadow:0 0 18px rgba(255,255,255,0.18)}
+.hero-sub{font-size:clamp(16px,1.45vw,22px);color:#d7deeb;margin-bottom:32px;letter-spacing:0;line-height:1.35}
+.hero-btns{display:flex;gap:30px;flex-wrap:wrap;justify-content:center;margin-bottom:0}
+.btn-hero-primary{display:inline-flex;align-items:center;gap:13px;font-size:15px;font-weight:800;padding:16px 36px;border-radius:7px;background:linear-gradient(180deg,#0877ff,#0052dc);color:#fff;text-decoration:none;letter-spacing:0.2px;text-transform:uppercase;transition:background 0.2s,transform 0.15s;box-shadow:0 0 18px rgba(0,91,255,0.42)}
+.btn-hero-primary:hover{background:#0862f0;transform:translateY(-2px)}
+.btn-hero-ghost{display:inline-flex;align-items:center;gap:13px;font-size:15px;font-weight:700;padding:16px 36px;border-radius:7px;background:rgba(1,8,20,0.55);color:#fff;text-decoration:none;border:1px solid rgba(72,129,190,0.55);letter-spacing:0.2px;text-transform:uppercase;transition:all 0.2s}
+.btn-hero-ghost:hover{border-color:var(--blue);background:rgba(59,130,246,0.1)}
+
+/* ── FEATURE CARDS STRIP ── */
+.feature-strip{position:relative;z-index:2;width:100%;max-width:1390px;background:rgba(3,12,25,0.72);border:1px solid rgba(42,123,214,0.42);border-radius:16px;margin-top:42px;padding:0;box-shadow:0 0 38px rgba(0,91,255,0.16),inset 0 0 32px rgba(10,68,140,0.22);overflow:hidden}
+.feature-cards{display:grid;grid-template-columns:repeat(4,1fr);max-width:none;margin:0 auto}
+.fc{padding:28px 44px 30px;text-align:center;border-right:1px solid rgba(59,130,246,0.16);transition:background 0.2s;min-height:202px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
+.fc:last-child{border-right:none}
+.fc:hover{background:rgba(59,130,246,0.05)}
+.fc-icon{margin:0 auto 18px;width:72px;height:72px;display:flex;align-items:center;justify-content:center;opacity:0.95;filter:drop-shadow(0 0 14px rgba(56,189,248,0.34))}
+.fc-icon svg{width:66px;height:66px}
+.fc-title{font-size:17px;font-weight:800;letter-spacing:0.4px;text-transform:uppercase;color:#fff;margin-bottom:8px;line-height:1.25}
+.fc-desc{font-size:15px;color:#cbd5e1;line-height:1.48;max-width:250px}
+
+/* ── SHARED ── */
+.section-wrap{padding:80px 40px;max-width:1100px;margin:0 auto}
+.full-bleed{padding:80px 40px}
+.full-bleed .inner{max-width:1100px;margin:0 auto}
+.accent-bar{height:1px;background:linear-gradient(90deg,transparent,var(--blue),var(--sky),var(--blue),transparent)}
+.sec-label{font-size:10px;font-weight:800;letter-spacing:3px;color:var(--blue);text-transform:uppercase;margin-bottom:10px}
+.sec-title{font-size:clamp(26px,3.5vw,38px);font-weight:900;color:#fff;line-height:1.15;margin-bottom:14px}
+.sec-title em{color:var(--sky);font-style:italic}
+.sec-desc{font-size:15px;color:var(--muted);max-width:560px;line-height:1.75;margin-bottom:48px}
+
+/* ── WHAT I BUILD ── */
+.build-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.build-card{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:24px;transition:border-color 0.2s,transform 0.2s}
+.build-card:hover{border-color:var(--blue);transform:translateY(-3px)}
+.build-icon{width:44px;height:44px;border-radius:10px;background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.2);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:14px}
+.build-card h3{font-size:15px;font-weight:800;color:#fff;margin-bottom:8px}
+.build-card p{font-size:13px;color:var(--muted);line-height:1.65}
+.build-card .tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:14px}
+.tag-pill{font-size:10px;font-weight:600;padding:2px 9px;border-radius:4px;border:1px solid rgba(59,130,246,0.25);color:var(--blue2);background:rgba(59,130,246,0.06)}
+.tag-pill.t{border-color:rgba(45,212,191,0.25);color:var(--teal);background:rgba(45,212,191,0.06)}
+.tag-pill.a{border-color:rgba(245,158,11,0.25);color:var(--amber);background:rgba(245,158,11,0.06)}
+
+/* ── CCM PLATFORM ── */
+#ccm{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.ccm-hero{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;margin-bottom:64px}
+.ccm-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.25);color:var(--sky);padding:5px 14px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:22px}
+.ccm-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--sky);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.ccm-hero h2{font-size:clamp(28px,3.5vw,46px);font-weight:900;color:#fff;line-height:1.1;margin-bottom:18px}
+.ccm-hero h2 em{color:var(--sky);font-style:italic}
+.ccm-hero p{font-size:15px;color:var(--muted);line-height:1.8;margin-bottom:20px}
+.ccm-hero-cards{display:flex;flex-direction:column;gap:12px}
+.hcard{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:20px;transition:border-color 0.2s}
+.hcard:hover{border-color:var(--border2)}
+.hcard-label{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--sky);margin-bottom:6px}
+.hcard-title{font-size:14px;font-weight:700;color:#fff;margin-bottom:4px}
+.hcard-desc{font-size:12px;color:var(--muted);line-height:1.6}
+.ccm-stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.stat-box{background:rgba(59,130,246,0.06);border:1px solid rgba(59,130,246,0.18);border-radius:10px;padding:16px;text-align:center}
+.stat-num{font-size:18px;font-weight:800;color:var(--sky)}
+.stat-lbl{font-size:10px;color:rgba(255,255,255,0.6);margin-top:4px;line-height:1.4}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:48px}
+.pcard{background:var(--s1);border-radius:14px;padding:28px;border:1px solid var(--border);transition:all 0.3s;position:relative;overflow:hidden}
+.pcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--sky));opacity:0;transition:opacity 0.3s}
+.pcard:hover{border-color:var(--border2);transform:translateY(-3px)}
+.pcard:hover::before{opacity:1}
+.picon{width:44px;height:44px;border-radius:10px;margin-bottom:16px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.pcard h3{font-size:16px;font-weight:700;color:#fff;margin-bottom:8px}
+.pcard p{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:14px}
+.ptag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:4px;background:rgba(59,130,246,0.1);color:var(--sky);border:1px solid rgba(59,130,246,0.25)}
+
+/* VCA Coaches */
+.cgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:48px}
+.ccard{background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:24px;text-align:center;transition:all 0.25s}
+.ccard:hover{border-color:var(--border2);transform:translateY(-3px)}
+.cavatar{width:68px;height:68px;border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:26px;border:2px solid rgba(59,130,246,0.3);background:rgba(59,130,246,0.07)}
+.cname{font-size:16px;font-weight:700;color:#fff;margin-bottom:2px}
+.crole{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;color:var(--sky)}
+.cquote{font-size:11px;color:var(--muted);line-height:1.6;font-style:italic}
+
+/* ROI */
+.roi-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;margin-bottom:40px}
+.roi-nums{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.rbox{background:var(--s1);border-radius:12px;padding:22px;border:1px solid var(--border)}
+.rbox.hl{border-color:rgba(59,130,246,0.3);background:rgba(59,130,246,0.06)}
+.rnum{font-size:26px;font-weight:800;color:#fff}
+.rbox.hl .rnum{color:var(--sky)}
+.rlbl{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.5}
+.roi-quote-box{background:var(--s1);border-radius:14px;padding:36px;border:1px solid var(--border);position:relative;overflow:hidden}
+.roi-quote-box::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--blue),var(--sky))}
+.roi-qt{font-size:17px;color:#fff;line-height:1.65;margin-bottom:16px;font-style:italic}
+.roi-attr{font-size:11px;color:var(--sky);letter-spacing:1px;font-weight:600;text-transform:uppercase}
+.ccm-cta{text-align:center;padding:40px;background:var(--s1);border-radius:16px;border:1px solid var(--border)}
+.ccm-cta h3{font-size:22px;font-weight:900;color:#fff;margin-bottom:8px}
+.ccm-cta p{font-size:14px;color:var(--muted);margin-bottom:24px}
+
+/* ── RESULTS STRIP ── */
+#results{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:60px 40px}
+.results-inner{max-width:1100px;margin:0 auto}
+.results-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:24px}
+.result-item{text-align:center;padding:20px 16px}
+.result-item .big{font-size:36px;font-weight:900;color:var(--blue);line-height:1;margin-bottom:6px}
+.result-item .label{font-size:11px;font-weight:600;letter-spacing:1px;color:var(--blue3);text-transform:uppercase;line-height:1.4}
+
+/* ── TIMELINE ── */
+.timeline{position:relative}
+.timeline::before{content:'';position:absolute;left:0;top:8px;bottom:0;width:2px;background:linear-gradient(180deg,var(--blue),rgba(59,130,246,0.1))}
+.tl-item{padding:0 0 36px 28px;position:relative}
+.tl-dot{position:absolute;left:-5px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--blue);border:2px solid var(--bg);box-shadow:0 0 12px rgba(59,130,246,0.6)}
+.tl-dates{font-size:11px;font-weight:700;color:var(--teal);letter-spacing:0.5px;margin-bottom:3px}
+.tl-role{font-size:18px;font-weight:800;color:#fff;margin-bottom:3px}
+.tl-company{font-size:13px;font-weight:600;color:var(--amber);margin-bottom:10px}
+.tl-desc{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:10px}
+.tl-bullets{list-style:none}
+.tl-bullets li{font-size:13.5px;color:var(--text);padding:3px 0 3px 18px;position:relative;line-height:1.6}
+.tl-bullets li::before{content:'◆';color:var(--blue);font-size:7px;position:absolute;left:0;top:7px}
+.tl-bullets li strong{color:var(--blue2)}
+
+/* ── STACK ── */
+.stack-groups{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.stack-group{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:20px 22px}
+.stack-group h4{font-size:10px;font-weight:800;letter-spacing:2px;color:var(--blue);text-transform:uppercase;margin-bottom:12px;border-bottom:1px solid var(--border);padding-bottom:8px}
+.stack-pills{display:flex;flex-wrap:wrap;gap:7px}
+.pill{font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;border:1px solid var(--border);color:var(--text);background:rgba(255,255,255,0.03)}
+
+/* ── PROJECTS ── */
+.projects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.proj-card{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:24px;transition:border-color 0.2s}
+.proj-card:hover{border-color:var(--blue)}
+.proj-card.featured{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.proj-card.featured .proj-bullets{list-style:none;margin-top:10px}
+.proj-card.featured .proj-bullets li{font-size:13.5px;color:var(--text);padding:4px 0 4px 18px;position:relative;line-height:1.6;border-bottom:1px solid var(--border)}
+.proj-card.featured .proj-bullets li:last-child{border-bottom:none}
+.proj-card.featured .proj-bullets li::before{content:'◆';color:var(--blue);font-size:7px;position:absolute;left:0;top:8px}
+.proj-card.featured .proj-bullets li strong{color:var(--blue2)}
+.proj-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.proj-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.proj-name{font-size:17px;font-weight:800;color:#fff}
+.proj-badge{font-size:9px;font-weight:800;letter-spacing:1.5px;padding:3px 9px;border-radius:20px;text-transform:uppercase}
+.badge-live{background:rgba(45,212,191,0.1);border:1px solid rgba(45,212,191,0.3);color:var(--teal)}
+.badge-built{background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);color:var(--blue2)}
+.badge-pub{background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);color:var(--amber)}
+.proj-role{font-size:11px;font-weight:700;letter-spacing:1px;color:var(--blue2);text-transform:uppercase;margin-bottom:10px}
+.proj-desc{font-size:13.5px;color:var(--muted);line-height:1.65}
+
+/* ── EMAIL TEMPLATE ── */
+.template-box{background:var(--s1);border:1px solid var(--border);border-radius:8px;overflow:hidden;max-width:680px;margin:0 auto}
+.template-header{background:#0a1120;border-bottom:1px solid var(--border);padding:12px 20px;display:flex;justify-content:space-between;align-items:center}
+.template-header-left{font-size:12px;color:var(--muted)}
+.template-header-left strong{color:#fff}
+.copy-btn{background:var(--blue);color:#fff;border:none;padding:6px 16px;border-radius:4px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:opacity 0.2s}
+.copy-btn:hover{opacity:0.85}
+.copy-btn.copied{background:#16a34a}
+.template-body{padding:24px 28px}
+.template-subject{font-size:13px;color:var(--muted);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.template-subject strong{color:#fff}
+.template-text{font-size:14px;color:var(--muted);line-height:1.8;white-space:pre-wrap}
+
+/* ── CONTACT ── */
+#contact{background:var(--bg2);border-top:1px solid var(--border);padding:100px 40px;text-align:center;position:relative;overflow:hidden}
+#contact::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(59,130,246,0.08) 0%,transparent 60%)}
+.contact-inner{position:relative;max-width:600px;margin:0 auto}
+#contact h2{font-size:clamp(28px,4vw,42px);font-weight:900;color:#fff;margin-bottom:12px}
+#contact p{font-size:15px;color:var(--muted);margin-bottom:36px;line-height:1.6}
+.contact-links{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.cl{font-size:14px;font-weight:700;padding:13px 28px;border-radius:8px;text-decoration:none;transition:all 0.2s}
+.cl-primary{background:var(--blue);color:#fff}
+.cl-primary:hover{background:#2563eb;transform:translateY(-1px)}
+.cl-secondary{border:1px solid var(--border);color:var(--text);background:rgba(255,255,255,0.03)}
+.cl-secondary:hover{border-color:var(--blue)}
+.cl-demo{background:rgba(56,189,248,0.1);border:1px solid rgba(56,189,248,0.3);color:var(--sky)}
+.cl-demo:hover{background:rgba(56,189,248,0.18)}
+
+/* ── FOOTER ── */
+footer{background:#000;border-top:1px solid rgba(59,130,246,0.12);padding:24px 40px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--dim);flex-wrap:wrap;gap:10px}
+.footer-logo{height:32px;mix-blend-mode:screen;opacity:0.85}
+.footer-right{font-size:11px;color:var(--dim)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  nav{padding:12px 18px;min-height:80px;align-items:center}
+  .nav-logo-img{width:190px;max-height:62px}
+  .nav-links{display:none}
+  .nav-right{margin-top:0}
+  .nav-cta{font-size:11px;padding:10px 12px}
+  #hero{padding:96px 16px 24px;min-height:auto}
+  .hero-logo-img{width:min(540px,94vw)}
+  .hero-content{padding:8px 0 0}
+  .hero-btns{gap:12px}
+  .btn-hero-primary,.btn-hero-ghost{font-size:12px;padding:13px 18px}
+  .feature-strip{margin-top:30px;border-radius:12px}
+  .section-wrap{padding:60px 20px}
+  .full-bleed{padding:60px 20px}
+  .build-grid,.pgrid{grid-template-columns:1fr}
+  .ccm-hero,.roi-grid{grid-template-columns:1fr}
+  .cgrid{grid-template-columns:1fr 1fr}
+  .results-grid{grid-template-columns:repeat(2,1fr)}
+  .stack-groups{grid-template-columns:1fr}
+  .projects-grid{grid-template-columns:1fr}
+  .proj-card.featured{grid-template-columns:1fr}
+  .feature-cards{grid-template-columns:1fr 1fr}
+  .fc{border-right:none;border-bottom:1px solid rgba(59,130,246,0.1);padding:24px 18px;min-height:190px}
+  .fc:nth-child(odd){border-right:1px solid rgba(59,130,246,0.1)}
+  .fc-icon{width:58px;height:58px}
+  .fc-icon svg{width:54px;height:54px}
+  .fc-title{font-size:13px}
+  .fc-desc{font-size:12.5px}
+  footer{flex-direction:column;text-align:center}
+}
+@media(max-width:560px){
+  .nav-cta{display:none}
+  .feature-cards{grid-template-columns:1fr}
+  .fc:nth-child(odd){border-right:none}
+}
+</style>
+</head>
+<body>
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo-wrap">
+    <img src="jawsai911-logo-dark-nav.jpeg" class="nav-logo-img" alt="JAWSAI911">
+    <div class="nav-logo-text">
+      <div class="nav-logo-name">JAWS<span>AI</span>911</div>
+      <div class="nav-logo-sub">AI Incident Command Center</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="solutions.html">Solutions</a></li>
+    <li><a href="platform.html">Platform</a></li>
+    <li><a href="resources.html">Resources</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="contact.html" class="nav-cta">Workflow Review</a>
+  </div>
+</nav>
+<!-- PORTAL MODAL -->
+<div class="portal-overlay" id="portal-overlay">
+  <div class="portal-box">
+    <h3>JAWSAI911 Portal</h3>
+    <p>Enter your access code to open the CRM dashboard.</p>
+    <input type="password" class="portal-input" id="portal-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter') checkPortal()">
+    <div class="portal-error" id="portal-error">Incorrect code. Try again.</div>
+    <button class="portal-btn" onclick="checkPortal()">Enter Portal →</button>
+    <button class="portal-btn" style="background:rgba(56,189,248,0.12);border:1px solid rgba(56,189,248,0.35);color:var(--sky)" onclick="checkPortal(JOB_URL)">Open Job Tracker →</button>
+    <div class="portal-cancel" onclick="closePortal()">Cancel</div>
+  </div>
+</div>
+
+
+<div style="height:118px"></div>
+<div class="section-wrap" id="work">
+  <div class="sec-label">Work History</div>
+  <div class="sec-title">Where I've Been</div>
+  <div class="sec-desc">A decade building real systems in regulated, high-stakes environments before adding AI to the stack.</div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-dates">2025 — Present</div>
+      <div class="tl-role">Founder & AI Systems Architect</div>
+      <div class="tl-company">Complete Care Marketing Inc. (CCM)</div>
+      <div class="tl-desc">Built a 3-tier AI operations platform for Medicare telesales from the ground up — solo, no engineering team. CCM Enrollment Core (enrollment intelligence), VCAP (AI coaching), and CCM Onboard (training acceleration).</div>
+      <ul class="tl-bullets">
+        <li>Replaced <strong>11 separate platforms</strong> with a single unified enrollment intelligence screen</li>
+        <li>Architected VCAP — real-time AI coaching on live calls without the prospect knowing</li>
+        <li>Reduced agent onboarding from <strong>4 weeks to 3–5 days</strong></li>
+        <li>Zero non-compliant enrollments through structural CMS compliance enforcement</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-dates">2025 — 2026</div>
+      <div class="tl-role">Sales Team Leader</div>
+      <div class="tl-company">Health Plan One</div>
+      <div class="tl-desc">Led Medicare telesales team across AEP/OEP cycles — applying the same operational systems and compliance frameworks built over a decade.</div>
+      <ul class="tl-bullets">
+        <li>Worked across <strong>multiple carrier systems</strong> simultaneously on live calls</li>
+        <li>Identified platform consolidation opportunities that became CCM Enrollment Core</li>
+        <li>Applied compliance requirements firsthand — directly shaped VCAP coaching logic</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-dates">2019 — 2025</div>
+      <div class="tl-role">Regional Director of Sales</div>
+      <div class="tl-company">Trusted Medical Group</div>
+      <div class="tl-desc">Built proprietary enrollment platform and logistics infrastructure. In 2022, led a team of 6 people to 1,837 fully compliant Medicare enrollments in under one year — zero AI, zero compliance failures.</div>
+      <ul class="tl-bullets">
+        <li>Built platform and relationships generating <strong>$1M+ revenue in first 6 months</strong></li>
+        <li><strong>1,837 compliant enrollments</strong> with 6 people, zero AI, zero CMS violations</li>
+        <li>FMO relationships and carrier contracts across Medicare Advantage and Supplement lines</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-dates">2016 — 2019</div>
+      <div class="tl-role">Medicare Sales &amp; FMO Development</div>
+      <div class="tl-company">Trusted Medical Group</div>
+      <div class="tl-desc">Built FMO relationships, carrier contracts, and agent infrastructure across Medicare Advantage and Supplement lines — the foundation that enabled every result that followed.</div>
+    </div>
+  </div>
+</div>
+
+<!-- STACK -->
+
+<div class="section-wrap" id="stack" style="padding-top:0">
+  <div class="sec-label">Tech Stack</div>
+  <div class="sec-title">What I Work With</div>
+  <div class="sec-desc" style="margin-bottom:32px">The tools and platforms I use to design, build, and deploy AI systems in production environments.</div>
+  <div class="stack-groups">
+    <div class="stack-group">
+      <h4>AI / LLMs</h4>
+      <div class="stack-pills">
+        <span class="pill">Claude API</span><span class="pill">OpenAI API</span><span class="pill">GPT-4o</span><span class="pill">Claude Sonnet</span><span class="pill">Prompt Engineering</span><span class="pill">MCP Servers</span><span class="pill">Tool-Calling</span><span class="pill">RAG</span>
+      </div>
+    </div>
+    <div class="stack-group">
+      <h4>Automation</h4>
+      <div class="stack-pills">
+        <span class="pill">n8n</span><span class="pill">Make (Integromat)</span><span class="pill">Zapier</span><span class="pill">Webhooks</span><span class="pill">REST APIs</span><span class="pill">Google Apps Script</span>
+      </div>
+    </div>
+    <div class="stack-group">
+      <h4>Platforms & Integrations</h4>
+      <div class="stack-pills">
+        <span class="pill">Slack API</span><span class="pill">Google APIs</span><span class="pill">Chrome Extensions</span><span class="pill">HubSpot</span><span class="pill">DocuSign</span><span class="pill">Twilio</span>
+      </div>
+    </div>
+    <div class="stack-group">
+      <h4>Build & Deploy</h4>
+      <div class="stack-pills">
+        <span class="pill">HTML / CSS / JS</span><span class="pill">Node.js</span><span class="pill">Python</span><span class="pill">GitHub</span><span class="pill">Netlify</span><span class="pill">SQLite</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+
+<div class="section-wrap" id="projects" style="padding-top:0">
+  <div class="sec-label">Built &amp; Shipped</div>
+  <div class="sec-title">Projects</div>
+  <div class="sec-desc" style="margin-bottom:32px">A track record of building real products — not prototypes.</div>
+  <div class="projects-grid">
+    <div class="proj-card featured">
+      <div>
+        <div class="proj-header">
+          <div class="proj-name">CCM Platform — Enrollment Core + VCAP</div>
+          <span class="proj-badge badge-live">Live</span>
+        </div>
+        <div class="proj-role">Founder &amp; Architect · Complete Care Marketing Inc.</div>
+        <div class="proj-desc">3-tier AI operations platform for regulated Medicare telesales. Workflow automation, AI-powered compliance review, real-time agent coaching, Chrome tooling, Slack webhooks, and document pipelines — built solo from the ground up.</div>
+        <div class="proj-tags">
+          <span class="tag-pill">Claude API</span><span class="tag-pill">OpenAI</span><span class="tag-pill t">n8n</span><span class="tag-pill t">Chrome Ext.</span><span class="tag-pill a">Medicare CMS</span>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:2px;color:var(--blue);text-transform:uppercase;margin-bottom:12px">Key Outcomes</div>
+        <ul class="proj-bullets">
+          <li>Consolidated <strong>11 platforms into 1 screen</strong> — zero tab-switching on calls</li>
+          <li>Reduced agent training time by <strong>60–75%</strong></li>
+          <li>Structurally enforces CMS compliance — <strong>zero non-compliant enrollments</strong></li>
+          <li>4 VCA coach personas — agents pick and name their own AI coach</li>
+          <li><strong>$1M+ revenue</strong> in first 6 months with 6-person team</li>
+        </ul>
+      </div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-header">
+        <div class="proj-name">Six Pack Stacked Body</div>
+        <span class="proj-badge badge-pub">Publishing</span>
+      </div>
+      <div class="proj-role">Author · Fitness E-Book + App Bundle</div>
+      <div class="proj-desc">Fitness e-book and companion workout tracking app — sold as a Gumroad bundle. App includes workout logging, body stats, progress photos with before/after comparison, and weight chart.</div>
+      <div class="proj-tags" style="margin-top:12px">
+        <span class="tag-pill t">Gumroad</span><span class="tag-pill">HTML App</span><span class="tag-pill a">LocalStorage</span>
+      </div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-header">
+        <div class="proj-name">SNG Technical E-Books</div>
+        <span class="proj-badge badge-pub">Publishing</span>
+      </div>
+      <div class="proj-role">Author · AI-Assisted Technical Writing · SNG Cycles</div>
+      <div class="proj-desc">Build guides for electric powersports enthusiasts — written with AI as co-author. Covers complete vehicle builds from frame selection through final tune.</div>
+      <div class="proj-tags" style="margin-top:12px">
+        <span class="tag-pill t">LBX Frame-Up</span><span class="tag-pill t">270-E Light Bee</span><span class="tag-pill a">CRF450 52kW</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="accent-bar"></div>
+
+<!-- EMAIL TEMPLATE -->
+<!-- FOOTER -->
+<footer>
+  <div style="display:flex;align-items:center;gap:12px">
+    <img src="jawsai911-logo-dark-nav.jpeg" class="footer-logo" alt="JAWSAI911">
+    <div>
+      <div style="font-size:13px;font-weight:800;color:var(--text)">JAWSAI911.com</div>
+      <div style="font-size:11px;color:var(--dim)">Bryan Jaworski © 2026 · South Florida</div>
+    </div>
+  </div>
+  <div class="footer-right">Built with AI · Royal Palm Beach, FL · Bryan@jawsai911.com</div>
+</footer>
+<script>
+const PORTAL_PASS = 'jawsai911';
+const CRM_URL = '/crm';
+const JOB_URL = '/jobs';
+function openPortal(e){if(e)e.preventDefault();document.getElementById('portal-overlay').classList.add('open');setTimeout(()=>document.getElementById('portal-pass').focus(),100)}
+function closePortal(){document.getElementById('portal-overlay').classList.remove('open');document.getElementById('portal-pass').value='';document.getElementById('portal-error').style.display='none'}
+function checkPortal(target){const v=document.getElementById('portal-pass').value;if(v===PORTAL_PASS){window.open(target||CRM_URL,'_blank');closePortal()}else{document.getElementById('portal-error').style.display='block';document.getElementById('portal-pass').value='';document.getElementById('portal-pass').focus()}}
+document.getElementById('portal-overlay').addEventListener('click',function(e){if(e.target===this)closePortal()});
+function copyTemplate(btn){const text=document.getElementById('email-template').innerText;const done=()=>{btn.textContent='✓ Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy Email';btn.classList.remove('copied')},2500)};if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(text).then(done).catch(()=>fallbackCopy(text,done));}else{fallbackCopy(text,done);}}
+function fallbackCopy(text,done){const t=document.createElement('textarea');t.value=text;t.setAttribute('readonly','');t.style.position='fixed';t.style.left='-9999px';document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);done();}
+</script>
+</body>
+</html>

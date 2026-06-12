@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JAWSAI911.com — Your AI Incident Command Center</title>
+<meta name="description" content="Bryan Jaworski — AI Systems Builder. AI operations, workflow automation, enrollment intelligence, and live AI coaching. jawsai911.com">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#000000;
+  --bg2:#060b14;
+  --bg3:#0a1120;
+  --s1:#0d1525;
+  --s2:#111f35;
+  --border:rgba(59,130,246,0.15);
+  --border2:rgba(59,130,246,0.35);
+  --blue:#3b82f6;
+  --blue2:#60a5fa;
+  --blue3:#93c5fd;
+  --sky:#38bdf8;
+  --teal:#2dd4bf;
+  --amber:#f59e0b;
+  --text:#eef2ff;
+  --muted:#7b8db0;
+  --dim:#3d4f6e;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',-apple-system,sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.6;overflow-x:hidden}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:linear-gradient(180deg,rgba(0,0,0,0.92),rgba(0,0,0,0.66));backdrop-filter:blur(10px);border-bottom:1px solid rgba(59,130,246,0.08);padding:18px 44px 14px 52px;min-height:122px;display:flex;align-items:flex-start;justify-content:space-between}
+.nav-logo-wrap{display:flex;align-items:flex-start;text-decoration:none}
+.nav-logo-img{width:330px;height:auto;max-height:98px;object-fit:contain;object-position:left top;mix-blend-mode:screen;filter:brightness(1.16) contrast(1.08) drop-shadow(0 0 18px rgba(56,189,248,0.2))}
+.nav-logo-text{display:none}
+.nav-links{display:flex;gap:48px;list-style:none;align-items:flex-start;margin-top:18px}
+.nav-links a{font-size:15px;font-weight:600;color:#f5f7fb;text-decoration:none;letter-spacing:0;transition:color 0.2s;text-transform:uppercase;position:relative}
+.nav-links a:hover,.nav-links a.active{color:#fff}
+.nav-links a.active{color:var(--blue2)}
+.nav-links a.active::after{content:'';position:absolute;left:0;right:0;bottom:-22px;height:2px;background:var(--sky);box-shadow:0 0 10px rgba(56,189,248,0.8)}
+.nav-right{display:flex;align-items:flex-start;gap:10px;margin-top:10px}
+.nav-cta{font-size:15px;font-weight:700;padding:15px 28px;border-radius:7px;background:rgba(3,11,24,0.45);color:#fff;text-decoration:none;letter-spacing:0;transition:all 0.2s;cursor:pointer;border:1px solid rgba(56,189,248,0.65);font-family:inherit;text-transform:uppercase;box-shadow:inset 0 0 18px rgba(59,130,246,0.16),0 0 18px rgba(59,130,246,0.12)}
+.nav-cta:hover{background:rgba(59,130,246,0.18);border-color:var(--sky)}
+
+/* ── PORTAL MODAL ── */
+.portal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.82);z-index:999;align-items:center;justify-content:center}
+.portal-overlay.open{display:flex}
+.portal-box{background:#0d1525;border:1px solid var(--border2);border-top:3px solid var(--blue);border-radius:10px;padding:36px 32px;width:360px;text-align:center}
+.portal-box h3{font-size:18px;font-weight:800;color:#fff;margin-bottom:6px}
+.portal-box p{font-size:13px;color:var(--muted);margin-bottom:22px}
+.portal-input{width:100%;background:#111f35;border:1px solid var(--border);color:#fff;padding:11px 14px;border-radius:5px;font-size:14px;font-family:inherit;outline:none;margin-bottom:12px;text-align:center;letter-spacing:3px}
+.portal-input:focus{border-color:var(--blue)}
+.portal-btn{width:100%;background:var(--blue);color:#fff;border:none;padding:12px;border-radius:5px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:10px}
+.portal-btn:hover{background:#2563eb}
+.portal-cancel{font-size:12px;color:var(--dim);cursor:pointer}
+.portal-cancel:hover{color:#fff}
+.portal-error{color:#f87171;font-size:12px;margin-bottom:10px;display:none}
+
+/* ── HERO ── */
+#hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;position:relative;overflow:hidden;background:#02050b;padding:128px 44px 28px}
+#hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 34%,rgba(0,84,202,0.32),transparent 34%),radial-gradient(ellipse at 14% 62%,rgba(0,106,255,0.24),transparent 31%),radial-gradient(ellipse at 86% 64%,rgba(0,106,255,0.2),transparent 32%),linear-gradient(180deg,rgba(0,0,0,0.1),rgba(0,0,0,0.28) 58%,rgba(0,0,0,0.86));z-index:0}
+#hero::after{content:'';position:absolute;left:0;right:0;bottom:160px;height:360px;background:
+radial-gradient(circle at 16% 54%,rgba(88,166,255,0.95) 0 1px,transparent 2px),
+radial-gradient(circle at 21% 38%,rgba(88,166,255,0.85) 0 1px,transparent 2px),
+radial-gradient(circle at 74% 42%,rgba(88,166,255,0.9) 0 1px,transparent 2px),
+radial-gradient(circle at 82% 60%,rgba(88,166,255,0.85) 0 1px,transparent 2px),
+radial-gradient(ellipse at 16% 56%,rgba(0,95,255,0.34),transparent 28%),
+radial-gradient(ellipse at 82% 56%,rgba(0,95,255,0.28),transparent 31%);
+background-size:42px 34px,52px 38px,44px 32px,56px 42px,100% 100%,100% 100%;opacity:.75;filter:drop-shadow(0 0 5px rgba(59,130,246,0.8));z-index:1}
+#hero-canvas{position:absolute;inset:0;width:100%;height:100%;opacity:0.42;z-index:1}
+.hero-content{position:relative;z-index:2;text-align:center;padding:12px 40px 0;display:flex;flex-direction:column;align-items:center;width:100%}
+.hero-logo-img{width:min(760px,64vw);max-width:90vw;mix-blend-mode:screen;filter:brightness(1.2) contrast(1.08) drop-shadow(0 0 40px rgba(59,130,246,0.62)) drop-shadow(0 0 85px rgba(56,189,248,0.24));margin:0 0 18px}
+.hero-headline{font-size:clamp(24px,2.7vw,39px);font-weight:900;color:#fff;letter-spacing:1px;text-transform:uppercase;margin-bottom:1px;line-height:1.15;text-shadow:0 0 18px rgba(255,255,255,0.18)}
+.hero-sub{font-size:clamp(16px,1.45vw,22px);color:#d7deeb;margin-bottom:32px;letter-spacing:0;line-height:1.35}
+.hero-btns{display:flex;gap:30px;flex-wrap:wrap;justify-content:center;margin-bottom:0}
+.btn-hero-primary{display:inline-flex;align-items:center;gap:13px;font-size:15px;font-weight:800;padding:16px 36px;border-radius:7px;background:linear-gradient(180deg,#0877ff,#0052dc);color:#fff;text-decoration:none;letter-spacing:0.2px;text-transform:uppercase;transition:background 0.2s,transform 0.15s;box-shadow:0 0 18px rgba(0,91,255,0.42)}
+.btn-hero-primary:hover{background:#0862f0;transform:translateY(-2px)}
+.btn-hero-ghost{display:inline-flex;align-items:center;gap:13px;font-size:15px;font-weight:700;padding:16px 36px;border-radius:7px;background:rgba(1,8,20,0.55);color:#fff;text-decoration:none;border:1px solid rgba(72,129,190,0.55);letter-spacing:0.2px;text-transform:uppercase;transition:all 0.2s}
+.btn-hero-ghost:hover{border-color:var(--blue);background:rgba(59,130,246,0.1)}
+.lead-form-card{position:relative;z-index:3;width:min(920px,100%);margin:30px auto 0;background:rgba(3,12,25,0.82);border:1px solid rgba(42,123,214,0.46);border-radius:14px;padding:18px;box-shadow:0 0 30px rgba(0,91,255,0.15),inset 0 0 26px rgba(10,68,140,0.18)}
+.lead-form-card h2{font-size:18px;color:#fff;text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px}
+.lead-form-card p{font-size:13px;color:#9fb2d0;margin-bottom:14px}
+.lead-form{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.lead-form input,.lead-form select,.lead-form textarea{width:100%;background:rgba(8,18,34,0.9);border:1px solid rgba(59,130,246,0.28);border-radius:7px;color:#fff;padding:11px 12px;font-family:inherit;font-size:13px;outline:none}
+.lead-form input:focus,.lead-form select:focus,.lead-form textarea:focus{border-color:var(--sky);box-shadow:0 0 0 2px rgba(56,189,248,0.08)}
+.lead-form select{cursor:pointer}
+.lead-form textarea{min-height:44px;resize:vertical}
+.lead-form .wide{grid-column:span 2}
+.lead-form .full{grid-column:1/4}
+.lead-form button{background:linear-gradient(180deg,#0877ff,#0052dc);color:#fff;border:none;border-radius:7px;font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;cursor:pointer}
+.lead-form button:hover{background:#0862f0}
+.form-status{font-size:12px;color:var(--teal);margin-top:10px;min-height:18px}
+
+/* ── FEATURE CARDS STRIP ── */
+.feature-strip{position:relative;z-index:2;width:100%;max-width:1390px;background:rgba(3,12,25,0.72);border:1px solid rgba(42,123,214,0.42);border-radius:16px;margin-top:42px;padding:0;box-shadow:0 0 38px rgba(0,91,255,0.16),inset 0 0 32px rgba(10,68,140,0.22);overflow:hidden}
+.feature-cards{display:grid;grid-template-columns:repeat(4,1fr);max-width:none;margin:0 auto}
+.fc{padding:28px 44px 30px;text-align:center;border-right:1px solid rgba(59,130,246,0.16);transition:background 0.2s;min-height:202px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
+.fc:last-child{border-right:none}
+.fc:hover{background:rgba(59,130,246,0.05)}
+.fc-icon{margin:0 auto 18px;width:72px;height:72px;display:flex;align-items:center;justify-content:center;opacity:0.95;filter:drop-shadow(0 0 14px rgba(56,189,248,0.34))}
+.fc-icon svg{width:66px;height:66px}
+.fc-title{font-size:17px;font-weight:800;letter-spacing:0.4px;text-transform:uppercase;color:#fff;margin-bottom:8px;line-height:1.25}
+.fc-desc{font-size:15px;color:#cbd5e1;line-height:1.48;max-width:250px}
+
+/* ── SHARED ── */
+.section-wrap{padding:80px 40px;max-width:1100px;margin:0 auto}
+.full-bleed{padding:80px 40px}
+.full-bleed .inner{max-width:1100px;margin:0 auto}
+.accent-bar{height:1px;background:linear-gradient(90deg,transparent,var(--blue),var(--sky),var(--blue),transparent)}
+.sec-label{font-size:10px;font-weight:800;letter-spacing:3px;color:var(--blue);text-transform:uppercase;margin-bottom:10px}
+.sec-title{font-size:clamp(26px,3.5vw,38px);font-weight:900;color:#fff;line-height:1.15;margin-bottom:14px}
+.sec-title em{color:var(--sky);font-style:italic}
+.sec-desc{font-size:15px;color:var(--muted);max-width:560px;line-height:1.75;margin-bottom:48px}
+
+/* ── WHAT I BUILD ── */
+.build-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.build-card{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:24px;transition:border-color 0.2s,transform 0.2s}
+.build-card:hover{border-color:var(--blue);transform:translateY(-3px)}
+.build-icon{width:44px;height:44px;border-radius:10px;background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.2);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:14px}
+.build-card h3{font-size:15px;font-weight:800;color:#fff;margin-bottom:8px}
+.build-card p{font-size:13px;color:var(--muted);line-height:1.65}
+.build-card .tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:14px}
+.tag-pill{font-size:10px;font-weight:600;padding:2px 9px;border-radius:4px;border:1px solid rgba(59,130,246,0.25);color:var(--blue2);background:rgba(59,130,246,0.06)}
+.tag-pill.t{border-color:rgba(45,212,191,0.25);color:var(--teal);background:rgba(45,212,191,0.06)}
+.tag-pill.a{border-color:rgba(245,158,11,0.25);color:var(--amber);background:rgba(245,158,11,0.06)}
+
+/* ── CCM PLATFORM ── */
+#ccm{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.ccm-hero{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;margin-bottom:64px}
+.ccm-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.25);color:var(--sky);padding:5px 14px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:22px}
+.ccm-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--sky);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.ccm-hero h2{font-size:clamp(28px,3.5vw,46px);font-weight:900;color:#fff;line-height:1.1;margin-bottom:18px}
+.ccm-hero h2 em{color:var(--sky);font-style:italic}
+.ccm-hero p{font-size:15px;color:var(--muted);line-height:1.8;margin-bottom:20px}
+.ccm-hero-cards{display:flex;flex-direction:column;gap:12px}
+.hcard{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:20px;transition:border-color 0.2s}
+.hcard:hover{border-color:var(--border2)}
+.hcard-label{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--sky);margin-bottom:6px}
+.hcard-title{font-size:14px;font-weight:700;color:#fff;margin-bottom:4px}
+.hcard-desc{font-size:12px;color:var(--muted);line-height:1.6}
+.ccm-stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.stat-box{background:rgba(59,130,246,0.06);border:1px solid rgba(59,130,246,0.18);border-radius:10px;padding:16px;text-align:center}
+.stat-num{font-size:18px;font-weight:800;color:var(--sky)}
+.stat-lbl{font-size:10px;color:rgba(255,255,255,0.6);margin-top:4px;line-height:1.4}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:48px}
+.pcard{background:var(--s1);border-radius:14px;padding:28px;border:1px solid var(--border);transition:all 0.3s;position:relative;overflow:hidden}
+.pcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--sky));opacity:0;transition:opacity 0.3s}
+.pcard:hover{border-color:var(--border2);transform:translateY(-3px)}
+.pcard:hover::before{opacity:1}
+.picon{width:44px;height:44px;border-radius:10px;margin-bottom:16px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.pcard h3{font-size:16px;font-weight:700;color:#fff;margin-bottom:8px}
+.pcard p{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:14px}
+.ptag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:4px;background:rgba(59,130,246,0.1);color:var(--sky);border:1px solid rgba(59,130,246,0.25)}
+
+/* VCA Coaches */
+.cgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:48px}
+.ccard{background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:24px;text-align:center;transition:all 0.25s}
+.ccard:hover{border-color:var(--border2);transform:translateY(-3px)}
+.cavatar{width:68px;height:68px;border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:26px;border:2px solid rgba(59,130,246,0.3);background:rgba(59,130,246,0.07)}
+.cname{font-size:16px;font-weight:700;color:#fff;margin-bottom:2px}
+.crole{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;color:var(--sky)}
+.cquote{font-size:11px;color:var(--muted);line-height:1.6;font-style:italic}
+
+/* ROI */
+.roi-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;margin-bottom:40px}
+.roi-nums{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.rbox{background:var(--s1);border-radius:12px;padding:22px;border:1px solid var(--border)}
+.rbox.hl{border-color:rgba(59,130,246,0.3);background:rgba(59,130,246,0.06)}
+.rnum{font-size:26px;font-weight:800;color:#fff}
+.rbox.hl .rnum{color:var(--sky)}
+.rlbl{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.5}
+.roi-quote-box{background:var(--s1);border-radius:14px;padding:36px;border:1px solid var(--border);position:relative;overflow:hidden}
+.roi-quote-box::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--blue),var(--sky))}
+.roi-qt{font-size:17px;color:#fff;line-height:1.65;margin-bottom:16px;font-style:italic}
+.roi-attr{font-size:11px;color:var(--sky);letter-spacing:1px;font-weight:600;text-transform:uppercase}
+.ccm-cta{text-align:center;padding:40px;background:var(--s1);border-radius:16px;border:1px solid var(--border)}
+.ccm-cta h3{font-size:22px;font-weight:900;color:#fff;margin-bottom:8px}
+.ccm-cta p{font-size:14px;color:var(--muted);margin-bottom:24px}
+
+/* ── RESULTS STRIP ── */
+#results{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:60px 40px}
+.results-inner{max-width:1100px;margin:0 auto}
+.results-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:24px}
+.result-item{text-align:center;padding:20px 16px}
+.result-item .big{font-size:36px;font-weight:900;color:var(--blue);line-height:1;margin-bottom:6px}
+.result-item .label{font-size:11px;font-weight:600;letter-spacing:1px;color:var(--blue3);text-transform:uppercase;line-height:1.4}
+
+/* ── TIMELINE ── */
+.timeline{position:relative}
+.timeline::before{content:'';position:absolute;left:0;top:8px;bottom:0;width:2px;background:linear-gradient(180deg,var(--blue),rgba(59,130,246,0.1))}
+.tl-item{padding:0 0 36px 28px;position:relative}
+.tl-dot{position:absolute;left:-5px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--blue);border:2px solid var(--bg);box-shadow:0 0 12px rgba(59,130,246,0.6)}
+.tl-dates{font-size:11px;font-weight:700;color:var(--teal);letter-spacing:0.5px;margin-bottom:3px}
+.tl-role{font-size:18px;font-weight:800;color:#fff;margin-bottom:3px}
+.tl-company{font-size:13px;font-weight:600;color:var(--amber);margin-bottom:10px}
+.tl-desc{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:10px}
+.tl-bullets{list-style:none}
+.tl-bullets li{font-size:13.5px;color:var(--text);padding:3px 0 3px 18px;position:relative;line-height:1.6}
+.tl-bullets li::before{content:'◆';color:var(--blue);font-size:7px;position:absolute;left:0;top:7px}
+.tl-bullets li strong{color:var(--blue2)}
+
+/* ── STACK ── */
+.stack-groups{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.stack-group{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:20px 22px}
+.stack-group h4{font-size:10px;font-weight:800;letter-spacing:2px;color:var(--blue);text-transform:uppercase;margin-bottom:12px;border-bottom:1px solid var(--border);padding-bottom:8px}
+.stack-pills{display:flex;flex-wrap:wrap;gap:7px}
+.pill{font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;border:1px solid var(--border);color:var(--text);background:rgba(255,255,255,0.03)}
+
+/* ── PROJECTS ── */
+.projects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.proj-card{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:24px;transition:border-color 0.2s}
+.proj-card:hover{border-color:var(--blue)}
+.proj-card.featured{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.proj-card.featured .proj-bullets{list-style:none;margin-top:10px}
+.proj-card.featured .proj-bullets li{font-size:13.5px;color:var(--text);padding:4px 0 4px 18px;position:relative;line-height:1.6;border-bottom:1px solid var(--border)}
+.proj-card.featured .proj-bullets li:last-child{border-bottom:none}
+.proj-card.featured .proj-bullets li::before{content:'◆';color:var(--blue);font-size:7px;position:absolute;left:0;top:8px}
+.proj-card.featured .proj-bullets li strong{color:var(--blue2)}
+.proj-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.proj-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.proj-name{font-size:17px;font-weight:800;color:#fff}
+.proj-badge{font-size:9px;font-weight:800;letter-spacing:1.5px;padding:3px 9px;border-radius:20px;text-transform:uppercase}
+.badge-live{background:rgba(45,212,191,0.1);border:1px solid rgba(45,212,191,0.3);color:var(--teal)}
+.badge-built{background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);color:var(--blue2)}
+.badge-pub{background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);color:var(--amber)}
+.proj-role{font-size:11px;font-weight:700;letter-spacing:1px;color:var(--blue2);text-transform:uppercase;margin-bottom:10px}
+.proj-desc{font-size:13.5px;color:var(--muted);line-height:1.65}
+
+/* ── EMAIL TEMPLATE ── */
+.template-box{background:var(--s1);border:1px solid var(--border);border-radius:8px;overflow:hidden;max-width:680px;margin:0 auto}
+.template-header{background:#0a1120;border-bottom:1px solid var(--border);padding:12px 20px;display:flex;justify-content:space-between;align-items:center}
+.template-header-left{font-size:12px;color:var(--muted)}
+.template-header-left strong{color:#fff}
+.copy-btn{background:var(--blue);color:#fff;border:none;padding:6px 16px;border-radius:4px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:opacity 0.2s}
+.copy-btn:hover{opacity:0.85}
+.copy-btn.copied{background:#16a34a}
+.template-body{padding:24px 28px}
+.template-subject{font-size:13px;color:var(--muted);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.template-subject strong{color:#fff}
+.template-text{font-size:14px;color:var(--muted);line-height:1.8;white-space:pre-wrap}
+
+/* ── CONTACT ── */
+#contact{background:var(--bg2);border-top:1px solid var(--border);padding:100px 40px;text-align:center;position:relative;overflow:hidden}
+#contact::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(59,130,246,0.08) 0%,transparent 60%)}
+.contact-inner{position:relative;max-width:600px;margin:0 auto}
+#contact h2{font-size:clamp(28px,4vw,42px);font-weight:900;color:#fff;margin-bottom:12px}
+#contact p{font-size:15px;color:var(--muted);margin-bottom:36px;line-height:1.6}
+.contact-links{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.cl{font-size:14px;font-weight:700;padding:13px 28px;border-radius:8px;text-decoration:none;transition:all 0.2s}
+.cl-primary{background:var(--blue);color:#fff}
+.cl-primary:hover{background:#2563eb;transform:translateY(-1px)}
+.cl-secondary{border:1px solid var(--border);color:var(--text);background:rgba(255,255,255,0.03)}
+.cl-secondary:hover{border-color:var(--blue)}
+.cl-demo{background:rgba(56,189,248,0.1);border:1px solid rgba(56,189,248,0.3);color:var(--sky)}
+.cl-demo:hover{background:rgba(56,189,248,0.18)}
+
+/* ── FOOTER ── */
+footer{background:#000;border-top:1px solid rgba(59,130,246,0.12);padding:24px 40px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--dim);flex-wrap:wrap;gap:10px}
+.footer-logo{height:32px;mix-blend-mode:screen;opacity:0.85}
+.footer-right{font-size:11px;color:var(--dim)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  nav{padding:12px 18px;min-height:80px;align-items:center}
+  .nav-logo-img{width:190px;max-height:62px}
+  .nav-links{display:none}
+  .nav-right{margin-top:0}
+  .nav-cta{font-size:11px;padding:10px 12px}
+  #hero{padding:96px 16px 24px;min-height:auto}
+  .hero-logo-img{width:min(540px,94vw)}
+  .hero-content{padding:8px 0 0}
+  .hero-btns{gap:12px}
+  .btn-hero-primary,.btn-hero-ghost{font-size:12px;padding:13px 18px}
+  .lead-form{grid-template-columns:1fr 1fr}
+  .lead-form .wide,.lead-form .full{grid-column:1/-1}
+  .lead-form button{min-height:42px}
+  .feature-strip{margin-top:30px;border-radius:12px}
+  .section-wrap{padding:60px 20px}
+  .full-bleed{padding:60px 20px}
+  .build-grid,.pgrid{grid-template-columns:1fr}
+  .ccm-hero,.roi-grid{grid-template-columns:1fr}
+  .cgrid{grid-template-columns:1fr 1fr}
+  .results-grid{grid-template-columns:repeat(2,1fr)}
+  .stack-groups{grid-template-columns:1fr}
+  .projects-grid{grid-template-columns:1fr}
+  .proj-card.featured{grid-template-columns:1fr}
+  .feature-cards{grid-template-columns:1fr 1fr}
+  .fc{border-right:none;border-bottom:1px solid rgba(59,130,246,0.1);padding:24px 18px;min-height:190px}
+  .fc:nth-child(odd){border-right:1px solid rgba(59,130,246,0.1)}
+  .fc-icon{width:58px;height:58px}
+  .fc-icon svg{width:54px;height:54px}
+  .fc-title{font-size:13px}
+  .fc-desc{font-size:12.5px}
+  footer{flex-direction:column;text-align:center}
+}
+@media(max-width:560px){
+  .nav-cta{display:none}
+  .lead-form{grid-template-columns:1fr}
+  .lead-form .wide,.lead-form .full{grid-column:1}
+  .feature-cards{grid-template-columns:1fr}
+  .fc:nth-child(odd){border-right:none}
+}
+</style>
+</head>
+<body>
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo-wrap">
+    <img src="jawsai911-logo-dark-nav.jpeg" class="nav-logo-img" alt="JAWSAI911">
+    <div class="nav-logo-text">
+      <div class="nav-logo-name">JAWS<span>AI</span>911</div>
+      <div class="nav-logo-sub">AI Incident Command Center</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="solutions.html">Solutions</a></li>
+    <li><a href="platform.html">Platform</a></li>
+    <li><a href="resources.html">Resources</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="contact.html#demo-form" class="nav-cta">Workflow Review</a>
+  </div>
+</nav>
+<!-- PORTAL MODAL -->
+<div class="portal-overlay" id="portal-overlay">
+  <div class="portal-box">
+    <h3>JAWSAI911 Portal</h3>
+    <p>Enter your access code to open the CRM dashboard.</p>
+    <input type="password" class="portal-input" id="portal-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter') checkPortal()">
+    <div class="portal-error" id="portal-error">Incorrect code. Try again.</div>
+    <button class="portal-btn" onclick="checkPortal()">Enter Portal →</button>
+    <button class="portal-btn" style="background:rgba(56,189,248,0.12);border:1px solid rgba(56,189,248,0.35);color:var(--sky)" onclick="checkPortal(JOB_URL)">Open Job Tracker →</button>
+    <div class="portal-cancel" onclick="closePortal()">Cancel</div>
+  </div>
+</div>
+
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-content">
+    <img src="jawsai911-logo-dark-hero.jpeg" class="hero-logo-img" alt="JAWSAI911.com — Your AI Incident Command Center">
+    <h1 class="hero-headline">When Seconds Matter, Intelligence Leads.</h1>
+    <div class="hero-sub">AI workflow automation for local businesses, regulated teams, and high-volume operators.</div>
+    <p style="max-width:760px;color:#aebbd3;font-size:15px;line-height:1.55;margin:0 auto 26px">
+      JAWSAI911 helps law firms, clinics, dealerships, property managers, agencies, and enrollment teams turn repetitive intake,
+      scheduling, follow-up, reporting, and compliance work into practical AI systems.
+    </p>
+    <div class="hero-btns">
+      <a href="platform.html" class="btn-hero-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        Explore Platform
+      </a>
+      <a href="contact.html#demo-form" class="btn-hero-ghost">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Book 10-Min Review
+      </a>
+    </div>
+  </div>
+
+  <!-- 4 Feature Cards -->
+  <div class="feature-strip">
+    <div class="feature-cards">
+      <div class="fc" onclick="location.href='medicare-enrollment.html'">
+        <div class="fc-icon">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="32" cy="20" r="10" stroke="#38bdf8" stroke-width="2"/>
+            <path d="M20 42c0-6.627 5.373-12 12-12s12 5.373 12 12" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"/>
+            <path d="M12 28c0-3.314 2.686-6 6-6" stroke="#60a5fa" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M52 28c0-3.314-2.686-6-6-6" stroke="#60a5fa" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="32" cy="20" r="4" fill="#38bdf8" opacity="0.4"/>
+            <line x1="26" y1="14" x2="22" y2="10" stroke="#38bdf8" stroke-width="1.5"/>
+            <line x1="38" y1="14" x2="42" y2="10" stroke="#38bdf8" stroke-width="1.5"/>
+            <line x1="32" y1="10" x2="32" y2="6" stroke="#38bdf8" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="fc-title">AI Intake Systems</div>
+        <div class="fc-desc">Capture web, phone, and form inquiries, qualify them, and route the right next step automatically.</div>
+      </div>
+      <div class="fc" onclick="location.href='platform.html'">
+        <div class="fc-icon">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="32" cy="32" r="20" stroke="#38bdf8" stroke-width="2"/>
+            <circle cx="32" cy="32" r="13" stroke="#60a5fa" stroke-width="1.5"/>
+            <circle cx="32" cy="32" r="6" stroke="#3b82f6" stroke-width="1.5"/>
+            <circle cx="32" cy="32" r="2" fill="#38bdf8"/>
+            <line x1="32" y1="12" x2="32" y2="20" stroke="#38bdf8" stroke-width="2"/>
+            <line x1="44" y1="20" x2="38" y2="26" stroke="#60a5fa" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="fc-title">Scheduling + Follow-Up</div>
+        <div class="fc-desc">Reduce missed opportunities with faster replies, reminders, and simple customer handoffs.</div>
+      </div>
+      <div class="fc" onclick="location.href='platform.html'">
+        <div class="fc-icon">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M32 8 L54 16 L54 34 C54 46 43 54 32 58 C21 54 10 46 10 34 L10 16 Z" stroke="#38bdf8" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M22 32 L28 38 L42 26" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M32 8 L54 16 L54 34 C54 46 43 54 32 58 C21 54 10 46 10 34 L10 16 Z" fill="rgba(56,189,248,0.05)"/>
+          </svg>
+        </div>
+        <div class="fc-title">Workflow Automation</div>
+        <div class="fc-desc">Connect CRM, email, documents, and internal tools so staff can stop repeating the same tasks.</div>
+      </div>
+      <div class="fc" onclick="location.href='about.html'">
+        <div class="fc-icon">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="22" cy="22" r="8" stroke="#38bdf8" stroke-width="2"/>
+            <circle cx="42" cy="22" r="8" stroke="#60a5fa" stroke-width="2"/>
+            <path d="M10 46c0-6.627 5.373-12 12-12s12 5.373 12 12" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"/>
+            <path d="M30 46c0-6.627 5.373-12 12-12s12 5.373 12 12" stroke="#60a5fa" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="fc-title">Dashboards + Reporting</div>
+        <div class="fc-desc">See leads, tasks, compliance gaps, and follow-ups in one practical operating view.</div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- FOOTER -->
+<footer>
+  <div style="display:flex;align-items:center;gap:12px">
+    <img src="jawsai911-logo-dark-nav.jpeg" class="footer-logo" alt="JAWSAI911">
+    <div>
+      <div style="font-size:13px;font-weight:800;color:var(--text)">JAWSAI911.com</div>
+      <div style="font-size:11px;color:var(--dim)">Bryan Jaworski © 2026 · South Florida</div>
+    </div>
+  </div>
+  <div class="footer-right">Built with AI · Royal Palm Beach, FL · Bryan@jawsai911.com</div>
+</footer>
+<script>
+const PORTAL_PASS = 'jawsai911';
+const CRM_URL = '/crm';
+const JOB_URL = '/jobs';
+function openPortal(e){if(e)e.preventDefault();document.getElementById('portal-overlay').classList.add('open');setTimeout(()=>document.getElementById('portal-pass').focus(),100)}
+function closePortal(){document.getElementById('portal-overlay').classList.remove('open');document.getElementById('portal-pass').value='';document.getElementById('portal-error').style.display='none'}
+function checkPortal(target){const v=document.getElementById('portal-pass').value;if(v===PORTAL_PASS){window.open(target||CRM_URL,'_blank');closePortal()}else{document.getElementById('portal-error').style.display='block';document.getElementById('portal-pass').value='';document.getElementById('portal-pass').focus()}}
+document.getElementById('portal-overlay').addEventListener('click',function(e){if(e.target===this)closePortal()});
+function copyTemplate(btn){const text=document.getElementById('email-template').innerText;const done=()=>{btn.textContent='✓ Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy Email';btn.classList.remove('copied')},2500)};if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(text).then(done).catch(()=>fallbackCopy(text,done));}else{fallbackCopy(text,done);}}
+function fallbackCopy(text,done){const t=document.createElement('textarea');t.value=text;t.setAttribute('readonly','');t.style.position='fixed';t.style.left='-9999px';document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);done();}
+
+</script>
+<script>
+/* ── HERO CANVAS ANIMATION ── */
+(function(){
+  const canvas = document.getElementById('hero-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, nodes = [];
+  const COLORS = ['rgba(59,130,246,', 'rgba(56,189,248,', 'rgba(96,165,250,'];
+
+  function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight;init()}
+  window.addEventListener('resize', resize);
+
+  function init(){
+    nodes=[];
+    const count = Math.floor((W*H)/14000);
+    for(let i=0;i<count;i++){
+      nodes.push({
+        x:Math.random()*W, y:Math.random()*H,
+        vx:(Math.random()-0.5)*0.3, vy:(Math.random()-0.5)*0.3,
+        r:Math.random()*2+1,
+        c:COLORS[Math.floor(Math.random()*COLORS.length)],
+        o:Math.random()*0.5+0.2
+      });
+    }
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    // Globe glow blobs
+    const g1=ctx.createRadialGradient(W*0.25,H*0.5,0,W*0.25,H*0.5,W*0.35);
+    g1.addColorStop(0,'rgba(30,58,138,0.18)');g1.addColorStop(1,'transparent');
+    ctx.fillStyle=g1;ctx.fillRect(0,0,W,H);
+    const g2=ctx.createRadialGradient(W*0.75,H*0.5,0,W*0.75,H*0.5,W*0.3);
+    g2.addColorStop(0,'rgba(23,37,90,0.12)');g2.addColorStop(1,'transparent');
+    ctx.fillStyle=g2;ctx.fillRect(0,0,W,H);
+
+    // Connections
+    for(let i=0;i<nodes.length;i++){
+      for(let j=i+1;j<nodes.length;j++){
+        const dx=nodes[i].x-nodes[j].x, dy=nodes[i].y-nodes[j].y;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<150){
+          const alpha=(1-dist/150)*0.25;
+          ctx.beginPath();ctx.moveTo(nodes[i].x,nodes[i].y);ctx.lineTo(nodes[j].x,nodes[j].y);
+          ctx.strokeStyle=`rgba(59,130,246,${alpha})`;ctx.lineWidth=0.8;ctx.stroke();
+        }
+      }
+    }
+    // Dots
+    nodes.forEach(n=>{
+      ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+      ctx.fillStyle=n.c+n.o+')';ctx.fill();
+      n.x+=n.vx;n.y+=n.vy;
+      if(n.x<0||n.x>W)n.vx*=-1;
+      if(n.y<0||n.y>H)n.vy*=-1;
+    });
+    requestAnimationFrame(draw);
+  }
+
+  resize();
+  draw();
+})();
+</script>
+</body>
+</html>

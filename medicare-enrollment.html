@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Intelligent Medicare Enrollment System | JAWSAI911</title>
+<meta name="description" content="Intelligent Medicare Enrollment System by JAWSAI911. AI-assisted Medicare enrollment workflows, compliance, and agent support.">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#000;--bg2:#060b14;--s1:#0d1525;--border:rgba(59,130,246,.18);--border2:rgba(59,130,246,.38);
+  --blue:#3b82f6;--blue2:#60a5fa;--sky:#38bdf8;--text:#eef2ff;--muted:#8fa2c4;--dim:#4b5d7b
+}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',-apple-system,sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.6;overflow-x:hidden}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:linear-gradient(180deg,rgba(0,0,0,.92),rgba(0,0,0,.66));backdrop-filter:blur(10px);border-bottom:1px solid rgba(59,130,246,.08);padding:18px 44px 14px 52px;min-height:122px;display:flex;align-items:flex-start;justify-content:space-between}
+.nav-logo-wrap{display:flex;align-items:flex-start;text-decoration:none}
+.nav-logo-img{width:330px;height:auto;max-height:98px;object-fit:contain;object-position:left top;mix-blend-mode:screen;filter:brightness(1.16) contrast(1.08) drop-shadow(0 0 18px rgba(56,189,248,.2))}
+.nav-links{display:flex;gap:48px;list-style:none;align-items:flex-start;margin-top:18px}
+.nav-links a{font-size:15px;font-weight:600;color:#f5f7fb;text-decoration:none;text-transform:uppercase;position:relative}
+.nav-links a:hover,.nav-links a.active{color:var(--blue2)}
+.nav-links a.active::after{content:'';position:absolute;left:0;right:0;bottom:-22px;height:2px;background:var(--sky);box-shadow:0 0 10px rgba(56,189,248,.8)}
+.nav-right{display:flex;align-items:flex-start;gap:10px;margin-top:10px}
+.nav-cta{font-size:15px;font-weight:700;padding:15px 28px;border-radius:7px;background:rgba(3,11,24,.45);color:#fff;text-decoration:none;text-transform:uppercase;border:1px solid rgba(56,189,248,.65);box-shadow:inset 0 0 18px rgba(59,130,246,.16),0 0 18px rgba(59,130,246,.12)}
+.nav-cta:hover{background:rgba(59,130,246,.18);border-color:var(--sky)}
+.portal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:999;align-items:center;justify-content:center}
+.portal-overlay.open{display:flex}
+.portal-box{background:#0d1525;border:1px solid var(--border2);border-top:3px solid var(--blue);border-radius:10px;padding:36px 32px;width:360px;text-align:center}
+.portal-box h3{font-size:18px;font-weight:800;color:#fff;margin-bottom:6px}
+.portal-box p{font-size:13px;color:var(--muted);margin-bottom:22px}
+.portal-input{width:100%;background:#111f35;border:1px solid var(--border);color:#fff;padding:11px 14px;border-radius:5px;font-size:14px;font-family:inherit;outline:none;margin-bottom:12px;text-align:center;letter-spacing:3px}
+.portal-btn{width:100%;background:var(--blue);color:#fff;border:none;padding:12px;border-radius:5px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:10px}
+.portal-cancel{font-size:12px;color:var(--dim);cursor:pointer}
+.portal-error{color:#f87171;font-size:12px;margin-bottom:10px;display:none}
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;background:#02050b;padding:160px 44px 72px}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 34%,rgba(0,84,202,.32),transparent 34%),radial-gradient(ellipse at 14% 62%,rgba(0,106,255,.24),transparent 31%),radial-gradient(ellipse at 86% 64%,rgba(0,106,255,.2),transparent 32%),linear-gradient(180deg,rgba(0,0,0,.1),rgba(0,0,0,.28) 58%,rgba(0,0,0,.86));z-index:0}
+.hero::after{content:'';position:absolute;left:0;right:0;bottom:80px;height:360px;background:radial-gradient(circle at 16% 54%,rgba(88,166,255,.95) 0 1px,transparent 2px),radial-gradient(circle at 21% 38%,rgba(88,166,255,.85) 0 1px,transparent 2px),radial-gradient(circle at 74% 42%,rgba(88,166,255,.9) 0 1px,transparent 2px),radial-gradient(circle at 82% 60%,rgba(88,166,255,.85) 0 1px,transparent 2px),radial-gradient(ellipse at 16% 56%,rgba(0,95,255,.34),transparent 28%),radial-gradient(ellipse at 82% 56%,rgba(0,95,255,.28),transparent 31%);background-size:42px 34px,52px 38px,44px 32px,56px 42px,100% 100%,100% 100%;opacity:.75;filter:drop-shadow(0 0 5px rgba(59,130,246,.8));z-index:1}
+.hero-inner{position:relative;z-index:2;max-width:1120px;margin:0 auto;display:grid;grid-template-columns:1.05fr .95fr;gap:42px;align-items:center}
+.eyebrow{font-size:11px;font-weight:800;letter-spacing:3px;color:var(--sky);text-transform:uppercase;margin-bottom:14px}
+h1{font-size:clamp(34px,5vw,64px);font-weight:900;color:#fff;line-height:1.02;text-transform:uppercase;margin-bottom:18px;text-shadow:0 0 24px rgba(255,255,255,.14)}
+.lead{font-size:clamp(16px,1.5vw,21px);color:#d7deeb;line-height:1.55;margin-bottom:28px;max-width:680px}
+.cta-row{display:flex;gap:16px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;padding:15px 26px;border-radius:7px;text-decoration:none;text-transform:uppercase}
+.btn-primary{background:linear-gradient(180deg,#0877ff,#0052dc);color:#fff;box-shadow:0 0 18px rgba(0,91,255,.42)}
+.btn-ghost{background:rgba(1,8,20,.55);color:#fff;border:1px solid rgba(72,129,190,.55)}
+.panel{background:rgba(3,12,25,.76);border:1px solid rgba(42,123,214,.42);border-radius:16px;padding:28px;box-shadow:0 0 38px rgba(0,91,255,.16),inset 0 0 32px rgba(10,68,140,.22)}
+.panel h2{font-size:20px;color:#fff;text-transform:uppercase;margin-bottom:14px}
+.panel ul{list-style:none;display:grid;gap:12px}
+.panel li{font-size:14px;color:#cbd5e1;border-bottom:1px solid rgba(59,130,246,.14);padding-bottom:12px}
+.panel li:last-child{border-bottom:none;padding-bottom:0}
+.panel strong{color:var(--sky)}
+.section{padding:72px 40px;max-width:1120px;margin:0 auto}
+.section-title{font-size:32px;font-weight:900;color:#fff;text-transform:uppercase;margin-bottom:14px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px}
+.card{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:24px}
+.card h3{font-size:16px;color:#fff;margin-bottom:8px}
+.card p{font-size:14px;color:var(--muted)}
+footer{border-top:1px solid rgba(59,130,246,.12);padding:24px 52px;display:flex;justify-content:space-between;gap:20px;align-items:center;color:var(--dim);font-size:12px;background:#02050b}
+.footer-logo{width:78px;height:auto;mix-blend-mode:screen;filter:brightness(1.16) contrast(1.08)}
+@media(max-width:900px){nav{padding:14px 20px;min-height:86px}.nav-logo-img{width:210px}.nav-links{display:none}.nav-cta{padding:11px 14px;font-size:12px}.hero{padding:120px 22px 48px}.hero-inner{grid-template-columns:1fr}.cards{grid-template-columns:1fr}footer{padding:22px;flex-direction:column;align-items:flex-start}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo-wrap">
+    <img src="jawsai911-logo-dark-nav.jpeg" class="nav-logo-img" alt="JAWSAI911">
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="solutions.html" class="active">Solutions</a></li>
+    <li><a href="platform.html">Platform</a></li>
+    <li><a href="resources.html">Resources</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="contact.html#demo-form" class="nav-cta">Workflow Review</a>
+  </div>
+</nav>
+
+<div class="portal-overlay" id="portal-overlay">
+  <div class="portal-box">
+    <h3>JAWSAI911 Portal</h3>
+    <p>Enter your access code to open the CRM dashboard.</p>
+    <input type="password" class="portal-input" id="portal-pass" placeholder="password" onkeydown="if(event.key==='Enter') checkPortal()">
+    <div class="portal-error" id="portal-error">Incorrect code. Try again.</div>
+    <button class="portal-btn" onclick="checkPortal()">Enter Portal</button>
+    <button class="portal-btn" style="background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.35);color:var(--sky)" onclick="checkPortal(JOB_URL)">Open Job Tracker</button>
+    <div class="portal-cancel" onclick="closePortal()">Cancel</div>
+  </div>
+</div>
+
+<main>
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="eyebrow">AI-Powered Intelligence</div>
+        <h1>Intelligent Medicare Enrollment System</h1>
+        <p class="lead">A JAWSAI911 workflow system for Medicare enrollment teams that need faster intake, cleaner compliance, and real-time agent support without slowing the sales process down.</p>
+        <div class="cta-row">
+          <a href="contact.html#demo-form" class="btn btn-primary">Book 10-Min Review</a>
+          <a href="solutions.html" class="btn btn-ghost">View Solutions</a>
+        </div>
+      </div>
+      <div class="panel">
+        <h2>System Focus</h2>
+        <ul>
+          <li><strong>Enrollment guidance:</strong> AI-assisted scripts, answers, and workflow prompts for Medicare conversations.</li>
+          <li><strong>Compliance support:</strong> Structured checks for required disclosures, documentation, and call handling.</li>
+          <li><strong>CRM-ready records:</strong> Cleaner prospect, agent, activity, and follow-up tracking.</li>
+          <li><strong>Operational visibility:</strong> A command-center view for managers to see status, risk, and next actions.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">What It Connects</div>
+    <div class="section-title">Built for regulated Medicare sales workflows</div>
+    <p class="lead">The system is meant to connect the pieces that matter: lead intake, agent coaching, compliance review, CRM follow-up, and reporting.</p>
+    <div class="cards">
+      <div class="card"><h3>Agent Assist</h3><p>Surfaces the right enrollment and compliance guidance while the conversation is happening.</p></div>
+      <div class="card"><h3>Enrollment Workflow</h3><p>Tracks each prospect from first contact through follow-up, status updates, and next steps.</p></div>
+      <div class="card"><h3>Compliance Oversight</h3><p>Helps teams catch missing information and risky moments before they become bigger problems.</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">Automations We've Built</div>
+    <div class="section-title">Real automations already running</div>
+    <p class="lead">These aren't slideware. Each of these is a working automation built for live Medicare telesales operations — designed to remove busywork, protect compliance, and let agents stay on the phone.</p>
+    <div class="cards">
+      <div class="card"><h3>① Lead Intake &amp; Routing</h3><p>New leads are captured, de-duplicated, scored, and routed to the right agent automatically — no manual list-pulling or copy-paste between systems.</p></div>
+      <div class="card"><h3>② Real-Time Agent Assist</h3><p>AI listens to the conversation and surfaces the right plan details, rebuttals, and next questions on screen, live, without the prospect ever knowing.</p></div>
+      <div class="card"><h3>③ Compliance Disclosure Checks</h3><p>Required CMS disclosures, scope-of-appointment, and recording prompts are tracked in real time, flagging gaps before the call ends.</p></div>
+      <div class="card"><h3>④ Auto Call Summaries → CRM</h3><p>Every call is transcribed, summarized, and logged to the prospect's record with outcome, objections, and next steps — written for you.</p></div>
+      <div class="card"><h3>⑤ Follow-Up &amp; Reminder Engine</h3><p>Callbacks, SEP/AEP deadlines, and follow-ups are scheduled automatically and pushed to agents so no enrollment window gets missed.</p></div>
+      <div class="card"><h3>⑥ Manager Command Center</h3><p>Live dashboards roll up pipeline, agent activity, compliance risk, and conversion so managers see status and act in one view.</p></div>
+    </div>
+    <div class="cta-row" style="margin-top:34px">
+      <a href="contact.html#demo-form" class="btn btn-primary">Schedule a Demo</a>
+      <a href="solutions.html" class="btn btn-ghost">See All Solutions</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div style="display:flex;align-items:center;gap:12px">
+    <img src="jawsai911-logo-dark-nav.jpeg" class="footer-logo" alt="JAWSAI911">
+    <div>
+      <div style="font-size:13px;font-weight:800;color:var(--text)">JAWSAI911.com</div>
+      <div style="font-size:11px;color:var(--dim)">Bryan Jaworski 2026 · South Florida</div>
+    </div>
+  </div>
+  <div>Built with AI · Royal Palm Beach, FL · Bryan@jawsai911.com</div>
+</footer>
+
+<script>
+const PORTAL_PASS='jawsai911';
+const CRM_URL='/crm';
+const JOB_URL='/jobs';
+function openPortal(e){if(e)e.preventDefault();document.getElementById('portal-overlay').classList.add('open');setTimeout(()=>document.getElementById('portal-pass').focus(),100)}
+function closePortal(){document.getElementById('portal-overlay').classList.remove('open');document.getElementById('portal-pass').value='';document.getElementById('portal-error').style.display='none'}
+function checkPortal(target){const v=document.getElementById('portal-pass').value;if(v===PORTAL_PASS){window.open(target||CRM_URL,'_blank');closePortal()}else{document.getElementById('portal-error').style.display='block';document.getElementById('portal-pass').value='';document.getElementById('portal-pass').focus()}}
+document.getElementById('portal-overlay').addEventListener('click',function(e){if(e.target===this)closePortal()});
+</script>
+</body>
+</html>
