@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Command Center — JAWSAI911</title>
+<script>if(!sessionStorage.getItem('jaw_auth')){sessionStorage.setItem('jaw_return',location.href);location.href='login.html';}</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #000810;
+  color: #eef2ff;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── HEADER ── */
+.header {
+  background: #060a14;
+  border-bottom: 2px solid #3b82f6;
+  padding: 14px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.header-logo {
+  height: 38px;
+  display: block;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+.header-nav {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+.header-nav a {
+  font-size: 13px;
+  font-weight: 600;
+  color: #7b8db0;
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  transition: color 0.15s;
+}
+.header-nav a:hover { color: #38bdf8; }
+.header-nav a.logout { color: #f85149; }
+.header-nav a.logout:hover { color: #ff6b6b; }
+
+/* ── MAIN ── */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+}
+
+.greeting {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: #38bdf8;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  text-align: center;
+}
+.title {
+  font-size: 36px;
+  font-weight: 900;
+  color: #ffffff;
+  text-align: center;
+  letter-spacing: 0.5px;
+  margin-bottom: 48px;
+}
+.title span { color: #38bdf8; }
+
+/* ── APP CARDS ── */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  width: 100%;
+  max-width: 700px;
+}
+
+.app-card {
+  background: #060a14;
+  border: 1px solid rgba(59,130,246,0.25);
+  border-top: 3px solid #3b82f6;
+  border-radius: 10px;
+  padding: 36px 32px;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+  cursor: pointer;
+}
+.app-card:hover {
+  border-color: #38bdf8;
+  box-shadow: 0 0 40px rgba(56,189,248,0.12);
+  transform: translateY(-2px);
+}
+.app-card.crm { border-top-color: #38bdf8; }
+
+.card-icon {
+  font-size: 36px;
+  line-height: 1;
+}
+.card-title {
+  font-size: 20px;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 0.3px;
+}
+.card-desc {
+  font-size: 13px;
+  color: #7b8db0;
+  line-height: 1.6;
+}
+.card-arrow {
+  font-size: 13px;
+  font-weight: 700;
+  color: #3b82f6;
+  margin-top: 8px;
+  letter-spacing: 0.5px;
+}
+.app-card.crm .card-arrow { color: #38bdf8; }
+
+/* ── FOOTER ── */
+.footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 11px;
+  color: #2d3a50;
+  letter-spacing: 0.5px;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <img class="header-logo" src="jawsai911-logo-dark-hero.jpeg" alt="JAWSAI911">
+  <nav class="header-nav">
+    <a href="index.html">← Back to Site</a>
+    <a href="#" class="logout" onclick="sessionStorage.removeItem('jaw_auth');location.href='login.html';return false;">Logout</a>
+  </nav>
+</div>
+
+<div class="main">
+  <div class="greeting">Command Center</div>
+  <div class="title">What are we working on<span>?</span></div>
+
+  <div class="cards">
+    <a class="app-card" href="tracker.html">
+      <div class="card-icon">🎯</div>
+      <div class="card-title">Job Tracker</div>
+      <div class="card-desc">Track applications, interviews, and follow-ups across every role and pipeline stage.</div>
+      <div class="card-arrow">Open Tracker →</div>
+    </a>
+
+    <a class="app-card crm" href="crm.html">
+      <div class="card-icon">⚡</div>
+      <div class="card-title">AI Leads CRM</div>
+      <div class="card-desc">West Palm Beach region prospects, outreach priority, and lead pipeline management.</div>
+      <div class="card-arrow">Open CRM →</div>
+    </a>
+  </div>
+</div>
+
+<div class="footer">JAWSAI911.COM &nbsp;·&nbsp; COMMAND CENTER &nbsp;·&nbsp; 2026</div>
+
+</body>
+</html>

@@ -124,7 +124,7 @@ async function tryLogin() {
   const hash = await sha256(pw);
   if (hash === HASH) {
     sessionStorage.setItem('jaw_auth', 'ok');
-    const dest = sessionStorage.getItem('jaw_return') || 'tracker.html';
+    const dest = sessionStorage.getItem('jaw_return') || 'dashboard.html';
     sessionStorage.removeItem('jaw_return');
     location.href = dest;
   } else {
