@@ -607,6 +607,27 @@ let currentFilter = 'all';
 let currentCategory = 'all';
 let currentDetailId = null;
 
+// ── Resume / Cover Letter PDF map ─────────────────────
+const BASE = 'https://jawsai911.com/resumes/';
+const RESUME_MAP = {
+  'Arc.dev — Workflow Automation':          { r: 'Arc_Dev_Resume_Bryan_Jaworski.pdf',           c: 'Arc_Dev_Cover_Letter_Bryan_Jaworski.pdf' },
+  'Puffy (LinkedIn)':                       { r: 'Puffy_Resume_Bryan_Jaworski.pdf',              c: 'Puffy_Cover_Letter_Bryan_Jaworski.pdf' },
+  'Cognigy (NICE)':                         { r: 'Cognigy_Resume_Bryan_Jaworski.pdf',            c: 'Cognigy_Cover_Letter_Bryan_Jaworski.pdf' },
+  'Devoted Health':                         { r: 'Devoted_Health_Resume_Bryan_Jaworski.pdf',     c: 'Devoted_Health_Cover_Letter_Bryan_Jaworski.pdf' },
+  'Cognizant':                              { r: 'Cognizant_Resume_Bryan_Jaworski.pdf',          c: 'Cognizant_Cover_Letter_Bryan_Jaworski.pdf' },
+  'Cresta':                                 { r: 'Cresta_Resume_Bryan_Jaworski.pdf',             c: null },
+  'Indeed — AI Adoption Manager':           { r: 'Indeed_AI_Adoption_Resume_Bryan_Jaworski.pdf', c: 'Indeed_AI_Adoption_Cover_Letter_Bryan_Jaworski.pdf' },
+  'Indeed — AI Adoption Enablement':        { r: 'Indeed_AI_Adoption_Resume_Bryan_Jaworski.pdf', c: 'Indeed_AI_Adoption_Cover_Letter_Bryan_Jaworski.pdf' },
+  'Music AI':                               { r: 'Music_AI_Resume_Bryan_Jaworski.pdf',           c: 'Music_AI_Cover_Letter_Bryan_Jaworski.pdf' },
+  'Back At You':                            { r: 'Back_At_You_Resume_Bryan_Jaworski.pdf',        c: 'Back_At_You_Cover_Letter_Bryan_Jaworski.pdf' },
+  'Caul Group':                             { r: 'Caul_Group_Resume_Bryan_Jaworski.pdf',         c: 'Caul_Group_Cover_Letter_Bryan_Jaworski.pdf' },
+  'Designit':                               { r: 'Designit_Resume_Bryan_Jaworski.pdf',           c: 'Designit_Cover_Letter_Bryan_Jaworski.pdf' },
+  'HiCareer':                               { r: 'HiCareer_Resume_Bryan_Jaworski.pdf',           c: 'HiCareer_Cover_Letter_Bryan_Jaworski.pdf' },
+  'Huzzle':                                 { r: 'Huzzle_Resume_Bryan_Jaworski.pdf',             c: 'Huzzle_Cover_Letter_Bryan_Jaworski.pdf' },
+  'Ryz Labs':                               { r: 'Ryz_Labs_Resume_Bryan_Jaworski.pdf',           c: 'Ryz_Labs_Cover_Letter_Bryan_Jaworski.pdf' },
+  'phData':                                 { r: 'phData_Resume_Bryan_Jaworski.pdf',             c: 'phData_Cover_Letter_Bryan_Jaworski.pdf' },
+};
+
 // ── Seed data ─────────────────────────────────────────
 function seedIfEmpty() {
   if (load().length > 0) return;
@@ -1115,8 +1136,14 @@ function renderDetail(id) {
   const phoneHTML = c.phone ? `<div class="info-row"><span class="info-icon">📞</span><span class="info-val"><a href="tel:${esc(c.phone)}">${esc(c.phone)}</a></span></div>` : '';
   const contactHTML = c.contactName ? `<div class="info-row"><span class="info-icon">👤</span><span class="info-val">${esc(c.contactName)}</span></div>` : '';
   const notesHTML = c.notes ? `<div class="info-row" style="align-items:flex-start"><span class="info-icon">📝</span><span class="info-val" style="white-space:pre-wrap;font-size:13px;color:var(--muted)">${esc(c.notes)}</span></div>` : '';
+  const pdfs = RESUME_MAP[c.company] || (c.resume_url || c.cover_url ? { r: c.resume_url, c: c.cover_url } : null);
+  const pdfHTML = pdfs ? `<div class="info-row" style="gap:10px;flex-wrap:wrap;">
+    <span class="info-icon">📄</span>
+    ${pdfs.r ? `<a href="${BASE}${pdfs.r}" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background:rgba(57,208,178,0.12);border:1px solid rgba(57,208,178,0.3);color:var(--teal);font-size:12px;font-weight:700;padding:5px 12px;border-radius:20px;text-decoration:none;">📄 Resume</a>` : ''}
+    ${pdfs.c ? `<a href="${BASE}${pdfs.c}" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background:rgba(88,166,255,0.1);border:1px solid rgba(88,166,255,0.3);color:var(--blue);font-size:12px;font-weight:700;padding:5px 12px;border-radius:20px;text-decoration:none;">✉️ Cover Letter</a>` : ''}
+  </div>` : '';
 
-  const hasInfo = c.url || c.email || c.phone || c.contactName || c.notes;
+  const hasInfo = c.url || c.email || c.phone || c.contactName || c.notes || pdfs;
 
   document.getElementById('detail-modal-content').innerHTML = `
     <div class="modal-handle"></div>
@@ -1173,7 +1200,7 @@ function renderDetail(id) {
     ${hasInfo ? `
     <div class="contact-info-section">
       <h3>Info</h3>
-      ${contactHTML}${emailHTML}${phoneHTML}${urlHTML}${notesHTML}
+      ${pdfHTML}${contactHTML}${emailHTML}${phoneHTML}${urlHTML}${notesHTML}
     </div>` : ''}
 
     <div class="detail-actions">
