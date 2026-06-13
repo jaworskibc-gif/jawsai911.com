@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CCM Platform — Enrollment Intelligence & AI Coaching</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+body {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  background: #0a0d14;
+  color: #eef2ff;
+  width: 816px;
+  margin: 0 auto;
+  min-height: 1056px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── HEADER BAR ── */
+.header {
+  background: #060a14;
+  border-bottom: 3px solid #3b82f6;
+  padding: 14px 28px 13px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.header-left {}
+.doc-label {
+  font-size: 16px; font-weight: 800; color: #ffffff; letter-spacing: 0.2px;
+}
+.doc-sublabel {
+  font-size: 11px; font-weight: 600; color: #38bdf8; margin-top: 2px;
+}
+.doc-meta {
+  font-size: 9px; color: #4a5c7a; margin-top: 3px; letter-spacing: 0.3px;
+}
+.header-logo {
+  height: 44px; width: auto;
+  filter: brightness(1.1) drop-shadow(0 0 10px rgba(56,189,248,0.5));
+}
+
+/* ── BODY AREA ── */
+.content {
+  flex: 1;
+  padding: 28px 28px 22px;
+  background: #0a0d14;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-headline {
+  font-size: 26px; font-weight: 900; color: #ffffff; margin-bottom: 4px; letter-spacing: 0.3px; text-transform: uppercase;
+  text-shadow: 0 0 30px rgba(56,189,248,0.2);
+}
+.page-intro {
+  font-size: 11px; color: #8ba8cc; line-height: 1.6; margin-bottom: 14px; max-width: 700px;
+}
+
+/* ── IMPACT STRIP ── */
+.impact-strip {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 10px; margin-bottom: 16px;
+}
+.impact-item {
+  background: rgba(0,20,55,0.7);
+  border: 1px solid rgba(59,130,246,0.3);
+  border-top: 2px solid #3b82f6;
+  border-radius: 5px;
+  padding: 10px 12px 9px;
+  text-align: center;
+}
+.impact-num {
+  font-size: 20px; font-weight: 900; color: #38bdf8; line-height: 1; margin-bottom: 3px;
+  letter-spacing: -0.5px;
+}
+.impact-label {
+  font-size: 8px; font-weight: 700; color: #7b8db0; text-transform: uppercase; letter-spacing: 0.8px; line-height: 1.3;
+}
+
+/* ── THREE COLUMNS ── */
+.tiers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr;
+  gap: 16px;
+  flex: 1;
+  height: 610px;
+  align-items: stretch;
+}
+
+.tier { height: 100%; min-height: 610px; }
+
+.tier {
+  border: 1px solid rgba(59,130,246,0.3);
+  border-radius: 6px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.tier-hd {
+  padding: 16px 18px 14px;
+  border-bottom: 1px solid rgba(59,130,246,0.2);
+  background: rgba(0,20,50,0.6);
+}
+.tier-num {
+  font-size: 28px; font-weight: 900; color: #3b82f6; line-height: 1; margin-bottom: 6px;
+  letter-spacing: -0.5px;
+}
+.tier.t2 .tier-num { color: #38bdf8; }
+.tier.t3 .tier-num { color: #60a5fa; }
+
+.tier-name {
+  font-size: 15px; font-weight: 800; color: #ffffff; margin-bottom: 4px;
+}
+.tier-tag {
+  font-size: 10px; color: #7b8db0; line-height: 1.45;
+}
+
+.tier-body {
+  padding: 14px 18px 16px;
+  background: rgba(5,10,22,0.7);
+  flex: 1;
+}
+
+.bullet {
+  display: flex; align-items: flex-start; gap: 8px;
+  font-size: 11px; color: #c0ceea; line-height: 1.55; padding: 4px 0;
+}
+.bullet::before {
+  content: '✓'; color: #3b82f6; font-size: 10px; font-weight: 800;
+  flex-shrink: 0; margin-top: 1px;
+}
+.tier.t2 .bullet::before { color: #38bdf8; }
+.tier.t3 .bullet::before { color: #60a5fa; }
+.bullet.top { color: #eef2ff; font-weight: 600; }
+
+/* ── FOOTER BAND ── */
+.cta-bar {
+  background: #060a14;
+  border-top: 2px solid #3b82f6;
+  padding: 13px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.cta-label {
+  font-size: 14px; font-weight: 800; color: #ffffff;
+}
+.cta-contact {
+  font-size: 8.5px; color: #4a5c7a; letter-spacing: 0.3px; margin-top: 3px;
+}
+
+/* ── COPYRIGHT ── */
+.copyright {
+  background: #040710;
+  padding: 7px 28px;
+  font-size: 8px; color: #2d3a50; letter-spacing: 0.5px; text-align: center;
+  border-top: 1px solid rgba(59,130,246,0.08);
+}
+
+/* ── PRINT ── */
+@media screen {
+  html { background: #040710; }
+  body { zoom: 1.45; margin: 24px auto; box-shadow: 0 4px 60px rgba(0,0,0,0.8); }
+}
+@media print {
+  @page { size: letter; margin: 0; }
+  html { background: #0a0d14; }
+  body { zoom: 1.0; width: 816px; height: 1056px; margin: 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div class="doc-label">CCM Platform</div>
+    <div class="doc-sublabel">Enrollment Intelligence &amp; AI Coaching</div>
+    <div class="doc-meta">Complete Care Marketing Inc. &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; 2026</div>
+  </div>
+  <img class="header-logo" src="jawsai911-logo-dark-hero.jpeg" alt="JAWSAI911">
+</div>
+
+<div class="content">
+
+  <div class="page-headline">One Platform. Close More Deals. Zero Compliance Risk.</div>
+  <div class="page-intro">The CCM platform replaces 11 open apps with one screen — full compliance enforced, AI coaching live on every call, and agents producing faster than any other onboarding model in Medicare telesales.</div>
+
+  <div class="impact-strip">
+    <div class="impact-item">
+      <div class="impact-num">20–30%</div>
+      <div class="impact-label">Increase in Agent Production</div>
+    </div>
+    <div class="impact-item">
+      <div class="impact-num">Zero</div>
+      <div class="impact-label">High-Risk Compliance Calls — Structurally Impossible</div>
+    </div>
+    <div class="impact-item">
+      <div class="impact-num">11 → 1</div>
+      <div class="impact-label">Platforms Consolidated into One Screen</div>
+    </div>
+    <div class="impact-item">
+      <div class="impact-num">Week 2</div>
+      <div class="impact-label">Agents Closing — Not Week 5</div>
+    </div>
+  </div>
+
+  <div class="tiers">
+
+    <div class="tier t1">
+      <div class="tier-hd">
+        <div class="tier-num">01</div>
+        <div class="tier-name">CCM Core</div>
+        <div class="tier-tag">The full enrollment platform. One screen. Full stack.</div>
+      </div>
+      <div class="tier-body">
+        <div class="bullet">One unified screen — no more tab switching</div>
+        <div class="bullet">Doctor Finder — real-time in-network lookup</div>
+        <div class="bullet">Medication Finder — live formulary by plan</div>
+        <div class="bullet">Compliance Checklist — mandatory, enforced</div>
+        <div class="bullet">Scope of Coverage — built into every call</div>
+        <div class="bullet">Beneficiary e-sign enrollment link</div>
+        <div class="bullet">Chrome Autofill — Sunfire, TrueTrack, all carriers</div>
+        <div class="bullet">Manager Approval Queue with Slack alerts</div>
+        <div class="bullet">Auto-generated enrollment confirmation PDF</div>
+        <div class="bullet">Eliminates high-risk compliance calls</div>
+        <div class="bullet">Sunfire, TrueTrack, EnrollHere, MARx integrated</div>
+      </div>
+    </div>
+
+    <div class="tier t2">
+      <div class="tier-hd">
+        <div class="tier-num">02</div>
+        <div class="tier-name">Core + AI Review</div>
+        <div class="tier-tag">Post-call AI coaching. Improve every agent over time.</div>
+      </div>
+      <div class="tier-body">
+        <div class="bullet top">Everything in Core +</div>
+        <div class="bullet">AI reviews every completed call recording</div>
+        <div class="bullet">Post-call coaching notes for every agent</div>
+        <div class="bullet">Performance scoring after each enrollment</div>
+        <div class="bullet">Compliance analysis — flags missed disclosures</div>
+        <div class="bullet">Agent improvement reports over time</div>
+        <div class="bullet">Manager dashboard — full team analytics</div>
+        <div class="bullet">No live inference cost — uses existing recordings</div>
+      </div>
+    </div>
+
+    <div class="tier t3">
+      <div class="tier-hd">
+        <div class="tier-num">03</div>
+        <div class="tier-name">Core + VCAP Live</div>
+        <div class="tier-tag">Full platform. Live AI coaching. Close more deals now.</div>
+      </div>
+      <div class="tier-body">
+        <div class="bullet top">Everything in Core + AI Review +</div>
+        <div class="bullet">VCAP live on every call in real time</div>
+        <div class="bullet">Named personal VCA coach per agent</div>
+        <div class="bullet">In-ear guidance while agent is on the phone</div>
+        <div class="bullet">Live objection handling suggestions</div>
+        <div class="bullet">Real-time compliance alerts mid-call</div>
+        <div class="bullet">Live close rate coaching — helps agents close NOW</div>
+        <div class="bullet">VCA learns each agent's style over time</div>
+        <div class="bullet">Agent Onboard — new agents live in 3–5 days</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="cta-bar">
+  <div>
+    <div class="cta-label">Ready to see it live?</div>
+    <div class="cta-contact">Complete Care Marketing Inc. &nbsp;·&nbsp; completecaremarketinginc.com &nbsp;·&nbsp; 173 Saratoga Blvd W, Royal Palm Beach, FL 33411</div>
+  </div>
+</div>
+
+<div class="copyright">2026 © Complete Care Marketing Inc. &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; All Rights Reserved</div>
+
+</body>
+</html>

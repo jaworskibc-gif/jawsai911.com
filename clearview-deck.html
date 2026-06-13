@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Clearview — Enrollment Intelligence System</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+
+:root {
+  --bg: #000810;
+  --bg2: #060a14;
+  --blue: #3b82f6;
+  --sky: #38bdf8;
+  --text: #eef2ff;
+  --muted: #7b8db0;
+  --dim: #3d4f6e;
+  --border: rgba(59,130,246,0.25);
+}
+
+body { font-family:'Inter','Segoe UI',sans-serif; background:#000; color:var(--text); }
+
+/* ── PAGE SHELL ── */
+.page {
+  width: 816px;
+  height: 1056px;
+  margin: 0 auto;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  page-break-after: always;
+}
+.page:last-child { page-break-after: avoid; }
+
+/* ── SHARED HEADER ── */
+.pg-header {
+  background: var(--bg2);
+  border-bottom: 2px solid var(--blue);
+  padding: 12px 32px 11px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.pg-logo { height: 36px; filter: brightness(1.1) drop-shadow(0 0 8px rgba(56,189,248,0.5)); }
+.pg-header-right { text-align:right; }
+.pg-doc-name { font-size:10px; font-weight:700; color:var(--sky); letter-spacing:1.5px; text-transform:uppercase; }
+.pg-confidential { font-size:8px; color:var(--dim); margin-top:2px; letter-spacing:0.5px; }
+
+.accent-bar { height:3px; background:linear-gradient(90deg,#0052dc,#38bdf8 50%,#0052dc); box-shadow:0 0 10px rgba(56,189,248,0.5); flex-shrink:0; }
+
+/* ── SHARED FOOTER ── */
+.pg-footer {
+  background: #040710;
+  border-top: 1px solid rgba(59,130,246,0.12);
+  padding: 7px 32px;
+  display:flex; align-items:center; justify-content:space-between;
+  flex-shrink:0;
+}
+.pg-footer-text { font-size:7.5px; color:var(--dim); letter-spacing:0.5px; }
+.pg-num { font-size:9px; font-weight:700; color:var(--blue); }
+
+/* ── CONTENT AREA ── */
+.pg-body { flex:1; padding:32px 36px 24px; display:flex; flex-direction:column; overflow:hidden; }
+
+/* ── SECTION LABEL ── */
+.section-label {
+  font-size:9px; font-weight:800; letter-spacing:3px; color:var(--sky);
+  text-transform:uppercase; margin-bottom:10px;
+}
+
+/* ── PAGE TITLES ── */
+.pg-title {
+  font-size:32px; font-weight:900; color:#fff; letter-spacing:0.5px;
+  text-transform:uppercase; line-height:1.1; margin-bottom:8px;
+  text-shadow:0 0 30px rgba(56,189,248,0.2);
+}
+.pg-title span { color:var(--sky); }
+.pg-subtitle { font-size:13px; color:var(--muted); line-height:1.6; margin-bottom:24px; max-width:600px; }
+
+/* ── STAT CARDS ── */
+.stat-row { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:24px; }
+.stat-card {
+  background:rgba(0,20,55,0.7); border:1px solid var(--border);
+  border-top:2px solid var(--blue); border-radius:6px; padding:18px 16px;
+  text-align:center;
+}
+.stat-num { font-size:30px; font-weight:900; color:var(--sky); line-height:1; margin-bottom:5px; }
+.stat-label { font-size:9px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:1px; line-height:1.4; }
+.stat-sub { font-size:9px; color:var(--dim); margin-top:4px; line-height:1.4; }
+
+/* ── BODY TEXT ── */
+.body-text { font-size:12px; color:#a8b8d4; line-height:1.75; margin-bottom:16px; }
+.body-text strong { color:#fff; }
+
+/* ── FEATURE BLOCKS ── */
+.feature-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+.feature-block {
+  background:rgba(5,12,28,0.8); border:1px solid var(--border);
+  border-left:3px solid var(--blue); border-radius:0 6px 6px 0;
+  padding:14px 16px;
+}
+.feature-block.sky { border-left-color:var(--sky); }
+.fb-title { font-size:12px; font-weight:800; color:#fff; margin-bottom:5px; }
+.fb-body { font-size:10.5px; color:#8ba8cc; line-height:1.55; }
+
+/* ── BULLET LIST ── */
+.bullet-list { margin-top:8px; }
+.bl-item {
+  display:flex; align-items:flex-start; gap:8px;
+  font-size:11px; color:#c0ceea; line-height:1.55; padding:3.5px 0;
+}
+.bl-item::before { content:'◆'; color:var(--blue); font-size:6px; flex-shrink:0; margin-top:4px; }
+.bl-item.sky::before { color:var(--sky); }
+.bl-item strong { color:#fff; }
+
+/* ── STEP FLOW ── */
+.step-flow { display:flex; flex-direction:column; gap:12px; margin-top:8px; }
+.step {
+  display:flex; align-items:flex-start; gap:16px;
+  background:rgba(5,12,28,0.8); border:1px solid var(--border); border-radius:6px; padding:14px 18px;
+}
+.step-num {
+  font-size:24px; font-weight:900; color:var(--blue); line-height:1; flex-shrink:0; width:32px;
+}
+.step-content {}
+.step-title { font-size:12px; font-weight:800; color:#fff; margin-bottom:3px; }
+.step-body { font-size:10.5px; color:#8ba8cc; line-height:1.5; }
+
+/* ── ROI TABLE ── */
+.roi-table { width:100%; border-collapse:collapse; margin-top:12px; }
+.roi-table th {
+  background:rgba(0,20,55,0.8); color:var(--sky); font-size:9px; font-weight:800;
+  letter-spacing:1.5px; text-transform:uppercase; padding:9px 14px; text-align:left;
+  border-bottom:1px solid var(--border);
+}
+.roi-table td {
+  padding:9px 14px; font-size:10.5px; color:#c0ceea; border-bottom:1px solid rgba(59,130,246,0.08);
+}
+.roi-table tr:hover td { background:rgba(59,130,246,0.04); }
+.roi-table .td-amt { font-weight:800; color:#fff; text-align:right; }
+.roi-table tfoot td { background:rgba(0,20,55,0.6); font-weight:800; color:var(--sky); border-top:1px solid var(--border); }
+
+/* ── TIMELINE ── */
+.timeline { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-top:16px; }
+.tl-item {
+  background:rgba(5,12,28,0.8); border:1px solid var(--border);
+  border-top:2px solid var(--blue); border-radius:0 0 6px 6px; padding:12px 12px;
+  text-align:center;
+}
+.tl-day { font-size:11px; font-weight:800; color:var(--sky); margin-bottom:5px; }
+.tl-title { font-size:11px; font-weight:700; color:#fff; margin-bottom:4px; }
+.tl-body { font-size:9px; color:var(--muted); line-height:1.45; }
+
+/* ── COACH CARDS ── */
+.coach-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:16px; }
+.coach-card {
+  background:rgba(5,12,28,0.8); border:1px solid var(--border);
+  border-radius:8px; padding:20px 14px; text-align:center;
+}
+.coach-icon { font-size:36px; margin-bottom:12px; }
+.coach-name { font-size:16px; font-weight:900; color:#fff; margin-bottom:3px; }
+.coach-role { font-size:8.5px; font-weight:800; color:var(--sky); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:10px; }
+.coach-line { font-size:10px; color:#8ba8cc; line-height:1.5; font-style:italic; }
+
+/* ── PHASE CARDS ── */
+.phase-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:16px; }
+.phase-card {
+  background:rgba(5,12,28,0.8); border:1px solid var(--border);
+  border-top:2px solid var(--blue); border-radius:0 0 6px 6px; padding:14px 14px;
+}
+.phase-label { font-size:8px; font-weight:800; color:var(--sky); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:6px; }
+.phase-title { font-size:13px; font-weight:900; color:#fff; margin-bottom:6px; }
+.phase-body { font-size:10px; color:#8ba8cc; line-height:1.5; }
+
+/* ── HIGHLIGHT BOX ── */
+.highlight-box {
+  background:rgba(0,52,140,0.2); border:1px solid rgba(56,189,248,0.4);
+  border-radius:6px; padding:16px 20px; margin-top:16px;
+  font-size:13px; font-style:italic; color:#c8d8f0; line-height:1.65;
+}
+.highlight-box strong { color:#fff; font-style:normal; }
+
+/* ── TRANSITION PAGE ── */
+.page-transition { background:linear-gradient(160deg,#000d1f 0%,#001435 50%,#000d1f 100%); }
+.transition-body {
+  flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding:60px 80px;
+}
+.transition-whisper { font-size:14px; color:var(--muted); margin-bottom:18px; letter-spacing:1px; }
+.transition-headline { font-size:42px; font-weight:900; color:#fff; line-height:1.15; margin-bottom:16px; letter-spacing:0.5px; }
+.transition-headline span { color:var(--sky); }
+.transition-sub { font-size:14px; color:#8ba8cc; max-width:500px; line-height:1.7; }
+
+/* ── TWO-COL LAYOUT ── */
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.col-section { }
+.col-title { font-size:10px; font-weight:800; color:var(--sky); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:10px; padding-bottom:6px; border-bottom:1px solid var(--border); }
+
+/* ── COVER PAGE ── */
+.cover-body {
+  flex:1; display:flex; flex-direction:column; align-items:center; justify-content:space-between;
+  text-align:center; padding:44px 60px 36px; position:relative;
+}
+.cover-logo { height:120px; filter:brightness(1.15) drop-shadow(0 0 30px rgba(56,189,248,0.5)); }
+.cover-title { font-size:56px; font-weight:900; color:#fff; text-transform:uppercase; letter-spacing:2px; line-height:1.05; margin-bottom:10px; }
+.cover-title span { color:var(--sky); }
+.cover-sub { font-size:17px; font-weight:600; color:var(--sky); letter-spacing:3px; text-transform:uppercase; margin-bottom:20px; }
+.cover-divider { width:200px; height:2px; background:linear-gradient(90deg,transparent,var(--sky),transparent); margin:0 auto 20px; }
+.cover-by { font-size:11px; color:var(--muted); letter-spacing:1px; line-height:1.8; }
+
+/* ── SCREEN ── */
+@media screen {
+  body { background:#000; }
+  .page { margin:28px auto; box-shadow:0 0 60px rgba(0,84,202,0.25); }
+}
+
+/* ── PRINT ── */
+@media print {
+  @page { size:letter; margin:0; }
+  body { background:#000810; }
+  .page { margin:0 auto; box-shadow:none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE 1 — COVER
+═══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="pg-header">
+    <img class="pg-logo" src="jawsai911-logo-dark-hero.jpeg" alt="JAWSAI911">
+    <div class="pg-header-right">
+      <div class="pg-doc-name">Clearview — Enrollment Intelligence System</div>
+      <div class="pg-confidential">Complete Care Marketing Inc. &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; 2026</div>
+    </div>
+  </div>
+  <div class="accent-bar"></div>
+
+  <div class="cover-body">
+    <!-- top anchor: logo -->
+    <img class="cover-logo" src="jawsai911-logo-dark-hero.jpeg" alt="JAWSAI911">
+
+    <!-- center block: headline + stats -->
+    <div style="width:100%;text-align:center;">
+      <div class="cover-title">CLEARVIEW</div>
+      <div class="cover-sub" style="margin-bottom:18px;">Enrollment Intelligence System</div>
+      <div class="cover-divider" style="margin-bottom:18px;"></div>
+      <div style="font-size:22px;font-weight:900;color:#fff;margin-bottom:6px;letter-spacing:1px;">One App. One Screen. One Flow.</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:32px;">From first ring to signed confirmation — start to finish.</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;width:100%;">
+        <div style="background:rgba(0,20,55,0.7);border:1px solid var(--border);border-top:2px solid var(--blue);border-radius:5px;padding:14px 10px;text-align:center;">
+          <div style="font-size:22px;font-weight:900;color:var(--sky);line-height:1;margin-bottom:4px;">20–30%</div>
+          <div style="font-size:8px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;">Production Increase</div>
+        </div>
+        <div style="background:rgba(0,20,55,0.7);border:1px solid var(--border);border-top:2px solid var(--blue);border-radius:5px;padding:14px 10px;text-align:center;">
+          <div style="font-size:22px;font-weight:900;color:var(--sky);line-height:1;margin-bottom:4px;">Zero</div>
+          <div style="font-size:8px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;">High-Risk Compliance Calls</div>
+        </div>
+        <div style="background:rgba(0,20,55,0.7);border:1px solid var(--border);border-top:2px solid var(--blue);border-radius:5px;padding:14px 10px;text-align:center;">
+          <div style="font-size:22px;font-weight:900;color:var(--sky);line-height:1;margin-bottom:4px;">11 → 1</div>
+          <div style="font-size:8px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;">Platforms Consolidated</div>
+        </div>
+        <div style="background:rgba(0,20,55,0.7);border:1px solid var(--border);border-top:2px solid var(--blue);border-radius:5px;padding:14px 10px;text-align:center;">
+          <div style="font-size:22px;font-weight:900;color:var(--sky);line-height:1;margin-bottom:4px;">30 Days</div>
+          <div style="font-size:8px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;">Fully Live</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- bottom anchor: presenter info -->
+    <div class="cover-by">
+      Presented by Bryan Jaworski &nbsp;·&nbsp; Complete Care Marketing Inc.<br>
+      173 Saratoga Blvd W, Royal Palm Beach, FL 33411 &nbsp;·&nbsp; 2026 &nbsp;·&nbsp; Confidential
+    </div>
+  </div>
+
+  <div class="pg-footer">
+    <div class="pg-footer-text">Complete Care Marketing Inc. &nbsp;·&nbsp; Confidential</div>
+    <div class="pg-num">1 / 11</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE 2 — THE OPPORTUNITY
+═══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="pg-header">
+    <img class="pg-logo" src="jawsai911-logo-dark-hero.jpeg" alt="JAWSAI911">
+    <div class="pg-header-right">
+      <div class="pg-doc-name">Clearview — Enrollment Intelligence System</div>
+      <div class="pg-confidential">Complete Care Marketing Inc. &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; 2026</div>
+    </div>
+  </div>
+  <div class="accent-bar"></div>
+
+  <div class="pg-body">
+    <div class="section-label">The Opportunity</div>
+    <div class="pg-title">350 Agents.<br><span>Untapped Growth.</span></div>
+    <div class="pg-subtitle">An operation at your scale has everything it needs to accelerate significantly — the agents, the infrastructure, the carrier relationships. Clearview is the unified intelligence layer that unlocks what is already there.</div>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="stat-num">20–30%</div>
+        <div class="stat-label">Production Growth</div>
+        <div class="stat-sub">Projected increase in enrollment volume across your agent base within the first 12 months</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">+20 pts</div>
+        <div class="stat-label">QA Score Improvement</div>
+        <div class="stat-sub">Automated compliance guardrails and real-time guidance drive measurable QA gains</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">Zero</div>
+        <div class="stat-label">High-Risk Compliance Calls</div>
+        <div class="stat-sub">Structurally impossible — the platform enforces compliance, not just flags it</div>
+      </div>
+    </div>
+
+    <div class="body-text">
+      Your agents work hard. The problem isn't effort — it's infrastructure. Eleven open apps, manual tab switching, compliance risk on every call, and new hires taking weeks to get up to speed. <strong>Clearview eliminates all of it.</strong>
+    </div>
+    <div class="body-text">
+      One screen. Every system. Every call. From the moment a beneficiary picks up to the confirmation PDF — Clearview handles the flow so your agents can focus on one thing: <strong>closing the enrollment.</strong>
+    </div>
+  </div>
+
+  <div class="pg-footer">
+    <div class="pg-footer-text">Complete Care Marketing Inc. &nbsp;·&nbsp; Confidential</div>
+    <div class="pg-num">2 / 11</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE 3 — ONE APP. ONE SCREEN.
+═══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="pg-header">
+    <img class="pg-logo" src="jawsai911-logo-dark-hero.jpeg" alt="JAWSAI911">
+    <div class="pg-header-right">
+      <div class="pg-doc-name">Clearview — Enrollment Intelligence System</div>
+      <div class="pg-confidential">Complete Care Marketing Inc. &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; 2026</div>
+    </div>
+  </div>
+  <div class="accent-bar"></div>
+
+  <div class="pg-body">
+    <div class="section-label">The Platform</div>
+    <div class="pg-title">One App. One Screen.<br><span>One Flow.</span></div>
+    <div class="pg-subtitle">Your agents work across a complex stack every single day — enrollment portals, carrier systems, compliance references, and more. Clearview sits above all of it as a single unified intelligence layer.</div>
+
+    <div class="feature-grid">
+      <div class="feature-block sky">
+        <div class="fb-title">Unified Integration</div>
+        <div class="fb-body">Connects directly with EnrollHere, TrueTrack, MARX, Sunfire, SharePoint, UHone Portal, and carrier portals — pulling from every system in real time so agents never leave the screen.</div>
+      </div>
+      <div class="feature-block">
+        <div class="fb-title">Doctor &amp; Medication Finder</div>
+        <div class="fb-body">Real-time in-network doctor lookup and live formulary by plan — on the same screen, mid-call, without switching tabs or waiting for portals to load.</div>
+      </div>
+      <div class="feature-block">
+        <div class="fb-title">Chrome Autofill Engine</div>
+        <div class="fb-body">Automatically populates Sunfire, TrueTrack, and all carrier portals — eliminating manual data entry and the errors that come with it.</div>
+      </div>
+      <div class="feature-block sky">
+        <div class="fb-title">Beneficiary E-Sign Enrollment</div>
+        <div class="fb-body">Enrollment link generated and delivered to the beneficiary without leaving Clearview. Auto-generated confirmation PDF delivered on completion.</div>
+      </div>
+      <div class="feature-block">
+        <div class="fb-title">Manager Approval Queue</div>
+        <div class="fb-body">Slack-integrated approval workflow — managers review and approve flagged enrollments in real time without disrupting active agents.</div>
+      </div>
+      <div class="feature-block sky">
+        <div class="fb-title">11 Platforms → 1 Screen</div>
+        <div class="fb-body">Every system your operation runs on — consolidated into one interface. No context switching. No missed steps. No compliance gaps.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pg-footer">
+    <div class="pg-footer-text">Complete Care Marketing Inc. &nbsp;·&nbsp; Confidential</div>
+    <div class="pg-num">3 / 11</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE 4 — THE COMPLIANCE ENGINE
+═══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="pg-header">
+    <img class="pg-logo" src="jawsai911-logo-dark-hero.jpeg" alt="JAWSAI911">
+    <div class="pg-header-right">
+      <div class="pg-doc-name">Clearview — Enrollment Intelligence System</div>
+      <div class="pg-confidential">Complete Care Marketing Inc. &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; 2026</div>
+    </div>
+  </div>
+  <div class="accent-bar"></div>
+
+  <div class="pg-body">
+    <div class="section-label">Compliance Engine</div>
+    <div class="pg-title">Structurally Impossible<br><span>to Get Wrong.</span></div>
+    <div class="pg-subtitle">Clearview doesn't just flag compliance issues — it makes non-compliant enrollments structurally impossible. The system monitors every active call in real time and intervenes the moment a risk is detected.</div>
+
+    <div class="step-flow">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Risk Detected</div>
+          <div class="step-body">The system identifies a compliance scenario in real time during the live enrollment call — before the agent or manager would ever catch it manually.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Alert Fires — Enrollment Locked</div>
+          <div class="step-body">A visual alert appears immediately on the agent's screen. The enrollment is locked — the call cannot proceed until the issue is resolved. No override. No workaround.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Verbatim Displayed — Agent Guided</div>
+          <div class="step-body">The exact required language appears on screen. The agent reads it. The enrollment unlocks. Compliance is documented automatically. Zero manual effort from managers.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      "The compliance issue isn't that agents are careless. It's that no one built a system that makes doing it wrong <strong>impossible.</strong> Clearview is that system."
+    </div>
+  </div>
+
+  <div class="pg-footer">
+    <div class="pg-footer-text">Complete Care Marketing Inc. &nbsp;·&nbsp; Confidential</div>
+    <div class="pg-num">4 / 11</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE 5 — WHAT GROWTH LOOKS LIKE
+═══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="pg-header">
+    <img class="pg-logo" src="jawsai911-logo-dark-hero.jpeg" alt="JAWSAI911">
+    <div class="pg-header-right">
+      <div class="pg-doc-name">Clearview — Enrollment Intelligence System</div>
+      <div class="pg-confidential">Complete Care Marketing Inc. &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; 2026</div>
+    </div>
+  </div>
+  <div class="accent-bar"></div>
+
+  <div class="pg-body">
+    <div class="section-label">Revenue Impact</div>
+    <div class="pg-title">What Growth Actually<br><span>Looks Like.</span></div>
+    <div class="pg-subtitle">At 350 agents and an estimated $52M–$70M in annual production volume, here is what a 20–30% increase means in real dollars — and what Clearview makes possible.</div>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="stat-num">$10M–$14M</div>
+        <div class="stat-label">Additional Annual Revenue</div>
+        <div class="stat-sub">Conservative 20% growth projection</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">$16M–$21M</div>
+        <div class="stat-label">Additional Annual Revenue</div>
+        <div class="stat-sub">Full potential at 30% growth</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">Week 2</div>
+        <div class="stat-label">Agents Closing</div>
+        <div class="stat-sub">Not week 5 — Clearview Onboard cuts ramp time dramatically</div>
+      </div>
+    </div>
+
+    <div class="body-text">
+      These numbers are not projections built on hope. They are the direct result of removing the friction that currently exists in your operation: tab switching, compliance delays, manual data entry, and slow agent onboarding.
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature-block sky">
+        <div class="fb-title">Carrier Partner Growth</div>
+        <div class="fb-body">As performance improves, stronger carrier relationships follow — and new opportunities open. Better compliance metrics lead to better carrier standing across your book.</div>
+      </div>
+      <div class="feature-block">
+        <div class="fb-title">Zero Unbilled Enrollments</div>
+        <div class="fb-body">Every completed enrollment is confirmed, documented, and billed. The platform closes the loop automatically — no revenue leaks from incomplete or unbilled enrollments.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pg-footer">
+    <div class="pg-footer-text">Complete Care Marketing Inc. &nbsp;·&nbsp; Confidential</div>
+    <div class="pg-num">5 / 11</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE 6 — TRANSITION
+═══════════════════════════════════════════════════════════ -->
+<div class="page page-transition">
+  <div class="pg-header">
+    <img class="pg-logo" src="jawsai911-logo-dark-hero.jpeg" alt="JAWSAI911">
+    <div class="pg-header-right">
+      <div class="pg-doc-name">Clearview — Enrollment Intelligence System</div>
+      <div class="pg-confidential">Complete Care Marketing Inc. &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; 2026</div>
+    </div>
+  </div>
+  <div class="accent-bar"></div>
+
+  <div class="transition-body">
+    <div class="transition-whisper">Psst...</div>
+    <div class="transition-headline">You thought that<br>was <span>something?</span></div>
+    <div style="width:120px;height:2px;background:linear-gradient(90deg,transparent,var(--sky),transparent);margin:20px auto 24px;"></div>
+    <div class="transition-sub">Check this out.</div>
+    <div style="margin-top:40px;padding:20px 32px;background:rgba(0,20,55,0.5);border:1px solid rgba(56,189,248,0.25);border-radius:8px;max-width:500px;">
+      <div style="font-size:11px;font-weight:800;color:var(--sky);text-transform:uppercase;letter-spacing:2px;margin-bottom:10px;">What's Coming Next</div>
+      <div style="font-size:12px;color:#8ba8cc;line-height:1.7;">Meet the AI coaches that live inside Clearview — named, personalized, and on every call with your agents in real time. This is what closes the gap between your best agent and every agent.</div>
+    </div>
+    <div style="margin-top:32px;max-width:500px;text-align:left;">
+      <div style="font-size:9px;font-weight:800;color:var(--dim);text-transform:uppercase;letter-spacing:2px;margin-bottom:14px;">Three things CVC coaches do that nothing else can:</div>
+      <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:12px;">
+        <div style="color:var(--sky);font-size:8px;font-weight:900;margin-top:3px;flex-shrink:0;">◆</div>
+        <div style="font-size:12px;color:#c0ceea;line-height:1.6;">Give real-time in-ear guidance while agents are live on the phone — not after the call, <em>during it</em></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:12px;">
+        <div style="color:var(--sky);font-size:8px;font-weight:900;margin-top:3px;flex-shrink:0;">◆</div>
+        <div style="font-size:12px;color:#c0ceea;line-height:1.6;">Learn each agent's individual style, objection patterns, and close tendencies — and improve every call</div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:12px;">
+        <div style="color:var(--sky);font-size:8px;font-weight:900;margin-top:3px;flex-shrink:0;">◆</div>
+        <div style="font-size:12px;color:#c0ceea;line-height:1.6;">Close compliance gaps in real time — before the call ends, not flagged in a report two days later</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pg-footer">
+    <div class="pg-footer-text">Complete Care Marketing Inc. &nbsp;·&nbsp; Confidential</div>
+    <div class="pg-num">6 / 11</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE 7 — MEET YOUR CVC COACHES
+═══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="pg-header">
+    <img class="pg-logo" src="jawsai911-logo-dark-hero.jpeg" alt="JAWSAI911">
+    <div class="pg-header-right">
+      <div class="pg-doc-name">Clearview — Enrollment Intelligence System</div>
+      <div class="pg-confidential">Complete Care Marketing Inc. &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; 2026</div>
+    </div>
+  </div>
+  <div class="accent-bar"></div>
+
+  <div class="pg-body">
+    <div class="section-label">Clearview Virtual Coach</div>
+    <div class="pg-title">Meet Your<br><span>CVC Coaches.</span></div>
+    <div class="pg-subtitle">Every agent picks their coach on day one. Named by them. Theirs from day one. For their entire career. The coach learns their style, their objection patterns, and their close tendencies — and gets better every call.</div>
+
+    <div class="coach-grid">
+      <div class="coach-card">
+        <div class="coach-icon">🎯</div>
+        <div class="coach-name">Dale</div>
+        <div class="coach-role">The Closer</div>
+        <div class="coach-line">"Every call ends in a close. No exceptions."</div>
+      </div>
+      <div class="coach-card">
+        <div class="coach-icon">🌟</div>
+        <div class="coach-name">Donna</div>
+        <div class="coach-role">The Mentor</div>
+        <div class="coach-line">"Building something real — one call, one win at a time."</div>
+      </div>
+      <div class="coach-card">
+        <div class="coach-icon">🧠</div>
+        <div class="coach-name">Carrie</div>
+        <div class="coach-role">The Strategist</div>
+        <div class="coach-line">"Let's map this call out together — step by step."</div>
+      </div>
+      <div class="coach-card">
+        <div class="coach-icon">⚡</div>
+        <div class="coach-name">Sean</div>
+        <div class="coach-role">The Motivator</div>
+        <div class="coach-line">"You have everything you need. Let's go take some names."</div>
+      </div>
+    </div>
+
+    <div class="highlight-box" style="margin-top:20px;">
+      The coach is live on every call — in the agent's ear, in real time. Handling objections. Flagging compliance risks. Suggesting the close. The agent stays focused on the beneficiary. The AI handles everything else.
+    </div>
+  </div>
+
+  <div class="pg-footer">
+    <div class="pg-footer-text">Complete Care Marketing Inc. &nbsp;·&nbsp; Confidential</div>
+    <div class="pg-num">7 / 11</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE 8 — WHY CLEARVIEW CHANGES EVERYTHING
+═══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="pg-header">
+    <img class="pg-logo" src="jawsai911-logo-dark-hero.jpeg" alt="JAWSAI911">
+    <div class="pg-header-right">
+      <div class="pg-doc-name">Clearview — Enrollment Intelligence System</div>
+      <div class="pg-confidential">Complete Care Marketing Inc. &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; 2026</div>
+    </div>
+  </div>
+  <div class="accent-bar"></div>
+
+  <div class="pg-body">
+    <div class="section-label">Full Picture</div>
+    <div class="pg-title">Why Clearview<br><span>Changes Everything.</span></div>
+
+    <div class="two-col" style="margin-top:16px;gap:24px;">
+      <div>
+        <div class="col-title">The Numbers</div>
+        <div class="bullet-list">
+          <div class="bl-item"><strong>$10M–$21M</strong> projected revenue impact</div>
+          <div class="bl-item">Agents producing by <strong>week 2</strong>, not week 5</div>
+          <div class="bl-item"><strong>Zero</strong> unbilled enrollments</div>
+          <div class="bl-item"><strong>Zero</strong> high-risk compliance calls</div>
+          <div class="bl-item"><strong>+20 pts</strong> QA score improvement</div>
+        </div>
+
+        <div class="col-title" style="margin-top:20px;">The Technology</div>
+        <div class="bullet-list">
+          <div class="bl-item sky">One screen replacing <strong>11 open apps</strong></div>
+          <div class="bl-item sky">Real-time compliance — structurally impossible to get wrong</div>
+          <div class="bl-item sky">CVC — live AI coach on every call</div>
+          <div class="bl-item sky">Instant payer rule intelligence</div>
+          <div class="bl-item sky">Complete audit trail — zero manual effort</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="col-title">The People</div>
+        <div class="bullet-list">
+          <div class="bl-item">Agents focus on <strong>people</strong> — not systems</div>
+          <div class="bl-item">New hires confident from <strong>day one</strong></div>
+          <div class="bl-item">Managers see the whole floor — <strong>one dashboard</strong></div>
+          <div class="bl-item">Every agent has a <strong>personal AI coach</strong></div>
+          <div class="bl-item">Turnover reduced — agents <strong>succeed faster</strong></div>
+        </div>
+
+        <div class="col-title" style="margin-top:20px;">The Operation</div>
+        <div class="bullet-list">
+          <div class="bl-item sky">Full audit trail on every enrollment</div>
+          <div class="bl-item sky">Carrier compliance metrics improve automatically</div>
+          <div class="bl-item sky">Scales to any team size — no infrastructure change</div>
+          <div class="bl-item sky">Live in <strong>30 days</strong> — full deployment</div>
+          <div class="bl-item sky">No disruption to existing carrier relationships</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pg-footer">
+    <div class="pg-footer-text">Complete Care Marketing Inc. &nbsp;·&nbsp; Confidential</div>
+    <div class="pg-num">8 / 11</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE 9 — ROI
+═══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="pg-header">
+    <img class="pg-logo" src="jawsai911-logo-dark-hero.jpeg" alt="JAWSAI911">
+    <div class="pg-header-right">
+      <div class="pg-doc-name">Clearview — Enrollment Intelligence System</div>
+      <div class="pg-confidential">Complete Care Marketing Inc. &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; 2026</div>
+    </div>
+  </div>
+  <div class="accent-bar"></div>
+
+  <div class="pg-body">
+    <div class="section-label">Return on Investment — Conservative</div>
+    <div class="pg-title">What You Get<br><span>Back.</span></div>
+    <div class="pg-subtitle" style="margin-bottom:16px;">This is not a cost. Every dollar invested in this platform returns measurable, documented revenue and savings across your operation.</div>
+
+    <table class="roi-table">
+      <thead>
+        <tr>
+          <th>Revenue Driver</th>
+          <th>How It Works</th>
+          <th style="text-align:right;">Impact</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong style="color:#fff;">Production Increase — Clearview Core</strong></td>
+          <td>20% lift across 350 agents. One screen, every system.</td>
+          <td class="td-amt">$10,000,000</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#fff;">Close Rate Improvement — CVC</strong></td>
+          <td>Real-time AI coaching. Right response on every objection.</td>
+          <td class="td-amt">$8,000,000</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#fff;">Training Savings — Clearview Onboard</strong></td>
+          <td>Ramp time cut dramatically. $156K saved per class for paid programs.</td>
+          <td class="td-amt">$500,000</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#fff;">Agent Retention</strong></td>
+          <td>Agents who succeed early stay longer. Reduced turnover cost.</td>
+          <td class="td-amt">$750,000</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#fff;">Compliance Risk Elimination</strong></td>
+          <td>Zero high-risk calls. No CMS penalties. No corrective action costs.</td>
+          <td class="td-amt">Incalculable</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="2"><strong>Conservative Year-One Total Impact</strong></td>
+          <td class="td-amt" style="color:var(--sky);font-size:14px;">$19,250,000+</td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <div class="highlight-box" style="margin-top:18px;">
+      "For every dollar invested in this platform, you get measurable production back — plus the compliance protection that keeps your carrier relationships intact and your operation off CMS radar."
+    </div>
+  </div>
+
+  <div class="pg-footer">
+    <div class="pg-footer-text">Complete Care Marketing Inc. &nbsp;·&nbsp; Confidential</div>
+    <div class="pg-num">9 / 11</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE 10 — INTRODUCING CVC / PHASES
+═══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="pg-header">
+    <img class="pg-logo" src="jawsai911-logo-dark-hero.jpeg" alt="JAWSAI911">
+    <div class="pg-header-right">
+      <div class="pg-doc-name">Clearview — Enrollment Intelligence System</div>
+      <div class="pg-confidential">Complete Care Marketing Inc. &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; 2026</div>
+    </div>
+  </div>
+  <div class="accent-bar"></div>
+
+  <div class="pg-body">
+    <div class="section-label">Clearview Virtual Coach</div>
+    <div class="pg-title">Introducing <span>CVC.</span></div>
+    <div class="pg-subtitle">Real-time AI guidance on every live call. CVC doesn't replace your agents — it makes every agent your best agent, on every call, from day one.</div>
+
+    <div class="phase-grid">
+      <div class="phase-card">
+        <div class="phase-label">Phase 1 &nbsp;·&nbsp; Days 1–30</div>
+        <div class="phase-title">Clearview Core</div>
+        <div class="phase-body">Full platform live across all 350 agents. One screen, every system, every call. Immediate production lift from day one.</div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-label">Phase 2 &nbsp;·&nbsp; Months 1–3</div>
+        <div class="phase-title">Data &amp; Learning</div>
+        <div class="phase-body">Clearview learns your call patterns, objection types, payer rules, and agent behaviors. The AI gets smarter on your operation specifically.</div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-label">Phase 3 &nbsp;·&nbsp; Months 4–6</div>
+        <div class="phase-title">CVC Goes Live</div>
+        <div class="phase-body">Clearview Virtual Coach activates. Every agent has an AI in their ear — guiding, coaching, and closing alongside them on every call.</div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-label">Phase 4 &nbsp;·&nbsp; Month 6+</div>
+        <div class="phase-title">Clearview Onboard</div>
+        <div class="phase-body">New agent training time drops dramatically. AI coaches live from day one. Your onboarding pipeline becomes a competitive advantage.</div>
+      </div>
+    </div>
+
+    <div class="highlight-box" style="margin-top:20px;">
+      <strong>The result:</strong> A floor of 350 agents where every single person has a real-time AI coach in their ear — trained on your payer rules, your objections, and your close patterns. No other operation in Medicare telesales has this.
+    </div>
+  </div>
+
+  <div class="pg-footer">
+    <div class="pg-footer-text">Complete Care Marketing Inc. &nbsp;·&nbsp; Confidential</div>
+    <div class="pg-num">10 / 11</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE 11 — ONBOARDING ROADMAP
+═══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="pg-header">
+    <img class="pg-logo" src="jawsai911-logo-dark-hero.jpeg" alt="JAWSAI911">
+    <div class="pg-header-right">
+      <div class="pg-doc-name">Clearview — Enrollment Intelligence System</div>
+      <div class="pg-confidential">Complete Care Marketing Inc. &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; 2026</div>
+    </div>
+  </div>
+  <div class="accent-bar"></div>
+
+  <div class="pg-body">
+    <div class="section-label">Deployment</div>
+    <div class="pg-title">Your Onboarding<br><span>Roadmap.</span></div>
+    <div class="pg-subtitle">From signed agreement to fully live — 30 days. Here is exactly what that looks like.</div>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-day">Day 1</div>
+        <div class="tl-title">Agreement Signed</div>
+        <div class="tl-body">Licensing executed. Partnership is official. Clock starts.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-day">Days 2–5</div>
+        <div class="tl-title">Discovery &amp; Access</div>
+        <div class="tl-body">CCM maps your systems and integration points. Credentials and access provisioned.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-day">Days 6–14</div>
+        <div class="tl-title">Integration Build</div>
+        <div class="tl-body">Clearview connects to your full tech stack. Carrier portals, CRM, enrollment systems — all integrated.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-day">Days 15–21</div>
+        <div class="tl-title">Testing &amp; Training</div>
+        <div class="tl-body">Live testing with agents. Compliance flows verified. Team trained and ready.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-day">Day 30</div>
+        <div class="tl-title">Go Live</div>
+        <div class="tl-body">Full deployment. All 350 agents active. Production increase begins immediately.</div>
+      </div>
+    </div>
+
+    <div class="highlight-box" style="margin-top:20px;">
+      <strong>Phase Two — Marketing Growth Proposal</strong> presented upon successful go-live. The platform grows with your operation — Clearview Core is the foundation. What comes next is built on your results.
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;">
+      <div style="background:rgba(5,12,28,0.8);border:1px solid var(--border);border-left:3px solid var(--sky);border-radius:0 6px 6px 0;padding:12px 16px;">
+        <div style="font-size:10px;font-weight:800;color:var(--sky);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">What's Included at Go-Live</div>
+        <div class="bl-item sky" style="font-size:10px;">Full Clearview Core for all 350 agents</div>
+        <div class="bl-item sky" style="font-size:10px;">All carrier integrations live and tested</div>
+        <div class="bl-item sky" style="font-size:10px;">Compliance engine active on every call</div>
+        <div class="bl-item sky" style="font-size:10px;">Manager dashboard and approval queue</div>
+      </div>
+      <div style="background:rgba(5,12,28,0.8);border:1px solid var(--border);border-left:3px solid var(--blue);border-radius:0 6px 6px 0;padding:12px 16px;">
+        <div style="font-size:10px;font-weight:800;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Phase Two Unlocks</div>
+        <div class="bl-item" style="font-size:10px;">CVC — live AI coaching on every call</div>
+        <div class="bl-item" style="font-size:10px;">Post-call AI review and agent scoring</div>
+        <div class="bl-item" style="font-size:10px;">Clearview Onboard — agents live in days</div>
+        <div class="bl-item" style="font-size:10px;">Full marketing growth strategy</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px;">
+      <div style="background:rgba(0,20,55,0.6);border:1px solid var(--border);border-radius:5px;padding:14px;text-align:center;">
+        <div style="font-size:16px;font-weight:900;color:var(--sky);margin-bottom:4px;">Day 1</div>
+        <div style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Agreement Signed</div>
+        <div style="font-size:9px;color:var(--dim);margin-top:4px;">Clock starts immediately</div>
+      </div>
+      <div style="background:rgba(0,20,55,0.6);border:1px solid var(--border);border-radius:5px;padding:14px;text-align:center;">
+        <div style="font-size:16px;font-weight:900;color:var(--sky);margin-bottom:4px;">30 Days</div>
+        <div style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Fully Live</div>
+        <div style="font-size:9px;color:var(--dim);margin-top:4px;">All 350 agents active</div>
+      </div>
+      <div style="background:rgba(0,20,55,0.6);border:1px solid var(--border);border-radius:5px;padding:14px;text-align:center;">
+        <div style="font-size:16px;font-weight:900;color:var(--sky);margin-bottom:4px;">Month 2</div>
+        <div style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Results Visible</div>
+        <div style="font-size:9px;color:var(--dim);margin-top:4px;">Production increase measurable</div>
+      </div>
+    </div>
+
+    <div style="margin-top:16px;padding:16px 20px;background:rgba(0,52,140,0.25);border:1px solid rgba(56,189,248,0.4);border-radius:6px;display:flex;align-items:center;justify-content:space-between;">
+      <div>
+        <div style="font-size:14px;font-weight:800;color:#fff;margin-bottom:3px;">Ready to move forward?</div>
+        <div style="font-size:10px;color:var(--muted);">Bryan Jaworski &nbsp;·&nbsp; Complete Care Marketing Inc. &nbsp;·&nbsp; completecaremarketinginc.com</div>
+      </div>
+      <div style="font-size:11px;font-weight:800;color:var(--sky);letter-spacing:1px;text-transform:uppercase;">Let's Talk →</div>
+    </div>
+  </div>
+
+  <div class="pg-footer">
+    <div class="pg-footer-text">Complete Care Marketing Inc. &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; 2026 © All Rights Reserved</div>
+    <div class="pg-num">11 / 11</div>
+  </div>
+</div>
+
+</body>
+</html>

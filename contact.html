@@ -342,7 +342,7 @@ footer{background:#000;border-top:1px solid rgba(59,130,246,0.12);padding:24px 4
     <h1 style="font-size:clamp(30px,4vw,46px);font-weight:900;color:#fff;margin-bottom:12px">Let's build a practical AI workflow.</h1>
     <p>Need faster intake, cleaner follow-up, better scheduling, or less repetitive admin work? Send the details and I will reply directly.</p>
     <div class="contact-links">
-      <a href="mailto:Bryan@jawsai911.com" class="cl cl-primary">Bryan@jawsai911.com</a>
+      <a href="mailto:info@jawsai911.com" class="cl cl-primary">info@jawsai911.com</a>
       <a href="#demo-form" class="cl cl-demo">Book 10-Min Review</a>
       <a href="ai-education-class.html" class="cl cl-demo">Free AI Class</a>
       <a href="#" class="cl cl-secondary" onclick="openPortal();return false">⚙ CRM Portal</a>
@@ -379,7 +379,7 @@ footer{background:#000;border-top:1px solid rgba(59,130,246,0.12);padding:24px 4
       <div style="font-size:11px;color:var(--dim)">Bryan Jaworski © 2026 · South Florida</div>
     </div>
   </div>
-  <div class="footer-right">Built with AI · Royal Palm Beach, FL · Bryan@jawsai911.com</div>
+  <div class="footer-right">Built with AI · Royal Palm Beach, FL · info@jawsai911.com</div>
 </footer>
 <script>
 const PORTAL_PASS = 'jawsai911';
@@ -411,7 +411,9 @@ async function submitDemoRequest(e){
   ];
   const subject=encodeURIComponent(`AI workflow review request from ${body.name||'website visitor'}`);
   const mailBody=encodeURIComponent(lines.join('\n'));
-  window.location.href=`mailto:Bryan@jawsai911.com?subject=${subject}&body=${mailBody}`;
+  const a=document.createElement('a');
+  a.href=`mailto:info@jawsai911.com?subject=${subject}&body=${mailBody}`;
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
   status.style.color='var(--teal)';
   status.textContent='Your email app should open with the request filled in. Send it from there.';
   button.textContent='Create Email Request';
