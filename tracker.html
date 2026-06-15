@@ -1204,9 +1204,29 @@ function renderDetail(id) {
     </div>` : ''}
 
     <div class="detail-actions">
+      ${pdfs ? `<button class="btn btn-primary" onclick="emailApplication('${id}')">✉️ Email Application</button>` : ''}
       <button class="btn btn-ghost" onclick="openEditModal('${id}')">✏️ Edit</button>
     </div>
   `;
+}
+
+function emailApplication(id) {
+  const c = load().find(j => j.id === id);
+  if (!c) return;
+  const pdfs = RESUME_MAP[c.company] || (c.resume_url || c.cover_url ? { r: c.resume_url, c: c.cover_url } : null);
+  if (!pdfs) return;
+
+  const to = c.email || '';
+  const subject = 'Application — ' + c.company + ' — ' + c.role;
+
+  let body = c.contactName ? ('Hi ' + c.contactName + ',\n\n') : 'Hello,\n\n';
+  body += 'I\'m reaching out to apply for the ' + c.role + ' position at ' + c.company + '.\n\n';
+  body += 'Please find my documents below:\n';
+  if (pdfs.r) body += 'Resume: ' + BASE + pdfs.r + '\n';
+  if (pdfs.c) body += 'Cover Letter: ' + BASE + pdfs.c + '\n';
+  body += '\nI\'d love to connect about this opportunity.\n\nBest,\nBryan Jaworski\nBryan@jawsai911.com\nRoyal Palm Beach, FL';
+
+  window.location.href = 'mailto:' + to + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
 }
 
 function actIcon(type) {
