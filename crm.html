@@ -43,161 +43,85 @@
     header .hd-actions a { font-size: 12px; color: var(--muted); text-decoration: none; }
     header .hd-actions a:hover { color: var(--brand-ink); }
 
-    h1 {
-      margin: 0 0 6px;
-      font-size: clamp(24px, 3vw, 38px);
-      letter-spacing: 0;
-    }
+    h1 { margin: 0 0 6px; font-size: clamp(24px, 3vw, 38px); letter-spacing: 0; }
+    .subhead { color: var(--muted); margin: 0; }
 
-    .subhead {
-      color: var(--muted);
-      margin: 0;
-    }
+    main { padding: 20px clamp(16px, 4vw, 40px) 40px; display: grid; gap: 18px; }
 
-    main {
-      padding: 20px clamp(16px, 4vw, 40px) 40px;
-      display: grid;
-      gap: 18px;
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 10px;
-    }
-
-    .stat {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 12px 14px;
-      background: var(--soft);
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 26px;
-      line-height: 1;
-      margin-bottom: 4px;
-    }
-
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+    .stat { border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; background: var(--soft); }
+    .stat strong { display: block; font-size: 26px; line-height: 1; margin-bottom: 4px; }
     .stat span { color: var(--muted); font-size: 13px; }
 
-    .toolbar {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
+    .toolbar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
     input, select, button {
-      min-height: 40px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 0 12px;
-      font: inherit;
-      background: #0a0d14;
-      color: var(--ink);
+      min-height: 40px; border: 1px solid var(--line); border-radius: 8px;
+      padding: 0 12px; font: inherit; background: #0a0d14; color: var(--ink);
     }
+    input { flex: 1 1 260px; }
+    button { cursor: pointer; background: var(--brand); border-color: var(--brand); color: #fff; font-weight: 700; }
 
-    input {
-      flex: 1 1 260px;
-    }
-
-    button {
-      cursor: pointer;
-      background: var(--brand);
-      border-color: var(--brand);
-      color: #fff;
-      font-weight: 700;
-    }
-
-    .board {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 14px;
-      align-items: start;
-    }
-
-    .lane {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      overflow: hidden;
-      background: #060a14;
-    }
-
-    .lane h2 {
-      margin: 0;
-      padding: 12px 14px;
-      font-size: 16px;
-      background: #0a0d14;
-      border-bottom: 1px solid var(--line);
-      display: flex;
-      justify-content: space-between;
-      gap: 8px;
-    }
-
-    .cards {
-      display: grid;
-      gap: 10px;
-      padding: 10px;
-    }
-
-    .card {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 12px;
-      display: grid;
-      gap: 8px;
-    }
-
-    .card h3 {
-      margin: 0;
-      font-size: 15px;
-    }
-
-    .meta, .notes {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.35;
-    }
-
-    .chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .chip {
-      border-radius: 999px;
-      padding: 4px 8px;
-      font-size: 12px;
-      font-weight: 700;
-      background: #e7f6f4;
-      color: var(--brand-ink);
-    }
-
+    .board { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; align-items: start; }
+    .lane { border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: #060a14; }
+    .lane h2 { margin: 0; padding: 12px 14px; font-size: 16px; background: #0a0d14; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; gap: 8px; }
+    .cards { display: grid; gap: 10px; padding: 10px; }
+    .card { border: 1px solid var(--line); border-radius: 8px; padding: 12px; display: grid; gap: 8px; }
+    .card h3 { margin: 0; font-size: 15px; }
+    .meta, .notes { color: var(--muted); font-size: 13px; line-height: 1.35; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chip { border-radius: 999px; padding: 4px 8px; font-size: 12px; font-weight: 700; background: #e7f6f4; color: var(--brand-ink); }
     .chip.hot { background: #fee4e2; color: var(--hot); }
     .chip.warm { background: #fef0c7; color: var(--warm); }
     .chip.cool { background: #dbeafe; color: var(--cool); }
-
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      font-size: 13px;
+    .actions { display: flex; flex-wrap: wrap; gap: 8px; font-size: 13px; align-items: center; }
+    .actions a { color: var(--brand-ink); font-weight: 700; text-decoration: none; }
+    .btn-draft {
+      background: transparent; border: 1px solid var(--brand-ink); color: var(--brand-ink);
+      border-radius: 6px; padding: 4px 10px; font-size: 12px; font-weight: 700;
+      cursor: pointer; min-height: unset;
     }
+    .btn-draft:hover { background: var(--brand-ink); color: #000; }
+    .empty { padding: 22px; color: var(--muted); text-align: center; }
 
-    .actions a {
-      color: var(--brand-ink);
-      font-weight: 700;
-      text-decoration: none;
+    /* ── EMAIL DRAFT MODAL ── */
+    .email-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,4,16,0.88); z-index: 999;
+      align-items: center; justify-content: center; padding: 20px;
     }
-
-    .empty {
-      padding: 22px;
-      color: var(--muted);
-      text-align: center;
+    .email-overlay.open { display: flex; }
+    .email-modal {
+      background: #060a14; border: 1px solid var(--brand); border-top: 3px solid var(--brand-ink);
+      border-radius: 12px; width: 100%; max-width: 640px; max-height: 90vh;
+      overflow-y: auto; padding: 28px;
+      display: grid; gap: 14px;
     }
+    .email-modal h2 { margin: 0; font-size: 18px; font-weight: 800; color: var(--brand-ink); }
+    .email-modal .from-line {
+      font-size: 12px; color: var(--muted); background: #0a0d14;
+      border: 1px solid var(--line); border-radius: 6px; padding: 8px 12px;
+    }
+    .email-modal label { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; display: block; }
+    .email-modal input[type="text"] {
+      width: 100%; min-height: 40px; background: #0a0d14; border: 1px solid var(--line);
+      border-radius: 6px; padding: 8px 12px; color: var(--ink); font: inherit; font-size: 14px;
+    }
+    .email-modal input[type="text"]:focus { outline: none; border-color: var(--brand-ink); }
+    .email-modal textarea {
+      width: 100%; min-height: 260px; background: #0a0d14; border: 1px solid var(--line);
+      border-radius: 6px; padding: 12px; color: var(--ink); font: inherit; font-size: 14px;
+      line-height: 1.6; resize: vertical;
+    }
+    .email-modal textarea:focus { outline: none; border-color: var(--brand-ink); }
+    .modal-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .modal-actions button { min-height: 38px; font-size: 13px; border-radius: 7px; padding: 0 16px; }
+    .btn-send { background: #16a34a; border-color: #16a34a; }
+    .btn-send:hover { background: #15803d; }
+    .btn-copy { background: #1e3a5f; border-color: var(--brand); color: var(--brand-ink); }
+    .btn-copy:hover { background: #1d4ed8; border-color: #1d4ed8; color: #fff; }
+    .btn-close { background: transparent; border: 1px solid #334155; color: var(--muted); }
+    .btn-close:hover { border-color: var(--muted); color: var(--ink); }
+    .copy-confirm { font-size: 12px; color: #4ade80; display: none; align-self: center; }
   </style>
 </head>
 <body>
@@ -225,6 +149,32 @@
     <section class="board" id="board"></section>
   </main>
 
+  <!-- EMAIL DRAFT MODAL -->
+  <div class="email-overlay" id="email-overlay" onclick="if(event.target===this)closeEmail()">
+    <div class="email-modal">
+      <h2 id="em-biz">Draft Email</h2>
+      <div class="from-line">From: <strong>info@jawsai911.com</strong> &nbsp;·&nbsp; Review and edit before sending</div>
+      <div>
+        <label>To</label>
+        <input type="text" id="em-to" placeholder="Email address (fill in if not on file)">
+      </div>
+      <div>
+        <label>Subject</label>
+        <input type="text" id="em-subject">
+      </div>
+      <div>
+        <label>Body</label>
+        <textarea id="em-body"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-send" onclick="openInMail()">Open in Mail App ↗</button>
+        <button class="btn-copy" onclick="copyBody()">Copy Body</button>
+        <button class="btn-close" onclick="closeEmail()">Close</button>
+        <span class="copy-confirm" id="copy-confirm">Copied!</span>
+      </div>
+    </div>
+  </div>
+
   <script>
     const csvUrl = 'ai-leads-west-palm-beach.csv';
     const priorities = new Map([
@@ -243,45 +193,498 @@
       ['Financial Advisors / CPA', 'cool']
     ]);
 
+    // ── ALL 31 EMAIL DRAFTS ──────────────────────────────────────────────────
+    const EMAIL_DRAFTS = {
+
+      'Nason Yeager Law Firm': {
+        subject: 'AI client intake for Nason Yeager — quick question',
+        body: `Hi,
+
+I'm Bryan Jaworski from JAWSAI911.com — I help South Florida law firms automate client intake and legal document workflows.
+
+For a multi-office firm like Nason Yeager, an AI intake chatbot handles new client screening across all locations 24/7, collects case details automatically, and routes to the right attorney — without adding intake staff. Most firms see response time drop from hours to under 3 minutes.
+
+Worth a 15-minute call to see how it works for your practice?
+
+Bryan Jaworski
+info@jawsai911.com | JAWSAI911.com`
+      },
+
+      'Mayersohn Law': {
+        to: '',
+        subject: 'AI intake screening for criminal defense — for Mayersohn Law',
+        body: `Hi,
+
+I'm Bryan Jaworski from JAWSAI911.com. I build AI systems for South Florida law firms — specifically intake screening and client communication automation.
+
+For a criminal defense firm like Mayersohn, the biggest win is an AI system that screens new case inquiries 24/7 — qualifying prospects, collecting case details, and escalating urgent matters before a human ever picks up the phone. That means no missed leads at 11pm when someone just got arrested.
+
+Most firms using this cut intake staff time by 50% and respond to new prospects in under 3 minutes, around the clock.
+
+Are you open to a 15-minute call to see what this looks like for your firm?
+
+Bryan Jaworski
+info@jawsai911.com | JAWSAI911.com`
+      },
+
+      'The Carlin Law Firm': {
+        subject: 'AI contract automation for The Carlin Law Firm — quick question',
+        body: `Hi,
+
+I'm Bryan Jaworski from JAWSAI911.com. I help South Florida business and real estate law firms automate contract review and client communication.
+
+An AI contract review tool for a litigation firm like Carlin can cut document review time by 40–60% and flag issues automatically before they reach the attorney. Pair that with a client communication chatbot that handles status updates and you free your team for the work that actually requires their expertise.
+
+Worth 15 minutes to see it live?
+
+Bryan Jaworski
+info@jawsai911.com | JAWSAI911.com`
+      },
+
+      'Bruce Law Firm PA': {
+        subject: 'AI for family law intake — quick idea for Bruce Law',
+        body: `Hi,
+
+I'm Bryan Jaworski from JAWSAI911.com — I build AI systems for South Florida family law firms.
+
+An AI chatbot that handles initial divorce and family law consultations 24/7 means no missed calls after hours and new clients get answers immediately — while your attorneys focus on cases, not intake calls. Works across your WPB, Boca, and Wellington locations simultaneously.
+
+I'm local to West Palm Beach. Worth a 15-minute call this week?
+
+Bryan Jaworski
+info@jawsai911.com | JAWSAI911.com`
+      },
+
+      'Dickenson Law Firm': {
+        subject: 'Personal injury intake on autopilot — quick idea for Dickenson Law',
+        body: `Hi,
+
+I'm Bryan Jaworski from JAWSAI911.com — I'm based in South Florida and I specialize in AI automation for personal injury firms.
+
+For Dickenson Law, I see a clear fit: an AI intake chatbot that screens new accident and property damage cases 24/7, collects the facts you need, and follows up with prospects automatically so no potential client goes cold while waiting for a callback.
+
+PI firms using this typically convert 30–40% more inbound inquiries into signed clients without adding intake staff.
+
+I'd love to show you a 15-minute demo. Would this week work?
+
+Bryan Jaworski
+info@jawsai911.com | JAWSAI911.com`
+      },
+
+      'Hollander Law Firm': {
+        subject: 'AI PI intake for Hollander Law — quick question',
+        body: `Hi,
+
+I'm Bryan Jaworski from JAWSAI911.com. I specialize in AI intake automation for personal injury firms in South Florida.
+
+For a multi-location firm like Hollander, an AI chatbot qualifies new accident cases across all your locations simultaneously, collects the facts you need, and follows up automatically — so no potential client slips through after hours.
+
+PI firms using this convert significantly more inbound leads without adding headcount.
+
+Worth 15 minutes to see how it works?
+
+Bryan Jaworski
+info@jawsai911.com | JAWSAI911.com`
+      },
+
+      'Chane Socarras PLLC (CS Law)': {
+        subject: 'AI contract tools for CS Law — quick idea',
+        body: `Hi,
+
+I'm Bryan Jaworski from JAWSAI911.com. I help AV-rated business and real estate law firms use AI to automate contract analysis and case management.
+
+For a commercial litigation practice like CS Law, AI contract review tools flag issues, extract key terms, and summarize documents in minutes instead of hours — giving your attorneys more time on strategy and client work instead of document review.
+
+Worth 15 minutes to see it in action?
+
+Bryan Jaworski
+info@jawsai911.com | JAWSAI911.com`
+      },
+
+      'Leifer & Ramirez': {
+        subject: 'More PI cases, less intake work — for Leifer & Ramirez',
+        body: `Hi,
+
+I'm Bryan Jaworski from JAWSAI911.com — I build AI intake systems for personal injury firms in South Florida.
+
+A well-built AI intake chatbot for a PI firm like yours can qualify 3–4x more inbound leads without adding staff, and follow up with prospects automatically so no case slips through after hours.
+
+Firms using this typically see their intake staff shift from data entry to actual case prep within the first 30 days.
+
+I'm local to Boca — happy to hop on a 15-minute call this week to show you exactly how it works.
+
+Bryan Jaworski
+info@jawsai911.com | JAWSAI911.com`
+      },
+
+      'Berman Law Group': {
+        subject: 'AI for mass tort case volume — quick question for Berman Law Group',
+        body: `Hi,
+
+I'm Bryan Jaworski from JAWSAI911.com — I build AI systems for large South Florida law firms, and mass tort and PI volume is exactly where AI creates the most obvious ROI.
+
+For a firm at Berman's scale, I'm thinking automated case intake screening that qualifies leads before they reach your staff, plus a client communication portal that handles status updates without tying up your paralegals.
+
+That combination typically cuts intake labor costs significantly while handling 5–10x more inbound inquiries without adding headcount.
+
+Can we find 15 minutes this week? I'll come prepared with numbers specific to your practice size.
+
+Bryan Jaworski
+info@jawsai911.com | JAWSAI911.com`
+      },
+
+      'West Boca Dental Care': {
+        subject: 'AI booking + patient recall for West Boca Dental — quick idea',
+        body: `Hi,
+
+I'm Bryan Jaworski from JAWSAI911.com. I help South Florida dental practices use AI to fill schedules and reduce no-shows automatically.
+
+An AI booking chatbot handles appointment requests around the clock and an automated recall system reaches out to overdue patients — without front desk staff spending hours on the phone. Most practices see 15–20 more bookings per month just from after-hours coverage alone.
+
+Worth a 15-minute call to see how it works?
+
+Bryan Jaworski
+info@jawsai911.com | JAWSAI911.com`
+      },
+
+      'Polin Dental': {
+        subject: 'AI patient recall for Polin Dental — quick idea',
+        body: `Hi,
+
+I'm Bryan Jaworski from JAWSAI911.com. I help South Florida dental practices automate patient recall and online scheduling.
+
+For Polin Dental, an AI recall system automatically reaches out to patients due for checkups and hygiene appointments — filling gaps in your schedule without staff calling through lists all day. Plus 24/7 online booking so no appointment request waits until Monday.
+
+Worth a 15-minute call?
+
+Bryan Jaworski
+info@jawsai911.com | JAWSAI911.com`
+      },
+
+      'Ericsson Dental': {
+        subject: 'Automated booking + treatment follow-ups — for Ericsson Dental',
+        body: `Hi,
+
+I'm Bryan Jaworski from JAWSAI911.com — I help South Florida dental practices use AI to fill their schedules and reduce no-shows without extra front desk work.
+
+For Ericsson Dental, I'm thinking an AI booking system that handles appointment requests around the clock and an automated follow-up sequence for treatment plans that patients said they'd think about — the ones that usually just disappear.
+
+Practices using this see schedules fill faster and treatment plan acceptance rates climb, without staff spending hours chasing callbacks.
+
+Worth 15 minutes to see it in action?
+
+Bryan Jaworski
+info@jawsai911.com | JAWSAI911.com`
+      },
+
+      'Shapiro Family Dentistry': {
+        subject: 'AI scheduling across all your locations — quick idea for Shapiro Family Dentistry',
+        body: `Hi,
+
+I'm Bryan Jaworski from JAWSAI911.com. I build AI systems for multi-location dental practices in South Florida.
+
+For a practice with locations in WPB, Boca, and Fort Pierce, the right AI system coordinates scheduling across all locations automatically — patients get routed to the right office and time slot without staff playing phone tag between locations. Intake and recall run automatically too.
+
+Worth 15 minutes to see it?
+
+Bryan Jaworski
+info@jawsai911.com | JAWSAI911.com`
+      },
+
+      'Dental First Care': {
+        to: 'contact@dentalfirst.care',
+        subject: 'AI intake + scheduling across all 4 of your locations — quick idea',
+        body: `Hi,
+
+I'm Bryan Jaworski from JAWSAI911.com. I help multi-location dental practices use AI to stop losing patients to voicemail and slow response times.
+
+For a 4-location group like Dental First Care, the right AI system handles new patient intake, routes scheduling across locations, and sends automated reminders — all without adding front desk staff.
+
+Practices like yours typically recover 15–20 unbooked appointments per month just from after-hours AI coverage alone.
+
+I'd love 15 minutes to show you the system.
+
+Bryan Jaworski
+info@jawsai911.com | JAWSAI911.com`
+      },
+
+      'Boca Dental & Cosmetic': {
+        subject: 'AI cosmetic consultation chatbot for Boca Dental — quick idea',
+        body: `Hi,
+
+I'm Bryan Jaworski from JAWSAI911.com. I help cosmetic dental practices use AI to convert more consultations into booked cases.
+
+For Boca Dental & Cosmetic, an AI chatbot handles initial cosmetic inquiries 24/7 — answers questions about veneers, implants, and whitening, books consultations automatically, and follows up with before/after case examples to keep prospects warm. More consultations booked, less phone time for your front desk.
+
+Worth 15 minutes to see it work?
+
+Bryan Jaworski
+info@jawsai911.com | JAWSAI911.com`
+      },
+
+      'The Keyes Company': {
+        subject: 'AI that closes more deals for Keyes agents — quick question',
+        body: `Hi,
+
+I'm Bryan Jaworski from JAWSAI911.com. I help large Florida real estate brokerages use AI to give their agents a real edge.
+
+For a firm with Keyes' reach across Palm Beach, Broward, and Miami, an AI property matching engine gives buyers better matches faster, and automated drip campaigns keep sellers engaged without agents manually following up. Your top agents get more time to close, not chase.
+
+Worth a 15-minute call?
+
+Bryan Jaworski
+info@jawsai911.com | JAWSAI911.com`
+      },
+
+      'ONE Sotheby\'s International Realty': {
+        subject: 'AI for luxury buyer matching at ONE Sotheby\'s — quick question',
+        body: `Hi,
+
+I'm Bryan Jaworski from JAWSAI911.com. I work with luxury real estate firms in South Florida on AI tools that help agents match high-net-worth buyers to properties faster and automate listing promotion.
+
+For ONE Sotheby's 30 offices and 1,400 agents, an AI property matching system and automated listing campaigns can meaningfully increase agent productivity across the board — without adding to your tech stack complexity.
+
+Worth 15 minutes to explore?
+
+Bryan Jaworski
+info@jawsai911.com | JAWSAI911.com`
+      },
+
+      'Lang Realty': {
+        subject: 'AI CRM for Lang Realty agents — quick idea',
+        body: `Hi,
+
+I'm Bryan Jaworski from JAWSAI911.com. I help independent South Florida real estate agencies use AI to give their agents better tools than the big corporate brokerages.
+
+For Lang Realty, an AI-powered agent CRM automates client follow-up, predicts which leads are ready to move, and keeps every agent's pipeline organized without manual data entry. Competitive advantage without the enterprise price tag.
+
+Worth 15 minutes?
+
+Bryan Jaworski
+info@jawsai911.com | JAWSAI911.com`
+      },
+
+      'Schumacher Automotive Group': {
+        subject: 'AI vehicle recommendations + service scheduling — for Schumacher Auto',
+        body: `Hi,
+
+Bryan Jaworski here from JAWSAI911.com — I build AI systems for South Florida businesses, and dealership groups are one of my strongest fits.
+
+For a multi-brand group like Schumacher, the immediate wins are a 24/7 AI chatbot that handles service scheduling without tying up your service advisors, and a vehicle recommendation engine that qualifies buyers before they ever talk to a salesperson.
+
+Dealerships using these tools typically see 20–30% more booked service appointments and a measurable drop in time-to-sale.
+
+Can we get 15 minutes on the calendar this week? I can show you a live demo.
+
+Bryan Jaworski
+info@jawsai911.com | JAWSAI911.com`
+      },
+
+      'Napleton Automotive West Palm Beach': {
+        subject: 'AI inventory chatbot for Napleton WPB — quick idea',
+        body: `Hi,
+
+I'm Bryan Jaworski from JAWSAI911.com. I build AI chatbots for automotive groups in South Florida.
+
+For Napleton's West Palm Beach location, an AI inventory chatbot handles vehicle availability questions and financing inquiries automatically — so your sales team focuses on buyers who are ready to purchase, not ones still in the research phase. Also handles service scheduling 24/7 without tying up your advisors.
+
+Worth a 15-minute call to see it in action?
+
+Bryan Jaworski
+info@jawsai911.com | JAWSAI911.com`
+      },
+
+      'Stiles Corporation': {
+        to: 'Adrienne.zalkind@stiles.com',
+        subject: 'Cut bid turnaround time at Stiles — quick AI question',
+        body: `Hi Adrienne,
+
+I'm Bryan Jaworski — I run JAWSAI911.com, an AI implementation firm based in South Florida.
+
+I work with commercial construction and development companies to automate the parts that eat time: project cost estimation, subcontractor bid collection and comparison, and client status communication.
+
+For a firm doing Stiles' volume, the right AI workflow can cut bid turnaround by 40–60% and take manual data entry almost completely off your project managers' plates.
+
+I'd love to show you a 15-minute demo specific to commercial development — no pitch deck, just the actual tool working.
+
+Are you available for a quick call this week?
+
+Bryan Jaworski
+info@jawsai911.com | JAWSAI911.com`
+      },
+
+      'Seacrest Services': {
+        subject: 'AI that handles resident requests automatically — for Seacrest Services',
+        body: `Hi,
+
+I'm Bryan Jaworski from JAWSAI911.com — I build AI systems for South Florida property management companies, and HOA and condo management is one of my strongest use cases.
+
+For a company managing Seacrest's volume of communities, the right AI chatbot handles routine resident questions and maintenance request routing automatically — so your team spends time on real issues, not answering "when is trash day" for the hundredth time.
+
+Most property management clients see their inbound call volume drop 40–50% in the first 60 days.
+
+Can we get 15 minutes on the calendar this week?
+
+Bryan Jaworski
+info@jawsai911.com | JAWSAI911.com`
+      },
+
+      'GRS Community Management': {
+        subject: 'AI for HOA violation tracking and resident reporting — quick idea for GRS',
+        body: `Hi,
+
+I'm Bryan Jaworski from JAWSAI911.com. I help South Florida community association management companies use AI to handle the volume of resident requests and compliance tracking.
+
+For GRS, an AI system that auto-processes violation reports and generates automated resident dashboards can save your team significant manual review time every week — while giving board members better visibility into their communities.
+
+Worth 15 minutes to see how it works?
+
+Bryan Jaworski
+info@jawsai911.com | JAWSAI911.com`
+      },
+
+      'Buccan': {
+        subject: 'AI reservations + guest experience for Buccan — quick idea',
+        body: `Hi,
+
+I'm Bryan Jaworski from JAWSAI911.com. I help notable South Florida restaurants use AI to elevate the guest experience and reduce friction for the team.
+
+For a MICHELIN Guide restaurant like Buccan, an AI reservation management system handles bookings and special requests automatically, and personalized guest experience notes help your team deliver a more memorable visit without extra overhead. No double-booked tables, no dropped special requests.
+
+Worth 15 minutes?
+
+Bryan Jaworski
+info@jawsai911.com | JAWSAI911.com`
+      },
+
+      'Farmer\'s Table': {
+        to: 'info@dinefarmerstable.com',
+        subject: 'Automate your catering inquiries — quick idea for Farmer\'s Table',
+        body: `Hi,
+
+I'm Bryan Jaworski from JAWSAI911.com — I help South Florida restaurants and hospitality businesses use AI to handle the busy work so their team can focus on guests.
+
+For Farmer's Table specifically, I'm thinking an AI chatbot that handles catering inquiries and online ordering questions automatically — so your staff stops getting the same calls 30 times a day and every inquiry gets a fast, professional response even on a Saturday night.
+
+Most restaurants see response time drop from hours to under 2 minutes. That alone converts more catering leads.
+
+I'm local to Boca — 15 minutes is all I need to show you how it works.
+
+Bryan Jaworski
+info@jawsai911.com | JAWSAI911.com`
+      },
+
+      'The Spa at PGA National Resort': {
+        to: 'Spareservations@pgaresort.com',
+        subject: 'AI membership management + personalized treatments — for PGA National Spa',
+        body: `Hi,
+
+I'm Bryan Jaworski from JAWSAI911.com — I help luxury wellness venues in South Florida use AI to increase membership value and reduce booking friction.
+
+For a 40,000 sq ft resort spa like PGA National, an AI system tracks guest preferences across visits, suggests personalized treatment sequences, and handles booking automatically — making every guest's experience feel tailored without adding to your team's workload.
+
+Worth a 15-minute call to explore what this looks like for your spa?
+
+Bryan Jaworski
+info@jawsai911.com | JAWSAI911.com`
+      },
+
+      'Zimmerman Advertising': {
+        subject: 'AI campaign optimization for Zimmerman — quick idea',
+        body: `Hi,
+
+I'm Bryan Jaworski from JAWSAI911.com. I help South Florida advertising and digital marketing agencies use AI to deliver better results for their clients faster.
+
+For a firm with Zimmerman's reach, AI-powered audience targeting and campaign optimization tools can improve performance across client accounts while cutting the manual analysis time your team puts in. Better outcomes, faster — which is a story that sells itself to clients.
+
+Worth 15 minutes to compare notes?
+
+Bryan Jaworski
+info@jawsai911.com | JAWSAI911.com`
+      },
+
+      'Berkowitz Pollack Brant Advisors + CPAs': {
+        subject: 'AI for client financial reporting at BPB — quick idea',
+        body: `Hi,
+
+I'm Bryan Jaworski from JAWSAI911.com. I help South Florida accounting and advisory firms use AI to automate the reporting and communication that takes the most time.
+
+For BPB's multi-office practice, AI-powered client financial dashboards generate automatically from your existing data — so clients get real-time visibility and your team spends less time on manual report generation and more time on advisory work that commands higher fees.
+
+Worth 15 minutes?
+
+Bryan Jaworski
+info@jawsai911.com | JAWSAI911.com`
+      },
+
+      'Southern Glazer\'s Wine & Spirits': {
+        subject: 'AI demand forecasting + route optimization for Southern Glazer\'s',
+        body: `Hi,
+
+I'm Bryan Jaworski from JAWSAI911.com. I work with large South Florida distributors on AI tools for demand forecasting and route optimization.
+
+For a network of Southern Glazer's scale — 40+ distribution centers — AI demand forecasting reduces overstock and stockouts systematically, while route optimization cuts delivery costs across your fleet. The ROI at your volume compounds fast.
+
+Worth a conversation with your ops or tech team?
+
+Bryan Jaworski
+info@jawsai911.com | JAWSAI911.com`
+      },
+
+      'Cheney Brothers': {
+        subject: 'AI forecasting for food service distribution — quick question',
+        body: `Hi,
+
+I'm Bryan Jaworski from JAWSAI911.com. I help food service distributors in South Florida use AI to reduce waste and delivery costs.
+
+For Cheney Brothers, AI order forecasting predicts demand shifts before they happen — so you're not over-ordered on perishables or short on high-velocity items during a rush. Pairs with delivery route optimization for compounding savings across your operation.
+
+Worth 15 minutes?
+
+Bryan Jaworski
+info@jawsai911.com | JAWSAI911.com`
+      },
+
+      'Cleveland Clinic Florida': {
+        subject: 'AI for patient triage and scheduling at Cleveland Clinic Florida',
+        body: `Hi,
+
+I'm Bryan Jaworski from JAWSAI911.com. I help South Florida healthcare systems use AI to reduce administrative burden and improve patient flow.
+
+For Cleveland Clinic Florida, an AI patient triage chatbot handles initial symptom screening and appointment routing automatically — reducing time-to-care for patients and load on your scheduling staff. Clinical documentation AI also reduces physician charting time significantly.
+
+Worth 15 minutes with your operations or innovation team?
+
+Bryan Jaworski
+info@jawsai911.com | JAWSAI911.com`
+      }
+
+    };
+    // ── END EMAIL DRAFTS ─────────────────────────────────────────────────────
+
     let rows = [];
 
     function parseCsv(text) {
       const records = [];
-      let row = [];
-      let value = '';
-      let quoted = false;
+      let row = [], value = '', quoted = false;
       for (let i = 0; i < text.length; i++) {
-        const char = text[i];
-        const next = text[i + 1];
-        if (char === '"' && quoted && next === '"') {
-          value += '"';
-          i++;
-        } else if (char === '"') {
-          quoted = !quoted;
-        } else if (char === ',' && !quoted) {
-          row.push(value);
-          value = '';
-        } else if ((char === '\n' || char === '\r') && !quoted) {
+        const char = text[i], next = text[i + 1];
+        if (char === '"' && quoted && next === '"') { value += '"'; i++; }
+        else if (char === '"') { quoted = !quoted; }
+        else if (char === ',' && !quoted) { row.push(value); value = ''; }
+        else if ((char === '\n' || char === '\r') && !quoted) {
           if (char === '\r' && next === '\n') i++;
           row.push(value);
           if (row.some(cell => cell.trim())) records.push(row);
-          row = [];
-          value = '';
-        } else {
-          value += char;
-        }
+          row = []; value = '';
+        } else { value += char; }
       }
-      if (value || row.length) {
-        row.push(value);
-        records.push(row);
-      }
+      if (value || row.length) { row.push(value); records.push(row); }
       const headers = records.shift();
       return records.map(record => Object.fromEntries(headers.map((key, index) => [key, record[index] || ''])));
     }
 
-    function priorityFor(row) {
-      return priorities.get(row.Industry) || 'cool';
-    }
+    function priorityFor(row) { return priorities.get(row.Industry) || 'cool'; }
 
     function filteredRows() {
       const q = document.querySelector('#search').value.trim().toLowerCase();
@@ -309,11 +712,16 @@
 
     function card(row) {
       const priority = priorityFor(row);
+      const name = row['Business Name'];
       const mail = row.Email ? `<a href="mailto:${row.Email}">${row.Email}</a>` : '';
       const phone = row.Phone ? `<a href="tel:${row.Phone}">${row.Phone}</a>` : '';
+      const hasDraft = EMAIL_DRAFTS[name];
+      const draftBtn = hasDraft
+        ? `<button class="btn-draft" onclick="showDraft(${JSON.stringify(name)})">✉ Draft Email</button>`
+        : '';
       return `
         <article class="card">
-          <h3>${row['Business Name']}</h3>
+          <h3>${name}</h3>
           <div class="chips">
             <span class="chip ${priority}">${priority.toUpperCase()}</span>
             <span class="chip">${row.Industry}</span>
@@ -325,6 +733,7 @@
             <a href="${row.Website}" target="_blank" rel="noreferrer">Website</a>
             ${phone}
             ${mail}
+            ${draftBtn}
           </div>
         </article>
       `;
@@ -333,11 +742,7 @@
     function renderBoard() {
       const data = filteredRows();
       renderStats(data);
-      const groups = [
-        ['hot', 'Hot'],
-        ['warm', 'Warm'],
-        ['cool', 'Research']
-      ];
+      const groups = [['hot','Hot'],['warm','Warm'],['cool','Research']];
       document.querySelector('#board').innerHTML = groups.map(([key, label]) => {
         const groupRows = data.filter(row => priorityFor(row) === key);
         return `
@@ -353,18 +758,50 @@
       const select = document.querySelector(id);
       for (const value of [...new Set(values)].sort()) {
         const option = document.createElement('option');
-        option.value = value;
-        option.textContent = value;
+        option.value = value; option.textContent = value;
         select.append(option);
       }
     }
 
     function exportCsv() {
       const link = document.createElement('a');
-      link.href = csvUrl;
-      link.download = 'ai-leads-west-palm-beach.csv';
-      link.click();
+      link.href = csvUrl; link.download = 'ai-leads-west-palm-beach.csv'; link.click();
     }
+
+    // ── EMAIL MODAL ──────────────────────────────────────────────────────────
+    function showDraft(bizName) {
+      const d = EMAIL_DRAFTS[bizName];
+      if (!d) return;
+      document.getElementById('em-biz').textContent = bizName;
+      document.getElementById('em-to').value = d.to || '';
+      document.getElementById('em-subject').value = d.subject || '';
+      document.getElementById('em-body').value = d.body || '';
+      document.getElementById('copy-confirm').style.display = 'none';
+      document.getElementById('email-overlay').classList.add('open');
+    }
+
+    function closeEmail() {
+      document.getElementById('email-overlay').classList.remove('open');
+    }
+
+    function openInMail() {
+      const to = document.getElementById('em-to').value.trim();
+      const subject = encodeURIComponent(document.getElementById('em-subject').value);
+      const body = encodeURIComponent(document.getElementById('em-body').value);
+      window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+    }
+
+    function copyBody() {
+      const body = document.getElementById('em-body').value;
+      navigator.clipboard.writeText(body).then(() => {
+        const el = document.getElementById('copy-confirm');
+        el.style.display = 'inline';
+        setTimeout(() => { el.style.display = 'none'; }, 2000);
+      });
+    }
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeEmail(); });
+    // ── END EMAIL MODAL ──────────────────────────────────────────────────────
 
     fetch(csvUrl)
       .then(response => response.text())
