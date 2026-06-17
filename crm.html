@@ -39,9 +39,10 @@
     header img { height: 36px; filter: brightness(1.1) drop-shadow(0 0 8px rgba(56,189,248,0.4)); }
     header .hd-text h1 { font-size: clamp(18px, 2vw, 24px); font-weight: 900; margin: 0 0 2px; }
     header .hd-text p { color: var(--muted); font-size: 12px; margin: 0; }
-    header .hd-actions { margin-left: auto; display: flex; gap: 10px; align-items: center; }
-    header .hd-actions a { font-size: 12px; color: var(--muted); text-decoration: none; }
-    header .hd-actions a:hover { color: var(--brand-ink); }
+    header .hd-actions { margin-left: auto; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    header .hd-actions a { font-size: 13px; font-weight: 600; color: var(--muted); text-decoration: none; padding: 6px 12px; border-radius: 6px; border: 1px solid transparent; white-space: nowrap; }
+    header .hd-actions a:hover { color: var(--brand-ink); border-color: var(--brand-ink); background: rgba(0,102,204,.06); }
+    header .hd-actions a.tool-link { color: var(--brand-ink); border-color: rgba(0,102,204,.3); background: rgba(0,102,204,.06); }
 
     h1 { margin: 0 0 6px; font-size: clamp(24px, 3vw, 38px); letter-spacing: 0; }
     .subhead { color: var(--muted); margin: 0; }
@@ -132,8 +133,8 @@
       <p>West Palm Beach region prospects · outreach pipeline</p>
     </div>
     <div class="hd-actions">
-      <a href="JAWS_BUSINESS_CARD.html" target="_blank">🪪 Business Card</a>
-      <a href="JAWS_LETTERHEAD.html" target="_blank">📄 Letterhead</a>
+      <a href="JAWS_BUSINESS_CARD.html" target="_blank" class="tool-link">🪪 Business Card</a>
+      <a href="JAWS_LETTERHEAD.html" target="_blank" class="tool-link">📄 Letterhead</a>
       <a href="tracker.html">Job Tracker</a>
       <a href="index.html">← Site</a>
       <a href="#" onclick="sessionStorage.removeItem('jaw_auth');location.href='login.html';return false;" style="color:#f85149;">Logout</a>
