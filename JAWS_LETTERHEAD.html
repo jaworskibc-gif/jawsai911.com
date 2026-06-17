@@ -29,9 +29,9 @@ html,body{background:#1a1a1a;font-family:var(--font);min-height:100vh;padding:32
 /* HEADER */
 .lh-header{
   background:linear-gradient(135deg,#050d1a 0%,#081224 60%,#050d1a 100%);
-  padding:28px 48px 22px;
+  padding:20px 48px;
   display:flex;align-items:center;justify-content:space-between;
-  position:relative;overflow:hidden;
+  position:relative;overflow:hidden;min-height:140px;
 }
 .lh-header::after{
   content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
@@ -42,7 +42,7 @@ html,body{background:#1a1a1a;font-family:var(--font);min-height:100vh;padding:32
   background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ccircle cx='1' cy='1' r='.4' fill='rgba(0,170,255,.06)'/%3E%3C/svg%3E");
   pointer-events:none;
 }
-.lh-logo img{height:90px;object-fit:contain;filter:drop-shadow(0 0 14px rgba(0,170,255,.6));position:relative;z-index:1;}
+.lh-logo img{height:160px;width:340px;object-fit:contain;object-position:left center;filter:drop-shadow(0 0 18px rgba(0,170,255,.7));position:relative;z-index:1;}
 .lh-brand{text-align:right;position:relative;z-index:1;}
 .lh-brand-name{font-size:22px;font-weight:900;color:#fff;letter-spacing:1px;}
 .lh-brand-name span{color:#00aaff;}
