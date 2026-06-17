@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JAWSAI911 — Letterhead</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#050d1a;--blue:#00aaff;--blue2:#0066cc;
+  --white:#ffffff;--muted:#7ab3d9;
+  --font:'Segoe UI',Arial,sans-serif;
+}
+html,body{background:#1a1a1a;font-family:var(--font);min-height:100vh;padding:32px;display:flex;flex-direction:column;align-items:center;gap:20px;}
+
+.controls{display:flex;gap:12px;}
+.btn{padding:10px 22px;border-radius:8px;border:1px solid rgba(0,170,255,.4);background:rgba(0,170,255,.1);color:var(--blue);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .15s;}
+.btn:hover{background:rgba(0,170,255,.2);}
+
+/* LETTER PAGE */
+.page{
+  width:816px;min-height:1056px;
+  background:#ffffff;
+  box-shadow:0 4px 40px rgba(0,0,0,.5);
+  display:flex;flex-direction:column;
+  position:relative;overflow:hidden;
+}
+
+/* HEADER */
+.lh-header{
+  background:linear-gradient(135deg,#050d1a 0%,#081224 60%,#050d1a 100%);
+  padding:28px 48px 22px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:relative;overflow:hidden;
+}
+.lh-header::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,#00aaff,#0066cc,#00aaff,transparent);
+}
+.lh-header::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ccircle cx='1' cy='1' r='.4' fill='rgba(0,170,255,.06)'/%3E%3C/svg%3E");
+  pointer-events:none;
+}
+.lh-logo img{height:48px;object-fit:contain;filter:drop-shadow(0 0 10px rgba(0,170,255,.5));position:relative;z-index:1;}
+.lh-brand{text-align:right;position:relative;z-index:1;}
+.lh-brand-name{font-size:22px;font-weight:900;color:#fff;letter-spacing:1px;}
+.lh-brand-name span{color:#00aaff;}
+.lh-brand-sub{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#7ab3d9;margin-top:2px;}
+.lh-brand-tag{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0088cc;margin-top:4px;display:flex;align-items:center;justify-content:flex-end;gap:6px;}
+.lh-brand-tag::before{content:'—';color:#0066cc;}
+
+/* CONTACT STRIP */
+.lh-contact-strip{
+  background:#081224;
+  padding:10px 48px;
+  display:flex;gap:32px;
+  border-bottom:1px solid rgba(0,170,255,.15);
+}
+.lh-contact-item{display:flex;align-items:center;gap:7px;font-size:11px;color:#7ab3d9;}
+.lh-contact-item span{color:rgba(255,255,255,.7);}
+
+/* BODY */
+.lh-body{flex:1;padding:44px 48px;background:#fff;color:#1a1a2e;font-size:13px;line-height:1.8;}
+
+/* PLACEHOLDERS */
+.date-line{color:#888;font-size:12px;margin-bottom:28px;}
+.recipient-block{margin-bottom:28px;line-height:1.7;font-size:13px;color:#333;}
+.subject-line{font-weight:700;color:#050d1a;margin-bottom:24px;font-size:13px;}
+.subject-line span{color:#0066cc;}
+.body-text{color:#333;margin-bottom:16px;font-size:13px;}
+.body-text.placeholder{color:#aaa;font-style:italic;}
+
+/* SIGNATURE BLOCK */
+.lh-sig-block{margin-top:40px;}
+.lh-sig-name{font-size:16px;font-weight:900;color:#050d1a;letter-spacing:.5px;}
+.lh-sig-name span{color:#0066cc;}
+.lh-sig-title{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#0066cc;margin-bottom:10px;margin-top:2px;}
+.lh-sig-contacts{display:flex;flex-direction:column;gap:3px;}
+.lh-sig-contact{font-size:11px;color:#555;}
+.lh-sig-contact span{color:#0066cc;}
+
+/* FOOTER */
+.lh-footer{
+  background:linear-gradient(135deg,#050d1a 0%,#081224 100%);
+  padding:14px 48px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.lh-footer-left{font-size:9px;color:#7ab3d9;letter-spacing:2px;text-transform:uppercase;}
+.lh-footer-right{font-size:9px;color:#0088cc;letter-spacing:2px;text-transform:uppercase;font-weight:700;}
+.lh-footer-line{position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#00aaff,transparent);}
+
+/* SIDE ACCENT */
+.lh-side-accent{
+  position:absolute;left:0;top:120px;bottom:60px;width:3px;
+  background:linear-gradient(to bottom,transparent,#0066cc,#00aaff,#0066cc,transparent);
+}
+
+@media print{
+  html,body{background:#fff;padding:0;}
+  .controls{display:none;}
+  .page{box-shadow:none;width:100%;}
+}
+</style>
+</head>
+<body>
+
+<div class="controls">
+  <button class="btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
+  <button class="btn" onclick="clearPlaceholders()">Clear Placeholders</button>
+</div>
+
+<div class="page" id="letter-page">
+  <div class="lh-side-accent"></div>
+
+  <!-- HEADER -->
+  <div class="lh-header">
+    <div class="lh-logo">
+      <img src="jawsai911-logo-glow.png" alt="JAWSAI911">
+    </div>
+    <div class="lh-brand">
+      <div class="lh-brand-name">JAWSAI<span>911</span>.COM</div>
+      <div class="lh-brand-sub">AI Automation &amp; Business Solutions</div>
+      <div class="lh-brand-tag">Leave The School Behind</div>
+    </div>
+  </div>
+
+  <!-- CONTACT STRIP -->
+  <div class="lh-contact-strip">
+    <div class="lh-contact-item">📞 <span>786-761-2950</span></div>
+    <div class="lh-contact-item">✉ <span>info@jawsai911.com</span></div>
+    <div class="lh-contact-item">📍 <span>Royal Palm Beach, FL</span></div>
+    <div class="lh-contact-item">🌐 <span>jawsai911.com</span></div>
+  </div>
+
+  <!-- BODY -->
+  <div class="lh-body">
+    <div class="date-line" contenteditable="true">June 17, 2026</div>
+
+    <div class="recipient-block" contenteditable="true">
+      [Recipient Name]<br>
+      [Title]<br>
+      [Company]<br>
+      [Address]
+    </div>
+
+    <div class="subject-line">RE: <span contenteditable="true">AI Automation Solutions for [Company Name]</span></div>
+
+    <p class="body-text" contenteditable="true">Dear [Name],</p>
+
+    <p class="body-text placeholder" contenteditable="true">
+      [Your letter body goes here. Click to edit. This is a fully editable letterhead — click any text to modify it before printing or saving as PDF.]
+    </p>
+
+    <p class="body-text placeholder" contenteditable="true">
+      [Additional paragraph...]
+    </p>
+
+    <p class="body-text placeholder" contenteditable="true">
+      [Closing paragraph...]
+    </p>
+
+    <div class="lh-sig-block">
+      <p class="body-text" style="margin-bottom:40px;">Sincerely,</p>
+      <div class="lh-sig-name">BRYAN <span>JAWORSKI</span></div>
+      <div class="lh-sig-title">Founder &amp; CEO — JAWSAI911.com</div>
+      <div class="lh-sig-contacts">
+        <div class="lh-sig-contact">📞 786-761-2950 &nbsp;·&nbsp; ✉ <span>info@jawsai911.com</span></div>
+        <div class="lh-sig-contact">Royal Palm Beach, FL &nbsp;·&nbsp; <span>jawsai911.com</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="lh-footer" style="position:relative;">
+    <div class="lh-footer-line"></div>
+    <div class="lh-footer-left">JAWSAI911.COM · Royal Palm Beach, FL · info@jawsai911.com</div>
+    <div class="lh-footer-right">When Seconds Matter, Intelligence Leads.</div>
+  </div>
+</div>
+
+<script>
+function clearPlaceholders() {
+  document.querySelectorAll('.placeholder').forEach(el => {
+    el.textContent = '';
+    el.classList.remove('placeholder');
+  });
+  document.querySelectorAll('[contenteditable]').forEach(el => {
+    if (el.textContent.startsWith('[')) el.textContent = '';
+  });
+}
+</script>
+</body>
+</html>

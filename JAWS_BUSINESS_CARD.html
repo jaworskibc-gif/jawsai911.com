@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bryan Jaworski — JAWSAI911.com</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#050d1a;--bg2:#080f1f;--border:#0066cc;--blue:#00aaff;--blue2:#0066cc;
+  --white:#ffffff;--muted:#7ab3d9;
+  --font:'Segoe UI',Arial,sans-serif;
+}
+html,body{min-height:100vh;background:var(--bg);color:var(--white);font-family:var(--font);}
+body{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;gap:32px;}
+
+/* ── STARS BG ── */
+body::before{
+  content:'';position:fixed;inset:0;
+  background:radial-gradient(ellipse at 20% 50%,rgba(0,102,204,.15) 0%,transparent 60%),
+             radial-gradient(ellipse at 80% 50%,rgba(0,170,255,.08) 0%,transparent 60%),
+             radial-gradient(ellipse at 50% 0%,rgba(0,170,255,.12) 0%,transparent 50%);
+  pointer-events:none;z-index:0;
+}
+
+.label{font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--muted);z-index:1;margin-bottom:-16px;}
+
+/* ── CARD ── */
+.card{
+  position:relative;z-index:1;
+  display:grid;grid-template-columns:1fr 1fr;
+  max-width:780px;width:100%;
+  border:1px solid rgba(0,170,255,.3);border-radius:16px;overflow:hidden;
+  box-shadow:0 0 40px rgba(0,170,255,.15),0 0 80px rgba(0,102,204,.1);
+  background:linear-gradient(135deg,#060e1e 0%,#080f20 50%,#060e1e 100%);
+}
+.card::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='1' cy='1' r='.5' fill='rgba(0,170,255,.08)'/%3E%3C/svg%3E");
+  pointer-events:none;
+}
+
+/* LEFT PANEL */
+.card-left{padding:36px 32px;border-right:1px solid rgba(0,170,255,.2);display:flex;flex-direction:column;gap:0;}
+.logo-wrap{margin-bottom:14px;}
+.logo-wrap img{height:56px;object-fit:contain;filter:drop-shadow(0 0 12px rgba(0,170,255,.5));}
+.tagline-bar{display:flex;align-items:center;gap:8px;margin-bottom:28px;}
+.tagline-bar::before,.tagline-bar::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--blue2));}
+.tagline-bar::after{background:linear-gradient(90deg,var(--blue2),transparent);}
+.tagline-text{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--blue);white-space:nowrap;}
+.name{font-size:22px;font-weight:900;letter-spacing:1px;margin-bottom:4px;}
+.name span{color:var(--blue);}
+.title{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--blue);margin-bottom:24px;}
+.contact-list{display:flex;flex-direction:column;gap:10px;margin-bottom:28px;}
+.contact-item{display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.85);}
+.contact-icon{width:22px;height:22px;border-radius:50%;border:1px solid rgba(0,170,255,.4);background:rgba(0,170,255,.08);display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;}
+.qr-row{display:flex;align-items:flex-end;justify-content:space-between;margin-top:auto;}
+.qr-box{border:2px solid rgba(0,170,255,.4);border-radius:10px;padding:8px;background:rgba(255,255,255,.95);}
+.qr-box img{width:100px;height:100px;display:block;}
+.qr-label{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--blue);text-align:center;margin-top:6px;}
+
+/* RIGHT PANEL */
+.card-right{padding:36px 32px;position:relative;overflow:hidden;display:flex;flex-direction:column;}
+.globe-bg{position:absolute;right:-20px;bottom:-20px;width:200px;opacity:.15;pointer-events:none;}
+.panel-title{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--white);margin-bottom:4px;}
+.panel-title span{color:var(--blue);}
+.panel-rule{width:100%;height:1px;background:linear-gradient(90deg,var(--blue2),transparent);margin-bottom:24px;}
+.feature-list{display:flex;flex-direction:column;gap:18px;flex:1;}
+.feature{display:flex;gap:12px;align-items:flex-start;}
+.feature-icon{width:36px;height:36px;border-radius:8px;border:1px solid rgba(0,170,255,.3);background:rgba(0,170,255,.08);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.feature-name{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--white);margin-bottom:3px;}
+.feature-desc{font-size:11px;color:var(--muted);line-height:1.5;}
+.panel-footer{margin-top:auto;padding-top:20px;border-top:1px solid rgba(0,170,255,.15);}
+.panel-cta{font-size:13px;color:var(--white);}
+.panel-cta span{color:var(--blue);font-weight:700;}
+
+/* ── EMAIL SIG ── */
+.sig{
+  position:relative;z-index:1;
+  display:grid;grid-template-columns:220px 1fr 1fr;
+  max-width:780px;width:100%;
+  border:1px solid rgba(0,170,255,.3);border-radius:16px;overflow:hidden;
+  box-shadow:0 0 40px rgba(0,170,255,.12);
+  background:linear-gradient(135deg,#060e1e 0%,#080f20 100%);
+}
+.sig-logo{padding:28px 24px;border-right:1px solid rgba(0,170,255,.15);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;}
+.sig-logo img{height:44px;object-fit:contain;filter:drop-shadow(0 0 10px rgba(0,170,255,.5));}
+.sig-tagline-bar{display:flex;align-items:center;gap:6px;width:100%;}
+.sig-tagline-bar::before,.sig-tagline-bar::after{content:'';flex:1;height:1px;background:var(--blue2);}
+.sig-tagline-text{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--blue);white-space:nowrap;}
+.sig-info{padding:28px 24px;border-right:1px solid rgba(0,170,255,.15);}
+.sig-name{font-size:20px;font-weight:900;margin-bottom:3px;}
+.sig-name span{color:var(--blue);}
+.sig-title{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--blue);margin-bottom:16px;}
+.sig-contacts{display:flex;flex-direction:column;gap:7px;}
+.sig-contact{display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.85);}
+.sig-contact-icon{width:18px;height:18px;border-radius:50%;border:1px solid rgba(0,170,255,.4);background:rgba(0,170,255,.08);display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0;}
+.sig-cta{padding:28px 24px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;}
+.sig-cta::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(0,102,204,.2) 0%,transparent 70%);}
+.sig-cta-line1{font-size:22px;font-weight:900;line-height:1.1;position:relative;z-index:1;}
+.sig-cta-line2{font-size:22px;font-weight:900;color:var(--blue);line-height:1.1;position:relative;z-index:1;}
+.sig-cta-line3{font-size:14px;color:var(--white);margin-top:4px;position:relative;z-index:1;}
+
+/* COPY BUTTON */
+.copy-btn{
+  z-index:1;padding:10px 24px;border-radius:8px;border:1px solid rgba(0,170,255,.4);
+  background:rgba(0,170,255,.1);color:var(--blue);font-size:12px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .15s;
+}
+.copy-btn:hover{background:rgba(0,170,255,.2);border-color:var(--blue);}
+
+@media(max-width:600px){
+  .card{grid-template-columns:1fr;}
+  .card-right{display:none;}
+  .sig{grid-template-columns:1fr;}
+  .sig-cta{display:none;}
+}
+</style>
+</head>
+<body>
+
+<div class="label">Digital Business Card</div>
+
+<!-- BUSINESS CARD -->
+<div class="card">
+  <!-- LEFT -->
+  <div class="card-left">
+    <div class="logo-wrap">
+      <img src="jawsai911-logo-glow.png" alt="JAWSAI911">
+    </div>
+    <div class="tagline-bar"><span class="tagline-text">Leave The School Behind</span></div>
+
+    <div class="name">BRYAN <span>JAWORSKI</span></div>
+    <div class="title">Founder &amp; CEO</div>
+
+    <div class="contact-list">
+      <div class="contact-item"><div class="contact-icon">📞</div> 786-761-2950</div>
+      <div class="contact-item"><div class="contact-icon">✉</div> info@jawsai911.com</div>
+      <div class="contact-item"><div class="contact-icon">📍</div> Royal Palm Beach, FL</div>
+    </div>
+
+    <div class="qr-row">
+      <div>
+        <div class="qr-box">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://jawsai911.com&color=000000&bgcolor=ffffff" alt="QR Code">
+        </div>
+        <div class="qr-label">JAWSAI911.COM</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="card-right">
+    <div class="panel-title">AI-POWERED SOLUTIONS FOR <span>REAL-WORLD RESULTS</span></div>
+    <div class="panel-rule"></div>
+    <div class="feature-list">
+      <div class="feature">
+        <div class="feature-icon">🧠</div>
+        <div><div class="feature-name">AI-Powered Intelligence</div><div class="feature-desc">Advanced AI analyzes data from multiple sources to deliver actionable insights in real time.</div></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📡</div>
+        <div><div class="feature-name">Real-Time Awareness</div><div class="feature-desc">Live monitoring and predictive analytics keep you ahead of every opportunity.</div></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">⚡</div>
+        <div><div class="feature-name">Rapid Response</div><div class="feature-desc">Automated workflows and smart recommendations enable faster, smarter decisions.</div></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🎯</div>
+        <div><div class="feature-name">Unified Command</div><div class="feature-desc">One platform. One view. Total coordination across your business.</div></div>
+      </div>
+    </div>
+    <div class="panel-footer">
+      <div class="panel-cta">WHEN SECONDS MATTER, <span>INTELLIGENCE LEADS.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- EMAIL SIGNATURE -->
+<div class="label">Email Signature</div>
+
+<div class="sig" id="sig-block">
+  <div class="sig-logo">
+    <img src="jawsai911-logo-glow.png" alt="JAWSAI911">
+    <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#00aaff;text-align:center;">AI Automation &amp;<br>Business Solutions</div>
+    <div class="sig-tagline-bar"><span class="sig-tagline-text">Leave The School Behind</span></div>
+  </div>
+  <div class="sig-info">
+    <div class="sig-name">BRYAN <span>JAWORSKI</span></div>
+    <div class="sig-title">Founder &amp; CEO</div>
+    <div class="sig-contacts">
+      <div class="sig-contact"><div class="sig-contact-icon">📞</div> 786-761-2950</div>
+      <div class="sig-contact"><div class="sig-contact-icon">✉</div> info@jawsai911.com</div>
+      <div class="sig-contact"><div class="sig-contact-icon">📍</div> Royal Palm Beach, FL</div>
+      <div class="sig-contact"><div class="sig-contact-icon">🌐</div> <span style="color:#00aaff;font-weight:700;">JAWSAI911.COM</span></div>
+    </div>
+  </div>
+  <div class="sig-cta">
+    <div class="sig-cta-line1">WHEN</div>
+    <div class="sig-cta-line1">SECONDS</div>
+    <div class="sig-cta-line2">MATTER,</div>
+    <div class="sig-cta-line2">INTELLIGENCE</div>
+    <div class="sig-cta-line3">LEADS.</div>
+  </div>
+</div>
+
+<button class="copy-btn" onclick="copySig()">Copy Email Signature HTML</button>
+
+<script>
+function copySig() {
+  const sig = document.getElementById('sig-block');
+  const html = sig.outerHTML;
+  navigator.clipboard.writeText(html).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = '✓ Copied — Paste into Gmail Signature Settings';
+    btn.style.color = '#2ecc71';
+    btn.style.borderColor = '#2ecc71';
+    setTimeout(() => {
+      btn.textContent = 'Copy Email Signature HTML';
+      btn.style.color = '';
+      btn.style.borderColor = '';
+    }, 3000);
+  });
+}
+</script>
+</body>
+</html>
