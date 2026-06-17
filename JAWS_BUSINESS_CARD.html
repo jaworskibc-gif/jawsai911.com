@@ -121,7 +121,13 @@ body::before{
 
 <div class="label">Digital Business Card</div>
 
-<!-- BUSINESS CARD -->
+<!-- BUSINESS CARD — full design image -->
+<div style="position:relative;z-index:1;max-width:780px;width:100%;border:1px solid rgba(0,170,255,.3);border-radius:16px;overflow:hidden;box-shadow:0 0 40px rgba(0,170,255,.15);">
+  <img src="jaws-card-design.png" alt="JAWSAI911 Business Card" style="width:100%;display:block;">
+</div>
+
+<div style="display:none;">
+<!-- BUSINESS CARD OLD -->
 <div class="card">
   <!-- LEFT -->
   <div class="card-left">
@@ -180,7 +186,12 @@ body::before{
 <!-- EMAIL SIGNATURE -->
 <div class="label">Email Signature</div>
 
-<div class="sig" id="sig-block">
+<!-- EMAIL SIG — use the panel image directly -->
+<div id="sig-block" style="position:relative;z-index:1;max-width:780px;width:100%;border:1px solid rgba(0,170,255,.3);border-radius:12px;overflow:hidden;box-shadow:0 0 30px rgba(0,170,255,.12);">
+  <img src="jaws-email-sig-panel.png" alt="Email Signature" style="width:100%;display:block;">
+</div>
+
+<div style="display:none;" id="sig-block-hidden">
   <div class="sig-logo">
     <img src="jawsai911-logo-dark-hero.jpeg" alt="JAWSAI911">
     <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#00aaff;text-align:center;">AI Automation &amp;<br>Business Solutions</div>
