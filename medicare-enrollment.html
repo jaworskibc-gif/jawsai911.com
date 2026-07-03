@@ -125,6 +125,92 @@ footer{border-top:1px solid rgba(59,130,246,.12);padding:24px 52px;display:flex;
     </div>
   </section>
 
+  <section class="cl-section" id="compliance-lock">
+    <style>
+      .cl-section { background:#010711; color:#e8eef7; padding:88px 24px; position:relative; overflow:hidden; }
+      .cl-section .cl-inner { max-width:1100px; margin:0 auto; }
+      .cl-section .cl-eyebrow { color:#00C4B4; font-size:13px; letter-spacing:4px; text-transform:uppercase; font-weight:700; margin-bottom:14px; }
+      .cl-section h2 { font-size:clamp(30px,5vw,52px); line-height:1.05; margin:0 0 18px; font-weight:800; }
+      .cl-section h2 .cl-red { color:#E8175D; }
+      .cl-section .cl-lede { font-size:clamp(16px,2vw,19px); line-height:1.6; color:#9fb2cc; max-width:640px; margin-bottom:48px; }
+      .cl-section .cl-grid { display:grid; grid-template-columns:1.1fr 1fr; gap:48px; align-items:center; }
+      .cl-demo { background:#0a1428; border:1px solid rgba(0,180,255,0.25); border-radius:14px; padding:0; box-shadow:0 30px 80px rgba(0,0,0,0.6); transition:box-shadow 0.3s, border-color 0.3s; }
+      .cl-demo.cl-locked { border-color:#E8175D; box-shadow:0 0 0 3px rgba(232,23,93,0.35), 0 30px 80px rgba(232,23,93,0.25); animation:cl-flash 0.9s ease-in-out 2; }
+      @keyframes cl-flash { 0%,100%{background:#0a1428;} 50%{background:#2a0a18;} }
+      .cl-demo-bar { display:flex; align-items:center; gap:8px; padding:12px 16px; border-bottom:1px solid rgba(255,255,255,0.07); }
+      .cl-demo-bar span { width:10px; height:10px; border-radius:50%; background:#22314d; }
+      .cl-demo-bar .cl-status { margin-left:auto; font-size:11px; letter-spacing:2px; font-weight:700; color:#00C4B4; }
+      .cl-demo.cl-locked .cl-demo-bar .cl-status { color:#E8175D; }
+      .cl-demo-body { padding:22px 22px 26px; min-height:250px; }
+      .cl-line { height:11px; border-radius:6px; background:#16233e; margin-bottom:12px; }
+      .cl-line.w60{width:60%;} .cl-line.w85{width:85%;} .cl-line.w45{width:45%;}
+      .cl-alert { display:none; background:rgba(232,23,93,0.12); border:1px solid #E8175D; border-radius:10px; padding:16px; margin-top:6px; }
+      .cl-demo.cl-locked .cl-alert { display:block; }
+      .cl-alert .cl-alert-head { color:#E8175D; font-weight:800; font-size:13px; letter-spacing:2px; margin-bottom:8px; }
+      .cl-alert .cl-say { background:#010711; border-radius:8px; padding:12px 14px; font-size:14px; line-height:1.5; color:#fff; border-left:3px solid #00B4FF; }
+      .cl-alert .cl-say b { color:#00B4FF; font-size:11px; letter-spacing:2px; display:block; margin-bottom:5px; }
+      .cl-unlock { display:none; margin-top:14px; color:#00C4B4; font-weight:700; font-size:13px; letter-spacing:1px; }
+      .cl-demo.cl-cleared .cl-unlock { display:block; }
+      .cl-demo.cl-cleared { border-color:#00C4B4; }
+      .cl-points { display:flex; flex-direction:column; gap:26px; }
+      .cl-point h3 { font-size:18px; margin:0 0 6px; color:#fff; }
+      .cl-point h3 em { color:#00B4FF; font-style:normal; }
+      .cl-point p { margin:0; color:#9fb2cc; line-height:1.6; font-size:15px; }
+      .cl-cta { margin-top:36px; }
+      .cl-cta a { display:inline-block; background:#E8175D; color:#fff; text-decoration:none; font-weight:800; letter-spacing:1px; padding:16px 32px; border-radius:10px; font-size:15px; }
+      .cl-cta a:hover { background:#ff2f73; }
+      .cl-footnote { margin-top:40px; font-size:12.5px; color:#5c6f8d; line-height:1.55; max-width:820px; }
+      @media (max-width:860px){
+        .cl-section { padding:64px 20px; }
+        .cl-section .cl-grid { grid-template-columns:1fr; gap:36px; }
+        .cl-cta a { display:block; text-align:center; }
+      }
+      @media (prefers-reduced-motion: reduce){
+        .cl-demo.cl-locked { animation:none; }
+      }
+    </style>
+
+    <div class="cl-inner">
+      <div class="cl-eyebrow">CCM Intelligent Enrollment System</div>
+      <h2>Compliance Lock&trade;<br>The screen turns <span class="cl-red">red</span>. The call cannot move forward. Until it is compliant.</h2>
+      <p class="cl-lede">Every other platform records violations and reports them weeks later. Ours stops the call in the moment, shows the agent the exact required language, and stays locked until they say it. Procedural violations do not get flagged. They get prevented.</p>
+
+      <div class="cl-grid">
+        <div class="cl-demo" id="clDemo" aria-label="Animated demonstration of the Compliance Lock screen">
+          <div class="cl-demo-bar"><span></span><span></span><span></span><div class="cl-status" id="clStatus">ENROLLMENT IN PROGRESS</div></div>
+          <div class="cl-demo-body">
+            <div class="cl-line w60"></div>
+            <div class="cl-line w85"></div>
+            <div class="cl-line w45"></div>
+            <div class="cl-alert">
+              <div class="cl-alert-head">&#9888; COMPLIANCE ISSUE - ENROLLMENT LOCKED</div>
+              <div class="cl-say"><b>SAY THIS TO CONTINUE</b>"We do not offer every plan available in your area. Any information we provide is limited to those plans we do offer in your area..."</div>
+              <div class="cl-unlock">&#10003; Required language confirmed - enrollment unlocked</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cl-points">
+          <div class="cl-point">
+            <h3>Your recordings become your <em>defense</em>, not your exposure</h3>
+            <p>CMS requires every enrollment call recorded and stored for 10 years. On other systems that tape is evidence against you. On ours, it captures the correction happening in real time, a self-correcting system, on the record, every call.</p>
+          </div>
+          <div class="cl-point">
+            <h3>Secret-shopper proof, <em>by architecture</em></h3>
+            <p>An agent cannot talk past a skipped SOA, missed TPMO disclaimer, or absent attestation. The workflow physically will not advance. One agent's mistake can put an entire agency's marketing authority at risk, unless the mistake cannot happen.</p>
+          </div>
+          <div class="cl-point">
+            <h3>Every lock is a <em>live coaching rep</em></h3>
+            <p>The agent sees the exact compliant language, says it, and moves on. Paired with live coaching, violations become training data, caught by AI in the moment, corrected by humans for good.</p>
+          </div>
+          <div class="cl-cta"><a href="https://calendly.com/jaworskibc">See the lock in action - book a live demo</a></div>
+        </div>
+      </div>
+
+      <p class="cl-footnote">Compliance Lock enforces procedural compliance steps like SOA capture, required disclosures, attestation, and active recording at the workflow level and provides real-time prompts for required verbal language. All calls remain fully recorded and auditable in accordance with CMS requirements. Compliance Lock supports and does not replace your organization's compliance program.</p>
+    </div>
+  </section>
+
   <section class="section">
     <div class="eyebrow">Automations We've Built</div>
     <div class="section-title">Real automations already running</div>
@@ -163,6 +249,26 @@ function openPortal(e){if(e)e.preventDefault();document.getElementById('portal-o
 function closePortal(){document.getElementById('portal-overlay').classList.remove('open');document.getElementById('portal-pass').value='';document.getElementById('portal-error').style.display='none'}
 function checkPortal(target){const v=document.getElementById('portal-pass').value;if(v===PORTAL_PASS){window.open(target||CRM_URL,'_blank');closePortal()}else{document.getElementById('portal-error').style.display='block';document.getElementById('portal-pass').value='';document.getElementById('portal-pass').focus()}}
 document.getElementById('portal-overlay').addEventListener('click',function(e){if(e.target===this)closePortal()});
+(function(){
+  var demo = document.getElementById('clDemo');
+  var status = document.getElementById('clStatus');
+  if(!demo || !status) return;
+  function cycle(){
+    demo.classList.remove('cl-cleared');
+    demo.classList.add('cl-locked');
+    status.textContent = 'LOCKED - COMPLIANCE ISSUE';
+    setTimeout(function(){
+      demo.classList.add('cl-cleared');
+      status.textContent = 'COMPLIANT - CONTINUE';
+    },3800);
+    setTimeout(function(){
+      demo.classList.remove('cl-locked','cl-cleared');
+      status.textContent = 'ENROLLMENT IN PROGRESS';
+    },6800);
+  }
+  setTimeout(cycle,1500);
+  setInterval(cycle,10500);
+})();
 </script>
 </body>
 </html>

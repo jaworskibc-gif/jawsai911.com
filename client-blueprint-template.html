@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Client Growth Blueprint Template | JAWSAI911</title>
+<meta name="description" content="Reusable one-page blueprint template for JAWSAI911 client proposals.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#08172b;
+  --navy2:#0e2646;
+  --blue:#13b6ff;
+  --blue2:#61c8ff;
+  --teal:#1fc8a2;
+  --green:#1fb36c;
+  --amber:#ffb020;
+  --red:#ff5f6d;
+  --purple:#7b61ff;
+  --card:#ffffff;
+  --text:#10233e;
+  --muted:#58708f;
+  --line:#d7e3f2;
+  --bg:#eff5fb;
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);padding:18px}
+.sheet{max-width:1320px;margin:0 auto}
+.hero{background:linear-gradient(135deg,var(--navy) 0%, #0a2240 58%, #112b54 100%);border-radius:10px;color:#fff;overflow:hidden;box-shadow:0 18px 44px rgba(8,23,43,0.2)}
+.hero-inner{display:grid;grid-template-columns:360px 1fr;gap:22px;align-items:center;padding:26px 28px}
+.brand-lock{padding-right:22px;border-right:2px solid rgba(255,255,255,0.26)}
+.brand-main{font-family:'Rajdhani',sans-serif;font-size:50px;font-weight:700;line-height:.95;letter-spacing:1px}
+.brand-main span{color:var(--blue)}
+.brand-sub{margin-top:10px;font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--blue2)}
+.hero-copy h1{font-family:'Rajdhani',sans-serif;font-size:60px;line-height:.95;font-weight:700;margin-bottom:10px}
+.hero-copy h1 span{color:var(--blue)}
+.hero-copy .sub{font-size:15px;color:var(--blue2);font-style:italic;margin-bottom:8px;font-weight:600}
+.hero-copy .desc{font-size:18px;line-height:1.6;color:rgba(255,255,255,0.86)}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:16px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;box-shadow:0 8px 24px rgba(16,35,62,0.08)}
+.panel-head{background:linear-gradient(180deg,#0b1e38,#0b2442);color:#fff;padding:12px 16px;display:flex;align-items:center;gap:10px;font-family:'Rajdhani',sans-serif;font-size:28px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.num{width:30px;height:30px;border-radius:8px;border:2px solid rgba(19,182,255,0.8);color:var(--blue);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;background:rgba(19,182,255,0.08)}
+.panel-body{padding:14px}
+.problem-grid,.solution-grid,.stack-grid,.impact-grid{display:grid;gap:12px}
+.problem-grid,.solution-grid{grid-template-columns:repeat(5,1fr)}
+.stack-grid{grid-template-columns:repeat(7,1fr)}
+.impact-grid{grid-template-columns:repeat(4,1fr)}
+.mini{background:#fff;border:1px solid #e7eef7;border-radius:10px;padding:14px 12px;min-height:142px}
+.mini .k{font-size:30px;margin-bottom:10px}
+.mini .t{font-size:12px;font-weight:800;line-height:1.35;margin-bottom:6px}
+.mini .p{font-size:12px;line-height:1.55;color:var(--muted)}
+.score{color:var(--red)} .loss{color:var(--purple)} .review{color:var(--amber)} .manual{color:#ef4444}
+.capture{color:var(--green)} .follow{color:#2563eb} .agent{color:#16a34a} .content{color:var(--purple)} .visibility{color:#3b82f6}
+.stack .t{font-size:13px}
+.stack .p{font-size:11px}
+.bottom-grid{display:grid;grid-template-columns:1.3fr 1fr 1.15fr;gap:16px;margin-top:16px}
+.invest-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.invest-card{background:#fff;border:1px solid #e7eef7;border-radius:10px;padding:16px;text-align:center}
+.invest-label{font-size:12px;color:var(--muted);margin-bottom:8px;font-weight:700}
+.invest-old{font-size:18px;color:#64748b;margin-bottom:10px}
+.invest-new{display:inline-block;background:linear-gradient(180deg,#0f9488,#0f766e);color:#fff;padding:12px 18px;border-radius:10px;font-family:'Rajdhani',sans-serif;font-size:32px;font-weight:700;line-height:1}
+.invest-new.blue{background:linear-gradient(180deg,#1d4ed8,#1e3a8a)}
+.cta-box{display:grid;grid-template-columns:170px 1fr;gap:18px;align-items:center}
+.cta-logo{border:1px solid #d7e3f2;border-radius:10px;padding:18px;text-align:center;font-family:'Rajdhani',sans-serif;font-size:36px;font-weight:700;color:#16345a;line-height:.9}
+.cta-logo span{display:block;color:#17a2d8;font-size:22px;letter-spacing:1px}
+.cta-copy h3{font-size:28px;line-height:1.15;font-weight:900;color:#16345a;margin-bottom:10px}
+.cta-copy h3 span{color:#17a2d8}
+.cta-copy p{font-size:13px;line-height:1.7;color:var(--muted)}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:14px;padding:10px 16px;font-size:12px;color:#4c6484}
+.foot strong{color:#10233e}
+@media (max-width:1100px){
+  .hero-inner,.bottom-grid{grid-template-columns:1fr}
+  .brand-lock{border-right:none;border-bottom:2px solid rgba(255,255,255,0.16);padding-right:0;padding-bottom:18px}
+  .problem-grid,.solution-grid,.impact-grid{grid-template-columns:repeat(2,1fr)}
+  .stack-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media (max-width:720px){
+  body{padding:10px}
+  .hero-inner{padding:20px}
+  .hero-copy h1{font-size:38px}
+  .brand-main{font-size:40px}
+  .problem-grid,.solution-grid,.impact-grid,.stack-grid,.invest-grid,.cta-box{grid-template-columns:1fr}
+  .panel-head{font-size:22px}
+}
+</style>
+</head>
+<body>
+  <div class="sheet">
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="brand-lock">
+          <div class="brand-main">[NICHE] <span>BLUEPRINT</span></div>
+          <div class="brand-sub">Executive overview sample</div>
+        </div>
+        <div class="hero-copy">
+          <h1>AI-Powered [Client Growth] <span>Blueprint</span></h1>
+          <div class="sub">One-page executive overview for [owner / operator / principal]</div>
+          <div class="desc">Built to [capture leads], [tighten follow-up], [improve reviews], [increase visibility], and [modernize intake] without adding more manual work.</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="grid">
+      <section class="panel" style="grid-column:1 / span 3">
+        <div class="panel-head"><div class="num">1</div> The Problem</div>
+        <div class="panel-body">
+          <div class="problem-grid">
+            <div class="mini"><div class="k score">✖</div><div class="t score">[Weak Site / Intake]</div><div class="p">[Explain where trust, conversion path, or mobile flow is weak.]</div></div>
+            <div class="mini"><div class="k loss">🕒</div><div class="t loss">[Slow Response]</div><div class="p">[Explain what happens when leads come in after hours or staff is busy.]</div></div>
+            <div class="mini"><div class="k review">⭐</div><div class="t review">[Weak Review Engine]</div><div class="p">[Explain why review flow is too slow to support local trust.]</div></div>
+            <div class="mini"><div class="k manual">👤</div><div class="t manual">[Manual Follow-Up]</div><div class="p">[Explain how opportunities go cold after the first touch.]</div></div>
+            <div class="mini"><div class="k loss">📉</div><div class="t loss">[Low Visibility]</div><div class="p">[Explain local SEO, content, or listing visibility gap.]</div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" style="grid-column:1 / span 3">
+        <div class="panel-head"><div class="num">2</div> The Solution</div>
+        <div class="panel-body">
+          <div class="solution-grid">
+            <div class="mini"><div class="k capture">💬</div><div class="t capture">[24/7 Intake Layer]</div><div class="p">[Explain chat, form, text-back, or intake response layer.]</div></div>
+            <div class="mini"><div class="k follow">📨</div><div class="t follow">[Follow-Up Sequence]</div><div class="p">[Explain email, text, reminder, or reactivation flow.]</div></div>
+            <div class="mini"><div class="k agent">✳</div><div class="t agent">[Review Agent]</div><div class="p">[Explain review requests or reputation support.]</div></div>
+            <div class="mini"><div class="k content">🖥</div><div class="t content">[Smart Site Layer]</div><div class="p">[Explain modern site, service pages, trust sections, and conversion path.]</div></div>
+            <div class="mini"><div class="k visibility">📍</div><div class="t visibility">[Local Visibility]</div><div class="p">[Explain GBP, local SEO, FAQs, city pages, or content support.]</div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" style="grid-column:1 / span 3">
+        <div class="panel-head"><div class="num">3</div> AI Agent Stack</div>
+        <div class="panel-body">
+          <div class="stack-grid">
+            <div class="mini stack"><div class="k">💬</div><div class="t">[Reply Agent]</div><div class="p">[Instant replies for forms, texts, or FAQs.]</div></div>
+            <div class="mini stack"><div class="k">📞</div><div class="t">[Missed-Call Agent]</div><div class="p">[Text-back or call recovery flow.]</div></div>
+            <div class="mini stack"><div class="k">📡</div><div class="t">[Local Content Agent]</div><div class="p">[Service pages, FAQs, or location content.]</div></div>
+            <div class="mini stack"><div class="k">🗂</div><div class="t">[Intake Agent]</div><div class="p">[Routes or organizes incoming inquiries.]</div></div>
+            <div class="mini stack"><div class="k">🎥</div><div class="t">[Media Agent]</div><div class="p">[Turns one asset into multiple posts or updates.]</div></div>
+            <div class="mini stack"><div class="k">▶</div><div class="t">[Reactivation Agent]</div><div class="p">[Works old leads or past customers.]</div></div>
+            <div class="mini stack"><div class="k">⭐</div><div class="t">[Review Agent]</div><div class="p">[Sends review requests and strengthens trust.]</div></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="bottom-grid">
+      <section class="panel">
+        <div class="panel-head"><div class="num">4</div> The Impact</div>
+        <div class="panel-body">
+          <div class="impact-grid">
+            <div class="mini"><div class="k capture">📈</div><div class="t">[Lead / Appointment Lift]</div></div>
+            <div class="mini"><div class="k capture">$</div><div class="t">[Leakage Addressed]</div></div>
+            <div class="mini"><div class="k loss">🕒</div><div class="t">[Hours Saved]</div></div>
+            <div class="mini"><div class="k review">⭐</div><div class="t">[Review Growth]</div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head"><div class="num">5</div> Investment</div>
+        <div class="panel-body">
+          <div class="invest-grid">
+            <div class="invest-card">
+              <div class="invest-label">Typical Setup</div>
+              <div class="invest-old">[$X market]</div>
+              <div class="invest-new">[$X with us]</div>
+            </div>
+            <div class="invest-card">
+              <div class="invest-label">Typical Monthly</div>
+              <div class="invest-old">[$X market]</div>
+              <div class="invest-new blue">[$X/mo]</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head"><div class="num">6</div> Closing / CTA</div>
+        <div class="panel-body">
+          <div class="cta-box">
+            <div class="cta-logo">[CLIENT]<span>[LANE]</span></div>
+            <div class="cta-copy">
+              <h3>The system is built. <span>The playbook is clear.</span></h3>
+              <p>[Explain the rollout in one sentence. Example: We can rebuild the site, tighten intake, launch the follow-up layer, and have the new system live in 30 days.]</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="foot">
+      <div><strong>Generic Client Blueprint Template</strong> · Replace bracketed placeholders before sending</div>
+      <div>When seconds matter, intelligence leads.</div>
+    </div>
+  </div>
+</body>
+</html>

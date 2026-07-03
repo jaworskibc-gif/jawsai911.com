@@ -77,6 +77,18 @@ background-size:42px 34px,52px 38px,44px 32px,56px 42px,100% 100%,100% 100%;opac
 .btn-hero-primary:hover{background:#0862f0;transform:translateY(-2px)}
 .btn-hero-ghost{display:inline-flex;align-items:center;gap:13px;font-size:15px;font-weight:700;padding:16px 36px;border-radius:7px;background:rgba(1,8,20,0.55);color:#fff;text-decoration:none;border:1px solid rgba(72,129,190,0.55);letter-spacing:0.2px;text-transform:uppercase;transition:all 0.2s}
 .btn-hero-ghost:hover{border-color:var(--blue);background:rgba(59,130,246,0.1)}
+.vertical-hero-grid{position:relative;z-index:3;width:min(1320px,100%);display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:34px auto 0}
+.vertical-hero-card{position:relative;overflow:hidden;background:linear-gradient(160deg,rgba(6,15,29,0.96),rgba(7,19,37,0.92));border:1px solid rgba(59,130,246,0.22);border-radius:20px;padding:32px;box-shadow:0 0 34px rgba(0,91,255,0.12),inset 0 0 24px rgba(10,68,140,0.12);display:flex;flex-direction:column;min-height:360px}
+.vertical-hero-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at top right,rgba(56,189,248,0.12),transparent 34%),radial-gradient(circle at bottom left,rgba(59,130,246,0.12),transparent 32%);pointer-events:none}
+.vertical-hero-card > *{position:relative;z-index:1}
+.vertical-eyebrow{font-size:11px;font-weight:800;letter-spacing:2.6px;text-transform:uppercase;color:var(--sky);margin-bottom:14px}
+.vertical-title{font-size:clamp(30px,3vw,48px);font-weight:900;line-height:1.02;text-transform:uppercase;color:#fff;margin-bottom:14px}
+.vertical-copy{font-size:15px;color:#cfdbef;line-height:1.8;max-width:560px;margin-bottom:18px}
+.vertical-points{display:grid;gap:10px;margin-bottom:22px}
+.vertical-points div{background:rgba(255,255,255,0.03);border:1px solid rgba(59,130,246,0.14);border-radius:12px;padding:12px 14px;font-size:13px;color:#c0d0e6;line-height:1.55}
+.vertical-points strong{color:#fff}
+.vertical-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:auto}
+.vertical-actions .btn-hero-primary,.vertical-actions .btn-hero-ghost{padding:13px 18px;font-size:12px}
 .lead-form-card{position:relative;z-index:3;width:min(920px,100%);margin:30px auto 0;background:rgba(3,12,25,0.82);border:1px solid rgba(42,123,214,0.46);border-radius:14px;padding:18px;box-shadow:0 0 30px rgba(0,91,255,0.15),inset 0 0 26px rgba(10,68,140,0.18)}
 .lead-form-card h2{font-size:18px;color:#fff;text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px}
 .lead-form-card p{font-size:13px;color:#9fb2d0;margin-bottom:14px}
@@ -275,7 +287,9 @@ footer{background:#000;border-top:1px solid rgba(59,130,246,0.12);padding:24px 4
   .lead-form{grid-template-columns:1fr 1fr}
   .lead-form .wide,.lead-form .full{grid-column:1/-1}
   .lead-form button{min-height:42px}
-  .feature-strip{margin-top:30px;border-radius:12px}
+  .vertical-hero-grid{grid-template-columns:1fr;gap:14px;margin-top:22px}
+  .vertical-hero-card{min-height:auto;padding:24px}
+  .feature-strip{margin-top:22px;border-radius:12px}
   .section-wrap{padding:60px 20px}
   .full-bleed{padding:60px 20px}
   .build-grid,.pgrid{grid-template-columns:1fr}
@@ -323,7 +337,7 @@ footer{background:#000;border-top:1px solid rgba(59,130,246,0.12);padding:24px 4
   </ul>
   <div class="nav-right" style="display:flex;gap:12px;align-items:center;">
     <a href="login.html" style="font-size:13px;font-weight:700;color:#38bdf8;text-decoration:none;letter-spacing:0.5px;">Login</a>
-    <a href="https://calendly.com/jaworskibc" target="_blank" class="nav-cta">Request Demo</a>
+    <a href="https://calendly.com/jaworskibc" target="_blank" class="nav-cta">Book Review</a>
   </div>
 </nav>
 <!-- PORTAL MODAL -->
@@ -345,12 +359,12 @@ footer{background:#000;border-top:1px solid rgba(59,130,246,0.12);padding:24px 4
   <canvas id="hero-canvas"></canvas>
   <div class="hero-content">
     <img src="jawsai911-logo-dark-hero.jpeg" class="hero-logo-img" alt="JAWSAI911.com — Your AI Incident Command Center">
-    <h1 class="hero-headline">When Seconds Matter, Intelligence Leads.</h1>
-    <div class="hero-sub">AI-Powered Situational Awareness. Real-Time Decisions. Better Outcomes.</div>
+    <h1 class="hero-headline">Three Clear Entry Points. Built Around Real Operations.</h1>
+    <div class="hero-sub">Insurance, car dealerships, and local service businesses. Pick the lane that matches your operation and go straight into the systems, website, and workflow work built for it.</div>
     <div class="hero-btns">
-      <a href="platform.html" class="btn-hero-primary">
+      <a href="solutions.html" class="btn-hero-primary">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-        Explore Platform
+        Explore Verticals
       </a>
       <a href="https://calendly.com/jaworskibc" target="_blank" class="btn-hero-ghost">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
@@ -359,10 +373,57 @@ footer{background:#000;border-top:1px solid rgba(59,130,246,0.12);padding:24px 4
     </div>
   </div>
 
+  <div class="vertical-hero-grid">
+    <article class="vertical-hero-card">
+      <div class="vertical-eyebrow">Insurance Systems</div>
+      <h2 class="vertical-title">Medicare, ACA, Enrollment, and Agent Workflow Infrastructure</h2>
+      <p class="vertical-copy">Built for insurance teams that need stronger intake, cleaner follow-up, live agent assist, enrollment support, and systems that help producers move faster without creating more compliance friction.</p>
+      <div class="vertical-points">
+        <div><strong>Enrollment flow:</strong> Intake, qualification, routing, follow-up, and agent guidance built for real production environments.</div>
+        <div><strong>Agent support:</strong> Real-time coaching, objection help, script support, and workflow visibility for teams handling volume.</div>
+        <div><strong>Medicare + ACA:</strong> Systems shaped by frontline experience instead of generic AI agency packaging.</div>
+      </div>
+      <div class="vertical-actions">
+        <a href="medicare-enrollment.html" class="btn-hero-primary">Open Insurance Lane</a>
+        <a href="solutions.html#ccm" class="btn-hero-ghost">View Insurance Systems</a>
+      </div>
+    </article>
+
+    <article class="vertical-hero-card">
+      <div class="vertical-eyebrow">Dealership Systems</div>
+      <h2 class="vertical-title">Car Dealership AI, Lead Flow, and Smart Website Systems</h2>
+      <p class="vertical-copy">Built for dealer principals and store operators who need faster lead response, better follow-up, stronger review engines, inventory content, and a dealership website that converts better than a generic template lot page.</p>
+      <div class="vertical-points">
+        <div><strong>Lead capture:</strong> After-hours response, appointment push, finance inquiry handling, and organized BDC follow-up.</div>
+        <div><strong>Smart sites:</strong> Mobile-first dealership pages with stronger credit-app routing, trust sections, and cleaner inventory paths.</div>
+        <div><strong>Operator view:</strong> Dealer command hubs, content systems, and executive blueprint material for store growth conversations.</div>
+      </div>
+      <div class="vertical-actions">
+        <a href="dealership-ai.html" class="btn-hero-primary">Open Dealership Lane</a>
+        <a href="dealer-growth-blueprint.html" class="btn-hero-ghost">Open Dealer Blueprint</a>
+      </div>
+    </article>
+
+    <article class="vertical-hero-card">
+      <div class="vertical-eyebrow">Local Business Systems</div>
+      <h2 class="vertical-title">Doctors, Law Offices, and Real Estate Teams That Need Smarter Intake</h2>
+      <p class="vertical-copy">Built for local offices that live on calls, forms, follow-up, and trust. The goal is a smarter site, cleaner lead routing, faster response, and less dropped opportunity between first contact and booked appointment.</p>
+      <div class="vertical-points">
+        <div><strong>Intake flow:</strong> Better capture for calls, forms, consultation requests, and office inquiries before they go cold.</div>
+        <div><strong>Smart sites:</strong> Mobile-first pages with stronger trust sections, clear service paths, and better local conversion structure.</div>
+        <div><strong>Office workflow:</strong> Follow-up systems, missed-lead recovery, and simple visibility for what needs action now.</div>
+      </div>
+      <div class="vertical-actions">
+        <a href="local-business-ai.html" class="btn-hero-primary">Open Local Business Lane</a>
+        <a href="contact.html#demo-form" class="btn-hero-ghost">Request Office Review</a>
+      </div>
+    </article>
+  </div>
+
   <!-- 4 Feature Cards -->
   <div class="feature-strip">
     <div class="feature-cards">
-      <div class="fc" onclick="location.href='medicare-enrollment.html'">
+      <div class="fc" onclick="location.href='dealership-ai.html'">
         <div class="fc-icon">
           <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
             <ellipse cx="32" cy="32" rx="14" ry="14" stroke="#38bdf8" stroke-width="2"/>
@@ -377,10 +438,10 @@ footer{background:#000;border-top:1px solid rgba(59,130,246,0.12);padding:24px 4
             <circle cx="50" cy="46" r="3" stroke="#60a5fa" stroke-width="1.5"/>
           </svg>
         </div>
-        <div class="fc-title">AI-Powered Intelligence</div>
-        <div class="fc-desc">Advanced AI analyzes data from multiple sources to deliver actionable insights in real time.</div>
+        <div class="fc-title">Dealership AI Systems</div>
+        <div class="fc-desc">Lead response, inventory content, BDC follow-up, and dealer command hubs built for principals and store operators.</div>
       </div>
-      <div class="fc" onclick="location.href='platform.html'">
+      <div class="fc" onclick="location.href='medicare-enrollment.html'">
         <div class="fc-icon">
           <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="32" cy="32" r="20" stroke="#38bdf8" stroke-width="2"/>
@@ -391,19 +452,22 @@ footer{background:#000;border-top:1px solid rgba(59,130,246,0.12);padding:24px 4
             <line x1="55" y1="32" x2="52" y2="32" stroke="#38bdf8" stroke-width="2"/>
           </svg>
         </div>
-        <div class="fc-title">Real-Time Awareness</div>
-        <div class="fc-desc">Live monitoring and predictive analytics keep you ahead of every incident.</div>
+        <div class="fc-title">Insurance Workflow Systems</div>
+        <div class="fc-desc">Enrollment, compliance, intake, follow-up, and real-time agent assist for insurance and Medicare sales teams.</div>
       </div>
-      <div class="fc" onclick="location.href='platform.html'">
+      <div class="fc" onclick="location.href='local-business-ai.html'">
         <div class="fc-icon">
           <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M32 8 L54 16 L54 34 C54 46 43 54 32 58 C21 54 10 46 10 34 L10 16 Z" stroke="#38bdf8" stroke-width="2" stroke-linejoin="round" fill="rgba(56,189,248,0.05)"/>
-            <path d="M22 32 L28 38 L42 26" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <circle cx="32" cy="8" r="2" fill="#38bdf8" opacity="0.6"/>
+            <rect x="10" y="12" width="44" height="34" rx="4" stroke="#38bdf8" stroke-width="2"/>
+            <path d="M18 22h18" stroke="#60a5fa" stroke-width="2" stroke-linecap="round"/>
+            <path d="M18 30h28" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"/>
+            <path d="M18 38h16" stroke="#60a5fa" stroke-width="2" stroke-linecap="round"/>
+            <path d="M26 52h12" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="47" cy="23" r="5" stroke="#60a5fa" stroke-width="1.5"/>
           </svg>
         </div>
-        <div class="fc-title">Rapid Response</div>
-        <div class="fc-desc">AI sales coaches assist on live calls in real time — making any rookie sound like a veteran on day one.</div>
+        <div class="fc-title">Local Business Systems</div>
+        <div class="fc-desc">Smart websites, intake flow, missed-lead recovery, and local trust systems for medical, legal, and service offices.</div>
       </div>
       <div class="fc" onclick="location.href='about.html'">
         <div class="fc-icon">
@@ -414,8 +478,8 @@ footer{background:#000;border-top:1px solid rgba(59,130,246,0.12);padding:24px 4
             <path d="M30 46c0-6.627 5.373-12 12-12s12 5.373 12 12" stroke="#60a5fa" stroke-width="2" stroke-linecap="round"/>
           </svg>
         </div>
-        <div class="fc-title">Unified Command</div>
-        <div class="fc-desc">One platform. One view. Total coordination across teams and agencies.</div>
+        <div class="fc-title">Operator Background</div>
+        <div class="fc-desc">Insurance leadership experience, dealership workflow focus, and local-business systems shaped by real production environments.</div>
       </div>
     </div>
   </div>

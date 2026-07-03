@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dealership AI Systems | JAWSAI911</title>
+<meta name="description" content="AI systems for dealerships from JAWSAI911. Faster lead response, inventory content, follow-up automation, and manager command hubs for auto sales teams.">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#000000;
+  --bg2:#060b14;
+  --bg3:#0a1120;
+  --s1:#0d1525;
+  --s2:#111f35;
+  --border:rgba(59,130,246,0.15);
+  --border2:rgba(59,130,246,0.35);
+  --blue:#3b82f6;
+  --blue2:#60a5fa;
+  --blue3:#93c5fd;
+  --sky:#38bdf8;
+  --teal:#2dd4bf;
+  --amber:#f59e0b;
+  --text:#eef2ff;
+  --muted:#7b8db0;
+  --dim:#3d4f6e;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',-apple-system,sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.6;overflow-x:hidden}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:linear-gradient(180deg,rgba(0,0,0,0.92),rgba(0,0,0,0.66));backdrop-filter:blur(10px);border-bottom:1px solid rgba(59,130,246,0.08);padding:18px 44px 14px 52px;min-height:122px;display:flex;align-items:flex-start;justify-content:space-between}
+.nav-logo-wrap{display:flex;align-items:flex-start;text-decoration:none}
+.nav-logo-img{width:330px;height:auto;max-height:98px;object-fit:contain;object-position:left top;mix-blend-mode:screen;filter:brightness(1.16) contrast(1.08) drop-shadow(0 0 18px rgba(56,189,248,0.2))}
+.nav-links{display:flex;gap:48px;list-style:none;align-items:flex-start;margin-top:18px}
+.nav-links a{font-size:15px;font-weight:600;color:#f5f7fb;text-decoration:none;transition:color 0.2s;text-transform:uppercase;position:relative}
+.nav-links a:hover,.nav-links a.active{color:#fff}
+.nav-links a.active{color:var(--blue2)}
+.nav-links a.active::after{content:'';position:absolute;left:0;right:0;bottom:-22px;height:2px;background:var(--sky);box-shadow:0 0 10px rgba(56,189,248,0.8)}
+.nav-right{display:flex;align-items:flex-start;gap:10px;margin-top:10px}
+.nav-cta{font-size:15px;font-weight:700;padding:15px 28px;border-radius:7px;background:rgba(3,11,24,0.45);color:#fff;text-decoration:none;transition:all 0.2s;cursor:pointer;border:1px solid rgba(56,189,248,0.65);font-family:inherit;text-transform:uppercase;box-shadow:inset 0 0 18px rgba(59,130,246,0.16),0 0 18px rgba(59,130,246,0.12)}
+.nav-cta:hover{background:rgba(59,130,246,0.18);border-color:var(--sky)}
+.portal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.82);z-index:999;align-items:center;justify-content:center}
+.portal-overlay.open{display:flex}
+.portal-box{background:#0d1525;border:1px solid var(--border2);border-top:3px solid var(--blue);border-radius:10px;padding:36px 32px;width:360px;text-align:center}
+.portal-box h3{font-size:18px;font-weight:800;color:#fff;margin-bottom:6px}
+.portal-box p{font-size:13px;color:var(--muted);margin-bottom:22px}
+.portal-input{width:100%;background:#111f35;border:1px solid var(--border);color:#fff;padding:11px 14px;border-radius:5px;font-size:14px;font-family:inherit;outline:none;margin-bottom:12px;text-align:center;letter-spacing:3px}
+.portal-input:focus{border-color:var(--blue)}
+.portal-btn{width:100%;background:var(--blue);color:#fff;border:none;padding:12px;border-radius:5px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:10px}
+.portal-btn:hover{background:#2563eb}
+.portal-cancel{font-size:12px;color:var(--dim);cursor:pointer}
+.portal-cancel:hover{color:#fff}
+.portal-error{color:#f87171;font-size:12px;margin-bottom:10px;display:none}
+.hero{padding:128px 22px 48px;min-height:100vh;background:
+  radial-gradient(ellipse at 18% 26%,rgba(59,130,246,0.16),transparent 32%),
+  radial-gradient(ellipse at 82% 18%,rgba(45,212,191,0.12),transparent 28%),
+  linear-gradient(180deg,#02050b 0%,#07101d 58%,#04070d 100%);
+}
+.hero-inner{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.05fr .95fr;gap:26px;align-items:stretch}
+.hero-copy,.hero-panel,.section,.cta-band{background:rgba(7,16,29,0.82);border:1px solid rgba(59,130,246,0.18);box-shadow:0 0 30px rgba(0,91,255,0.08),inset 0 0 28px rgba(10,68,140,0.08)}
+.hero-copy{padding:54px 48px;border-radius:18px}
+.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:3px;color:var(--sky);margin-bottom:18px;font-weight:800}
+h1{font-size:clamp(38px,5vw,68px);line-height:.95;font-weight:900;color:#fff;margin-bottom:18px;text-transform:uppercase}
+.lead{font-size:18px;line-height:1.75;color:#dbe7fb;max-width:640px}
+.cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 22px;text-decoration:none;font-size:12px;text-transform:uppercase;letter-spacing:1.6px;font-weight:800;border-radius:8px}
+.btn-primary{background:linear-gradient(180deg,#0877ff,#0052dc);color:#fff}
+.btn-ghost{border:1px solid rgba(59,130,246,0.26);color:#fff;background:rgba(255,255,255,0.03)}
+.hero-panel{border-radius:18px;padding:28px}
+.hero-panel h2{font-size:14px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--blue2);margin-bottom:18px}
+.hero-panel ul{list-style:none;display:grid;gap:14px}
+.hero-panel li{background:rgba(255,255,255,0.03);border:1px solid rgba(59,130,246,0.12);border-radius:12px;padding:16px 18px;color:var(--muted);font-size:14px;line-height:1.7}
+.hero-panel strong{color:#fff}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+.stat-card{background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.16);border-radius:12px;padding:16px;text-align:center}
+.stat-card strong{display:block;font-size:22px;color:var(--sky);margin-bottom:4px}
+.stat-card span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1.4px;line-height:1.4}
+.section-wrap{max-width:1180px;margin:0 auto;padding:0 22px 28px}
+.section{border-radius:18px;padding:34px}
+.section + .section{margin-top:20px}
+.section-title{font-size:30px;font-weight:900;color:#fff;line-height:1.12;margin-bottom:12px}
+.section-sub{font-size:15px;color:var(--muted);max-width:760px;line-height:1.8;margin-bottom:24px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.card{background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:22px}
+.card h3{font-size:16px;font-weight:800;color:#fff;margin-bottom:8px}
+.card p{font-size:13px;color:var(--muted);line-height:1.75}
+.lane-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.lane{background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:22px}
+.lane strong{display:block;font-size:15px;color:#fff;margin-bottom:8px}
+.lane p{font-size:13px;color:var(--muted);line-height:1.75}
+.blueprint-card{background:linear-gradient(135deg, rgba(8,20,38,0.96), rgba(10,27,54,0.92));border:1px solid rgba(56,189,248,0.2);border-radius:18px;padding:28px;display:grid;grid-template-columns:1.2fr .8fr;gap:20px;align-items:center}
+.blueprint-card h3{font-size:28px;font-weight:900;color:#fff;line-height:1.1;margin-bottom:10px}
+.blueprint-card p{font-size:14px;color:#bfd1ea;line-height:1.8}
+.blueprint-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.blueprint-stat{background:rgba(255,255,255,0.04);border:1px solid rgba(59,130,246,0.18);border-radius:14px;padding:16px}
+.blueprint-stat strong{display:block;font-size:24px;color:var(--sky);margin-bottom:6px}
+.blueprint-stat span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1.4px;line-height:1.45}
+.cta-band{border-radius:18px;padding:34px;text-align:center}
+.cta-band h2{font-size:32px;font-weight:900;color:#fff;margin-bottom:10px}
+.cta-band p{font-size:15px;color:var(--muted);max-width:760px;margin:0 auto 22px;line-height:1.8}
+footer{background:#000;border-top:1px solid rgba(59,130,246,0.12);padding:24px 40px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--dim);flex-wrap:wrap;gap:10px}
+.footer-logo{height:32px;mix-blend-mode:screen;opacity:0.85}
+@media(max-width:900px){
+  nav{padding:14px 18px;min-height:86px;align-items:center}
+  .nav-logo-img{width:210px;max-height:62px}
+  .nav-links{display:none}
+  .nav-right{margin-top:0}
+  .nav-cta{padding:11px 14px;font-size:12px}
+  .hero{padding:108px 16px 24px;min-height:auto}
+  .hero-inner,.cards,.lane-grid,.stats-grid,.blueprint-card,.blueprint-stats{grid-template-columns:1fr}
+  .hero-copy,.hero-panel,.section,.cta-band{padding:24px}
+  h1{font-size:clamp(34px,11vw,52px)}
+  .lead{font-size:16px}
+  footer{padding:22px;flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo-wrap">
+    <img src="jawsai911-logo-dark-nav.jpeg" class="nav-logo-img" alt="JAWSAI911">
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="solutions.html" class="active">Solutions</a></li>
+    <li><a href="platform.html">Platform</a></li>
+    <li><a href="resources.html">Resources</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="contact.html#demo-form" class="nav-cta">Workflow Review</a>
+  </div>
+</nav>
+
+<div class="portal-overlay" id="portal-overlay">
+  <div class="portal-box">
+    <h3>JAWSAI911 Portal</h3>
+    <p>Enter your access code to open the CRM dashboard.</p>
+    <input type="password" class="portal-input" id="portal-pass" placeholder="password" onkeydown="if(event.key==='Enter') checkPortal()">
+    <div class="portal-error" id="portal-error">Incorrect code. Try again.</div>
+    <button class="portal-btn" onclick="checkPortal()">Enter Portal</button>
+    <button class="portal-btn" style="background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.35);color:var(--sky)" onclick="checkPortal(JOB_URL)">Open Job Tracker</button>
+    <div class="portal-cancel" onclick="closePortal()">Cancel</div>
+  </div>
+</div>
+
+<main>
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <div class="eyebrow">Automotive AI Systems</div>
+        <h1>AI for Dealerships That Need More Than a Chatbot</h1>
+        <p class="lead">JAWSAI911 builds dealership workflows that answer leads faster, turn inventory into daily content, keep follow-up moving, and give management one cleaner view of what needs attention now.</p>
+        <div class="cta-row">
+          <a href="contact.html#demo-form" class="btn btn-primary">Book 10-Min Review</a>
+          <a href="solutions.html" class="btn btn-ghost">Back to Solutions</a>
+        </div>
+      </div>
+      <div class="hero-panel">
+        <h2>System Focus</h2>
+        <ul>
+          <li><strong>Lead response:</strong> Instant first-touch replies for vehicle, finance, trade, and appointment inquiries.</li>
+          <li><strong>Inventory content:</strong> Turn each unit into website copy, marketplace support copy, ad angles, and social posts.</li>
+          <li><strong>BDC follow-up:</strong> Structured 3-day, 7-day, and 14-day sequences that keep warm leads from going cold.</li>
+          <li><strong>Manager visibility:</strong> A dealer command hub showing hot leads, stale opportunities, review activity, and content priorities.</li>
+        </ul>
+        <div class="stats-grid">
+          <div class="stat-card"><strong>&lt; 2 min</strong><span>Target lead response window</span></div>
+          <div class="stat-card"><strong>1 hub</strong><span>Lead, content, and follow-up view</span></div>
+          <div class="stat-card"><strong>7 lanes</strong><span>Core dealership AI modules</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-wrap">
+    <section class="section">
+      <div class="eyebrow">What It Connects</div>
+      <div class="section-title">Built around the dealership work that actually creates revenue</div>
+      <div class="section-sub">The point is not novelty. The point is faster response, cleaner follow-up, better inventory presentation, and a sales floor that stops losing time to repetitive tasks.</div>
+      <div class="cards">
+        <div class="card"><h3>Lead Response Agent</h3><p>Handles inbound lead acknowledgment immediately, answers first-touch questions, and pushes the prospect toward appointment, trade submission, or finance application.</p></div>
+        <div class="card"><h3>Inventory Content Agent</h3><p>Writes inventory highlights, video captions, boosted-post copy, and “who this vehicle is for” angles so every unit becomes usable marketing material.</p></div>
+        <div class="card"><h3>BDC Follow-Up Agent</h3><p>Keeps working leads after the first inquiry with structured follow-up sequences for ghosted leads, no-shows, finance shoppers, and trade conversations.</p></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="eyebrow">Dealer Command Hub</div>
+      <div class="section-title">One operating view for the manager and the floor</div>
+      <div class="section-sub">The AI stack can live inside a simple command hub so the dealership sees what came in, what needs a reply, what inventory needs help, and what the team should post today.</div>
+      <div class="cards">
+        <div class="card"><h3>Hot Lead Queue</h3><p>New leads, hottest units, missed follow-ups, and aged opportunities prioritized in one place instead of spread across inboxes and tabs.</p></div>
+        <div class="card"><h3>Review + Reactivation Engine</h3><p>Post-sale review requests, past-customer reactivation, trade-up campaigns, and tax-season or winter-ready pushes managed from the same system.</p></div>
+        <div class="card"><h3>Daily Intelligence Brief</h3><p>A daily manager summary covering hot leads, weak-engagement inventory, follow-up gaps, review activity, and content priorities for the day.</p></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="eyebrow">Best-Fit Lanes</div>
+      <div class="section-title">Strong fit for stores with clear inventory categories</div>
+      <div class="section-sub">This works especially well when the dealership has lanes that can be marketed clearly instead of presenting like a generic used lot.</div>
+      <div class="lane-grid">
+        <div class="lane"><strong>4x4 / Winter-Ready Inventory</strong><p>Position AWD, trucks, and utility vehicles with faster inquiry handling, seasonal campaigns, and inventory-specific content.</p></div>
+        <div class="lane"><strong>Family SUVs + Daily Drivers</strong><p>Build cleaner messaging around practical family vehicles, financing questions, trade-ins, and appointment setting.</p></div>
+        <div class="lane"><strong>Affordable Premium Inventory</strong><p>Give nicer-trim and luxury units stronger presentation, better first-touch scripts, and follow-up that feels more private and respectful.</p></div>
+        <div class="lane"><strong>Multi-Source Lead Handling</strong><p>Website forms, Facebook messages, text inquiries, and inventory leads can all route into one more organized workflow.</p></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="eyebrow">Executive Asset</div>
+      <div class="section-title">One-Page Dealer Growth Blueprint</div>
+      <div class="section-sub">A single-page executive overview that shows the dealership problem, the AI solution stack, the operator workflow, projected impact, and the rollout path. Public version is generic and client-name free.</div>
+      <div class="blueprint-card">
+        <div>
+          <h3>Use this as the dealer-principal leave-behind.</h3>
+          <p>It compresses the whole dealership pitch into one page: lost after-hours leads, manual follow-up, thin review flow, weak inventory content, the AI agent stack, and the investment logic behind the rollout.</p>
+          <div class="cta-row">
+            <a href="dealer-growth-blueprint.html" class="btn btn-primary">Open Blueprint</a>
+            <a href="contact.html#demo-form" class="btn btn-ghost">Request Dealership Review</a>
+          </div>
+        </div>
+        <div class="blueprint-stats">
+          <div class="blueprint-stat"><strong>1 page</strong><span>Executive overview for dealer principals</span></div>
+          <div class="blueprint-stat"><strong>6 blocks</strong><span>Problem, solution, stack, impact, investment, close</span></div>
+          <div class="blueprint-stat"><strong>Generic</strong><span>No client store names on the public site</span></div>
+          <div class="blueprint-stat"><strong>Fast pitch</strong><span>Built for quick scan and fast follow-up</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-band">
+      <div class="eyebrow">Next Step</div>
+      <h2>Want a dealership workflow page built around your store?</h2>
+      <p>I can map the current lead flow, identify the highest-value automation wins, and show what a dealer command hub would look like for your inventory mix and sales process.</p>
+      <div class="cta-row" style="justify-content:center">
+        <a href="contact.html#demo-form" class="btn btn-primary">Request Dealership Review</a>
+        <a href="https://calendly.com/jaworskibc" target="_blank" class="btn btn-ghost">Schedule 30-Min Zoom</a>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div style="display:flex;align-items:center;gap:12px">
+    <img src="jawsai911-logo-dark-nav.jpeg" class="footer-logo" alt="JAWSAI911">
+    <div>
+      <div style="font-size:13px;font-weight:800;color:var(--text)">JAWSAI911.com</div>
+      <div style="font-size:11px;color:var(--dim)">Bryan Jaworski 2026 · South Florida</div>
+    </div>
+  </div>
+  <div>Built with AI · Royal Palm Beach, FL · bryan@jawsai911.com</div>
+</footer>
+
+<script>
+const PORTAL_PASS='jawsai911';
+const CRM_URL='/crm';
+const JOB_URL='/jobs';
+function openPortal(e){if(e)e.preventDefault();document.getElementById('portal-overlay').classList.add('open');setTimeout(()=>document.getElementById('portal-pass').focus(),100)}
+function closePortal(){document.getElementById('portal-overlay').classList.remove('open');document.getElementById('portal-pass').value='';document.getElementById('portal-error').style.display='none'}
+function checkPortal(target){const v=document.getElementById('portal-pass').value;if(v===PORTAL_PASS){window.open(target||CRM_URL,'_blank');closePortal()}else{document.getElementById('portal-error').style.display='block';document.getElementById('portal-pass').value='';document.getElementById('portal-pass').focus()}}
+document.getElementById('portal-overlay').addEventListener('click',function(e){if(e.target===this)closePortal()});
+</script>
+</body>
+</html>
