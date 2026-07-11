@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Referral Hub | JAWSAI911</title>
+<script>if(!sessionStorage.getItem('jaw_auth')){sessionStorage.setItem('jaw_return',location.href);location.href='login.html';}</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme:dark;
+    --bg:#020611;
+    --panel:#07111f;
+    --panel2:#0d1525;
+    --line:rgba(59,130,246,.2);
+    --blue:#3b82f6;
+    --sky:#38bdf8;
+    --green:#22c55e;
+    --amber:#f59e0b;
+    --text:#eef2ff;
+    --muted:#86a0c8;
+    --red:#fb7185;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:'Inter',Segoe UI,sans-serif;
+    color:var(--text);
+    background:linear-gradient(180deg,#01040a,#030915 45%,#07111f);
+  }
+  header{
+    padding:16px clamp(16px,4vw,40px);
+    border-bottom:2px solid var(--blue);
+    background:#060a14;
+    display:flex;
+    gap:18px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+  header img{height:36px}
+  .head-copy h1{margin:0;font-size:clamp(22px,3vw,34px)}
+  .head-copy p{margin:4px 0 0;color:var(--muted);font-size:13px}
+  .head-actions{margin-left:auto;display:flex;gap:10px;flex-wrap:wrap}
+  .head-actions a,.head-actions button{
+    min-height:38px;
+    padding:0 14px;
+    border-radius:10px;
+    border:1px solid var(--line);
+    background:transparent;
+    color:var(--text);
+    text-decoration:none;
+    font:inherit;
+    font-size:13px;
+    font-weight:700;
+    display:inline-flex;
+    align-items:center;
+    cursor:pointer;
+  }
+  .head-actions button.primary{background:var(--blue);border-color:var(--blue)}
+  main{
+    padding:20px clamp(16px,4vw,40px) 40px;
+    display:grid;
+    gap:18px;
+  }
+  .notice{
+    border:1px solid rgba(245,158,11,.25);
+    background:rgba(245,158,11,.08);
+    color:#ffe3ae;
+    border-radius:14px;
+    padding:14px 16px;
+    font-size:14px;
+    line-height:1.6;
+  }
+  .links{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:12px;
+  }
+  .tool-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:12px;
+  }
+  .asset-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:12px;
+  }
+  .media-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:14px;
+  }
+  .workspace-grid{
+    display:grid;
+    grid-template-columns:1.05fr .95fr;
+    gap:18px;
+    align-items:start;
+  }
+  .link-card,.stat,.table-wrap{
+    background:rgba(7,17,31,.92);
+    border:1px solid var(--line);
+    border-radius:16px;
+  }
+  .workspace-card{
+    background:rgba(7,17,31,.92);
+    border:1px solid var(--line);
+    border-radius:16px;
+    overflow:hidden;
+  }
+  .workspace-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:10px;
+    padding:18px 18px 14px;
+    border-bottom:1px solid var(--line);
+    background:#0a1220;
+  }
+  .workspace-head h3{
+    margin:0 0 4px;
+    font-size:17px;
+  }
+  .workspace-head p{
+    margin:0;
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.5;
+  }
+  .workspace-head a{
+    color:var(--sky);
+    text-decoration:none;
+    font-size:13px;
+    font-weight:700;
+    white-space:nowrap;
+  }
+  .workspace-body{
+    padding:16px 18px 18px;
+    display:grid;
+    gap:14px;
+  }
+  .mini-stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+    gap:10px;
+  }
+  .mini-stat{
+    background:var(--panel2);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:14px;
+  }
+  .mini-stat strong{
+    display:block;
+    font-size:24px;
+    line-height:1;
+    margin-bottom:5px;
+  }
+  .mini-stat span{
+    color:var(--muted);
+    font-size:12px;
+  }
+  .mini-list{
+    display:grid;
+    gap:10px;
+  }
+  .mini-item{
+    background:var(--panel2);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:14px;
+  }
+  .mini-item strong{
+    display:block;
+    font-size:14px;
+    margin-bottom:4px;
+  }
+  .mini-item .sub{
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.5;
+  }
+  .badge-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    margin-top:8px;
+  }
+  .badge{
+    display:inline-flex;
+    align-items:center;
+    padding:4px 8px;
+    border-radius:999px;
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:.3px;
+    border:1px solid var(--line);
+    background:#0a1220;
+  }
+  .badge.hot{color:#fecaca;border-color:rgba(248,113,113,.25);background:rgba(127,29,29,.25)}
+  .badge.warm{color:#fde68a;border-color:rgba(245,158,11,.25);background:rgba(120,53,15,.24)}
+  .badge.cool{color:#bfdbfe;border-color:rgba(59,130,246,.25);background:rgba(30,64,175,.2)}
+  .badge.stage{color:#dbeafe}
+  .empty-mini{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.6;
+    padding:4px 2px;
+  }
+  .link-card{
+    padding:18px;
+    display:grid;
+    gap:8px;
+  }
+  .link-card strong{font-size:15px}
+  .link-card a{color:var(--sky);word-break:break-all}
+  .link-card .muted{color:var(--muted);font-size:13px;line-height:1.6}
+  .media-card{
+    background:rgba(7,17,31,.92);
+    border:1px solid var(--line);
+    border-radius:16px;
+    overflow:hidden;
+  }
+  .media-frame{
+    position:relative;
+    width:100%;
+    aspect-ratio:16 / 9;
+    background:#020611;
+  }
+  .media-frame iframe,.media-frame video{
+    width:100%;
+    height:100%;
+    border:0;
+    display:block;
+  }
+  .media-body{
+    padding:16px;
+    display:grid;
+    gap:8px;
+  }
+  .media-body strong{font-size:15px}
+  .media-body p{margin:0;color:var(--muted);font-size:13px;line-height:1.6}
+  .audio-card{
+    background:rgba(7,17,31,.92);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:16px;
+    display:grid;
+    gap:10px;
+  }
+  .audio-card strong{font-size:15px}
+  .audio-card p{margin:0;color:var(--muted);font-size:13px;line-height:1.6}
+  .audio-card audio{
+    width:100%;
+    filter:invert(1) hue-rotate(180deg);
+  }
+  .section-title{
+    margin:6px 0 -4px;
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:1.8px;
+    text-transform:uppercase;
+    color:var(--sky);
+  }
+  .stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+    gap:12px;
+  }
+  .stat{padding:18px}
+  .stat strong{
+    display:block;
+    font-size:30px;
+    line-height:1;
+    margin-bottom:6px;
+  }
+  .stat span{color:var(--muted);font-size:13px}
+  .table-wrap{
+    overflow:auto;
+    padding:0;
+  }
+  table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:1020px;
+  }
+  th,td{
+    padding:14px 12px;
+    border-bottom:1px solid var(--line);
+    text-align:left;
+    vertical-align:top;
+    font-size:13px;
+  }
+  th{
+    position:sticky;
+    top:0;
+    background:#0a1220;
+    color:var(--sky);
+    text-transform:uppercase;
+    letter-spacing:.8px;
+    font-size:11px;
+  }
+  td small{display:block;color:var(--muted);margin-top:4px}
+  select,input[type="number"],input[type="text"]{
+    width:100%;
+    min-height:34px;
+    border-radius:8px;
+    border:1px solid var(--line);
+    background:var(--panel2);
+    color:var(--text);
+    font:inherit;
+    padding:0 10px;
+  }
+  input[type="checkbox"]{transform:scale(1.15)}
+  .empty{
+    padding:26px;
+    color:var(--muted);
+  }
+  @media (max-width: 980px){
+    .workspace-grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+  <header>
+    <img src="jawsai911-logo-dark-hero.jpeg" alt="JAWSAI911">
+    <div class="head-copy">
+      <h1>Referral Hub</h1>
+      <p>Aaron Elrod referral tracking, form submissions, sales status, and commission tally.</p>
+    </div>
+    <div class="head-actions">
+      <button class="primary" id="export-btn" type="button">Export CSV</button>
+      <a href="dashboard.html">Command Center</a>
+      <a href="index.html">Site</a>
+    </div>
+  </header>
+  <main>
+    <div class="notice">This repo does not include a live backend. The hub below stores data in the browser for this static deployment, which is enough to build and review the workflow but not enough for shared cross-device production tracking.</div>
+
+    <section class="links">
+      <div class="link-card">
+        <strong>Public QR page</strong>
+        <a href="/aaron" target="_blank">https://jawsai911.com/aaron</a>
+        <div>Applies the 10% client discount and credits the lead to Aaron.</div>
+      </div>
+      <div class="link-card">
+        <strong>Private agent page</strong>
+        <a href="/aaron-agent" target="_blank">https://jawsai911.com/aaron-agent</a>
+        <div>Tracks Aaron-entered leads without the client discount.</div>
+      </div>
+    </section>
+
+    <div class="section-title">Other Hub Sections</div>
+    <section class="tool-grid">
+      <div class="link-card">
+        <strong>Job Tracker</strong>
+        <div>Open the existing backend section for applications, follow-ups, interviews, and pipeline stages.</div>
+        <a href="tracker.html">Open tracker.html</a>
+      </div>
+      <div class="link-card">
+        <strong>Lead Listing</strong>
+        <div>Open the AI Leads CRM listing for West Palm Beach prospects, outreach priority, and sales follow-up.</div>
+        <a href="crm.html">Open crm.html</a>
+      </div>
+    </section>
+
+    <div class="section-title">Training Media</div>
+    <section class="asset-grid">
+      <div class="link-card">
+        <strong>Training Video Library</strong>
+        <div class="muted">Reserved space for agent onboarding videos, workflow walkthroughs, and dashboard training clips.</div>
+        <a href="resources.html" target="_blank">Open training portal</a>
+      </div>
+      <div class="link-card">
+        <strong>Audio Recording Library</strong>
+        <div class="muted">Reserved space for call recordings, coaching examples, and objection-handling audio reviews.</div>
+        <a href="resources.html" target="_blank">Open resource page</a>
+      </div>
+    </section>
+
+    <section class="media-grid" id="training-videos"></section>
+    <section class="asset-grid" id="training-audio"></section>
+
+    <div class="section-title">Scripts And Rebuttals</div>
+    <section class="asset-grid">
+      <div class="link-card">
+        <strong>Cold Call Opening And Rebuttals</strong>
+        <div class="muted">Brokerage outreach script with objection handling and workflow review framing.</div>
+        <a href="CLEARVIEW_COLD_CALL_OPENING_SCRIPT_AND_REBUTTALS.md" target="_blank">Open markdown</a>
+      </div>
+      <div class="link-card">
+        <strong>Cold Call Cheat Sheet</strong>
+        <div class="muted">Readable HTML cheat sheet with scripts and rebuttal blocks.</div>
+        <a href="clearview-cold-call-cheat-sheet.html" target="_blank">Open cheat sheet</a>
+      </div>
+      <div class="link-card">
+        <strong>Readable Call Script</strong>
+        <div class="muted">Long-form brokerage call script for owners, operations, compliance, and training leaders.</div>
+        <a href="MEDICARE_BROKERAGE_CALL_SCRIPT_READABLE.md" target="_blank">Open call script</a>
+      </div>
+      <div class="link-card">
+        <strong>Objection Handling</strong>
+        <div class="muted">Readable objection handling reference for outreach and sales conversations.</div>
+        <a href="MEDICARE_BROKERAGE_OBJECTION_HANDLING_READABLE.md" target="_blank">Open objection guide</a>
+      </div>
+    </section>
+
+    <div class="section-title">Workspace Preview</div>
+    <section class="workspace-grid">
+      <article class="workspace-card">
+        <div class="workspace-head">
+          <div>
+            <h3>Job Tracker Snapshot</h3>
+            <p>Live summary from the current tracker storage with recent application records.</p>
+          </div>
+          <a href="tracker.html">Open full tracker</a>
+        </div>
+        <div class="workspace-body">
+          <div class="mini-stats" id="job-stats"></div>
+          <div class="mini-list" id="job-list"></div>
+        </div>
+      </article>
+
+      <article class="workspace-card">
+        <div class="workspace-head">
+          <div>
+            <h3>Lead Listing Snapshot</h3>
+            <p>Top CRM leads from the current CSV, focused on high-priority opportunities first.</p>
+          </div>
+          <a href="crm.html">Open full lead listing</a>
+        </div>
+        <div class="workspace-body">
+          <div class="mini-stats" id="crm-stats"></div>
+          <div class="mini-list" id="crm-list"></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="stats" id="stats"></section>
+
+    <section class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Lead</th>
+            <th>Source</th>
+            <th>Discount</th>
+            <th>Status</th>
+            <th>Closed Sale</th>
+            <th>Commission Owed</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody id="lead-rows"></tbody>
+      </table>
+      <div class="empty" id="empty" hidden>No Aaron leads submitted yet.</div>
+    </section>
+  </main>
+
+  <script src="referrals.js"></script>
+  <script>
+    const JOB_STORE_KEY = 'jt_contacts_v3';
+    const CRM_CSV_URL = 'ai-leads-west-palm-beach.csv';
+    const statsRoot = document.getElementById('stats');
+    const leadRows = document.getElementById('lead-rows');
+    const empty = document.getElementById('empty');
+    const jobStats = document.getElementById('job-stats');
+    const jobList = document.getElementById('job-list');
+    const crmStats = document.getElementById('crm-stats');
+    const crmList = document.getElementById('crm-list');
+    const trainingVideosRoot = document.getElementById('training-videos');
+    const trainingAudioRoot = document.getElementById('training-audio');
+
+    const TRAINING_VIDEOS = [
+      {
+        title: 'Training Video Slot 1',
+        description: 'Drop a YouTube training URL into the config in referrals.html and this card will render as an embedded player.',
+        youtubeId: ''
+      },
+      {
+        title: 'Training Video Slot 2',
+        description: 'Use this for onboarding walkthroughs, dashboard tours, or recorded coaching.',
+        youtubeId: ''
+      }
+    ];
+
+    const TRAINING_AUDIO = [
+      {
+        title: 'Recorded Call Slot 1',
+        description: 'Local recording found on this machine but not yet published to the website. Move the file into the site folder to make it playable here.',
+        href: '',
+        localPath: '/home/shark/SNG-BIKE-PROJECT/202916-Joan_Carvalho.mp3'
+      },
+      {
+        title: 'Recorded Call Slot 2',
+        description: 'Second placeholder for a recorded audio review or coaching call.',
+        href: '',
+        localPath: '/home/shark/SNG-BIKE-PROJECT/202942-Jones.mp3'
+      }
+    ];
+
+    function currency(value) {
+      return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD'
+      }).format(Number(value || 0));
+    }
+
+    function render() {
+      const summary = window.JAWSReferrals.summarizeRep('aaron');
+      statsRoot.innerHTML = [
+        statCard(summary.rep.name, 'Rep'),
+        statCard(summary.scans, 'Total QR scans'),
+        statCard(summary.completedForms, 'Completed forms'),
+        statCard(summary.clientDiscountLeads, 'Client-discount leads'),
+        statCard(summary.selfEnteredLeads, 'Self-entered leads'),
+        statCard(summary.closedSales, 'Closed sales'),
+        statCard(currency(summary.commissionOwed), 'Commission owed')
+      ].join('');
+
+      if (!summary.leads.length) {
+        leadRows.innerHTML = '';
+        empty.hidden = false;
+        return;
+      }
+
+      empty.hidden = true;
+      leadRows.innerHTML = summary.leads.map(function (lead) {
+        return `
+          <tr>
+            <td>
+              <strong>${escapeHtml(lead.clientName)}</strong>
+              <small>${escapeHtml(lead.businessName)}</small>
+              <small>${escapeHtml(lead.phone)} · ${escapeHtml(lead.email)}</small>
+              <small>${new Date(lead.createdAt).toLocaleString()}</small>
+            </td>
+            <td>${lead.sourceType === 'public' ? 'Public QR' : 'Aaron agent'}</td>
+            <td>${lead.discountApplied ? lead.discountPercent + '% off' : 'None'}</td>
+            <td>
+              <select data-action="status" data-id="${lead.id}">
+                ${statusOption(lead.status, 'new', 'New')}
+                ${statusOption(lead.status, 'contacted', 'Contacted')}
+                ${statusOption(lead.status, 'qualified', 'Qualified')}
+                ${statusOption(lead.status, 'proposal', 'Proposal')}
+                ${statusOption(lead.status, 'closed', 'Closed')}
+                ${statusOption(lead.status, 'lost', 'Lost')}
+              </select>
+            </td>
+            <td><input data-action="closedSale" data-id="${lead.id}" type="checkbox" ${lead.closedSale ? 'checked' : ''}></td>
+            <td><input data-action="commissionOwed" data-id="${lead.id}" type="number" min="0" step="0.01" value="${Number(lead.commissionOwed || 0).toFixed(2)}"></td>
+            <td><input data-action="notes" data-id="${lead.id}" type="text" value="${escapeAttribute(lead.notes || '')}" placeholder="Add note"></td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function statCard(value, label) {
+      return `<div class="stat"><strong>${value}</strong><span>${label}</span></div>`;
+    }
+
+    function miniStat(value, label) {
+      return `<div class="mini-stat"><strong>${value}</strong><span>${label}</span></div>`;
+    }
+
+    function statusOption(current, value, label) {
+      return `<option value="${value}" ${current === value ? 'selected' : ''}>${label}</option>`;
+    }
+
+    function renderTrainingMedia() {
+      const liveVideos = TRAINING_VIDEOS.filter(function (item) {
+        return item.youtubeId;
+      });
+      const videoCards = liveVideos.length ? liveVideos : TRAINING_VIDEOS;
+      trainingVideosRoot.innerHTML = videoCards.map(function (item) {
+        const frame = item.youtubeId
+          ? `<div class="media-frame"><iframe src="https://www.youtube.com/embed/${escapeAttribute(item.youtubeId)}" title="${escapeAttribute(item.title)}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>`
+          : `<div class="media-frame"></div>`;
+        const action = item.youtubeId
+          ? `<a href="https://www.youtube.com/watch?v=${escapeAttribute(item.youtubeId)}" target="_blank">Open on YouTube</a>`
+          : `<div class="muted">Awaiting YouTube URL</div>`;
+        return `
+          <article class="media-card">
+            ${frame}
+            <div class="media-body">
+              <strong>${escapeHtml(item.title)}</strong>
+              <p>${escapeHtml(item.description)}</p>
+              ${action}
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      trainingAudioRoot.innerHTML = TRAINING_AUDIO.map(function (item) {
+        const player = item.href
+          ? `<audio controls preload="none" src="${escapeAttribute(item.href)}"></audio>`
+          : '';
+        const action = item.href
+          ? `<a href="${escapeAttribute(item.href)}" target="_blank">Open recording</a>`
+          : `<div class="muted">Local file not yet published: ${escapeHtml(item.localPath || 'No path set')}</div>`;
+        return `
+          <article class="audio-card">
+            <strong>${escapeHtml(item.title)}</strong>
+            <p>${escapeHtml(item.description)}</p>
+            ${player}
+            ${action}
+          </article>
+        `;
+      }).join('');
+    }
+
+    function escapeHtml(value) {
+      return String(value || '').replace(/[&<>"]/g, function (char) {
+        return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[char];
+      });
+    }
+
+    function escapeAttribute(value) {
+      return escapeHtml(value).replace(/'/g, '&#39;');
+    }
+
+    function loadJobTrackerSnapshot() {
+      let jobs = [];
+      try {
+        jobs = JSON.parse(localStorage.getItem(JOB_STORE_KEY) || '[]');
+      } catch (error) {
+        jobs = [];
+      }
+      const stageCounts = jobs.reduce(function (counts, job) {
+        const stage = job.stage || 'saved';
+        counts[stage] = (counts[stage] || 0) + 1;
+        return counts;
+      }, {});
+      const activeCount = jobs.filter(function (job) {
+        return !['rejected'].includes(job.stage);
+      }).length;
+      const highPriority = jobs.filter(function (job) {
+        return job.priority === 'high';
+      }).length;
+      const recent = jobs.slice().sort(function (a, b) {
+        return Number(b.createdAt || 0) - Number(a.createdAt || 0);
+      }).slice(0, 5);
+
+      jobStats.innerHTML = [
+        miniStat(jobs.length, 'Total tracked'),
+        miniStat(activeCount, 'Active'),
+        miniStat(stageCounts.interview || 0, 'Interviews'),
+        miniStat(stageCounts.offer || 0, 'Offers'),
+        miniStat(highPriority, 'High priority')
+      ].join('');
+
+      if (!recent.length) {
+        jobList.innerHTML = '<div class="empty-mini">No saved job tracker records in local storage yet.</div>';
+        return;
+      }
+
+      jobList.innerHTML = recent.map(function (job) {
+        return `
+          <div class="mini-item">
+            <strong>${escapeHtml(job.company || 'Unknown company')}</strong>
+            <div class="sub">${escapeHtml(job.role || 'No role')}</div>
+            <div class="badge-row">
+              <span class="badge stage">${escapeHtml(job.stage || 'saved')}</span>
+              <span class="badge stage">${escapeHtml(job.category || 'uncategorized')}</span>
+              ${job.priority === 'high' ? '<span class="badge warm">HIGH PRIORITY</span>' : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function parseCsv(text) {
+      const rows = [];
+      let row = [];
+      let value = '';
+      let inQuotes = false;
+      for (let i = 0; i < text.length; i += 1) {
+        const char = text[i];
+        const next = text[i + 1];
+        if (char === '"') {
+          if (inQuotes && next === '"') {
+            value += '"';
+            i += 1;
+          } else {
+            inQuotes = !inQuotes;
+          }
+        } else if (char === ',' && !inQuotes) {
+          row.push(value);
+          value = '';
+        } else if ((char === '\n' || char === '\r') && !inQuotes) {
+          if (char === '\r' && next === '\n') i += 1;
+          row.push(value);
+          if (row.some(function (cell) { return cell !== ''; })) rows.push(row);
+          row = [];
+          value = '';
+        } else {
+          value += char;
+        }
+      }
+      if (value.length || row.length) {
+        row.push(value);
+        rows.push(row);
+      }
+      const headers = rows.shift() || [];
+      return rows.map(function (record) {
+        const entry = {};
+        headers.forEach(function (key, index) {
+          entry[key] = record[index] || '';
+        });
+        return entry;
+      });
+    }
+
+    function crmPriority(row) {
+      const hotIndustries = new Set([
+        'Law Firm',
+        'Real Estate Agency',
+        'Auto Dealership',
+        'Construction & Real Estate',
+        'Logistics / Distribution',
+        'Food Distribution',
+        'Healthcare / Medical'
+      ]);
+      const warmIndustries = new Set([
+        'Dental Practice',
+        'Property Management',
+        'Restaurant / Hospitality',
+        'Spa / Wellness'
+      ]);
+      if (hotIndustries.has(row.Industry)) return 'hot';
+      if (warmIndustries.has(row.Industry)) return 'warm';
+      return 'cool';
+    }
+
+    async function loadCrmSnapshot() {
+      try {
+        const response = await fetch(CRM_CSV_URL, { cache: 'no-store' });
+        const text = await response.text();
+        const rows = parseCsv(text);
+        const hot = rows.filter(function (row) { return crmPriority(row) === 'hot'; });
+        const withPhone = rows.filter(function (row) { return row.Phone; });
+        const withEmail = rows.filter(function (row) { return row.Email; });
+        const preview = rows.slice().sort(function (a, b) {
+          const order = { hot: 0, warm: 1, cool: 2 };
+          return order[crmPriority(a)] - order[crmPriority(b)];
+        }).slice(0, 5);
+
+        crmStats.innerHTML = [
+          miniStat(rows.length, 'Total leads'),
+          miniStat(hot.length, 'Hot priority'),
+          miniStat(withPhone.length, 'With phone'),
+          miniStat(withEmail.length, 'With email')
+        ].join('');
+
+        crmList.innerHTML = preview.map(function (row) {
+          return `
+            <div class="mini-item">
+              <strong>${escapeHtml(row['Business Name'])}</strong>
+              <div class="sub">${escapeHtml(row.City)}, ${escapeHtml(row.State)} · ${escapeHtml(row.Industry)}</div>
+              <div class="sub">${escapeHtml(row['AI Opportunity'])}</div>
+              <div class="badge-row">
+                <span class="badge ${crmPriority(row)}">${crmPriority(row).toUpperCase()}</span>
+                ${row.Phone ? '<span class="badge stage">PHONE</span>' : ''}
+                ${row.Email ? '<span class="badge stage">EMAIL</span>' : ''}
+              </div>
+            </div>
+          `;
+        }).join('');
+      } catch (error) {
+        crmStats.innerHTML = miniStat('N/A', 'CSV unavailable');
+        crmList.innerHTML = '<div class="empty-mini">Could not load the CRM CSV preview from this page.</div>';
+      }
+    }
+
+    leadRows.addEventListener('change', function (event) {
+      const target = event.target;
+      const id = target.getAttribute('data-id');
+      const action = target.getAttribute('data-action');
+      if (!id || !action) return;
+      if (action === 'status') {
+        window.JAWSReferrals.updateLead(id, { status: target.value, closedSale: target.value === 'closed' ? true : undefined });
+      }
+      if (action === 'closedSale') {
+        window.JAWSReferrals.updateLead(id, { closedSale: target.checked });
+      }
+      if (action === 'commissionOwed') {
+        window.JAWSReferrals.updateLead(id, { commissionOwed: Number(target.value || 0) });
+      }
+      if (action === 'notes') {
+        window.JAWSReferrals.updateLead(id, { notes: target.value });
+      }
+      render();
+    });
+
+    document.getElementById('export-btn').addEventListener('click', function () {
+      window.JAWSReferrals.downloadCsv('aaron', 'aaron-referrals.csv');
+    });
+
+    render();
+    renderTrainingMedia();
+    loadJobTrackerSnapshot();
+    loadCrmSnapshot();
+  </script>
+</body>
+</html>

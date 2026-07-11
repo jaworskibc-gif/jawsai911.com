@@ -10,6 +10,17 @@ This folder is a fixed deploy-ready copy of the current live GitHub Pages site.
 - Replaced the broken `/api/demo-request` form call with a `mailto:` request flow to `Bryan@jawsai911.com`.
 - Replaced the public Gmail address with `Bryan@jawsai911.com`.
 - Added `CNAME` for `jawsai911.com`.
+- Added `/aaron` and `/aaron-agent` referral intake pages plus a protected `referrals.html` hub for Aaron Elrod lead tracking.
+
+## Referral Tracking Note
+
+The Aaron referral flow added in this repo is front-end only because this site currently deploys as a static GitHub Pages site.
+
+- `/aaron` tracks a public QR visit and stores form submissions with a 10% discount flag.
+- `/aaron-agent` stores Aaron-entered leads without the discount flag.
+- `referrals.html` summarizes scans, forms, lead types, closed sales, and commission owed.
+
+For true cross-device production tracking, the storage in `referrals.js` should be replaced with a real API or hosted form/database service.
 
 ## Critical GitHub Pages HTTPS Fix
 

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aaron Lead Form | JAWSAI911</title>
+<meta name="description" content="Submit your JAWSAI911 request through Aaron Elrod and receive a 10% discount.">
+<style>
+  :root{
+    --bg:#020611;
+    --panel:#07111f;
+    --panel2:#0c1830;
+    --line:rgba(96,165,250,.25);
+    --blue:#3b82f6;
+    --sky:#38bdf8;
+    --text:#eef2ff;
+    --muted:#8aa0c7;
+    --green:#22c55e;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    min-height:100vh;
+    font-family:Inter,Segoe UI,sans-serif;
+    color:var(--text);
+    background:
+      radial-gradient(circle at top, rgba(59,130,246,.25), transparent 38%),
+      linear-gradient(180deg, #01040a, #020611 50%, #05101d);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+  }
+  .card{
+    width:min(100%, 540px);
+    background:rgba(7,17,31,.92);
+    border:1px solid var(--line);
+    border-top:3px solid var(--sky);
+    border-radius:18px;
+    padding:28px;
+    box-shadow:0 24px 90px rgba(0,0,0,.45);
+  }
+  .eyebrow{
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--sky);
+    margin-bottom:10px;
+  }
+  h1{
+    margin:0 0 10px;
+    font-size:clamp(28px,6vw,40px);
+    line-height:1;
+  }
+  p{
+    margin:0 0 18px;
+    color:var(--muted);
+    line-height:1.6;
+    font-size:15px;
+  }
+  .offer{
+    background:rgba(34,197,94,.12);
+    color:#d7ffe4;
+    border:1px solid rgba(34,197,94,.35);
+    border-radius:12px;
+    padding:14px 16px;
+    font-size:14px;
+    font-weight:700;
+    margin-bottom:20px;
+  }
+  form{
+    display:grid;
+    gap:14px;
+  }
+  label{
+    display:grid;
+    gap:8px;
+    font-size:13px;
+    font-weight:700;
+    color:#d9e7ff;
+  }
+  input{
+    width:100%;
+    min-height:48px;
+    border-radius:12px;
+    border:1px solid var(--line);
+    background:var(--panel2);
+    color:var(--text);
+    padding:0 14px;
+    font:inherit;
+  }
+  input:focus{
+    outline:none;
+    border-color:var(--sky);
+    box-shadow:0 0 0 3px rgba(56,189,248,.15);
+  }
+  button{
+    min-height:50px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(180deg, #1498ff, #0862f0);
+    color:#fff;
+    font:inherit;
+    font-weight:800;
+    letter-spacing:.4px;
+    cursor:pointer;
+  }
+  button:hover{filter:brightness(1.05)}
+  .status{
+    min-height:22px;
+    margin-top:10px;
+    font-size:14px;
+  }
+  .status.ok{color:#8df0ae}
+  .status.err{color:#fda4af}
+</style>
+</head>
+<body>
+  <main class="card">
+    <div class="eyebrow">Aaron Elrod</div>
+    <h1>Claim Your 10% Discount</h1>
+    <p>Scan completed. Submit your details below and this lead will be credited to Aaron automatically.</p>
+    <div class="offer">This public referral form applies a 10% client discount.</div>
+    <form id="lead-form">
+      <label>Client name
+        <input name="clientName" autocomplete="name" required>
+      </label>
+      <label>Phone number
+        <input name="phone" autocomplete="tel" inputmode="tel" required>
+      </label>
+      <label>Business name
+        <input name="businessName" autocomplete="organization" required>
+      </label>
+      <label>Email
+        <input name="email" type="email" autocomplete="email" required>
+      </label>
+      <button type="submit">Submit</button>
+    </form>
+    <div class="status" id="status"></div>
+  </main>
+
+  <script src="../referrals.js"></script>
+  <script>
+    window.JAWSReferrals.trackScan('aaron', 'public');
+
+    document.getElementById('lead-form').addEventListener('submit', function (event) {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const formData = new FormData(form);
+      window.JAWSReferrals.createLead({
+        repId: 'aaron',
+        sourceType: 'public',
+        discountApplied: true,
+        clientName: formData.get('clientName'),
+        phone: formData.get('phone'),
+        businessName: formData.get('businessName'),
+        email: formData.get('email')
+      });
+      form.reset();
+      const status = document.getElementById('status');
+      status.className = 'status ok';
+      status.textContent = 'Submitted. Aaron has been credited and your 10% discount is marked on the lead.';
+    });
+  </script>
+</body>
+</html>
