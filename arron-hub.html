@@ -364,6 +364,29 @@
     text-align:center;
     padding:12px;
   }
+  .lead-grid{
+    display:grid;
+    gap:10px;
+  }
+  .lead-card{
+    display:grid;
+    gap:9px;
+    padding:14px;
+    border:1px solid rgba(96,165,250,.14);
+    border-radius:14px;
+    background:rgba(10,18,32,.95);
+  }
+  .lead-top{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:12px;
+  }
+  .lead-meta{
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.5;
+  }
   .empty{
     padding:14px;
     border:1px dashed rgba(96,165,250,.18);
@@ -564,6 +587,22 @@
         <section class="card">
           <div class="card-head">
             <div>
+              <h2>Arkansas Lead List</h2>
+              <p>Starter calling list for Arkansas car dealers and powersports stores, directly inside Arron’s hub.</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="btn-row">
+              <button class="btn-green" id="load-starter-leads" type="button">Load Starter Leads</button>
+            </div>
+            <div class="status-line" id="lead-status"></div>
+            <div class="lead-grid" id="lead-list"></div>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-head">
+            <div>
               <h2>Next-Day Handoff</h2>
               <p>Create an explicit package for Arron to open the next morning. This is optional once shared Supabase sync is enabled, but it still works as a manual send-off step.</p>
             </div>
@@ -680,8 +719,32 @@ const defaultState = {
   appointments: [],
   videos: [],
   dispositions: [],
-  assets: []
+  assets: [],
+  leads: []
 };
+
+const STARTER_LEADS = [
+  { id:'lead_01', businessName:'Arkansas Golf & Powersports', category:'Powersports', city:'North Little Rock', state:'AR', phone:'501-690-0868', website:'https://www.arpowersports.com/', priority:'High', openingAngle:'Owner/operator style store, likely easier first conversation about lead response and follow-up.' },
+  { id:'lead_02', businessName:'Jonesboro Cycle and ATV', category:'Powersports', city:'Bono', state:'AR', phone:'870-935-2887', website:'https://www.jonesborocycle.com/', priority:'High', openingAngle:'Powersports and local operator angle. Lead handling and missed web inquiries.' },
+  { id:'lead_03', businessName:'Karl Malone Powersports', category:'Powersports', city:'El Dorado', state:'AR', phone:'870-639-6850', website:'https://www.karlmalonepowersports.com/', priority:'High', openingAngle:'Strong inventory store. Good fit for fast response and appointment setting pitch.' },
+  { id:'lead_04', businessName:'Honda of Russellville', category:'Powersports', city:'Russellville', state:'AR', phone:'479-968-2233', website:'https://www.hondaofrussellville.com/', priority:'High', openingAngle:'High-volume Honda angle. Ask about internet lead response and follow-up consistency.' },
+  { id:'lead_05', businessName:'Independence County Off Road', category:'Powersports', city:'Batesville', state:'AR', phone:'870-251-2468', website:'https://www.myoffroadatv.com/', priority:'High', openingAngle:'Smaller market store. Likely easier access to manager or owner.' },
+  { id:'lead_06', businessName:'Greeson\\'s', category:'Powersports', city:'Hot Springs', state:'AR', phone:'501-767-2771', website:'https://www.gogreeson.com/', priority:'High', openingAngle:'Good powersports opener around missed inbound opportunities and follow-up.' },
+  { id:'lead_07', businessName:'Allred Motorsports', category:'Powersports', city:'Rogers', state:'AR', phone:'', website:'https://www.allredmotorsports.com/', priority:'Medium', openingAngle:'Broader motorsports inventory. Use website follow-up and quote response angle.' },
+  { id:'lead_08', businessName:'Sunrise Honda', category:'Powersports', city:'Searcy', state:'AR', phone:'', website:'https://www.sunrisehonda.com/', priority:'Medium', openingAngle:'Honda powersports angle. Focus on quote requests and lead nurture.' },
+  { id:'lead_09', businessName:'C2 Powersports', category:'Powersports', city:'Conway', state:'AR', phone:'', website:'https://www.myc2powersports.com/', priority:'Medium', openingAngle:'Two-location operator. Good fit for centralized lead handling conversation.' },
+  { id:'lead_10', businessName:'Acura of Fayetteville', category:'Car Dealer', city:'Fayetteville', state:'AR', phone:'(479) 251-2050', website:'', priority:'High', openingAngle:'Franchise store opener about internet opportunities going cold in first 10 minutes.' },
+  { id:'lead_11', businessName:'Adventure Subaru', category:'Car Dealer', city:'Fayetteville', state:'AR', phone:'(479) 442-8200', website:'', priority:'High', openingAngle:'Use lead response and appointment-setting review angle.' },
+  { id:'lead_12', businessName:'BMW of Northwest Arkansas', category:'Car Dealer', city:'Bentonville', state:'AR', phone:'(479) 636-4155', website:'', priority:'High', openingAngle:'High-end inbound lead angle. Focus on speed to response and showroom appointment conversion.' },
+  { id:'lead_13', businessName:'Breeden Dodge Chrysler Jeep', category:'Car Dealer', city:'Fort Smith', state:'AR', phone:'(479) 646-4731', website:'', priority:'High', openingAngle:'Truck and SUV lead follow-up angle.' },
+  { id:'lead_14', businessName:'Caldwell Toyota', category:'Car Dealer', city:'Conway', state:'AR', phone:'(501) 327-3900', website:'', priority:'High', openingAngle:'Toyota volume angle. Ask who handles internet lead process review.' },
+  { id:'lead_15', businessName:'Central Chevrolet Cadillac', category:'Car Dealer', city:'Jonesboro', state:'AR', phone:'(870) 935-5575', website:'', priority:'Medium', openingAngle:'Appointment conversion and long-tail follow-up angle.' },
+  { id:'lead_16', businessName:'Central Buick GMC Nissan', category:'Car Dealer', city:'Jonesboro', state:'AR', phone:'(870) 935-2142', website:'', priority:'Medium', openingAngle:'Lead response consistency angle.' },
+  { id:'lead_17', businessName:'Chris Crain CDJR Hot Springs', category:'Car Dealer', city:'Hot Springs', state:'AR', phone:'(501) 525-0777', website:'', priority:'Medium', openingAngle:'Missed inbound opportunities and BDC support angle.' },
+  { id:'lead_18', businessName:'Acura of Little Rock', category:'Car Dealer', city:'Little Rock', state:'AR', phone:'(501) 448-8000', website:'', priority:'Medium', openingAngle:'Use fast response and nurture process review opener.' },
+  { id:'lead_19', businessName:'Audi of Little Rock', category:'Car Dealer', city:'Little Rock', state:'AR', phone:'(501) 221-2600', website:'', priority:'Medium', openingAngle:'Luxury lead handling angle focused on response quality and appointment set rate.' },
+  { id:'lead_20', businessName:'Bale GMC', category:'Car Dealer', city:'Little Rock', state:'AR', phone:'(501) 221-9191', website:'https://balegmc.com', priority:'Medium', openingAngle:'General manager and internet lead follow-up angle.' }
+];
 
 function loadState() {
   try {
@@ -692,7 +755,8 @@ function loadState() {
       appointments: Array.isArray(saved.appointments) ? saved.appointments : [],
       videos: Array.isArray(saved.videos) ? saved.videos : [],
       dispositions: Array.isArray(saved.dispositions) ? saved.dispositions : [],
-      assets: Array.isArray(saved.assets) ? saved.assets : []
+      assets: Array.isArray(saved.assets) ? saved.assets : [],
+      leads: Array.isArray(saved.leads) ? saved.leads : []
     };
   } catch (error) {
     return { ...defaultState };
@@ -712,6 +776,7 @@ function replaceState(nextState) {
   state.videos = Array.isArray(nextState.videos) ? nextState.videos : [];
   state.dispositions = Array.isArray(nextState.dispositions) ? nextState.dispositions : [];
   state.assets = Array.isArray(nextState.assets) ? nextState.assets : [];
+  state.leads = Array.isArray(nextState.leads) ? nextState.leads : [];
 }
 
 function uid() {
@@ -900,6 +965,35 @@ function renderAssets() {
   }).join('');
 }
 
+function renderLeads() {
+  const wrap = document.getElementById('lead-list');
+  if (!state.leads.length) {
+    wrap.innerHTML = '<div class="empty">No leads loaded yet. Click Load Starter Leads to place the Arkansas list into the hub.</div>';
+    return;
+  }
+
+  wrap.innerHTML = state.leads.map((lead, index) => `
+    <div class="lead-card" data-lead-id="${lead.id}">
+      <div class="lead-top">
+        <div>
+          <strong>${index + 1}. ${escapeHtml(lead.businessName)}</strong>
+          <div class="lead-meta">${escapeHtml(lead.category)} · ${escapeHtml(lead.city)}, ${escapeHtml(lead.state)}</div>
+        </div>
+        <button class="icon-btn" type="button" data-action="remove-lead">×</button>
+      </div>
+      <div class="badge-row">
+        <span class="badge ${lead.priority === 'High' ? 'red' : 'amber'}">${escapeHtml(lead.priority || 'Medium')}</span>
+        ${lead.phone ? `<span class="badge">${escapeHtml(lead.phone)}</span>` : ''}
+      </div>
+      <p>${escapeHtml(lead.openingAngle || 'No opening angle added.')}</p>
+      <div class="btn-row">
+        ${lead.phone ? `<a class="btn-green" href="tel:${escapeHtml(String(lead.phone).replace(/[^\d+]/g, ''))}" style="text-decoration:none;display:inline-flex;align-items:center;padding:0 16px;">Call</a>` : ''}
+        ${lead.website ? `<a class="btn-ghost" href="${escapeHtml(lead.website)}" target="_blank" rel="noopener noreferrer" style="text-decoration:none;display:inline-flex;align-items:center;">Website</a>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
 function renderAll() {
   document.getElementById('dialer-script').value = state.script;
   renderStats();
@@ -908,6 +1002,7 @@ function renderAll() {
   renderVideos();
   renderDispositions();
   renderAssets();
+  renderLeads();
 }
 
 function buildSharePayload() {
@@ -917,7 +1012,8 @@ function buildSharePayload() {
     appointments: state.appointments,
     videos: state.videos,
     dispositions: state.dispositions,
-    assets: state.assets
+    assets: state.assets,
+    leads: state.leads
   };
 }
 
@@ -940,7 +1036,8 @@ function importSharedBrief(payload) {
     appointments: Array.isArray(payload.appointments) ? payload.appointments : [],
     videos: Array.isArray(payload.videos) ? payload.videos : [],
     dispositions: Array.isArray(payload.dispositions) ? payload.dispositions : state.dispositions,
-    assets: Array.isArray(payload.assets) ? payload.assets : state.assets
+    assets: Array.isArray(payload.assets) ? payload.assets : state.assets,
+    leads: Array.isArray(payload.leads) ? payload.leads : state.leads
   });
   saveState();
   renderAll();
@@ -1260,6 +1357,24 @@ document.getElementById('asset-list').addEventListener('click', async (event) =>
   await pushRemoteState();
   await deleteAssetFile(asset);
   setAssetStatus('File removed.');
+});
+
+document.getElementById('load-starter-leads').addEventListener('click', async () => {
+  state.leads = STARTER_LEADS.slice();
+  saveState();
+  renderAll();
+  await pushRemoteState();
+  document.getElementById('lead-status').textContent = 'Arkansas starter leads loaded into the hub.';
+});
+
+document.getElementById('lead-list').addEventListener('click', async (event) => {
+  const row = event.target.closest('[data-lead-id]');
+  if (!row || event.target.dataset.action !== 'remove-lead') return;
+  state.leads = state.leads.filter((item) => item.id !== row.dataset.leadId);
+  saveState();
+  renderAll();
+  await pushRemoteState();
+  document.getElementById('lead-status').textContent = 'Lead removed.';
 });
 
 document.getElementById('generate-share').addEventListener('click', () => {
