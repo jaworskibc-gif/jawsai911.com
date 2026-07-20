@@ -603,6 +603,27 @@
         <section class="card">
           <div class="card-head">
             <div>
+              <h2>Shared Notes</h2>
+              <p>One note area for you and one for Arron. Both save into the shared hub.</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <label>Your notes
+              <textarea id="my-notes" placeholder="Your reminders, meeting notes, direction for Arron, follow-up ideas."></textarea>
+            </label>
+            <label>Arron notes
+              <textarea id="arron-notes" placeholder="Arron's running notes, call takeaways, questions, and updates."></textarea>
+            </label>
+            <div class="btn-row">
+              <button class="btn-primary" id="save-notes" type="button">Save Notes</button>
+            </div>
+            <div class="status-line" id="notes-status"></div>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-head">
+            <div>
               <h2>Next-Day Handoff</h2>
               <p>Create an explicit package for Arron to open the next morning. This is optional once shared Supabase sync is enabled, but it still works as a manual send-off step.</p>
             </div>
@@ -720,7 +741,11 @@ const defaultState = {
   videos: [],
   dispositions: [],
   assets: [],
-  leads: []
+  leads: [],
+  notes: {
+    mine: '',
+    arron: ''
+  }
 };
 
 const STARTER_LEADS = [
@@ -756,7 +781,13 @@ function loadState() {
       videos: Array.isArray(saved.videos) ? saved.videos : [],
       dispositions: Array.isArray(saved.dispositions) ? saved.dispositions : [],
       assets: Array.isArray(saved.assets) ? saved.assets : [],
-      leads: Array.isArray(saved.leads) ? saved.leads : []
+      leads: Array.isArray(saved.leads) ? saved.leads : [],
+      notes: saved.notes && typeof saved.notes === 'object'
+        ? {
+            mine: typeof saved.notes.mine === 'string' ? saved.notes.mine : '',
+            arron: typeof saved.notes.arron === 'string' ? saved.notes.arron : ''
+          }
+        : { ...defaultState.notes }
     };
   } catch (error) {
     return { ...defaultState };
@@ -777,6 +808,12 @@ function replaceState(nextState) {
   state.dispositions = Array.isArray(nextState.dispositions) ? nextState.dispositions : [];
   state.assets = Array.isArray(nextState.assets) ? nextState.assets : [];
   state.leads = Array.isArray(nextState.leads) ? nextState.leads : [];
+  state.notes = nextState.notes && typeof nextState.notes === 'object'
+    ? {
+        mine: typeof nextState.notes.mine === 'string' ? nextState.notes.mine : '',
+        arron: typeof nextState.notes.arron === 'string' ? nextState.notes.arron : ''
+      }
+    : { ...defaultState.notes };
 }
 
 function uid() {
@@ -996,6 +1033,8 @@ function renderLeads() {
 
 function renderAll() {
   document.getElementById('dialer-script').value = state.script;
+  document.getElementById('my-notes').value = state.notes.mine || '';
+  document.getElementById('arron-notes').value = state.notes.arron || '';
   renderStats();
   renderTodos();
   renderAppointments();
@@ -1013,7 +1052,8 @@ function buildSharePayload() {
     videos: state.videos,
     dispositions: state.dispositions,
     assets: state.assets,
-    leads: state.leads
+    leads: state.leads,
+    notes: state.notes
   };
 }
 
@@ -1037,7 +1077,8 @@ function importSharedBrief(payload) {
     videos: Array.isArray(payload.videos) ? payload.videos : [],
     dispositions: Array.isArray(payload.dispositions) ? payload.dispositions : state.dispositions,
     assets: Array.isArray(payload.assets) ? payload.assets : state.assets,
-    leads: Array.isArray(payload.leads) ? payload.leads : state.leads
+    leads: Array.isArray(payload.leads) ? payload.leads : state.leads,
+    notes: payload.notes && typeof payload.notes === 'object' ? payload.notes : state.notes
   });
   saveState();
   renderAll();
@@ -1066,6 +1107,10 @@ function setSyncMode() {
 
 function setAssetStatus(message) {
   document.getElementById('asset-status').textContent = message;
+}
+
+function setNotesStatus(message) {
+  document.getElementById('notes-status').textContent = message;
 }
 
 function createSupabaseClient() {
@@ -1375,6 +1420,17 @@ document.getElementById('lead-list').addEventListener('click', async (event) => 
   renderAll();
   await pushRemoteState();
   document.getElementById('lead-status').textContent = 'Lead removed.';
+});
+
+document.getElementById('save-notes').addEventListener('click', async () => {
+  state.notes = {
+    mine: document.getElementById('my-notes').value.trim(),
+    arron: document.getElementById('arron-notes').value.trim()
+  };
+  saveState();
+  renderAll();
+  await pushRemoteState();
+  setNotesStatus('Notes saved to shared workspace.');
 });
 
 document.getElementById('generate-share').addEventListener('click', () => {
