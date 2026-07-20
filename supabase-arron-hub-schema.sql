@@ -31,3 +31,37 @@ with check (true);
 insert into public.hub_state (hub, state_json)
 values ('arron', '{}'::jsonb)
 on conflict (hub) do nothing;
+
+insert into storage.buckets (id, name, public)
+values ('arron-assets', 'arron-assets', true)
+on conflict (id) do update
+set public = excluded.public;
+
+drop policy if exists "arron_assets_select" on storage.objects;
+create policy "arron_assets_select"
+on storage.objects
+for select
+to anon
+using (bucket_id = 'arron-assets');
+
+drop policy if exists "arron_assets_insert" on storage.objects;
+create policy "arron_assets_insert"
+on storage.objects
+for insert
+to anon
+with check (bucket_id = 'arron-assets');
+
+drop policy if exists "arron_assets_update" on storage.objects;
+create policy "arron_assets_update"
+on storage.objects
+for update
+to anon
+using (bucket_id = 'arron-assets')
+with check (bucket_id = 'arron-assets');
+
+drop policy if exists "arron_assets_delete" on storage.objects;
+create policy "arron_assets_delete"
+on storage.objects
+for delete
+to anon
+using (bucket_id = 'arron-assets');

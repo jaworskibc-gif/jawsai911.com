@@ -324,6 +324,46 @@
     border-radius:14px;
     background:#020611;
   }
+  .asset-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:12px;
+  }
+  .asset-card{
+    display:grid;
+    gap:10px;
+    padding:14px;
+    border:1px solid rgba(96,165,250,.14);
+    border-radius:14px;
+    background:rgba(10,18,32,.95);
+  }
+  .asset-preview{
+    width:100%;
+    aspect-ratio:4 / 3;
+    border-radius:12px;
+    overflow:hidden;
+    background:#020611;
+    border:1px solid rgba(96,165,250,.12);
+  }
+  .asset-preview img,
+  .asset-preview iframe{
+    width:100%;
+    height:100%;
+    border:0;
+    display:block;
+    object-fit:cover;
+  }
+  .asset-placeholder{
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--muted);
+    font-size:13px;
+    text-align:center;
+    padding:12px;
+  }
   .empty{
     padding:14px;
     border:1px dashed rgba(96,165,250,.18);
@@ -497,6 +537,33 @@
         <section class="card">
           <div class="card-head">
             <div>
+              <h2>Docs + Screenshots</h2>
+              <p>Upload full PDF documents, screenshots, and other supporting files directly into Arron’s hub.</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-grid">
+              <label>Asset title
+                <input id="asset-title" placeholder="Morning script PDF or call flow screenshot">
+              </label>
+              <label>Choose file
+                <input id="asset-file" type="file" accept=".pdf,image/*">
+              </label>
+            </div>
+            <label>Notes
+              <textarea id="asset-notes" placeholder="What Arron should review or use this for."></textarea>
+            </label>
+            <div class="btn-row">
+              <button class="btn-primary" id="upload-asset" type="button">Upload File</button>
+            </div>
+            <div class="status-line" id="asset-status"></div>
+            <div class="asset-grid" id="asset-list"></div>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-head">
+            <div>
               <h2>Next-Day Handoff</h2>
               <p>Create an explicit package for Arron to open the next morning. This is optional once shared Supabase sync is enabled, but it still works as a manual send-off step.</p>
             </div>
@@ -594,11 +661,13 @@
     </section>
   </main>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="hub-config.js"></script>
 <script>
 const STORAGE_KEY = 'jaws_arron_sales_hub_v1';
 const SHARE_PREFIX = '#brief=';
 const HUB_NAME = 'arron';
+const ASSET_BUCKET = 'arron-assets';
 const SUPABASE_URL = window.JAWS_HUB_CONFIG && window.JAWS_HUB_CONFIG.supabaseUrl
   ? String(window.JAWS_HUB_CONFIG.supabaseUrl).trim().replace(/\/$/, '')
   : '';
@@ -610,7 +679,8 @@ const defaultState = {
   todos: [],
   appointments: [],
   videos: [],
-  dispositions: []
+  dispositions: [],
+  assets: []
 };
 
 function loadState() {
@@ -621,7 +691,8 @@ function loadState() {
       todos: Array.isArray(saved.todos) ? saved.todos : [],
       appointments: Array.isArray(saved.appointments) ? saved.appointments : [],
       videos: Array.isArray(saved.videos) ? saved.videos : [],
-      dispositions: Array.isArray(saved.dispositions) ? saved.dispositions : []
+      dispositions: Array.isArray(saved.dispositions) ? saved.dispositions : [],
+      assets: Array.isArray(saved.assets) ? saved.assets : []
     };
   } catch (error) {
     return { ...defaultState };
@@ -640,6 +711,7 @@ function replaceState(nextState) {
   state.appointments = Array.isArray(nextState.appointments) ? nextState.appointments : [];
   state.videos = Array.isArray(nextState.videos) ? nextState.videos : [];
   state.dispositions = Array.isArray(nextState.dispositions) ? nextState.dispositions : [];
+  state.assets = Array.isArray(nextState.assets) ? nextState.assets : [];
 }
 
 function uid() {
@@ -795,6 +867,39 @@ function renderDispositions() {
   `).join('') : '<div class="empty">No sold deals or deposits logged yet.</div>';
 }
 
+function renderAssets() {
+  const wrap = document.getElementById('asset-list');
+  const assets = [...state.assets].reverse();
+  if (!assets.length) {
+    wrap.innerHTML = '<div class="empty">No PDFs or screenshots uploaded yet.</div>';
+    return;
+  }
+
+  wrap.innerHTML = assets.map((asset) => {
+    const isImage = String(asset.mimeType || '').startsWith('image/');
+    const isPdf = String(asset.mimeType || '').includes('pdf');
+    return `
+      <div class="asset-card" data-asset-id="${asset.id}">
+        <div class="asset-preview">
+          ${isImage ? `<img src="${escapeHtml(asset.url)}" alt="${escapeHtml(asset.title)}">`
+            : isPdf ? `<iframe src="${escapeHtml(asset.url)}#view=FitH"></iframe>`
+            : '<div class="asset-placeholder">Open file</div>'}
+        </div>
+        <strong>${escapeHtml(asset.title || asset.fileName || 'Uploaded file')}</strong>
+        <div class="badge-row">
+          <span class="badge">${escapeHtml(asset.fileName || 'file')}</span>
+          <span class="badge">${escapeHtml(asset.mimeType || 'asset')}</span>
+        </div>
+        <p>${escapeHtml(asset.notes || 'No notes added.')}</p>
+        <div class="btn-row">
+          <a class="btn-ghost" href="${escapeHtml(asset.url)}" target="_blank" rel="noopener noreferrer" style="text-decoration:none;display:inline-flex;align-items:center;">Open File</a>
+          <button class="icon-btn" type="button" data-action="remove-asset">×</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
 function renderAll() {
   document.getElementById('dialer-script').value = state.script;
   renderStats();
@@ -802,6 +907,7 @@ function renderAll() {
   renderAppointments();
   renderVideos();
   renderDispositions();
+  renderAssets();
 }
 
 function buildSharePayload() {
@@ -810,7 +916,8 @@ function buildSharePayload() {
     todos: state.todos,
     appointments: state.appointments,
     videos: state.videos,
-    dispositions: state.dispositions
+    dispositions: state.dispositions,
+    assets: state.assets
   };
 }
 
@@ -832,7 +939,8 @@ function importSharedBrief(payload) {
     todos: Array.isArray(payload.todos) ? payload.todos : [],
     appointments: Array.isArray(payload.appointments) ? payload.appointments : [],
     videos: Array.isArray(payload.videos) ? payload.videos : [],
-    dispositions: Array.isArray(payload.dispositions) ? payload.dispositions : state.dispositions
+    dispositions: Array.isArray(payload.dispositions) ? payload.dispositions : state.dispositions,
+    assets: Array.isArray(payload.assets) ? payload.assets : state.assets
   });
   saveState();
   renderAll();
@@ -857,6 +965,63 @@ function setSyncStatus(message) {
 function setSyncMode() {
   document.getElementById('sync-mode').textContent =
     SUPABASE_URL && SUPABASE_ANON_KEY ? 'Supabase Shared Mode' : 'Local Browser Mode';
+}
+
+function setAssetStatus(message) {
+  document.getElementById('asset-status').textContent = message;
+}
+
+function createSupabaseClient() {
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY || !window.supabase || !window.supabase.createClient) {
+    return null;
+  }
+
+  return window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false
+    }
+  });
+}
+
+async function uploadAssetFile(file, assetTitle, notes) {
+  const client = createSupabaseClient();
+  if (!client) {
+    throw new Error('Supabase client not configured');
+  }
+
+  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+  const path = `${HUB_NAME}/${Date.now()}_${safeName}`;
+  const upload = await client.storage.from(ASSET_BUCKET).upload(path, file, {
+    cacheControl: '3600',
+    upsert: false
+  });
+
+  if (upload.error) throw upload.error;
+
+  const publicUrlResult = client.storage.from(ASSET_BUCKET).getPublicUrl(path);
+  const publicUrl = publicUrlResult && publicUrlResult.data ? publicUrlResult.data.publicUrl : '';
+
+  if (!publicUrl) {
+    throw new Error('Upload succeeded but public URL was not returned');
+  }
+
+  return {
+    id: uid(),
+    title: assetTitle || file.name,
+    notes,
+    fileName: file.name,
+    mimeType: file.type || 'application/octet-stream',
+    path,
+    url: publicUrl,
+    uploadedAt: new Date().toISOString()
+  };
+}
+
+async function deleteAssetFile(asset) {
+  const client = createSupabaseClient();
+  if (!client || !asset || !asset.path) return;
+  await client.storage.from(ASSET_BUCKET).remove([asset.path]);
 }
 
 async function requestSharedState(action, payload) {
@@ -1021,6 +1186,39 @@ document.getElementById('video-list').addEventListener('click', (event) => {
   pushRemoteState();
 });
 
+document.getElementById('upload-asset').addEventListener('click', async () => {
+  const title = document.getElementById('asset-title');
+  const fileInput = document.getElementById('asset-file');
+  const notes = document.getElementById('asset-notes');
+  const file = fileInput.files && fileInput.files[0];
+
+  if (!file) {
+    setAssetStatus('Choose a PDF or image first.');
+    return;
+  }
+
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+    setAssetStatus('Supabase is not configured.');
+    return;
+  }
+
+  setAssetStatus('Uploading file...');
+
+  try {
+    const asset = await uploadAssetFile(file, title.value.trim(), notes.value.trim());
+    state.assets.push(asset);
+    title.value = '';
+    fileInput.value = '';
+    notes.value = '';
+    saveState();
+    renderAll();
+    await pushRemoteState();
+    setAssetStatus('File uploaded and saved.');
+  } catch (error) {
+    setAssetStatus('Upload failed. Make sure the storage bucket and policies are set up.');
+  }
+});
+
 document.getElementById('add-disposition').addEventListener('click', () => {
   const name = document.getElementById('disp-name');
   const outcome = document.getElementById('disp-outcome');
@@ -1050,6 +1248,18 @@ document.getElementById('disposition-list').addEventListener('click', (event) =>
   saveState();
   renderAll();
   pushRemoteState();
+});
+
+document.getElementById('asset-list').addEventListener('click', async (event) => {
+  const row = event.target.closest('[data-asset-id]');
+  if (!row || event.target.dataset.action !== 'remove-asset') return;
+  const asset = state.assets.find((item) => item.id === row.dataset.assetId);
+  state.assets = state.assets.filter((item) => item.id !== row.dataset.assetId);
+  saveState();
+  renderAll();
+  await pushRemoteState();
+  await deleteAssetFile(asset);
+  setAssetStatus('File removed.');
 });
 
 document.getElementById('generate-share').addEventListener('click', () => {

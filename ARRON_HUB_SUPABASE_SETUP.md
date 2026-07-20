@@ -1,11 +1,11 @@
 # Arron Hub Supabase Setup
 
-This turns `arron-hub.html` into a real shared workspace using Supabase's free plan.
+This turns `arron-hub.html` into a real shared workspace using Supabase's free plan, including document and screenshot uploads.
 
 ## What you get
 
 - Shared Arron to-do list across devices
-- Shared scripts, appointments, training videos, dispositions, deals, and deposits
+- Shared scripts, appointments, training videos, dispositions, deals, deposits, PDFs, and screenshots
 - No spreadsheet required
 
 ## Supabase setup
@@ -32,6 +32,7 @@ supabaseAnonKey: 'YOUR_ANON_PUBLIC_KEY'
 
 - When `supabaseUrl` and `supabaseAnonKey` are blank, the page stays in local browser-only mode.
 - Once both are set, `arron-hub.html` reads and writes the shared `arron` workspace from Supabase.
+- The same SQL also creates a public Storage bucket named `arron-assets` for PDFs and screenshots.
 - You can assign tasks at night, and Arron can sign in later and see them on his own device.
 
 ## Important note
