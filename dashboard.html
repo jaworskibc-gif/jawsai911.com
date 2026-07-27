@@ -493,6 +493,13 @@ body {
           <div class="card-arrow" style="color:#f59e0b;">Open Sales Hub →</div>
         </a>
 
+        <a class="app-card" href="top-prospect-text.html" style="border-top-color:#22c55e;">
+          <div class="card-icon">💬</div>
+          <div class="card-title">Top Prospect Text</div>
+          <div class="card-desc">Pull live pipeline leads, draft the first outreach text, then open your phone's SMS app and send it manually.</div>
+          <div class="card-arrow" style="color:#22c55e;">Open Text Tool →</div>
+        </a>
+
         <a class="app-card" href="toolkit/index.html" style="border-top-color:#00b4ff;">
           <div class="card-icon">🧰</div>
           <div class="card-title">JAWSAI911 Toolkit</div>
@@ -512,6 +519,20 @@ body {
           <div class="card-title">Letterhead</div>
           <div class="card-desc">Branded letterhead. Click to edit, print or save as PDF. Dark header, clean body.</div>
           <div class="card-arrow" style="color:#0066cc;">Open Letterhead →</div>
+        </a>
+
+        <a class="app-card" href="JAWS_LETTERHEAD_AARON.html" target="_blank" style="border-top-color:#38bdf8;">
+          <div class="card-icon">🖋️</div>
+          <div class="card-title">Aaron Letterhead</div>
+          <div class="card-desc">Second letterhead template with Aaron Elrod signature, contact info, and footer details.</div>
+          <div class="card-arrow" style="color:#38bdf8;">Open Aaron Letterhead →</div>
+        </a>
+
+        <a class="app-card" href="Medicare_Brokerage_Outreach_List_For_Google_Sheets.csv" target="_blank" style="border-top-color:#f85149;">
+          <div class="card-icon">📬</div>
+          <div class="card-title">Medicare Brokerage List</div>
+          <div class="card-desc">Import-ready outreach spreadsheet for Platinum, Exact Medicare, QuoteManage, New Medicare, and other big-phone brokerage targets.</div>
+          <div class="card-arrow" style="color:#f85149;">Open Spreadsheet →</div>
         </a>
       </div>
     </div>
@@ -580,8 +601,22 @@ body {
 
 <div class="footer">JAWSAI911.COM &nbsp;·&nbsp; COMMAND CENTER &nbsp;·&nbsp; 2026</div>
 
+<script src="hub-config.js"></script>
+<script src="shared-hub-state.js"></script>
 <script>
 const TODO_STORE_KEY = 'jaws_command_hub_todos_v1';
+const todoStore = window.JAWSSharedHubState
+  ? window.JAWSSharedHubState.createStore({
+      hubName: 'command-dashboard',
+      storageKey: TODO_STORE_KEY,
+      normalize: function (saved) {
+        return {
+          arron: saved && Array.isArray(saved.arron) ? saved.arron : [],
+          mine: saved && Array.isArray(saved.mine) ? saved.mine : []
+        };
+      }
+    })
+  : null;
 
 function escapeHtml(value) {
   return value
@@ -593,6 +628,7 @@ function escapeHtml(value) {
 }
 
 function loadTodos() {
+  if (todoStore) return todoStore.loadLocal();
   try {
     const saved = JSON.parse(localStorage.getItem(TODO_STORE_KEY) || '{}');
     return {
@@ -607,6 +643,10 @@ function loadTodos() {
 const todoState = loadTodos();
 
 function saveTodos() {
+  if (todoStore) {
+    todoStore.saveEverywhere(todoState);
+    return;
+  }
   localStorage.setItem(TODO_STORE_KEY, JSON.stringify(todoState));
 }
 
@@ -703,6 +743,21 @@ document.querySelectorAll('.todo-panel').forEach((panel) => {
 });
 
 renderTodos();
+
+if (todoStore) {
+  todoStore.subscribe(function (nextState, source) {
+    todoState.arron = Array.isArray(nextState.arron) ? nextState.arron : [];
+    todoState.mine = Array.isArray(nextState.mine) ? nextState.mine : [];
+    if (source === 'remote') {
+      renderTodos();
+    }
+  });
+  todoStore.loadRemoteIntoLocal().then(function (nextState) {
+    todoState.arron = Array.isArray(nextState.arron) ? nextState.arron : [];
+    todoState.mine = Array.isArray(nextState.mine) ? nextState.mine : [];
+    renderTodos();
+  });
+}
 </script>
 </body>
 </html>

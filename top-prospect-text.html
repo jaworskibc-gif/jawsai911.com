@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Top Prospect Text | JAWSAI911</title>
+<script>if(!sessionStorage.getItem('jaw_auth')){sessionStorage.setItem('jaw_return',location.href);location.href='login.html';}</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#020611;
+    --panel:#081120;
+    --panel-2:#0d1830;
+    --line:rgba(96,165,250,.2);
+    --blue:#3b82f6;
+    --sky:#38bdf8;
+    --green:#22c55e;
+    --amber:#f59e0b;
+    --red:#fb7185;
+    --text:#eef2ff;
+    --muted:#8aa0c7;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:'Inter',Segoe UI,sans-serif;
+    color:var(--text);
+    background:
+      radial-gradient(circle at top right, rgba(56,189,248,.12), transparent 28%),
+      radial-gradient(circle at top left, rgba(245,158,11,.1), transparent 22%),
+      linear-gradient(180deg,#01040a,#030915 40%,#07111f);
+  }
+  a{color:inherit}
+  .header{
+    position:sticky;
+    top:0;
+    z-index:20;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    padding:16px clamp(16px,4vw,34px);
+    background:rgba(6,10,20,.9);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(96,165,250,.16);
+  }
+  .header img{height:36px;display:block}
+  .header-copy{display:grid;gap:4px}
+  .header-copy h1{margin:0;font-size:24px}
+  .header-copy p{margin:0;color:var(--muted);font-size:13px}
+  .header-actions{display:flex;gap:10px;flex-wrap:wrap}
+  .header-actions a{
+    padding:10px 14px;
+    border-radius:10px;
+    border:1px solid var(--line);
+    text-decoration:none;
+    font-size:13px;
+    font-weight:700;
+    color:var(--muted);
+  }
+  .header-actions a.primary{
+    background:var(--blue);
+    border-color:var(--blue);
+    color:#fff;
+  }
+  main{
+    padding:28px clamp(16px,4vw,34px) 46px;
+    display:grid;
+    gap:18px;
+  }
+  .hero,.panel{
+    border:1px solid var(--line);
+    border-radius:20px;
+    background:rgba(7,17,31,.94);
+  }
+  .hero{
+    padding:24px;
+    display:grid;
+    gap:10px;
+    background:
+      radial-gradient(circle at 88% 12%, rgba(56,189,248,.12), transparent 25%),
+      rgba(7,17,31,.94);
+  }
+  .eyebrow{
+    color:var(--sky);
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:2.6px;
+    text-transform:uppercase;
+  }
+  .hero h2{margin:0;font-size:clamp(28px,5vw,42px);line-height:1}
+  .hero p{margin:0;color:var(--muted);font-size:14px;line-height:1.7;max-width:900px}
+  .hero-note{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    width:max-content;
+    padding:8px 12px;
+    border-radius:999px;
+    background:rgba(59,130,246,.12);
+    border:1px solid rgba(56,189,248,.22);
+    color:#dbeafe;
+    font-size:12px;
+    font-weight:700;
+  }
+  .stats{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:12px;
+  }
+  .stat{
+    padding:18px;
+    border:1px solid var(--line);
+    border-radius:16px;
+    background:rgba(7,17,31,.94);
+  }
+  .stat strong{display:block;font-size:28px;line-height:1;margin-bottom:6px}
+  .stat span{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:1px}
+  .grid{
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+    gap:18px;
+    align-items:start;
+  }
+  .panel-head{
+    padding:18px 18px 14px;
+    border-bottom:1px solid rgba(96,165,250,.12);
+    background:#091120;
+  }
+  .panel-head h3{margin:0 0 4px;font-size:18px}
+  .panel-head p{margin:0;color:var(--muted);font-size:13px;line-height:1.55}
+  .panel-body{padding:18px;display:grid;gap:14px}
+  .controls{
+    display:grid;
+    grid-template-columns:1.1fr .9fr .8fr;
+    gap:10px;
+  }
+  label{
+    display:grid;
+    gap:7px;
+    color:#dbe7ff;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.3px;
+  }
+  input,select,textarea,button{
+    width:100%;
+    min-height:46px;
+    border-radius:12px;
+    border:1px solid var(--line);
+    background:var(--panel-2);
+    color:var(--text);
+    font:inherit;
+    padding:11px 13px;
+  }
+  textarea{min-height:220px;resize:vertical;line-height:1.6}
+  input:focus,select:focus,textarea:focus{
+    outline:none;
+    border-color:var(--sky);
+    box-shadow:0 0 0 3px rgba(56,189,248,.12);
+  }
+  button{
+    cursor:pointer;
+    font-weight:800;
+    letter-spacing:.3px;
+  }
+  .btn-row{display:flex;gap:10px;flex-wrap:wrap}
+  .btn-primary{
+    width:auto;
+    padding:0 16px;
+    background:linear-gradient(180deg,#1498ff,#0862f0);
+    border-color:#0862f0;
+    color:#fff;
+  }
+  .btn-secondary{
+    width:auto;
+    padding:0 16px;
+    background:rgba(59,130,246,.08);
+    border-color:rgba(59,130,246,.28);
+    color:#dbeafe;
+  }
+  .btn-open{
+    width:auto;
+    padding:0 16px;
+    background:linear-gradient(180deg,#2ac76e,#12974c);
+    border-color:#12974c;
+    color:#fff;
+  }
+  .lead-list{
+    display:grid;
+    gap:12px;
+    max-height:880px;
+    overflow:auto;
+    padding-right:4px;
+  }
+  .lead-card{
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:16px;
+    background:linear-gradient(180deg,rgba(13,24,48,.75),rgba(8,17,32,.9));
+    display:grid;
+    gap:10px;
+  }
+  .lead-card.selected{
+    border-color:rgba(56,189,248,.52);
+    box-shadow:0 0 0 1px rgba(56,189,248,.18), 0 12px 30px rgba(2,6,17,.45);
+  }
+  .lead-top{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:10px;
+  }
+  .lead-top h4{margin:0;font-size:17px}
+  .lead-meta{color:var(--muted);font-size:13px;line-height:1.5}
+  .pill-row{display:flex;gap:8px;flex-wrap:wrap}
+  .pill{
+    display:inline-flex;
+    align-items:center;
+    min-height:26px;
+    padding:0 10px;
+    border-radius:999px;
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:.6px;
+    text-transform:uppercase;
+  }
+  .pill.stage-new,.pill.stage-contacted{background:rgba(34,197,94,.14);color:#86efac}
+  .pill.stage-video_sent,.pill.stage-scheduled{background:rgba(245,158,11,.14);color:#fcd34d}
+  .pill.stage-won{background:rgba(59,130,246,.16);color:#93c5fd}
+  .pill.stage-lost{background:rgba(251,113,133,.14);color:#fda4af}
+  .pill.hot{background:rgba(56,189,248,.14);color:#7dd3fc}
+  .draft-shell{
+    display:grid;
+    gap:14px;
+  }
+  .detail-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:10px;
+  }
+  .detail{
+    border:1px solid var(--line);
+    border-radius:14px;
+    background:rgba(8,17,32,.8);
+    padding:12px 14px;
+  }
+  .detail strong{
+    display:block;
+    font-size:11px;
+    color:var(--muted);
+    letter-spacing:1px;
+    text-transform:uppercase;
+    margin-bottom:6px;
+  }
+  .detail span,.detail a{
+    font-size:14px;
+    color:#eef2ff;
+    text-decoration:none;
+    word-break:break-word;
+  }
+  .helper{
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.6;
+  }
+  .status{
+    min-height:20px;
+    font-size:12px;
+    color:#86efac;
+    font-weight:700;
+  }
+  .empty{
+    padding:26px;
+    border:1px dashed rgba(96,165,250,.22);
+    border-radius:16px;
+    text-align:center;
+    color:var(--muted);
+  }
+  @media (max-width: 980px){
+    .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .grid{grid-template-columns:1fr}
+    .controls,.detail-grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<header class="header">
+  <div style="display:flex;align-items:center;gap:14px;">
+    <img src="jawsai911-logo-dark-hero.jpeg" alt="JAWSAI911">
+    <div class="header-copy">
+      <h1>Top Prospect Text</h1>
+      <p>Draft the first outreach text, then send it manually from your device.</p>
+    </div>
+  </div>
+  <div class="header-actions">
+    <a href="toolkit/JAWSAI911_Pipeline_CRM.html">Pipeline CRM</a>
+    <a href="toolkit/JAWSAI911_Call_Tracker.html">Call Tracker</a>
+    <a href="dashboard.html" class="primary">← Command Hub</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="eyebrow">Manual First Touch</div>
+    <h2>Pick a real lead. Tune the opener. Text from your own number.</h2>
+    <p>This tool reads live pipeline leads from the shared Supabase backend, prioritizes contacts with phone numbers, and gives you a clean first-text draft. It does not auto-send. You review, copy, and open your SMS app manually.</p>
+    <div class="hero-note">Safe mode: manual send only. Nothing is sent from the browser automatically.</div>
+  </section>
+
+  <section class="stats" id="stats">
+    <div class="stat"><strong id="stat-total">0</strong><span>Total Leads</span></div>
+    <div class="stat"><strong id="stat-phone">0</strong><span>With Phone</span></div>
+    <div class="stat"><strong id="stat-ready">0</strong><span>Top Prospect Pool</span></div>
+    <div class="stat"><strong id="stat-stage">0</strong><span>Filtered View</span></div>
+  </section>
+
+  <section class="grid">
+    <div class="panel">
+      <div class="panel-head">
+        <h3>Prospect Queue</h3>
+        <p>Leads are sorted toward first-touch outreach: `new`, `contacted`, and `video_sent` with a phone number rise to the top.</p>
+      </div>
+      <div class="panel-body">
+        <div class="controls">
+          <label>
+            Search
+            <input id="search" type="search" placeholder="Lead name, client, notes">
+          </label>
+          <label>
+            Client
+            <select id="client-filter"><option value="">All clients</option></select>
+          </label>
+          <label>
+            Stage
+            <select id="stage-filter">
+              <option value="">All stages</option>
+              <option value="new">New</option>
+              <option value="contacted">Contacted</option>
+              <option value="video_sent">Video Sent</option>
+              <option value="scheduled">Scheduled</option>
+              <option value="won">Won</option>
+              <option value="lost">Lost</option>
+            </select>
+          </label>
+        </div>
+        <div id="lead-list" class="lead-list"></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <h3>Draft Text</h3>
+        <p>Edit the message, then either copy it or open your SMS app with the message prefilled.</p>
+      </div>
+      <div class="panel-body draft-shell">
+        <div class="detail-grid">
+          <div class="detail">
+            <strong>Lead</strong>
+            <span id="lead-name">Select a prospect</span>
+          </div>
+          <div class="detail">
+            <strong>Client</strong>
+            <span id="client-name">-</span>
+          </div>
+          <div class="detail">
+            <strong>Phone</strong>
+            <span id="lead-phone">-</span>
+          </div>
+          <div class="detail">
+            <strong>Stage</strong>
+            <span id="lead-stage">-</span>
+          </div>
+        </div>
+
+        <label>
+          Your text draft
+          <textarea id="message-box" placeholder="Select a lead to generate a draft."></textarea>
+        </label>
+
+        <div class="btn-row">
+          <button class="btn-primary" id="regen-btn" type="button">Regenerate Draft</button>
+          <button class="btn-secondary" id="copy-btn" type="button">Copy Text</button>
+          <button class="btn-open" id="sms-btn" type="button">Open SMS App</button>
+        </div>
+
+        <div class="status" id="status"></div>
+        <div class="helper">Tip: on mobile, <code>Open SMS App</code> should launch your phone's text composer using your number. On desktop, behavior depends on whether you have a linked messaging app installed.</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="hub-config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = window.JAWS_HUB_CONFIG && window.JAWS_HUB_CONFIG.supabaseUrl ? String(window.JAWS_HUB_CONFIG.supabaseUrl).trim().replace(/\/$/, '') : '';
+const SUPABASE_ANON_KEY = window.JAWS_HUB_CONFIG && window.JAWS_HUB_CONFIG.supabaseAnonKey ? String(window.JAWS_HUB_CONFIG.supabaseAnonKey).trim() : '';
+
+let supabaseClient = null;
+let allLeads = [];
+let filteredLeads = [];
+let selectedLeadId = '';
+
+function createSupabaseClient() {
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY || !window.supabase || !window.supabase.createClient) {
+    return null;
+  }
+  return window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+    auth: { persistSession: false, autoRefreshToken: false }
+  });
+}
+
+function stageWeight(stage) {
+  const order = { new: 0, contacted: 1, video_sent: 2, scheduled: 3, won: 4, lost: 5 };
+  return Object.prototype.hasOwnProperty.call(order, stage) ? order[stage] : 99;
+}
+
+function escapeHtml(value) {
+  return String(value || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function normalizePhone(value) {
+  const digits = String(value || '').replace(/\D/g, '');
+  if (!digits) return '';
+  return digits.length === 11 && digits.startsWith('1') ? '+' + digits : '+1' + digits;
+}
+
+function prettyStage(stage) {
+  return String(stage || '').replace(/_/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); }) || '-';
+}
+
+function generateDraft(lead) {
+  const firstName = (lead.name || '').trim().split(/\s+/)[0] || 'there';
+  const clientName = lead.client_name || 'your business';
+  const opener = [
+    'Hi ' + firstName + ', this is Bryan with JAWSAI911.',
+    'I had a quick idea for ' + clientName + ' around AI follow-up and lead capture.',
+    'Would it be crazy if I sent you a 30-second breakdown?',
+  ];
+  return opener.join(' ');
+}
+
+function setStatus(message, isError) {
+  const el = document.getElementById('status');
+  el.textContent = message || '';
+  el.style.color = isError ? '#fda4af' : '#86efac';
+}
+
+function setSelectedLead(lead) {
+  selectedLeadId = lead ? lead.id : '';
+  document.getElementById('lead-name').textContent = lead ? lead.name : 'Select a prospect';
+  document.getElementById('client-name').textContent = lead ? (lead.client_name || '-') : '-';
+  document.getElementById('lead-phone').textContent = lead ? (lead.phone || '-') : '-';
+  document.getElementById('lead-stage').textContent = lead ? prettyStage(lead.stage) : '-';
+  document.getElementById('message-box').value = lead ? generateDraft(lead) : '';
+  renderLeads();
+}
+
+function renderStats(leads) {
+  const withPhone = leads.filter(function (lead) { return Boolean(lead.phone); });
+  const topPool = withPhone.filter(function (lead) { return stageWeight(lead.stage) <= 2; });
+  document.getElementById('stat-total').textContent = String(leads.length);
+  document.getElementById('stat-phone').textContent = String(withPhone.length);
+  document.getElementById('stat-ready').textContent = String(topPool.length);
+  document.getElementById('stat-stage').textContent = String(filteredLeads.length);
+}
+
+function renderClientFilter(leads) {
+  const select = document.getElementById('client-filter');
+  const current = select.value;
+  const names = Array.from(new Set(leads.map(function (lead) { return lead.client_name; }).filter(Boolean))).sort();
+  select.innerHTML = '<option value="">All clients</option>' + names.map(function (name) {
+    return '<option value="' + escapeHtml(name) + '">' + escapeHtml(name) + '</option>';
+  }).join('');
+  if (names.indexOf(current) >= 0) {
+    select.value = current;
+  }
+}
+
+function renderLeads() {
+  const list = document.getElementById('lead-list');
+  if (!filteredLeads.length) {
+    list.innerHTML = '<div class="empty">No matching prospects right now. Try a different filter or add more leads in Pipeline CRM.</div>';
+    return;
+  }
+
+  list.innerHTML = filteredLeads.map(function (lead) {
+    const selectedClass = lead.id === selectedLeadId ? ' selected' : '';
+    const phone = lead.phone ? escapeHtml(lead.phone) : 'No phone on file';
+    const notes = lead.notes ? '<div class="lead-meta">' + escapeHtml(lead.notes) + '</div>' : '';
+    return '<button class="lead-card' + selectedClass + '" type="button" data-id="' + escapeHtml(lead.id) + '">' +
+      '<div class="lead-top">' +
+        '<div>' +
+          '<h4>' + escapeHtml(lead.name) + '</h4>' +
+          '<div class="lead-meta">' + escapeHtml(lead.client_name || 'Unassigned client') + '</div>' +
+        '</div>' +
+        '<div class="pill-row">' +
+          '<span class="pill stage-' + escapeHtml(lead.stage || 'new') + '">' + escapeHtml(prettyStage(lead.stage)) + '</span>' +
+          (lead.phone ? '<span class="pill hot">Phone Ready</span>' : '') +
+        '</div>' +
+      '</div>' +
+      '<div class="lead-meta">' + phone + '</div>' +
+      notes +
+    '</button>';
+  }).join('');
+
+  list.querySelectorAll('[data-id]').forEach(function (button) {
+    button.addEventListener('click', function () {
+      const lead = filteredLeads.find(function (item) { return item.id === button.getAttribute('data-id'); });
+      if (lead) setSelectedLead(lead);
+    });
+  });
+}
+
+function applyFilters() {
+  const search = document.getElementById('search').value.trim().toLowerCase();
+  const clientFilter = document.getElementById('client-filter').value;
+  const stageFilter = document.getElementById('stage-filter').value;
+
+  filteredLeads = allLeads.filter(function (lead) {
+    if (clientFilter && lead.client_name !== clientFilter) return false;
+    if (stageFilter && lead.stage !== stageFilter) return false;
+    if (!search) return true;
+    const haystack = [lead.name, lead.client_name, lead.notes, lead.phone].join(' ').toLowerCase();
+    return haystack.indexOf(search) >= 0;
+  });
+
+  renderStats(allLeads);
+  renderLeads();
+
+  if (selectedLeadId && !filteredLeads.some(function (lead) { return lead.id === selectedLeadId; })) {
+    setSelectedLead(filteredLeads[0] || null);
+  } else if (!selectedLeadId && filteredLeads[0]) {
+    setSelectedLead(filteredLeads[0]);
+  }
+}
+
+async function loadLeads() {
+  supabaseClient = createSupabaseClient();
+  if (!supabaseClient) {
+    setStatus('Supabase config missing in hub-config.js.', true);
+    return;
+  }
+
+  setStatus('Loading live prospects...');
+  const result = await supabaseClient
+    .from('pipeline_leads')
+    .select('id, client_id, stage, name, phone, notes, created_at, clients(name)')
+    .order('created_at', { ascending: false });
+
+  if (result.error) {
+    setStatus(result.error.message || 'Could not load prospects.', true);
+    return;
+  }
+
+  allLeads = (result.data || []).map(function (lead) {
+    return {
+      id: lead.id,
+      client_id: lead.client_id,
+      client_name: lead.clients && lead.clients.name ? lead.clients.name : '',
+      stage: lead.stage || 'new',
+      name: lead.name || 'Unnamed lead',
+      phone: lead.phone || '',
+      notes: lead.notes || '',
+      created_at: lead.created_at || ''
+    };
+  }).sort(function (a, b) {
+    const phoneRank = Number(Boolean(b.phone)) - Number(Boolean(a.phone));
+    if (phoneRank !== 0) return phoneRank;
+    const stageRank = stageWeight(a.stage) - stageWeight(b.stage);
+    if (stageRank !== 0) return stageRank;
+    return String(b.created_at).localeCompare(String(a.created_at));
+  });
+
+  renderClientFilter(allLeads);
+  applyFilters();
+  setStatus('Loaded ' + allLeads.length + ' live prospects.');
+}
+
+async function copyDraft() {
+  const text = document.getElementById('message-box').value.trim();
+  if (!text) {
+    setStatus('There is no draft text to copy yet.', true);
+    return;
+  }
+  try {
+    await navigator.clipboard.writeText(text);
+    setStatus('Draft copied to clipboard.');
+  } catch (error) {
+    setStatus('Clipboard copy failed on this device.', true);
+  }
+}
+
+function openSmsComposer() {
+  const lead = allLeads.find(function (item) { return item.id === selectedLeadId; });
+  const text = document.getElementById('message-box').value.trim();
+  if (!lead || !lead.phone) {
+    setStatus('Select a prospect with a phone number first.', true);
+    return;
+  }
+  if (!text) {
+    setStatus('There is no draft text to send yet.', true);
+    return;
+  }
+  const phone = normalizePhone(lead.phone);
+  const body = encodeURIComponent(text);
+  window.location.href = 'sms:' + phone + '?body=' + body;
+}
+
+function regenerateDraft() {
+  const lead = allLeads.find(function (item) { return item.id === selectedLeadId; });
+  if (!lead) {
+    setStatus('Select a prospect first.', true);
+    return;
+  }
+  document.getElementById('message-box').value = generateDraft(lead);
+  setStatus('Draft refreshed.');
+}
+
+document.getElementById('search').addEventListener('input', applyFilters);
+document.getElementById('client-filter').addEventListener('change', applyFilters);
+document.getElementById('stage-filter').addEventListener('change', applyFilters);
+document.getElementById('copy-btn').addEventListener('click', copyDraft);
+document.getElementById('sms-btn').addEventListener('click', openSmsComposer);
+document.getElementById('regen-btn').addEventListener('click', regenerateDraft);
+
+loadLeads();
+</script>
+</body>
+</html>
