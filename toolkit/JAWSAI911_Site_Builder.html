@@ -58,6 +58,12 @@
   .service-item { display: flex; gap: 6px; margin-bottom: 6px; }
   .service-item input { flex: 1; }
   .service-del { background:none; border:none; color: var(--ink-soft); cursor:pointer; font-size:15px; }
+  .stack-item { border: 1px solid var(--line); border-radius: 6px; padding: 10px; margin-bottom: 8px; background: #FAFCFD; }
+  .stack-item input, .stack-item textarea, .stack-item select { margin-top: 4px; }
+  .image-thumb {
+    width: 100%; height: 120px; object-fit: cover; border-radius: 6px; border: 1px solid var(--line);
+    margin-top: 8px; background: #EEF3F6;
+  }
   .add-item-btn {
     width: 100%; padding: 7px; border: 1.5px dashed var(--line); background: none;
     border-radius: 5px; color: var(--ink-soft); font-size: 11.5px; font-weight: 700; cursor: pointer; margin-top: 4px;
@@ -137,6 +143,18 @@
         </div>
 
         <div class="section-card">
+          <h4>Gallery Images</h4>
+          <div id="galleryContainer"></div>
+          <button class="add-item-btn" onclick="addGalleryImage()">+ Add Image Slot</button>
+        </div>
+
+        <div class="section-card">
+          <h4>Google Reviews</h4>
+          <div id="reviewsContainer"></div>
+          <button class="add-item-btn" onclick="addReview()">+ Add Review</button>
+        </div>
+
+        <div class="section-card">
           <h4>Testimonial</h4>
           <label>Quote</label><textarea id="f_quote" rows="2" oninput="renderPreview()"></textarea>
         </div>
@@ -176,6 +194,8 @@ let currentClient = null;
 let currentClientId = null;
 let currentTheme = 'ocean';
 let services = [];
+let galleryImages = [];
+let reviews = [];
 
 function statusMsg(t) { document.getElementById('statusMsg').textContent = t; }
 function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
@@ -265,8 +285,31 @@ function defaultSiteData() {
       { name: 'Service One', desc: 'Short description of what you offer.' },
       { name: 'Service Two', desc: 'Short description of what you offer.' },
     ],
+    galleryImages: [],
+    reviews: [
+      { author: 'Happy Customer', rating: 5, text: "Fast response, great communication, and excellent work." },
+      { author: 'Local Homeowner', rating: 5, text: "Professional team and the finished result was exactly what we hoped for." }
+    ],
     quote: "These guys are the best in town. Wouldn't call anyone else."
   };
+}
+
+function normalizeServicesBlob(value, quoteFallback) {
+  if (Array.isArray(value)) {
+    return {
+      services: value,
+      galleryImages: [],
+      reviews: quoteFallback ? [{ author: 'Featured Review', rating: 5, text: quoteFallback }] : []
+    };
+  }
+  if (value && typeof value === 'object') {
+    return {
+      services: Array.isArray(value.services) ? value.services : [],
+      galleryImages: Array.isArray(value.galleryImages) ? value.galleryImages : [],
+      reviews: Array.isArray(value.reviews) ? value.reviews : []
+    };
+  }
+  return { services: [], galleryImages: [], reviews: [] };
 }
 
 async function loadSite() {
@@ -281,6 +324,7 @@ async function loadSite() {
       .maybeSingle();
     if (error) throw error;
     if (row) {
+      const siteBlob = normalizeServicesBlob(row.services, row.quote || '');
       data = {
         theme: row.theme || 'ocean',
         bizName: row.biz_name || '',
@@ -291,7 +335,9 @@ async function loadSite() {
         rating: row.rating || 0,
         reviewCount: row.review_count || 0,
         quote: row.quote || '',
-        services: Array.isArray(row.services) ? row.services : []
+        services: siteBlob.services,
+        galleryImages: siteBlob.galleryImages,
+        reviews: siteBlob.reviews
       };
     }
   } catch (e) { /* use defaults */ }
@@ -306,9 +352,13 @@ async function loadSite() {
   document.getElementById('f_reviewCount').value = data.reviewCount || 0;
   document.getElementById('f_quote').value = data.quote || '';
   services = data.services || [];
+  galleryImages = data.galleryImages || [];
+  reviews = data.reviews || [];
 
   renderThemeRow();
   renderServices();
+  renderGalleryImages();
+  renderReviews();
   renderPreview();
 }
 
@@ -343,6 +393,96 @@ function deleteService(idx) {
   renderPreview();
 }
 
+function renderGalleryImages() {
+  const container = document.getElementById('galleryContainer');
+  container.innerHTML = '';
+  galleryImages.forEach((img, idx) => {
+    const row = document.createElement('div');
+    row.className = 'stack-item';
+    row.innerHTML = `
+      <label>Caption</label>
+      <input type="text" value="${escapeHtml(img.caption || '')}" placeholder="Kitchen remodel, pressure wash, storefront, etc." oninput="updateGalleryImage(${idx}, 'caption', this.value)">
+      <label>Upload Image</label>
+      <input type="file" accept="image/*" onchange="uploadGalleryImage(${idx}, this)">
+      ${img.src ? `<img class="image-thumb" src="${escapeHtml(img.src)}" alt="${escapeHtml(img.caption || 'Gallery image')}">` : ''}
+      <button class="service-del" onclick="deleteGalleryImage(${idx})" style="margin-top:8px;">Remove Image</button>
+    `;
+    container.appendChild(row);
+  });
+}
+
+function updateGalleryImage(idx, key, value) {
+  galleryImages[idx][key] = value;
+  renderPreview();
+}
+
+function addGalleryImage() {
+  galleryImages.push({ caption: 'Project photo', src: '' });
+  renderGalleryImages();
+  renderPreview();
+}
+
+function deleteGalleryImage(idx) {
+  galleryImages.splice(idx, 1);
+  renderGalleryImages();
+  renderPreview();
+}
+
+function uploadGalleryImage(idx, input) {
+  const file = input.files && input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function () {
+    galleryImages[idx].src = reader.result;
+    renderGalleryImages();
+    renderPreview();
+  };
+  reader.readAsDataURL(file);
+}
+
+function renderReviews() {
+  const container = document.getElementById('reviewsContainer');
+  container.innerHTML = '';
+  reviews.forEach((review, idx) => {
+    const row = document.createElement('div');
+    row.className = 'stack-item';
+    row.innerHTML = `
+      <label>Reviewer Name</label>
+      <input type="text" value="${escapeHtml(review.author || '')}" placeholder="Jane D." oninput="updateReview(${idx}, 'author', this.value)">
+      <label>Stars</label>
+      <select onchange="updateReview(${idx}, 'rating', this.value)">
+        <option value="5"${String(review.rating) === '5' ? ' selected' : ''}>5 Stars</option>
+        <option value="4"${String(review.rating) === '4' ? ' selected' : ''}>4 Stars</option>
+        <option value="3"${String(review.rating) === '3' ? ' selected' : ''}>3 Stars</option>
+        <option value="2"${String(review.rating) === '2' ? ' selected' : ''}>2 Stars</option>
+        <option value="1"${String(review.rating) === '1' ? ' selected' : ''}>1 Star</option>
+      </select>
+      <label>Review Text</label>
+      <textarea rows="3" oninput="updateReview(${idx}, 'text', this.value)">${escapeHtml(review.text || '')}</textarea>
+      <button class="service-del" onclick="deleteReview(${idx})" style="margin-top:8px;">Remove Review</button>
+    `;
+    container.appendChild(row);
+  });
+}
+
+function updateReview(idx, key, value) {
+  reviews[idx][key] = key === 'rating' ? parseInt(value, 10) || 5 : value;
+  if (idx === 0 && key === 'text') document.getElementById('f_quote').value = value;
+  renderPreview();
+}
+
+function addReview() {
+  reviews.push({ author: 'Google Reviewer', rating: 5, text: 'Great service and communication from start to finish.' });
+  renderReviews();
+  renderPreview();
+}
+
+function deleteReview(idx) {
+  reviews.splice(idx, 1);
+  renderReviews();
+  renderPreview();
+}
+
 function collectFormData() {
   return {
     theme: currentTheme,
@@ -354,7 +494,9 @@ function collectFormData() {
     rating: parseFloat(document.getElementById('f_rating').value) || 0,
     reviewCount: parseInt(document.getElementById('f_reviewCount').value) || 0,
     quote: document.getElementById('f_quote').value,
-    services
+    services,
+    galleryImages,
+    reviews
   };
 }
 
@@ -372,7 +514,11 @@ async function saveSite() {
     rating: data.rating,
     review_count: data.reviewCount,
     quote: data.quote,
-    services: data.services
+    services: {
+      services: data.services,
+      galleryImages: data.galleryImages,
+      reviews: data.reviews
+    }
   }, { onConflict: 'client_id' });
   if (error) {
     alert(error.message);
@@ -390,6 +536,8 @@ function buildSiteHtml(data) {
   const subhead = escapeHtml(data.subhead || '');
   const rating = data.rating || 4.8;
   const reviewCount = data.reviewCount || 0;
+  const reviewsList = Array.isArray(data.reviews) ? data.reviews.filter(r => r && (r.author || r.text)) : [];
+  const galleryList = Array.isArray(data.galleryImages) ? data.galleryImages.filter(img => img && img.src) : [];
 
   const servicesHtml = (data.services || []).map(s => `
     <div style="background:white;border:1px solid #E4EDF0;border-radius:6px;padding:18px;">
@@ -397,6 +545,33 @@ function buildSiteHtml(data) {
       <div style="font-weight:800;font-size:14px;margin-bottom:4px;">${escapeHtml(s.name)}</div>
       <div style="font-size:11.5px;color:#5A6472;">${escapeHtml(s.desc || '')}</div>
     </div>`).join('');
+
+  const galleryHtml = galleryList.length ? `
+    <div style="max-width:1080px;margin:0 auto;padding:40px 30px 20px 30px;">
+      <div style="font-size:11px;letter-spacing:2px;color:${theme.accent};font-weight:800;margin-bottom:12px;text-transform:uppercase;">Recent Work</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;">
+        ${galleryList.map(img => `
+          <div style="background:white;border:1px solid #E4EDF0;border-radius:10px;overflow:hidden;">
+            <img src="${escapeHtml(img.src)}" alt="${escapeHtml(img.caption || bizName)}" style="width:100%;height:180px;object-fit:cover;display:block;">
+            <div style="padding:10px 12px;font-size:12px;color:#5A6472;">${escapeHtml(img.caption || '')}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>` : '';
+
+  const reviewCardsHtml = reviewsList.length ? `
+    <div style="max-width:1080px;margin:0 auto;padding:10px 30px 40px 30px;">
+      <div style="font-size:11px;letter-spacing:2px;color:${theme.accent};font-weight:800;margin-bottom:12px;text-transform:uppercase;">Google Reviews</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;">
+        ${reviewsList.map(review => `
+          <div style="background:white;border:1px solid #E4EDF0;border-radius:10px;padding:18px;">
+            <div style="color:${theme.warm};letter-spacing:2px;margin-bottom:8px;">${'★'.repeat(Math.max(1, Math.min(5, parseInt(review.rating, 10) || 5)))}</div>
+            <div style="font-size:13px;color:#5A6472;line-height:1.6;margin-bottom:12px;">"${escapeHtml(review.text || '')}"</div>
+            <div style="font-weight:800;font-size:12px;color:${theme.primary};">${escapeHtml(review.author || 'Google Reviewer')}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>` : '';
 
   return `
   <div style="font-family:'Liberation Sans',Arial,sans-serif;">
@@ -424,6 +599,8 @@ function buildSiteHtml(data) {
         ${servicesHtml}
       </div>
     </div>
+    ${galleryHtml}
+    ${reviewCardsHtml}
     <div style="max-width:640px;margin:50px auto;padding:0 30px;text-align:center;">
       <div style="color:${theme.warm};font-size:18px;letter-spacing:3px;margin-bottom:14px;">★★★★★</div>
       <div style="font-size:18px;font-weight:700;color:${theme.primary};">"${escapeHtml(data.quote || '')}"</div>
