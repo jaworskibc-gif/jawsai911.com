@@ -29,10 +29,10 @@ html,body{background:#1a1a1a;font-family:var(--font);min-height:100vh;padding:32
 /* HEADER */
 .lh-header{
   background:#050d1a;
-  padding:0;
+  padding:18px 42px 14px;
   position:relative;overflow:hidden;
-  min-height:160px;
-  display:flex;align-items:stretch;
+  min-height:112px;
+  display:flex;align-items:center;justify-content:flex-start;
 }
 .lh-header::after{
   content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
@@ -43,8 +43,16 @@ html,body{background:#1a1a1a;font-family:var(--font);min-height:100vh;padding:32
   background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ccircle cx='1' cy='1' r='.4' fill='rgba(0,170,255,.06)'/%3E%3C/svg%3E");
   pointer-events:none;
 }
-.lh-logo{flex:1;display:flex;align-items:center;padding:0 0 0 32px;}
-.lh-logo img{height:150px;width:480px;object-fit:contain;object-position:left center;display:block;position:relative;z-index:1;}
+.lh-header-image{
+  width:100%;
+  max-width:732px;
+  max-height:78px;
+  object-fit:contain;
+  object-position:left center;
+  display:block;
+  position:relative;
+  z-index:1;
+}
 .lh-brand{text-align:right;position:relative;z-index:1;flex-shrink:0;padding:20px 40px;display:flex;flex-direction:column;justify-content:center;}
 .lh-brand-name{font-size:11px;font-weight:700;color:#4a7aaa;letter-spacing:3px;text-transform:uppercase;}
 .lh-brand-sub{font-size:9px;color:#3a5a7a;letter-spacing:2px;text-transform:uppercase;margin-top:3px;}
@@ -116,8 +124,8 @@ html,body{background:#1a1a1a;font-family:var(--font);min-height:100vh;padding:32
 
   <!-- HEADER -->
   <!-- HEADER -->
-  <div class="lh-header" style="padding:0;display:block;">
-    <img src="jaws-logo-header.png" alt="JAWSAI911" style="width:100%;display:block;">
+  <div class="lh-header">
+    <img class="lh-header-image" src="jaws-logo-header.png" alt="JAWSAI911">
   </div>
 
   <!-- CONTACT STRIP -->
