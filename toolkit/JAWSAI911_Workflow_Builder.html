@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JAWSAI911 Workflow Builder</title>
+<style>
+  :root {
+    --navy: #010711; --navy-2: #0B1F33;
+    --cyan: #00B4FF; --teal: #00C4B4; --pink: #E8175D; --amber: #F2C879;
+    --ink: #1a2230; --ink-soft: #5A6472; --foam: #F7FAFB; --line: #E2E6EA;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Liberation Sans', Arial, sans-serif; }
+  body { background: var(--foam); color: var(--ink); }
+
+  .topbar {
+    background: var(--navy); color: white; padding: 14px 22px;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+  }
+  .brand { font-size: 15px; font-weight: 900; }
+  .brand span { color: var(--cyan); }
+  .picker { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .picker select, .picker input {
+    background: var(--navy-2); color: white; border: 1px solid rgba(255,255,255,0.15);
+    padding: 7px 10px; border-radius: 5px; font-size: 12.5px;
+  }
+  .picker button {
+    background: var(--teal); color: var(--navy); border: none; font-weight: 800;
+    padding: 7px 12px; border-radius: 5px; font-size: 12px; cursor: pointer;
+  }
+
+  .banner {
+    background: #FFF4E0; color: #8A5A0A; font-size: 11.5px; padding: 8px 22px; border-bottom: 1px solid #F2D9A0;
+  }
+
+  .tabs { display: flex; gap: 4px; padding: 14px 22px 0 22px; border-bottom: 1px solid var(--line); background: white; align-items:center; }
+  .tab { padding: 10px 16px; font-size: 12.5px; font-weight: 800; color: var(--ink-soft); cursor: pointer; border-bottom: 3px solid transparent; position:relative; }
+  .tab.active { color: var(--navy); border-bottom-color: var(--teal); }
+  .tab-count { background: var(--pink); color: white; font-size: 9.5px; font-weight: 800; padding: 1px 6px; border-radius: 8px; margin-left: 5px; }
+  .panel { display:none; padding: 22px; max-width: 900px; margin: 0 auto; }
+  .panel.active { display:block; }
+  .status-msg { font-size: 11px; color: var(--ink-soft); margin-bottom: 16px; }
+
+  .btn { padding: 8px 14px; border-radius: 5px; border: none; font-weight: 800; font-size: 12.5px; cursor: pointer; }
+  .btn-teal { background: var(--teal); color: var(--navy); }
+  .btn-pink { background: var(--pink); color: white; }
+  .btn-outline { background: white; border: 1px solid var(--line) !important; color: var(--ink-soft); }
+
+  /* ---- WORKFLOW LIST ---- */
+  .wf-list { display: grid; gap: 10px; margin-bottom: 16px; }
+  .wf-card { background: white; border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; display:flex; justify-content:space-between; align-items:center; cursor:pointer; }
+  .wf-card:hover { border-color: var(--cyan); }
+  .wf-card-name { font-weight: 800; font-size: 13.5px; }
+  .wf-card-meta { font-size: 11px; color: var(--ink-soft); margin-top: 3px; }
+
+  /* ---- EDITOR ---- */
+  .editor-card { background: white; border: 1px solid var(--line); border-radius: 10px; padding: 22px; }
+  .field label { font-size: 11px; font-weight: 700; color: var(--ink-soft); display:block; margin-bottom: 4px; }
+  .field input, .field textarea { width: 100%; padding: 9px 11px; border: 1px solid var(--line); border-radius: 6px; font-size: 13px; margin-bottom: 14px; }
+
+  .step-row { background: var(--foam); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; margin-bottom: 10px; }
+  .step-head { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+  .step-day { width: 70px; }
+  .step-day input { width: 100%; padding: 6px 8px; border: 1px solid var(--line); border-radius: 4px; font-size: 12px; text-align:center; }
+  .step-type select { padding: 6px 8px; border: 1px solid var(--line); border-radius: 4px; font-size: 12px; }
+  .step-del { margin-left: auto; background:none; border:none; color: var(--ink-soft); cursor:pointer; font-size:15px; }
+  .step-del:hover { color: var(--pink); }
+  .step-row textarea { width: 100%; padding: 8px 10px; border: 1px solid var(--line); border-radius: 5px; font-size: 12.5px; }
+  .add-step-btn {
+    width: 100%; padding: 10px; border: 1.5px dashed var(--line); background: none;
+    border-radius: 6px; color: var(--ink-soft); font-size: 12px; font-weight: 700; cursor: pointer; margin: 6px 0 16px 0;
+  }
+  .add-step-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  .type-badge { font-size: 9.5px; font-weight: 800; padding: 2px 8px; border-radius: 6px; }
+  .type-sms { background: #EAF6FF; color: var(--cyan); }
+  .type-call { background: #E6F9F1; color: #1FA37A; }
+  .type-email { background: #FFF4E0; color: #B8791A; }
+  .type-task { background: #EDEFF2; color: var(--ink-soft); }
+
+  /* ---- APPLY ---- */
+  .apply-card { background: white; border: 1px solid var(--line); border-radius: 10px; padding: 20px; margin-top: 20px; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+
+  /* ---- TASKS ---- */
+  .task-table { width: 100%; border-collapse: collapse; background: white; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  .task-table th { background: var(--navy-2); color: white; font-size: 11px; text-align:left; padding: 9px 12px; }
+  .task-table td { padding: 10px 12px; font-size: 12.5px; border-top: 1px solid var(--line); vertical-align: top; }
+  .task-table tr.done td { opacity: 0.45; text-decoration: line-through; }
+  .due-tag { font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 8px; }
+  .due-overdue { background: var(--pink); color: white; }
+  .due-today { background: var(--amber); color: var(--navy); }
+  .due-future { background: var(--foam); color: var(--ink-soft); border:1px solid var(--line); }
+  .empty-state { text-align: center; padding: 40px 20px; color: var(--ink-soft); font-size: 13px; }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="brand">JAWS<span>AI</span>911 <span style="font-weight:400;">Workflow Builder</span></div>
+    <div class="picker">
+      <select id="clientSelect"></select>
+      <input id="newClientName" placeholder="New client name...">
+      <button onclick="createClient()">+ Add Client</button>
+    </div>
+  </div>
+  <div class="banner">⚠ This builds and tracks playbooks — it doesn't auto-send messages on a timer (that needs phone/email infrastructure). Applying a workflow creates a dated task checklist you work through in "My Tasks."</div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="playbooks" onclick="switchTab('playbooks')">Playbooks</div>
+    <div class="tab" data-tab="editor" onclick="switchTab('editor')">Editor</div>
+    <div class="tab" data-tab="tasks" onclick="switchTab('tasks')">My Tasks <span class="tab-count" id="taskCount" style="display:none;">0</span></div>
+  </div>
+
+  <div class="panel active" id="panel-playbooks">
+    <div class="status-msg" id="statusMsg">Loading...</div>
+    <div class="wf-list" id="wfList"></div>
+    <button class="btn btn-teal" onclick="newWorkflow()">+ New Playbook</button>
+  </div>
+
+  <div class="panel" id="panel-editor">
+    <div class="editor-card">
+      <div class="field"><label>Playbook Name</label><input id="wfName" placeholder="e.g. Cold Outreach — No Website Leads"></div>
+      <div class="field"><label>Trigger (when you'd start this)</label><input id="wfTrigger" placeholder="e.g. New lead added to pipeline"></div>
+
+      <label style="font-size:11px; font-weight:700; color:var(--ink-soft); display:block; margin-bottom:8px;">Steps</label>
+      <div id="stepsContainer"></div>
+      <button class="add-step-btn" onclick="addStep()">+ Add Step</button>
+
+      <button class="btn btn-teal" onclick="saveWorkflow()">Save Playbook</button>
+      <button class="btn btn-outline" onclick="switchTab('playbooks')">Back to List</button>
+    </div>
+
+    <div class="apply-card" id="applyCard" style="display:none;">
+      <h4 style="font-size:13px; margin-bottom:12px;">Apply This Playbook to a Lead</h4>
+      <div class="row2">
+        <div class="field"><label>Lead / Business Name</label><input id="applyLeadName" placeholder="e.g. Coastal Blue Pool Care"></div>
+        <div class="field"><label>Start Date</label><input id="applyStartDate" type="date"></div>
+      </div>
+      <button class="btn btn-teal" onclick="applyWorkflow()">Generate Task Checklist</button>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-tasks">
+    <div id="tasksContainer"></div>
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+const SUPABASE_URL = 'https://owkqfledeuetwwmlvnmb.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93a3FmbGVkZXVldHd3bWx2bm1iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxMzM5MTQsImV4cCI6MjEwMDcwOTkxNH0.lOwjIzs-DyVtvKR8-b1L6RTdlb8iY9_1chgKbY2ml3c';
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const STEP_TYPES = [
+  { id: 'sms', label: 'Send Text' },
+  { id: 'call', label: 'Make Call' },
+  { id: 'email', label: 'Send Email' },
+  { id: 'task', label: 'Other Task' },
+];
+
+let currentClient = null;
+let currentClientId = null;
+let workflows = [];
+let currentWfId = null;
+let steps = [];
+let tasks = [];
+
+function statusMsg(t) { document.getElementById('statusMsg').textContent = t; }
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+function escapeHtml(str) { const d = document.createElement('div'); d.textContent = str || ''; return d.innerHTML; }
+function todayStr() { return new Date().toISOString().slice(0,10); }
+function addDays(dateStr, days) {
+  const d = new Date(dateStr + 'T00:00:00');
+  d.setDate(d.getDate() + days);
+  return d.toISOString().slice(0,10);
+}
+function normalizeWorkflow(row) {
+  return {
+    id: row.id,
+    name: row.name || '',
+    trigger: row.trigger_desc || '',
+    steps: Array.isArray(row.steps) ? row.steps : []
+  };
+}
+function normalizeTask(row) {
+  return {
+    id: row.id,
+    leadName: row.lead_name || '',
+    workflowName: row.workflow_name || '',
+    type: row.type || 'task',
+    script: row.script || '',
+    dueDate: row.due_date || todayStr(),
+    done: !!row.done,
+    createdAt: row.created_at || new Date().toISOString()
+  };
+}
+
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  if (name === 'playbooks') renderWfList();
+  if (name === 'tasks') renderTasks();
+}
+
+async function loadClientList() {
+  try {
+    const { data, error } = await supabaseClient.from('clients').select('id, name').order('name');
+    if (error) throw error;
+    const select = document.getElementById('clientSelect');
+    select.innerHTML = '';
+    if (!data || data.length === 0) {
+      select.innerHTML = '<option value="">No clients yet</option>';
+      currentClient = null;
+      currentClientId = null;
+      return;
+    }
+    data.forEach(client => {
+      const opt = document.createElement('option');
+      opt.value = client.id;
+      opt.textContent = client.name;
+      select.appendChild(opt);
+    });
+    const selected = data.find(client => client.id === currentClientId) || data[0];
+    currentClientId = selected.id;
+    currentClient = selected.name;
+    select.value = currentClientId;
+    await loadData();
+  } catch (e) {
+    statusMsg('No clients yet — add one to get started.');
+  }
+}
+
+async function createClient() {
+  const input = document.getElementById('newClientName');
+  const name = input.value.trim();
+  if (!name) return;
+  const { data, error } = await supabaseClient.from('clients').insert({ name }).select('id, name').single();
+  if (error) {
+    alert(error.message);
+    return;
+  }
+  input.value = '';
+  currentClientId = data.id;
+  currentClient = data.name;
+  await loadClientList();
+  await loadData();
+}
+
+document.getElementById('clientSelect').addEventListener('change', async (e) => {
+  const option = e.target.selectedOptions[0];
+  currentClientId = e.target.value || null;
+  currentClient = option ? option.textContent : null;
+  await loadData();
+});
+
+async function loadData() {
+  if (!currentClientId) { workflows = []; tasks = []; renderWfList(); updateTaskBadge(); return; }
+  statusMsg('Playbooks for ' + currentClient + ' — changes save automatically.');
+  try {
+    const { data, error } = await supabaseClient.from('workflows').select('*').eq('client_id', currentClientId).order('created_at');
+    if (error) throw error;
+    workflows = (data || []).map(normalizeWorkflow);
+  } catch (e) { workflows = []; }
+  try {
+    const { data, error } = await supabaseClient.from('workflow_tasks').select('*').eq('client_id', currentClientId).order('due_date');
+    if (error) throw error;
+    tasks = (data || []).map(normalizeTask);
+  } catch (e) { tasks = []; }
+  renderWfList();
+  updateTaskBadge();
+}
+
+async function saveWorkflows() {
+  if (!currentClientId) return;
+  const workflow = workflows.find(w => w.id === currentWfId);
+  if (!workflow) return;
+  const payload = {
+    client_id: currentClientId,
+    name: workflow.name,
+    trigger_desc: workflow.trigger,
+    steps: workflow.steps
+  };
+  if (currentWfId) {
+    const { error } = await supabaseClient.from('workflows').update(payload).eq('id', currentWfId);
+    if (error) statusMsg('Save failed: ' + error.message);
+  }
+}
+
+function renderWfList() {
+  const list = document.getElementById('wfList');
+  if (!currentClient || workflows.length === 0) {
+    list.innerHTML = '<div class="empty-state">No playbooks yet. Click "+ New Playbook" to build one — like a cold outreach sequence or a follow-up cadence.</div>';
+    return;
+  }
+  list.innerHTML = '';
+  workflows.forEach(wf => {
+    const card = document.createElement('div');
+    card.className = 'wf-card';
+    card.onclick = () => editWorkflow(wf.id);
+    card.innerHTML = `
+      <div>
+        <div class="wf-card-name">${escapeHtml(wf.name)}</div>
+        <div class="wf-card-meta">${wf.steps.length} step${wf.steps.length !== 1 ? 's' : ''} · Trigger: ${escapeHtml(wf.trigger || 'Not set')}</div>
+      </div>
+      <div style="color:var(--ink-soft); font-size:11px;">Edit →</div>
+    `;
+    list.appendChild(card);
+  });
+}
+
+function newWorkflow() {
+  currentWfId = null;
+  document.getElementById('wfName').value = '';
+  document.getElementById('wfTrigger').value = '';
+  steps = [{ id: uid(), day: 0, type: 'sms', script: '' }];
+  renderSteps();
+  document.getElementById('applyCard').style.display = 'none';
+  switchTab('editor');
+}
+
+function editWorkflow(id) {
+  const wf = workflows.find(w => w.id === id);
+  if (!wf) return;
+  currentWfId = id;
+  document.getElementById('wfName').value = wf.name;
+  document.getElementById('wfTrigger').value = wf.trigger || '';
+  steps = JSON.parse(JSON.stringify(wf.steps));
+  renderSteps();
+  document.getElementById('applyCard').style.display = 'block';
+  document.getElementById('applyStartDate').value = todayStr();
+  switchTab('editor');
+}
+
+function renderSteps() {
+  const container = document.getElementById('stepsContainer');
+  container.innerHTML = '';
+  steps.forEach((step, idx) => {
+    const row = document.createElement('div');
+    row.className = 'step-row';
+    const typeOptions = STEP_TYPES.map(t => `<option value="${t.id}" ${t.id === step.type ? 'selected' : ''}>${t.label}</option>`).join('');
+    row.innerHTML = `
+      <div class="step-head">
+        <div class="step-day"><input type="number" value="${step.day}" min="0" title="Day offset" oninput="updateStep(${idx}, 'day', this.value)"> <span style="font-size:10px;color:var(--ink-soft);">day</span></div>
+        <div class="step-type"><select onchange="updateStep(${idx}, 'type', this.value)">${typeOptions}</select></div>
+        <span class="type-badge type-${step.type}">${STEP_TYPES.find(t=>t.id===step.type).label}</span>
+        <button class="step-del" onclick="deleteStep(${idx})">✕</button>
+      </div>
+      <textarea rows="2" placeholder="Script / message template for this step..." oninput="updateStep(${idx}, 'script', this.value)">${escapeHtml(step.script)}</textarea>
+    `;
+    container.appendChild(row);
+  });
+}
+
+function updateStep(idx, key, value) {
+  steps[idx][key] = key === 'day' ? (parseInt(value) || 0) : value;
+  if (key === 'type') renderSteps();
+}
+
+function addStep() {
+  const lastDay = steps.length > 0 ? steps[steps.length-1].day : 0;
+  steps.push({ id: uid(), day: lastDay + 1, type: 'sms', script: '' });
+  renderSteps();
+}
+
+function deleteStep(idx) {
+  steps.splice(idx, 1);
+  renderSteps();
+}
+
+async function saveWorkflow() {
+  if (!currentClientId) { alert('Add a client first.'); return; }
+  const name = document.getElementById('wfName').value.trim();
+  if (!name) { alert('Name the playbook first.'); return; }
+  const trigger = document.getElementById('wfTrigger').value.trim();
+
+  const record = { id: currentWfId, name, trigger, steps: JSON.parse(JSON.stringify(steps)) };
+  const idx = workflows.findIndex(w => w.id === record.id);
+  if (idx >= 0) workflows[idx] = record;
+  let error;
+  if (currentWfId) {
+    ({ error } = await supabaseClient.from('workflows').update({
+      name,
+      trigger_desc: trigger,
+      steps: record.steps
+    }).eq('id', currentWfId));
+  } else {
+    const res = await supabaseClient.from('workflows').insert({
+      client_id: currentClientId,
+      name,
+      trigger_desc: trigger,
+      steps: record.steps
+    }).select('*').single();
+    error = res.error;
+    if (!error && res.data) {
+      currentWfId = res.data.id;
+      workflows.push(normalizeWorkflow(res.data));
+    }
+  }
+  if (error) {
+    alert(error.message);
+    return;
+  }
+  if (currentWfId) {
+    const wfIndex = workflows.findIndex(w => w.id === currentWfId);
+    if (wfIndex >= 0) workflows[wfIndex] = { id: currentWfId, name, trigger, steps: record.steps };
+  }
+  document.getElementById('applyCard').style.display = 'block';
+  document.getElementById('applyStartDate').value = todayStr();
+  statusMsg('Saved "' + name + '".');
+}
+
+async function applyWorkflow() {
+  const wf = workflows.find(w => w.id === currentWfId);
+  if (!wf) { alert('Save the playbook first.'); return; }
+  const leadName = document.getElementById('applyLeadName').value.trim();
+  const startDate = document.getElementById('applyStartDate').value || todayStr();
+  if (!leadName) { alert('Enter a lead name.'); return; }
+  const rows = wf.steps.map(step => ({
+    client_id: currentClientId,
+    workflow_id: currentWfId,
+    workflow_name: wf.name,
+    lead_name: leadName,
+    type: step.type,
+    script: step.script,
+    due_date: addDays(startDate, step.day),
+    done: false
+  }));
+  const { error } = await supabaseClient.from('workflow_tasks').insert(rows);
+  if (error) {
+    alert(error.message);
+    return;
+  }
+  await loadData();
+  document.getElementById('applyLeadName').value = '';
+  statusMsg('Applied "' + wf.name + '" to ' + leadName + ' — ' + wf.steps.length + ' tasks added.');
+  switchTab('tasks');
+}
+
+function getPendingTasks() {
+  return tasks.filter(t => !t.done);
+}
+
+function updateTaskBadge() {
+  const today = todayStr();
+  const due = tasks.filter(t => !t.done && t.dueDate <= today);
+  const badge = document.getElementById('taskCount');
+  if (due.length > 0) { badge.style.display = 'inline-block'; badge.textContent = due.length; }
+  else { badge.style.display = 'none'; }
+}
+
+function renderTasks() {
+  const container = document.getElementById('tasksContainer');
+  if (!currentClient || tasks.length === 0) {
+    container.innerHTML = '<div class="empty-state">No tasks yet. Apply a playbook to a lead from the Editor tab.</div>';
+    return;
+  }
+  const today = todayStr();
+  const sorted = tasks.slice().sort((a,b) => {
+    if (a.done !== b.done) return a.done ? 1 : -1;
+    return a.dueDate.localeCompare(b.dueDate);
+  });
+
+  let html = '<table class="task-table"><thead><tr><th></th><th>Lead</th><th>Playbook</th><th>Type</th><th>Script</th><th>Due</th></tr></thead><tbody>';
+  sorted.forEach(t => {
+    let tagClass = 'due-future', tagLabel = t.dueDate;
+    if (t.dueDate < today) { tagClass = 'due-overdue'; tagLabel = 'OVERDUE — ' + t.dueDate; }
+    else if (t.dueDate === today) { tagClass = 'due-today'; tagLabel = 'TODAY'; }
+    html += `<tr class="${t.done ? 'done' : ''}">
+      <td><input type="checkbox" ${t.done ? 'checked' : ''} onchange="toggleTask('${t.id}')"></td>
+      <td>${escapeHtml(t.leadName)}</td>
+      <td>${escapeHtml(t.workflowName)}</td>
+      <td><span class="type-badge type-${t.type}">${STEP_TYPES.find(s=>s.id===t.type).label}</span></td>
+      <td>${escapeHtml(t.script)}</td>
+      <td><span class="due-tag ${tagClass}">${escapeHtml(tagLabel)}</span></td>
+    </tr>`;
+  });
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+
+async function toggleTask(id) {
+  const task = tasks.find(t => t.id === id);
+  if (!task) return;
+  const { error } = await supabaseClient.from('workflow_tasks').update({ done: !task.done }).eq('id', id);
+  if (error) {
+    alert(error.message);
+    return;
+  }
+  await loadData();
+  renderTasks();
+}
+
+loadClientList();
+</script>
+</body>
+</html>

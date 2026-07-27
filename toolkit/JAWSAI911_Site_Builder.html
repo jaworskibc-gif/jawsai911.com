@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JAWSAI911 Site Builder</title>
+<style>
+  :root {
+    --navy: #010711; --navy-2: #0B1F33;
+    --cyan: #00B4FF; --teal: #00C4B4; --pink: #E8175D;
+    --ink: #1a2230; --ink-soft: #5A6472; --foam: #F7FAFB; --line: #E2E6EA;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Liberation Sans', Arial, sans-serif; }
+  body { background: var(--foam); color: var(--ink); }
+
+  .topbar {
+    background: var(--navy); color: white; padding: 14px 22px;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+  }
+  .brand { font-size: 15px; font-weight: 900; }
+  .brand span { color: var(--cyan); }
+  .picker { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .picker select, .picker input {
+    background: var(--navy-2); color: white; border: 1px solid rgba(255,255,255,0.15);
+    padding: 7px 10px; border-radius: 5px; font-size: 12.5px;
+  }
+  .picker button {
+    background: var(--teal); color: var(--navy); border: none; font-weight: 800;
+    padding: 7px 12px; border-radius: 5px; font-size: 12px; cursor: pointer;
+  }
+
+  .tabs { display: flex; gap: 4px; padding: 14px 22px 0 22px; border-bottom: 1px solid var(--line); background: white; }
+  .tab { padding: 10px 16px; font-size: 12.5px; font-weight: 800; color: var(--ink-soft); cursor: pointer; border-bottom: 3px solid transparent; }
+  .tab.active { color: var(--navy); border-bottom-color: var(--teal); }
+  .panel { display:none; }
+  .panel.active { display:block; }
+  .status-msg { font-size: 11px; color: var(--ink-soft); padding: 16px 22px 0 22px; }
+
+  /* ---- EDITOR LAYOUT ---- */
+  .editor-wrap { display: flex; gap: 18px; padding: 16px 22px; align-items: flex-start; }
+  .editor-form { width: 380px; flex-shrink: 0; }
+  .live-preview-col { flex: 1; min-width: 0; }
+
+  .theme-row { display: flex; gap: 8px; margin-bottom: 16px; }
+  .theme-swatch {
+    width: 40px; height: 40px; border-radius: 8px; cursor: pointer; border: 2px solid transparent;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .theme-swatch.selected { border-color: var(--navy); }
+  .theme-swatch svg { pointer-events: none; }
+
+  .section-card { background: white; border: 1px solid var(--line); border-radius: 8px; padding: 16px; margin-bottom: 12px; }
+  .section-card h4 { font-size: 12px; font-weight: 800; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+  .section-card label { font-size: 11px; font-weight: 700; color: var(--ink-soft); display:block; margin: 8px 0 3px 0; }
+  .section-card input, .section-card textarea { width: 100%; padding: 8px 10px; border: 1px solid var(--line); border-radius: 5px; font-size: 12.5px; }
+  .section-card textarea { resize: vertical; }
+
+  .service-item { display: flex; gap: 6px; margin-bottom: 6px; }
+  .service-item input { flex: 1; }
+  .service-del { background:none; border:none; color: var(--ink-soft); cursor:pointer; font-size:15px; }
+  .add-item-btn {
+    width: 100%; padding: 7px; border: 1.5px dashed var(--line); background: none;
+    border-radius: 5px; color: var(--ink-soft); font-size: 11.5px; font-weight: 700; cursor: pointer; margin-top: 4px;
+  }
+  .add-item-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  .save-bar { position: sticky; bottom: 0; background: white; border-top: 1px solid var(--line); padding: 12px; margin-top: 12px; border-radius: 8px; }
+  .btn { padding: 10px 16px; border-radius: 6px; border: none; font-weight: 800; font-size: 13px; cursor: pointer; width: 100%; }
+  .btn-teal { background: var(--teal); color: var(--navy); }
+
+  /* ---- LIVE PREVIEW FRAME ---- */
+  .preview-frame {
+    background: white; border: 1px solid var(--line); border-radius: 10px; overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+  .preview-toolbar {
+    background: #EDEFF2; padding: 8px 14px; font-size: 11px; color: var(--ink-soft); display:flex; justify-content: space-between; align-items:center;
+  }
+  #siteRender { min-height: 500px; }
+
+  /* ---- SITE VIEW TAB (full width live) ---- */
+  #fullSiteRender { min-height: 100vh; }
+
+  .empty-state { text-align: center; padding: 60px 20px; color: var(--ink-soft); font-size: 13px; }
+
+  @media (max-width: 900px) {
+    .editor-wrap { flex-direction: column; }
+    .editor-form { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="brand">JAWS<span>AI</span>911 <span style="font-weight:400;">Site Builder</span></div>
+    <div class="picker">
+      <select id="clientSelect"></select>
+      <input id="newClientName" placeholder="New client name...">
+      <button onclick="createClient()">+ Add Client</button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="editor" onclick="switchTab('editor')">Editor</div>
+    <div class="tab" data-tab="fullview" onclick="switchTab('fullview')">Full Preview</div>
+  </div>
+  <div class="status-msg" id="statusMsg">Loading...</div>
+
+  <div class="panel active" id="panel-editor">
+    <div class="editor-wrap">
+      <div class="editor-form">
+
+        <div class="section-card">
+          <h4>Theme</h4>
+          <div class="theme-row" id="themeRow"></div>
+        </div>
+
+        <div class="section-card">
+          <h4>Business Info</h4>
+          <label>Business Name</label><input id="f_bizName" oninput="renderPreview()">
+          <label>City / Area</label><input id="f_city" oninput="renderPreview()">
+          <label>Phone</label><input id="f_phone" oninput="renderPreview()">
+        </div>
+
+        <div class="section-card">
+          <h4>Hero Section</h4>
+          <label>Headline</label><textarea id="f_headline" rows="2" oninput="renderPreview()"></textarea>
+          <label>Subheadline</label><textarea id="f_subhead" rows="2" oninput="renderPreview()"></textarea>
+          <label>Rating (e.g. 4.9)</label><input id="f_rating" type="number" step="0.1" min="0" max="5" oninput="renderPreview()">
+          <label>Review Count</label><input id="f_reviewCount" type="number" min="0" oninput="renderPreview()">
+        </div>
+
+        <div class="section-card">
+          <h4>Services</h4>
+          <div id="servicesContainer"></div>
+          <button class="add-item-btn" onclick="addService()">+ Add Service</button>
+        </div>
+
+        <div class="section-card">
+          <h4>Testimonial</h4>
+          <label>Quote</label><textarea id="f_quote" rows="2" oninput="renderPreview()"></textarea>
+        </div>
+
+        <div class="save-bar">
+          <button class="btn btn-teal" onclick="saveSite()">Save Site</button>
+        </div>
+      </div>
+
+      <div class="live-preview-col">
+        <div class="preview-frame">
+          <div class="preview-toolbar"><span>Live Preview</span><span id="previewStatus"></span></div>
+          <div id="siteRender"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-fullview">
+    <div id="fullSiteRender"></div>
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+const SUPABASE_URL = 'https://owkqfledeuetwwmlvnmb.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93a3FmbGVkZXVldHd3bWx2bm1iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxMzM5MTQsImV4cCI6MjEwMDcwOTkxNH0.lOwjIzs-DyVtvKR8-b1L6RTdlb8iY9_1chgKbY2ml3c';
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const THEMES = {
+  ocean:  { name: 'Ocean',  primary: '#0A3D5C', accent: '#1FB6C9', warm: '#F2C879' },
+  navy:   { name: 'Navy/Cyan', primary: '#010711', accent: '#00B4FF', warm: '#00C4B4' },
+  forest: { name: 'Forest', primary: '#123524', accent: '#4CAF7D', warm: '#E8C170' },
+  slate:  { name: 'Slate',  primary: '#2B2F38', accent: '#E8175D', warm: '#F2C879' },
+};
+
+let currentClient = null;
+let currentClientId = null;
+let currentTheme = 'ocean';
+let services = [];
+
+function statusMsg(t) { document.getElementById('statusMsg').textContent = t; }
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+function escapeHtml(str) { const d = document.createElement('div'); d.textContent = str || ''; return d.innerHTML; }
+
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  if (name === 'fullview') renderFullPreview();
+}
+
+function renderThemeRow() {
+  const row = document.getElementById('themeRow');
+  row.innerHTML = '';
+  Object.keys(THEMES).forEach(key => {
+    const t = THEMES[key];
+    const sw = document.createElement('div');
+    sw.className = 'theme-swatch' + (key === currentTheme ? ' selected' : '');
+    sw.style.background = t.primary;
+    sw.title = t.name;
+    sw.innerHTML = `<div style="width:14px;height:14px;border-radius:50%;background:${t.accent};"></div>`;
+    sw.onclick = () => { currentTheme = key; renderThemeRow(); renderPreview(); };
+    row.appendChild(sw);
+  });
+}
+
+async function loadClientList() {
+  try {
+    const { data, error } = await supabaseClient.from('clients').select('id, name').order('name');
+    if (error) throw error;
+    const select = document.getElementById('clientSelect');
+    select.innerHTML = '';
+    if (!data || data.length === 0) {
+      select.innerHTML = '<option value="">No clients yet</option>';
+      currentClient = null;
+      currentClientId = null;
+      return;
+    }
+    data.forEach(client => {
+      const opt = document.createElement('option');
+      opt.value = client.id;
+      opt.textContent = client.name;
+      select.appendChild(opt);
+    });
+    const selected = data.find(client => client.id === currentClientId) || data[0];
+    currentClientId = selected.id;
+    currentClient = selected.name;
+    select.value = currentClientId;
+    await loadSite();
+  } catch (e) {
+    statusMsg('No clients yet — add one to get started.');
+  }
+}
+
+async function createClient() {
+  const input = document.getElementById('newClientName');
+  const name = input.value.trim();
+  if (!name) return;
+  const { data, error } = await supabaseClient.from('clients').insert({ name }).select('id, name').single();
+  if (error) {
+    alert(error.message);
+    return;
+  }
+  input.value = '';
+  currentClientId = data.id;
+  currentClient = data.name;
+  await loadClientList();
+  await loadSite();
+}
+
+document.getElementById('clientSelect').addEventListener('change', async (e) => {
+  const option = e.target.selectedOptions[0];
+  currentClientId = e.target.value || null;
+  currentClient = option ? option.textContent : null;
+  await loadSite();
+});
+
+function defaultSiteData() {
+  return {
+    theme: 'ocean',
+    bizName: '', city: '', phone: '',
+    headline: "{City}'s Trusted Team, Now Online.",
+    subhead: 'Real reviews, real work, right here.',
+    rating: 4.8, reviewCount: 0,
+    services: [
+      { name: 'Service One', desc: 'Short description of what you offer.' },
+      { name: 'Service Two', desc: 'Short description of what you offer.' },
+    ],
+    quote: "These guys are the best in town. Wouldn't call anyone else."
+  };
+}
+
+async function loadSite() {
+  if (!currentClientId) { renderPreview(); return; }
+  statusMsg('Editing site for ' + currentClient + ' — changes save on "Save Site."');
+  let data = defaultSiteData();
+  try {
+    const { data: row, error } = await supabaseClient
+      .from('sites')
+      .select('*')
+      .eq('client_id', currentClientId)
+      .maybeSingle();
+    if (error) throw error;
+    if (row) {
+      data = {
+        theme: row.theme || 'ocean',
+        bizName: row.biz_name || '',
+        city: row.city || '',
+        phone: row.phone || '',
+        headline: row.headline || '',
+        subhead: row.subhead || '',
+        rating: row.rating || 0,
+        reviewCount: row.review_count || 0,
+        quote: row.quote || '',
+        services: Array.isArray(row.services) ? row.services : []
+      };
+    }
+  } catch (e) { /* use defaults */ }
+
+  currentTheme = data.theme || 'ocean';
+  document.getElementById('f_bizName').value = data.bizName || currentClient;
+  document.getElementById('f_city').value = data.city || '';
+  document.getElementById('f_phone').value = data.phone || '';
+  document.getElementById('f_headline').value = data.headline || '';
+  document.getElementById('f_subhead').value = data.subhead || '';
+  document.getElementById('f_rating').value = data.rating || 4.8;
+  document.getElementById('f_reviewCount').value = data.reviewCount || 0;
+  document.getElementById('f_quote').value = data.quote || '';
+  services = data.services || [];
+
+  renderThemeRow();
+  renderServices();
+  renderPreview();
+}
+
+function renderServices() {
+  const container = document.getElementById('servicesContainer');
+  container.innerHTML = '';
+  services.forEach((svc, idx) => {
+    const row = document.createElement('div');
+    row.className = 'service-item';
+    row.innerHTML = `
+      <input type="text" value="${escapeHtml(svc.name)}" placeholder="Service name" oninput="updateService(${idx}, 'name', this.value)">
+      <button class="service-del" onclick="deleteService(${idx})">✕</button>
+    `;
+    container.appendChild(row);
+  });
+}
+
+function updateService(idx, key, value) {
+  services[idx][key] = value;
+  renderPreview();
+}
+
+function addService() {
+  services.push({ name: 'New Service', desc: '' });
+  renderServices();
+  renderPreview();
+}
+
+function deleteService(idx) {
+  services.splice(idx, 1);
+  renderServices();
+  renderPreview();
+}
+
+function collectFormData() {
+  return {
+    theme: currentTheme,
+    bizName: document.getElementById('f_bizName').value,
+    city: document.getElementById('f_city').value,
+    phone: document.getElementById('f_phone').value,
+    headline: document.getElementById('f_headline').value,
+    subhead: document.getElementById('f_subhead').value,
+    rating: parseFloat(document.getElementById('f_rating').value) || 0,
+    reviewCount: parseInt(document.getElementById('f_reviewCount').value) || 0,
+    quote: document.getElementById('f_quote').value,
+    services
+  };
+}
+
+async function saveSite() {
+  if (!currentClientId) { alert('Add a client first.'); return; }
+  const data = collectFormData();
+  const { error } = await supabaseClient.from('sites').upsert({
+    client_id: currentClientId,
+    theme: data.theme,
+    biz_name: data.bizName,
+    city: data.city,
+    phone: data.phone,
+    headline: data.headline,
+    subhead: data.subhead,
+    rating: data.rating,
+    review_count: data.reviewCount,
+    quote: data.quote,
+    services: data.services
+  }, { onConflict: 'client_id' });
+  if (error) {
+    alert(error.message);
+    return;
+  }
+  statusMsg('Saved site for ' + currentClient + '.');
+}
+
+function buildSiteHtml(data) {
+  const theme = THEMES[data.theme] || THEMES.ocean;
+  const bizName = escapeHtml(data.bizName || 'Your Business');
+  const city = escapeHtml(data.city || 'Your City');
+  const phone = escapeHtml(data.phone || '(555) 555-0100');
+  const headline = escapeHtml(data.headline || '').replace('{City}', city);
+  const subhead = escapeHtml(data.subhead || '');
+  const rating = data.rating || 4.8;
+  const reviewCount = data.reviewCount || 0;
+
+  const servicesHtml = (data.services || []).map(s => `
+    <div style="background:white;border:1px solid #E4EDF0;border-radius:6px;padding:18px;">
+      <div style="width:32px;height:32px;border-radius:6px;background:linear-gradient(135deg,${theme.accent},${theme.primary});margin-bottom:10px;"></div>
+      <div style="font-weight:800;font-size:14px;margin-bottom:4px;">${escapeHtml(s.name)}</div>
+      <div style="font-size:11.5px;color:#5A6472;">${escapeHtml(s.desc || '')}</div>
+    </div>`).join('');
+
+  return `
+  <div style="font-family:'Liberation Sans',Arial,sans-serif;">
+    <div style="background:linear-gradient(160deg, ${theme.primary} 0%, ${theme.accent} 130%); color:white; padding:40px 30px 70px 30px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:40px;">
+        <div style="font-weight:900;font-size:16px;">${bizName}</div>
+        <div style="background:${theme.warm};color:${theme.primary};padding:8px 16px;border-radius:4px;font-weight:800;font-size:12px;">${phone}</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:30px;align-items:center;">
+        <div>
+          <div style="font-size:11px;letter-spacing:2px;color:${theme.warm};font-weight:700;margin-bottom:12px;">SERVING ${city.toUpperCase()}</div>
+          <div style="font-size:32px;font-weight:900;line-height:1.15;margin-bottom:14px;">${headline}</div>
+          <div style="font-size:14px;color:rgba(255,255,255,0.85);max-width:400px;">${subhead}</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:8px;padding:20px;">
+          <div style="font-size:10px;letter-spacing:1.5px;color:${theme.warm};font-weight:700;margin-bottom:10px;">REPUTATION</div>
+          <div style="font-size:38px;font-weight:900;">${rating}<span style="font-size:14px;color:rgba(255,255,255,0.6);"> / 5.0</span></div>
+          <div style="color:${theme.warm};letter-spacing:2px;margin:6px 0;">★★★★★</div>
+          <div style="font-size:11.5px;color:rgba(255,255,255,0.75);">${reviewCount} Google reviews</div>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:960px;margin:-40px auto 0 auto;position:relative;padding:0 30px;">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;">
+        ${servicesHtml}
+      </div>
+    </div>
+    <div style="max-width:640px;margin:50px auto;padding:0 30px;text-align:center;">
+      <div style="color:${theme.warm};font-size:18px;letter-spacing:3px;margin-bottom:14px;">★★★★★</div>
+      <div style="font-size:18px;font-weight:700;color:${theme.primary};">"${escapeHtml(data.quote || '')}"</div>
+    </div>
+    <div style="background:${theme.primary};color:white;text-align:center;padding:40px 30px;">
+      <div style="font-size:22px;font-weight:900;margin-bottom:8px;">Ready to get started?</div>
+      <div style="font-size:14px;color:rgba(255,255,255,0.8);margin-bottom:18px;">${bizName} — ${city}</div>
+      <div style="display:inline-block;background:${theme.warm};color:${theme.primary};padding:12px 28px;border-radius:6px;font-weight:900;">${phone}</div>
+    </div>
+  </div>`;
+}
+
+function renderPreview() {
+  const data = collectFormData();
+  document.getElementById('siteRender').innerHTML = buildSiteHtml(data);
+}
+
+function renderFullPreview() {
+  const data = collectFormData();
+  document.getElementById('fullSiteRender').innerHTML = buildSiteHtml(data);
+}
+
+renderThemeRow();
+renderServices();
+loadClientList();
+</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JAWSAI911 Toolkit</title>
+<style>
+  :root {
+    --navy: #010711; --navy-2: #0B1F33;
+    --cyan: #00B4FF; --teal: #00C4B4; --pink: #E8175D;
+    --ink: #1a2230; --ink-soft: #5A6472; --foam: #F7FAFB; --line: #E2E6EA;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Liberation Sans', Arial, sans-serif; }
+  body { background: var(--foam); color: var(--ink); }
+  .topbar { background: var(--navy); color: white; padding: 26px 32px; }
+  .brand { font-size: 20px; font-weight: 900; }
+  .brand span { color: var(--cyan); }
+  .subtitle { font-size: 12.5px; color: rgba(255,255,255,0.6); margin-top: 4px; }
+  .back-link {
+    display: inline-flex; align-items: center; gap: 8px; margin-top: 14px;
+    color: rgba(255,255,255,0.86); text-decoration: none; font-size: 12px; font-weight: 700;
+  }
+  .back-link:hover { color: white; }
+
+  .wrap { max-width: 980px; margin: 0 auto; padding: 30px; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .card {
+    background: white; border: 1px solid var(--line); border-radius: 10px; padding: 20px;
+    text-decoration: none; color: var(--ink); display: block; transition: border-color 0.15s;
+  }
+  .card:hover { border-color: var(--teal); }
+  .card-icon { width: 34px; height: 34px; border-radius: 8px; margin-bottom: 12px; background: linear-gradient(135deg, var(--cyan), var(--teal)); }
+  .card-name { font-size: 14px; font-weight: 800; margin-bottom: 5px; }
+  .card-desc { font-size: 11.5px; color: var(--ink-soft); line-height: 1.4; }
+  .connected-note {
+    margin-top: 24px; background: #EAF6FF; border: 1px solid #C8E8F7; border-radius: 8px;
+    padding: 12px 16px; font-size: 11.5px; color: #0A5A80;
+  }
+  @media (max-width: 760px) { .grid { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="brand">JAWS<span>AI</span>911 Toolkit</div>
+    <div class="subtitle">10 connected tools · one client picker pattern · shared data where it matters</div>
+    <a class="back-link" href="../dashboard.html">← Back to Command Center</a>
+  </div>
+
+  <div class="wrap">
+    <div class="grid">
+      <a class="card" href="JAWSAI911_Dashboard.html"><div class="card-icon"></div><div class="card-name">Dashboard</div><div class="card-desc">Unified client snapshot — pulls live from every other tool.</div></a>
+      <a class="card" href="JAWSAI911_Pipeline_CRM.html"><div class="card-icon"></div><div class="card-name">Pipeline / CRM</div><div class="card-desc">Kanban lead tracking, drag between stages.</div></a>
+      <a class="card" href="JAWSAI911_Form_Builder.html"><div class="card-icon"></div><div class="card-name">Form Builder</div><div class="card-desc">Lead capture forms with saved submissions.</div></a>
+      <a class="card" href="JAWSAI911_Invoicing.html"><div class="card-icon"></div><div class="card-name">Invoicing &amp; Estimating</div><div class="card-desc">Line items, totals, printable branded invoices.</div></a>
+      <a class="card" href="JAWSAI911_Call_Tracker.html"><div class="card-icon"></div><div class="card-name">Call Tracker</div><div class="card-desc">Log calls, outcomes, follow-up dates due.</div></a>
+      <a class="card" href="JAWSAI911_Power_Dialer.html"><div class="card-icon"></div><div class="card-name">Power Dialer</div><div class="card-desc">Queue leads, click-to-call, log outcomes fast.</div></a>
+      <a class="card" href="JAWSAI911_Site_Builder.html"><div class="card-icon"></div><div class="card-name">Site Builder</div><div class="card-desc">Editable sections, 4 themes, live preview.</div></a>
+      <a class="card" href="JAWSAI911_Workflow_Builder.html"><div class="card-icon"></div><div class="card-name">Workflow Builder</div><div class="card-desc">Build outreach playbooks, apply to leads as tasks.</div></a>
+      <a class="card" href="JAWSAI911_Reputation_Manager.html"><div class="card-icon"></div><div class="card-name">Reputation Manager</div><div class="card-desc">Review request tracking + ask templates.</div></a>
+      <a class="card" href="JAWSAI911_Content_Planner.html"><div class="card-icon"></div><div class="card-name">Content Planner</div><div class="card-desc">Social post calendar by date, platform, status.</div></a>
+    </div>
+
+    <div class="connected-note">
+      ℹ Call Tracker, Power Dialer, and Dashboard read/write the same call history automatically. Add a client once in any tool — Dashboard will find them everywhere.
+    </div>
+  </div>
+
+</body>
+</html>

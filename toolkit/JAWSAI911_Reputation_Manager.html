@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JAWSAI911 Reputation Manager</title>
+<style>
+  :root {
+    --navy: #010711; --navy-2: #0B1F33;
+    --cyan: #00B4FF; --teal: #00C4B4; --pink: #E8175D; --amber: #F2C879;
+    --ink: #1a2230; --ink-soft: #5A6472; --foam: #F7FAFB; --line: #E2E6EA;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Liberation Sans', Arial, sans-serif; }
+  body { background: var(--foam); color: var(--ink); }
+
+  .topbar { background: var(--navy); color: white; padding: 14px 22px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  .brand { font-size: 15px; font-weight: 900; }
+  .brand span { color: var(--cyan); }
+  .picker { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .picker select, .picker input { background: var(--navy-2); color: white; border: 1px solid rgba(255,255,255,0.15); padding: 7px 10px; border-radius: 5px; font-size: 12.5px; }
+  .picker button { background: var(--teal); color: var(--navy); border: none; font-weight: 800; padding: 7px 12px; border-radius: 5px; font-size: 12px; cursor: pointer; }
+
+  .tabs { display: flex; gap: 4px; padding: 14px 22px 0 22px; border-bottom: 1px solid var(--line); background: white; }
+  .tab { padding: 10px 16px; font-size: 12.5px; font-weight: 800; color: var(--ink-soft); cursor: pointer; border-bottom: 3px solid transparent; }
+  .tab.active { color: var(--navy); border-bottom-color: var(--teal); }
+  .panel { display:none; padding: 22px; max-width: 900px; margin: 0 auto; }
+  .panel.active { display:block; }
+  .status-msg { font-size: 11px; color: var(--ink-soft); margin-bottom: 16px; }
+
+  .btn { padding: 8px 14px; border-radius: 5px; border: none; font-weight: 800; font-size: 12.5px; cursor: pointer; }
+  .btn-teal { background: var(--teal); color: var(--navy); }
+  .btn-outline { background: white; border: 1px solid var(--line) !important; color: var(--ink-soft); }
+
+  .kpi-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 20px; }
+  .kpi-card { background: white; border: 1px solid var(--line); border-radius: 10px; padding: 16px; }
+  .kpi-num { font-size: 26px; font-weight: 900; color: var(--navy); }
+  .kpi-label { font-size: 10.5px; color: var(--ink-soft); letter-spacing: 0.4px; margin-top: 3px; }
+
+  .form-card { background: white; border: 1px solid var(--line); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .field label { font-size: 11px; font-weight: 700; color: var(--ink-soft); display:block; margin-bottom: 4px; }
+  .field input, .field select { width: 100%; padding: 9px 11px; border: 1px solid var(--line); border-radius: 6px; font-size: 13px; }
+
+  .req-table { width: 100%; border-collapse: collapse; background: white; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  .req-table th { background: var(--navy-2); color: white; font-size: 11px; text-align:left; padding: 9px 12px; }
+  .req-table td { padding: 10px 12px; font-size: 12.5px; border-top: 1px solid var(--line); }
+  .badge { padding: 3px 10px; border-radius: 10px; font-size: 10.5px; font-weight: 800; }
+  .badge-pending { background: #EDEFF2; color: var(--ink-soft); }
+  .badge-reminded { background: #FFF4E0; color: #B8791A; }
+  .badge-completed { background: #E6F9F1; color: #1FA37A; }
+  .badge-btn { border:none; cursor:pointer; }
+
+  .template-card { background: white; border: 1px solid var(--line); border-radius: 10px; padding: 18px; margin-bottom: 14px; }
+  .template-card h4 { font-size: 12.5px; color: var(--navy); margin-bottom: 8px; }
+  .template-card textarea { width: 100%; padding: 10px; border: 1px solid var(--line); border-radius: 6px; font-size: 12.5px; }
+  .template-hint { font-size: 10.5px; color: var(--ink-soft); margin-top: 5px; }
+
+  .empty-state { text-align: center; padding: 40px 20px; color: var(--ink-soft); font-size: 13px; }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="brand">JAWS<span>AI</span>911 <span style="font-weight:400;">Reputation Manager</span></div>
+    <div class="picker">
+      <select id="clientSelect"></select>
+      <input id="newClientName" placeholder="New client name...">
+      <button onclick="createClient()">+ Add Client</button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="requests" onclick="switchTab('requests')">Review Requests</div>
+    <div class="tab" data-tab="templates" onclick="switchTab('templates')">Templates</div>
+  </div>
+
+  <div class="panel active" id="panel-requests">
+    <div class="status-msg" id="statusMsg">Loading...</div>
+
+    <div class="kpi-row">
+      <div class="kpi-card"><div class="kpi-num" id="kpiSent">0</div><div class="kpi-label">REQUESTS SENT</div></div>
+      <div class="kpi-card"><div class="kpi-num" id="kpiCompleted">0</div><div class="kpi-label">REVIEWS RECEIVED</div></div>
+      <div class="kpi-card"><div class="kpi-num" id="kpiRate">0%</div><div class="kpi-label">CONVERSION RATE</div></div>
+    </div>
+
+    <div class="form-card">
+      <div class="row2">
+        <div class="field"><label>Customer Name</label><input id="custName" placeholder="Who just got serviced?"></div>
+        <div class="field"><label>Phone</label><input id="custPhone" placeholder="(561) 555-0134"></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label>Channel</label>
+          <select id="channelSelect"><option value="sms">Text</option><option value="email">Email</option><option value="front_desk">Front Desk (in person)</option></select>
+        </div>
+        <div class="field"><label>&nbsp;</label><button class="btn btn-teal" style="width:100%; margin-top:0;" onclick="logRequest()">+ Log Review Request</button></div>
+      </div>
+    </div>
+
+    <div id="requestsContainer"></div>
+  </div>
+
+  <div class="panel" id="panel-templates">
+    <div class="template-card">
+      <h4>Front-Desk Script (Said in Person)</h4>
+      <textarea id="tpl_frontdesk" rows="2" oninput="saveTemplates()"></textarea>
+      <div class="template-hint">Read this out loud at checkout when a customer seems happy.</div>
+    </div>
+    <div class="template-card">
+      <h4>SMS Review Ask</h4>
+      <textarea id="tpl_sms" rows="2" oninput="saveTemplates()"></textarea>
+      <div class="template-hint">Sent right after the visit while the experience is fresh.</div>
+    </div>
+    <div class="template-card">
+      <h4>24-Hour Reminder</h4>
+      <textarea id="tpl_reminder" rows="2" oninput="saveTemplates()"></textarea>
+      <div class="template-hint">Sent to anyone who hasn't left a review after the first ask.</div>
+    </div>
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+const SUPABASE_URL = 'https://owkqfledeuetwwmlvnmb.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93a3FmbGVkZXVldHd3bWx2bm1iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxMzM5MTQsImV4cCI6MjEwMDcwOTkxNH0.lOwjIzs-DyVtvKR8-b1L6RTdlb8iY9_1chgKbY2ml3c';
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let currentClient = null;
+let currentClientId = null;
+let requests = [];
+
+function statusMsg(t) { document.getElementById('statusMsg').textContent = t; }
+function escapeHtml(str) { const d = document.createElement('div'); d.textContent = str || ''; return d.innerHTML; }
+function todayISO() { return new Date().toISOString().slice(0,10); }
+function normalizeRequest(row) {
+  return {
+    id: row.id,
+    custName: row.customer_name || '',
+    phone: row.phone || '',
+    channel: row.channel || 'sms',
+    status: row.status || 'pending',
+    sentDate: row.sent_date || todayISO(),
+    loggedAt: row.created_at || new Date().toISOString()
+  };
+}
+
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+}
+
+const DEFAULT_TEMPLATES = {
+  frontdesk: "If today helped, would you mind leaving us a quick Google review? It really helps us and helps other customers feel comfortable choosing us.",
+  sms: "Thanks again for the visit today! If it helped, would you mind leaving a quick Google review? It really helps us. [Google Review Link]",
+  reminder: "Quick follow-up — if you haven't had a chance yet, here's the review link from earlier. We'd really appreciate it. [Google Review Link]"
+};
+
+async function loadClientList() {
+  try {
+    const { data, error } = await supabaseClient.from('clients').select('id, name').order('name');
+    if (error) throw error;
+    const select = document.getElementById('clientSelect');
+    select.innerHTML = '';
+    if (!data || data.length === 0) {
+      select.innerHTML = '<option value="">No clients yet</option>';
+      currentClient = null;
+      currentClientId = null;
+      return;
+    }
+    data.forEach(client => {
+      const opt = document.createElement('option');
+      opt.value = client.id;
+      opt.textContent = client.name;
+      select.appendChild(opt);
+    });
+    const selected = data.find(client => client.id === currentClientId) || data[0];
+    currentClientId = selected.id;
+    currentClient = selected.name;
+    select.value = currentClientId;
+    await loadData();
+  } catch (e) {
+    statusMsg('No clients yet — add one to get started.');
+  }
+}
+
+async function createClient() {
+  const input = document.getElementById('newClientName');
+  const name = input.value.trim();
+  if (!name) return;
+  const { data, error } = await supabaseClient.from('clients').insert({ name }).select('id, name').single();
+  if (error) {
+    alert(error.message);
+    return;
+  }
+  const tplError = await supabaseClient.from('review_templates').upsert({
+    client_id: data.id,
+    frontdesk: DEFAULT_TEMPLATES.frontdesk,
+    sms: DEFAULT_TEMPLATES.sms,
+    reminder: DEFAULT_TEMPLATES.reminder
+  }, { onConflict: 'client_id' });
+  if (tplError.error) {
+    alert(tplError.error.message);
+    return;
+  }
+  input.value = '';
+  currentClientId = data.id;
+  currentClient = data.name;
+  await loadClientList();
+  await loadData();
+}
+
+document.getElementById('clientSelect').addEventListener('change', async (e) => {
+  const option = e.target.selectedOptions[0];
+  currentClientId = e.target.value || null;
+  currentClient = option ? option.textContent : null;
+  await loadData();
+});
+
+async function loadData() {
+  if (!currentClientId) { requests = []; renderRequests(); return; }
+  statusMsg('Review requests for ' + currentClient + ' — changes save automatically.');
+  try {
+    const { data, error } = await supabaseClient
+      .from('review_requests')
+      .select('*')
+      .eq('client_id', currentClientId)
+      .order('created_at', { ascending: false });
+    if (error) throw error;
+    requests = (data || []).map(normalizeRequest);
+  } catch (e) { requests = []; }
+
+  let templates = DEFAULT_TEMPLATES;
+  try {
+    const { data, error } = await supabaseClient
+      .from('review_templates')
+      .select('*')
+      .eq('client_id', currentClientId)
+      .maybeSingle();
+    if (error) throw error;
+    if (data) {
+      templates = {
+        frontdesk: data.frontdesk || DEFAULT_TEMPLATES.frontdesk,
+        sms: data.sms || DEFAULT_TEMPLATES.sms,
+        reminder: data.reminder || DEFAULT_TEMPLATES.reminder
+      };
+    }
+  } catch (e) { /* use defaults */ }
+  document.getElementById('tpl_frontdesk').value = templates.frontdesk || DEFAULT_TEMPLATES.frontdesk;
+  document.getElementById('tpl_sms').value = templates.sms || DEFAULT_TEMPLATES.sms;
+  document.getElementById('tpl_reminder').value = templates.reminder || DEFAULT_TEMPLATES.reminder;
+
+  renderRequests();
+}
+
+async function saveTemplates() {
+  if (!currentClientId) return;
+  const { error } = await supabaseClient.from('review_templates').upsert({
+    client_id: currentClientId,
+    frontdesk: document.getElementById('tpl_frontdesk').value,
+    sms: document.getElementById('tpl_sms').value,
+    reminder: document.getElementById('tpl_reminder').value
+  }, { onConflict: 'client_id' });
+  if (error) statusMsg('Template save failed: ' + error.message);
+}
+
+async function logRequest() {
+  if (!currentClientId) { alert('Add a client first.'); return; }
+  const custName = document.getElementById('custName').value.trim();
+  if (!custName) { alert('Enter a customer name first.'); return; }
+  const phone = document.getElementById('custPhone').value.trim();
+  const channel = document.getElementById('channelSelect').value;
+
+  const { error } = await supabaseClient.from('review_requests').insert({
+    client_id: currentClientId,
+    customer_name: custName,
+    phone,
+    channel,
+    status: 'pending',
+    sent_date: todayISO()
+  });
+  if (error) {
+    alert(error.message);
+    return;
+  }
+  await loadData();
+  document.getElementById('custName').value = '';
+  document.getElementById('custPhone').value = '';
+  renderRequests();
+}
+
+async function updateStatus(id, status) {
+  const { error } = await supabaseClient.from('review_requests').update({ status }).eq('id', id);
+  if (error) {
+    alert(error.message);
+    return;
+  }
+  await loadData();
+  renderRequests();
+}
+
+function renderRequests() {
+  const container = document.getElementById('requestsContainer');
+
+  const sent = requests.length;
+  const completed = requests.filter(r => r.status === 'completed').length;
+  const rate = sent > 0 ? Math.round((completed / sent) * 100) : 0;
+  document.getElementById('kpiSent').textContent = sent;
+  document.getElementById('kpiCompleted').textContent = completed;
+  document.getElementById('kpiRate').textContent = rate + '%';
+
+  if (!currentClient || requests.length === 0) {
+    container.innerHTML = '<div class="empty-state">No review requests logged yet. Add one above after a customer visit.</div>';
+    return;
+  }
+
+  const channelLabels = { sms: 'Text', email: 'Email', front_desk: 'Front Desk' };
+  let html = '<table class="req-table"><thead><tr><th>Customer</th><th>Channel</th><th>Sent</th><th>Status</th><th>Actions</th></tr></thead><tbody>';
+  requests.forEach(r => {
+    html += `<tr>
+      <td>${escapeHtml(r.custName)}<br><span style="color:var(--ink-soft); font-size:11px;">${escapeHtml(r.phone || '')}</span></td>
+      <td>${channelLabels[r.channel] || r.channel}</td>
+      <td>${escapeHtml(r.sentDate)}</td>
+      <td><span class="badge badge-${r.status}">${r.status.toUpperCase()}</span></td>
+      <td>
+        ${r.status !== 'reminded' ? `<button class="btn btn-outline badge-btn" onclick="updateStatus('${r.id}', 'reminded')">Mark Reminded</button>` : ''}
+        ${r.status !== 'completed' ? `<button class="btn btn-outline badge-btn" onclick="updateStatus('${r.id}', 'completed')">Mark Left Review</button>` : ''}
+      </td>
+    </tr>`;
+  });
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+
+loadClientList();
+</script>
+</body>
+</html>

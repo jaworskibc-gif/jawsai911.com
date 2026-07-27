@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JAWSAI911 Pipeline CRM</title>
+<style>
+  :root {
+    --navy: #010711;
+    --navy-2: #0B1F33;
+    --cyan: #00B4FF;
+    --teal: #00C4B4;
+    --pink: #E8175D;
+    --ink: #1a2230;
+    --ink-soft: #5A6472;
+    --foam: #F7FAFB;
+    --line: #E2E6EA;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; font-family: 'Liberation Sans', Arial, sans-serif; }
+  body { background: var(--foam); color: var(--ink); }
+
+  .topbar {
+    background: var(--navy); color: white; padding: 14px 22px;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+  }
+  .brand { font-size: 15px; font-weight: 900; letter-spacing: 0.5px; }
+  .brand span { color: var(--cyan); }
+  .client-picker { display: flex; align-items: center; gap: 8px; }
+  .client-picker select, .client-picker input {
+    background: var(--navy-2); color: white; border: 1px solid rgba(255,255,255,0.15);
+    padding: 7px 10px; border-radius: 5px; font-size: 12.5px;
+  }
+  .client-picker button {
+    background: var(--teal); color: var(--navy); border: none; font-weight: 800;
+    padding: 7px 12px; border-radius: 5px; font-size: 12px; cursor: pointer;
+  }
+  .client-picker button:hover { opacity: 0.9; }
+
+  .board-wrap { padding: 20px; overflow-x: auto; }
+  .board {
+    display: flex; gap: 14px; min-width: fit-content;
+  }
+  .column {
+    background: white; border: 1px solid var(--line); border-radius: 8px;
+    width: 260px; flex-shrink: 0; display: flex; flex-direction: column;
+    max-height: calc(100vh - 130px);
+  }
+  .col-head {
+    padding: 12px 14px; border-bottom: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 3px solid var(--stage-color, var(--cyan));
+    border-radius: 8px 8px 0 0;
+  }
+  .col-title { font-size: 13px; font-weight: 800; color: var(--ink); }
+  .col-count {
+    background: var(--foam); color: var(--ink-soft); font-size: 11px; font-weight: 700;
+    padding: 2px 8px; border-radius: 10px;
+  }
+  .col-body { padding: 10px; overflow-y: auto; flex: 1; min-height: 80px; }
+  .col-body.dragover { background: #EAF6FF; }
+
+  .card {
+    background: var(--foam); border: 1px solid var(--line); border-radius: 6px;
+    padding: 10px 12px; margin-bottom: 8px; cursor: grab; font-size: 12.5px;
+    position: relative;
+  }
+  .card:active { cursor: grabbing; }
+  .card-name { font-weight: 800; color: var(--ink); margin-bottom: 3px; }
+  .card-meta { font-size: 11px; color: var(--ink-soft); line-height: 1.4; }
+  .card-del {
+    position: absolute; top: 6px; right: 8px; background: none; border: none;
+    color: var(--ink-soft); font-size: 14px; cursor: pointer; opacity: 0.4;
+  }
+  .card-del:hover { opacity: 1; color: var(--pink); }
+
+  .add-card-btn {
+    width: 100%; padding: 8px; border: 1.5px dashed var(--line); background: none;
+    border-radius: 6px; color: var(--ink-soft); font-size: 12px; font-weight: 700; cursor: pointer;
+  }
+  .add-card-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(1,7,17,0.5);
+    display: none; align-items: center; justify-content: center; z-index: 50;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: white; border-radius: 10px; padding: 24px; width: 340px;
+  }
+  .modal h3 { font-size: 15px; margin-bottom: 14px; color: var(--ink); }
+  .modal label { font-size: 11px; font-weight: 700; color: var(--ink-soft); display:block; margin: 10px 0 4px 0; }
+  .modal input, .modal textarea {
+    width: 100%; padding: 8px 10px; border: 1px solid var(--line); border-radius: 5px; font-size: 13px;
+  }
+  .modal-actions { display: flex; gap: 8px; margin-top: 18px; }
+  .modal-actions button {
+    flex: 1; padding: 10px; border-radius: 6px; border: none; font-weight: 800; font-size: 13px; cursor: pointer;
+  }
+  .btn-save { background: var(--teal); color: var(--navy); }
+  .btn-cancel { background: var(--foam); color: var(--ink-soft); border: 1px solid var(--line) !important; }
+
+  .empty-state {
+    text-align: center; padding: 40px 20px; color: var(--ink-soft); font-size: 13px;
+  }
+  .status-msg {
+    font-size: 11px; color: rgba(255,255,255,0.6); padding: 0 22px 8px 22px; background: var(--navy);
+  }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="brand">JAWS<span>AI</span>911 <span style="color:white; font-weight:400;">Pipeline</span></div>
+    <div class="client-picker">
+      <select id="clientSelect"></select>
+      <input id="newClientName" placeholder="New client name...">
+      <button onclick="createClient()">+ Add Client</button>
+    </div>
+  </div>
+  <div class="status-msg" id="statusMsg">Loading...</div>
+
+  <div class="board-wrap">
+    <div class="board" id="board"></div>
+  </div>
+
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <h3>New Lead</h3>
+      <label>Name / Business</label>
+      <input id="leadName" placeholder="e.g. Coastal Blue Pool Care">
+      <label>Phone</label>
+      <input id="leadPhone" placeholder="(561) 555-0134">
+      <label>Notes</label>
+      <textarea id="leadNotes" rows="3" placeholder="Reviews, source, context..."></textarea>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+        <button class="btn-save" onclick="saveLead()">Add Lead</button>
+      </div>
+    </div>
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+const SUPABASE_URL = 'https://owkqfledeuetwwmlvnmb.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93a3FmbGVkZXVldHd3bWx2bm1iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxMzM5MTQsImV4cCI6MjEwMDcwOTkxNH0.lOwjIzs-DyVtvKR8-b1L6RTdlb8iY9_1chgKbY2ml3c';
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const STAGES = [
+  { id: 'new',        name: 'New Lead',        color: '#00B4FF' },
+  { id: 'contacted',  name: 'Contacted',        color: '#00C4B4' },
+  { id: 'video_sent',  name: 'Video/Demo Sent', color: '#F2C879' },
+  { id: 'scheduled',  name: 'Call Scheduled',  color: '#E8175D' },
+  { id: 'won',        name: 'Won',              color: '#1FA37A' },
+  { id: 'lost',       name: 'Lost / Cold',      color: '#8A94A0' },
+];
+
+let currentClient = null;
+let currentClientId = null;
+let pipelineData = {};
+let addingToStage = null;
+
+function statusMsg(text) {
+  document.getElementById('statusMsg').textContent = text;
+}
+function normalizeLead(row) {
+  return {
+    id: row.id,
+    name: row.name || '',
+    phone: row.phone || '',
+    notes: row.notes || '',
+    stage: row.stage || 'new',
+    position: row.position || 0
+  };
+}
+function buildEmptyPipeline() {
+  const empty = {};
+  STAGES.forEach(stage => { empty[stage.id] = []; });
+  return empty;
+}
+
+async function loadClientList() {
+  try {
+    const { data, error } = await supabaseClient.from('clients').select('id, name').order('name');
+    if (error) throw error;
+    const select = document.getElementById('clientSelect');
+    select.innerHTML = '';
+    if (!data || data.length === 0) {
+      select.innerHTML = '<option value="">No clients yet — add one</option>';
+      currentClient = null;
+      currentClientId = null;
+      return;
+    }
+    data.forEach(client => {
+      const opt = document.createElement('option');
+      opt.value = client.id;
+      opt.textContent = client.name;
+      select.appendChild(opt);
+    });
+    const selected = data.find(client => client.id === currentClientId) || data[0];
+    currentClientId = selected.id;
+    currentClient = selected.name;
+    select.value = currentClientId;
+    await loadPipeline(currentClient);
+  } catch (e) {
+    statusMsg('No clients yet — add one to get started.');
+  }
+}
+
+async function createClient() {
+  const input = document.getElementById('newClientName');
+  const name = input.value.trim();
+  if (!name) return;
+  try {
+    const { data, error } = await supabaseClient.from('clients').insert({ name }).select('id, name').single();
+    if (error) throw error;
+    input.value = '';
+    currentClientId = data.id;
+    currentClient = data.name;
+    await loadClientList();
+    await loadPipeline(name);
+  } catch (e) {
+    statusMsg('Error creating client: ' + e.message);
+  }
+}
+
+document.getElementById('clientSelect').addEventListener('change', async (e) => {
+  const option = e.target.selectedOptions[0];
+  currentClientId = e.target.value || null;
+  currentClient = option ? option.textContent : null;
+  await loadPipeline(currentClient);
+});
+
+async function loadPipeline(clientName) {
+  if (!currentClientId) { pipelineData = buildEmptyPipeline(); renderBoard(); return; }
+  statusMsg('Loading pipeline for ' + clientName + '...');
+  try {
+    const { data, error } = await supabaseClient
+      .from('pipeline_leads')
+      .select('*')
+      .eq('client_id', currentClientId)
+      .order('position');
+    if (error) throw error;
+    pipelineData = buildEmptyPipeline();
+    (data || []).map(normalizeLead).forEach(lead => {
+      if (!pipelineData[lead.stage]) pipelineData[lead.stage] = [];
+      pipelineData[lead.stage].push(lead);
+    });
+  } catch (e) {
+    pipelineData = buildEmptyPipeline();
+  }
+  statusMsg('Pipeline: ' + clientName + ' — drag cards between stages, changes save automatically.');
+  renderBoard();
+}
+
+async function savePipeline() {
+  if (!currentClientId) return;
+  try {
+    for (const stage of STAGES) {
+      const leads = pipelineData[stage.id] || [];
+      for (let idx = 0; idx < leads.length; idx++) {
+        const lead = leads[idx];
+        lead.stage = stage.id;
+        lead.position = idx;
+        const { error } = await supabaseClient
+          .from('pipeline_leads')
+          .update({ stage: stage.id, position: idx })
+          .eq('id', lead.id);
+        if (error) throw error;
+      }
+    }
+  } catch (e) {
+    statusMsg('Save failed: ' + e.message);
+  }
+}
+
+function renderBoard() {
+  const board = document.getElementById('board');
+  board.innerHTML = '';
+
+  if (!currentClient) {
+    board.innerHTML = '<div class="empty-state">Add a client above to start building their pipeline.</div>';
+    return;
+  }
+
+  for (const stage of STAGES) {
+    const col = document.createElement('div');
+    col.className = 'column';
+
+    const leads = pipelineData[stage.id] || [];
+    col.innerHTML = `
+      <div class="col-head" style="--stage-color:${stage.color}">
+        <span class="col-title">${stage.name}</span>
+        <span class="col-count">${leads.length}</span>
+      </div>
+      <div class="col-body" data-stage="${stage.id}"></div>
+    `;
+
+    const body = col.querySelector('.col-body');
+    leads.forEach((lead, idx) => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.draggable = true;
+      card.dataset.stage = stage.id;
+      card.dataset.idx = idx;
+      card.innerHTML = `
+        <button class="card-del" onclick="deleteLead('${stage.id}', ${idx})">✕</button>
+        <div class="card-name">${escapeHtml(lead.name)}</div>
+        <div class="card-meta">${escapeHtml(lead.phone || '')}${lead.notes ? '<br>' + escapeHtml(lead.notes) : ''}</div>
+      `;
+      card.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('text/plain', JSON.stringify({ stage: stage.id, idx: idx }));
+      });
+      body.appendChild(card);
+    });
+
+    const addBtn = document.createElement('button');
+    addBtn.className = 'add-card-btn';
+    addBtn.textContent = '+ Add Lead';
+    addBtn.onclick = () => openModal(stage.id);
+    body.appendChild(addBtn);
+
+    body.addEventListener('dragover', (e) => { e.preventDefault(); body.classList.add('dragover'); });
+    body.addEventListener('dragleave', () => body.classList.remove('dragover'));
+    body.addEventListener('drop', async (e) => {
+      e.preventDefault();
+      body.classList.remove('dragover');
+      const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+      if (data.stage === stage.id) return;
+      const [movedLead] = pipelineData[data.stage].splice(data.idx, 1);
+      pipelineData[stage.id].push(movedLead);
+      await savePipeline();
+      renderBoard();
+    });
+
+    board.appendChild(col);
+  }
+}
+
+function openModal(stageId) {
+  addingToStage = stageId;
+  document.getElementById('leadName').value = '';
+  document.getElementById('leadPhone').value = '';
+  document.getElementById('leadNotes').value = '';
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+
+async function saveLead() {
+  if (!currentClientId) { alert('Add a client first.'); return; }
+  const name = document.getElementById('leadName').value.trim();
+  if (!name) return;
+  const phone = document.getElementById('leadPhone').value.trim();
+  const notes = document.getElementById('leadNotes').value.trim();
+  const position = (pipelineData[addingToStage] || []).length;
+  const { data, error } = await supabaseClient.from('pipeline_leads').insert({
+    client_id: currentClientId,
+    stage: addingToStage,
+    name,
+    phone,
+    notes,
+    position
+  }).select('*').single();
+  if (error) {
+    statusMsg('Save failed: ' + error.message);
+    return;
+  }
+  pipelineData[addingToStage].push(normalizeLead(data));
+  closeModal();
+  renderBoard();
+}
+
+async function deleteLead(stageId, idx) {
+  const [lead] = pipelineData[stageId].splice(idx, 1);
+  if (lead) {
+    const { error } = await supabaseClient.from('pipeline_leads').delete().eq('id', lead.id);
+    if (error) {
+      statusMsg('Delete failed: ' + error.message);
+      return;
+    }
+  }
+  await savePipeline();
+  renderBoard();
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+loadClientList();
+</script>
+</body>
+</html>

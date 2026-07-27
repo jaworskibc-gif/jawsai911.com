@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JAWSAI911 Power Dialer</title>
+<style>
+  :root {
+    --navy: #010711; --navy-2: #0B1F33;
+    --cyan: #00B4FF; --teal: #00C4B4; --pink: #E8175D; --amber: #F2C879;
+    --ink: #1a2230; --ink-soft: #5A6472; --foam: #F7FAFB; --line: #E2E6EA;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Liberation Sans', Arial, sans-serif; }
+  body { background: var(--foam); color: var(--ink); }
+
+  .topbar {
+    background: var(--navy); color: white; padding: 14px 22px;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+  }
+  .brand { font-size: 15px; font-weight: 900; }
+  .brand span { color: var(--cyan); }
+  .picker { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .picker select, .picker input {
+    background: var(--navy-2); color: white; border: 1px solid rgba(255,255,255,0.15);
+    padding: 7px 10px; border-radius: 5px; font-size: 12.5px;
+  }
+  .picker button {
+    background: var(--teal); color: var(--navy); border: none; font-weight: 800;
+    padding: 7px 12px; border-radius: 5px; font-size: 12px; cursor: pointer;
+  }
+  .banner {
+    background: #FFF4E0; color: #8A5A0A; font-size: 11.5px; padding: 8px 22px; border-bottom: 1px solid #F2D9A0;
+  }
+
+  .tabs { display: flex; gap: 4px; padding: 14px 22px 0 22px; border-bottom: 1px solid var(--line); background: white; }
+  .tab { padding: 10px 16px; font-size: 12.5px; font-weight: 800; color: var(--ink-soft); cursor: pointer; border-bottom: 3px solid transparent; }
+  .tab.active { color: var(--navy); border-bottom-color: var(--teal); }
+  .panel { display:none; padding: 22px; max-width: 760px; margin: 0 auto; }
+  .panel.active { display:block; }
+  .status-msg { font-size: 11px; color: var(--ink-soft); margin-bottom: 16px; }
+
+  .btn { padding: 9px 16px; border-radius: 6px; border: none; font-weight: 800; font-size: 13px; cursor: pointer; }
+  .btn-teal { background: var(--teal); color: var(--navy); }
+  .btn-outline { background: white; border: 1px solid var(--line) !important; color: var(--ink-soft); }
+
+  /* ---- QUEUE SETUP ---- */
+  .setup-card { background: white; border: 1px solid var(--line); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+  .setup-card textarea { width: 100%; padding: 10px; border: 1px solid var(--line); border-radius: 6px; font-size: 12.5px; font-family: 'Liberation Mono', monospace; }
+  .setup-hint { font-size: 11px; color: var(--ink-soft); margin: 6px 0 12px 0; }
+
+  .queue-list { display: grid; gap: 6px; }
+  .queue-item { display:flex; justify-content:space-between; align-items:center; background:white; border:1px solid var(--line); border-radius:6px; padding:8px 12px; font-size:12.5px; }
+  .queue-item .qi-del { background:none; border:none; color:var(--ink-soft); cursor:pointer; font-size:14px; }
+
+  /* ---- SESSION VIEW ---- */
+  .session-stats { display: flex; gap: 10px; margin-bottom: 18px; }
+  .stat-box { flex:1; background:white; border:1px solid var(--line); border-radius:8px; padding:12px; text-align:center; }
+  .stat-num { font-size: 22px; font-weight: 900; color: var(--navy); }
+  .stat-label { font-size: 10px; color: var(--ink-soft); letter-spacing: 0.4px; margin-top: 2px; }
+
+  .call-card {
+    background: white; border: 1px solid var(--line); border-radius: 12px; padding: 30px; text-align: center;
+  }
+  .cc-progress { font-size: 11px; color: var(--ink-soft); margin-bottom: 14px; letter-spacing: 0.5px; }
+  .cc-name { font-size: 24px; font-weight: 900; color: var(--navy); margin-bottom: 4px; }
+  .cc-phone { font-size: 15px; color: var(--ink-soft); margin-bottom: 22px; }
+  .cc-call-btn {
+    display: inline-block; background: var(--teal); color: var(--navy); text-decoration: none;
+    padding: 16px 40px; border-radius: 40px; font-weight: 900; font-size: 16px; margin-bottom: 26px;
+  }
+  .cc-outcome-label { font-size: 11px; font-weight: 700; color: var(--ink-soft); margin-bottom: 10px; }
+  .outcome-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
+  .outcome-btn {
+    padding: 12px 8px; text-align: center; border: 1.5px solid var(--line); border-radius: 8px;
+    font-weight: 800; font-size: 12px; cursor: pointer; color: var(--ink-soft); background: white;
+  }
+  .outcome-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+  .cc-notes { width: 100%; padding: 9px 11px; border: 1px solid var(--line); border-radius: 6px; font-size: 12.5px; margin-bottom: 16px; }
+  .cc-skip { background: none; border: none; color: var(--ink-soft); font-size: 12px; cursor: pointer; text-decoration: underline; }
+
+  .empty-state { text-align: center; padding: 50px 20px; color: var(--ink-soft); font-size: 13px; }
+  .done-state { text-align: center; padding: 50px 20px; }
+  .done-state .big { font-size: 20px; font-weight: 900; color: var(--navy); margin-bottom: 8px; }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="brand">JAWS<span>AI</span>911 <span style="font-weight:400;">Power Dialer</span></div>
+    <div class="picker">
+      <select id="clientSelect"></select>
+      <input id="newClientName" placeholder="New client name...">
+      <button onclick="createClient()">+ Add Client</button>
+    </div>
+  </div>
+  <div class="banner">⚠ Click-to-call opens your phone's native dialer — this doesn't auto-dial or run VoIP itself. Once your Twilio/phone setup is live, this becomes the queue front-end for it. Outcomes log into the same call history as the Call Tracker tool.</div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="queue" onclick="switchTab('queue')">Build Queue</div>
+    <div class="tab" data-tab="session" onclick="switchTab('session')">Dial Session</div>
+  </div>
+
+  <div class="panel active" id="panel-queue">
+    <div class="status-msg" id="statusMsg">Loading...</div>
+    <div class="setup-card">
+      <label style="font-size:11px; font-weight:700; color:var(--ink-soft); display:block; margin-bottom:6px;">Paste Leads (one per line: Name, Phone)</label>
+      <textarea id="bulkInput" rows="6" placeholder="Coastal Blue Pool Care, (561) 555-0134&#10;Sunshine Pool Service, (561) 555-0198&#10;Deep Blue Pools, (954) 555-0122"></textarea>
+      <div class="setup-hint">Format: Name, Phone — one lead per line</div>
+      <button class="btn btn-teal" onclick="addBulk()">+ Add to Queue</button>
+    </div>
+    <div class="queue-list" id="queueList"></div>
+  </div>
+
+  <div class="panel" id="panel-session">
+    <div class="session-stats">
+      <div class="stat-box"><div class="stat-num" id="statRemaining">0</div><div class="stat-label">REMAINING</div></div>
+      <div class="stat-num" id="statCalled" style="display:none;"></div>
+      <div class="stat-box"><div class="stat-num" id="statCalledDisplay">0</div><div class="stat-label">CALLED TODAY</div></div>
+      <div class="stat-box"><div class="stat-num" id="statConnected">0</div><div class="stat-label">CONNECTED</div></div>
+    </div>
+    <div id="sessionContainer"></div>
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+const SUPABASE_URL = 'https://owkqfledeuetwwmlvnmb.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93a3FmbGVkZXVldHd3bWx2bm1iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxMzM5MTQsImV4cCI6MjEwMDcwOTkxNH0.lOwjIzs-DyVtvKR8-b1L6RTdlb8iY9_1chgKbY2ml3c';
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const OUTCOMES = [
+  { id: 'no_answer', label: 'No Answer', connected: false },
+  { id: 'voicemail', label: 'Left Voicemail', connected: false },
+  { id: 'spoke', label: 'Spoke to Them', connected: true },
+  { id: 'scheduled', label: 'Call Scheduled', connected: true },
+  { id: 'not_interested', label: 'Not Interested', connected: true },
+  { id: 'won', label: 'Won / Closed', connected: true },
+];
+
+let currentClient = null;
+let currentClientId = null;
+let queue = [];
+let calledCount = 0;
+let connectedCount = 0;
+
+function statusMsg(t) { document.getElementById('statusMsg').textContent = t; }
+function escapeHtml(str) { const d = document.createElement('div'); d.textContent = str || ''; return d.innerHTML; }
+function normalizeQueueRow(row) {
+  return {
+    id: row.id,
+    name: row.name || '',
+    phone: row.phone || '',
+    position: row.position || 0
+  };
+}
+
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  if (name === 'session') renderSession();
+}
+
+async function loadClientList() {
+  try {
+    const { data, error } = await supabaseClient.from('clients').select('id, name').order('name');
+    if (error) throw error;
+    const select = document.getElementById('clientSelect');
+    select.innerHTML = '';
+    if (!data || data.length === 0) {
+      select.innerHTML = '<option value="">No clients yet</option>';
+      currentClient = null;
+      currentClientId = null;
+      return;
+    }
+    data.forEach(client => {
+      const opt = document.createElement('option');
+      opt.value = client.id;
+      opt.textContent = client.name;
+      select.appendChild(opt);
+    });
+    const selected = data.find(client => client.id === currentClientId) || data[0];
+    currentClientId = selected.id;
+    currentClient = selected.name;
+    select.value = currentClientId;
+    await loadQueue();
+  } catch (e) {
+    statusMsg('No clients yet — add one to get started.');
+  }
+}
+
+async function createClient() {
+  const input = document.getElementById('newClientName');
+  const name = input.value.trim();
+  if (!name) return;
+  const { data, error } = await supabaseClient.from('clients').insert({ name }).select('id, name').single();
+  if (error) {
+    alert(error.message);
+    return;
+  }
+  input.value = '';
+  currentClientId = data.id;
+  currentClient = data.name;
+  calledCount = 0;
+  connectedCount = 0;
+  await loadClientList();
+  await loadQueue();
+}
+
+document.getElementById('clientSelect').addEventListener('change', async (e) => {
+  const option = e.target.selectedOptions[0];
+  currentClientId = e.target.value || null;
+  currentClient = option ? option.textContent : null;
+  calledCount = 0;
+  connectedCount = 0;
+  await loadQueue();
+});
+
+async function loadQueue() {
+  if (!currentClientId) { queue = []; renderQueueList(); return; }
+  statusMsg('Queue for ' + currentClient + ' — paste leads below, changes save automatically.');
+  try {
+    const { data, error } = await supabaseClient
+      .from('dial_queue')
+      .select('*')
+      .eq('client_id', currentClientId)
+      .order('position');
+    if (error) throw error;
+    queue = (data || []).map(normalizeQueueRow);
+  } catch (e) { queue = []; }
+  renderQueueList();
+}
+
+async function saveQueue() {
+  if (!currentClientId) return;
+  for (let idx = 0; idx < queue.length; idx++) {
+    const lead = queue[idx];
+    await supabaseClient.from('dial_queue').update({ position: idx }).eq('id', lead.id);
+  }
+}
+
+async function addBulk() {
+  if (!currentClientId) { alert('Add a client first.'); return; }
+  const text = document.getElementById('bulkInput').value.trim();
+  if (!text) return;
+  const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+  const maxPosition = queue.length;
+  const rows = [];
+  lines.forEach((line, index) => {
+    const parts = line.split(',');
+    const name = (parts[0] || '').trim();
+    const phone = (parts.slice(1).join(',') || '').trim();
+    if (name) rows.push({ client_id: currentClientId, name, phone, position: maxPosition + index });
+  });
+  if (rows.length === 0) return;
+  const { error } = await supabaseClient.from('dial_queue').insert(rows);
+  if (error) {
+    alert(error.message);
+    return;
+  }
+  document.getElementById('bulkInput').value = '';
+  await loadQueue();
+  renderQueueList();
+}
+
+function renderQueueList() {
+  const list = document.getElementById('queueList');
+  document.getElementById('statRemaining').textContent = queue.length;
+  if (queue.length === 0) {
+    list.innerHTML = "<div class=\"empty-state\">Queue is empty. Paste leads above to build today's call list.</div>";
+    return;
+  }
+  list.innerHTML = '';
+  queue.forEach((lead, idx) => {
+    const row = document.createElement('div');
+    row.className = 'queue-item';
+    row.innerHTML = `<span><b>${escapeHtml(lead.name)}</b> — ${escapeHtml(lead.phone)}</span><button class="qi-del" onclick="removeFromQueue(${idx})">✕</button>`;
+    list.appendChild(row);
+  });
+}
+
+async function removeFromQueue(idx) {
+  const lead = queue[idx];
+  if (!lead) return;
+  const { error } = await supabaseClient.from('dial_queue').delete().eq('id', lead.id);
+  if (error) {
+    alert(error.message);
+    return;
+  }
+  queue.splice(idx, 1);
+  await saveQueue();
+  await loadQueue();
+  renderQueueList();
+}
+
+function renderSession() {
+  document.getElementById('statCalledDisplay').textContent = calledCount;
+  document.getElementById('statConnected').textContent = connectedCount;
+  document.getElementById('statRemaining').textContent = queue.length;
+
+  const container = document.getElementById('sessionContainer');
+  if (queue.length === 0) {
+    if (calledCount > 0) {
+      container.innerHTML = `<div class="done-state"><div class="big">🎉 Queue Complete</div><div style="color:var(--ink-soft); font-size:13px;">Called ${calledCount}, connected with ${connectedCount}. Build a new queue to keep going.</div></div>`;
+    } else {
+      container.innerHTML = '<div class="empty-state">No leads in queue. Go to "Build Queue" to add some.</div>';
+    }
+    return;
+  }
+
+  const lead = queue[0];
+  const telHref = 'tel:' + lead.phone.replace(/[^0-9+]/g, '');
+  const outcomeButtons = OUTCOMES.map(o => `<div class="outcome-btn" onclick="logOutcome('${o.id}')">${o.label}</div>`).join('');
+
+  container.innerHTML = `
+    <div class="call-card">
+      <div class="cc-progress">LEAD ${calledCount + 1} OF ${calledCount + queue.length}</div>
+      <div class="cc-name">${escapeHtml(lead.name)}</div>
+      <div class="cc-phone">${escapeHtml(lead.phone)}</div>
+      <a class="cc-call-btn" href="${telHref}">📞 Call Now</a>
+      <div class="cc-outcome-label">LOG OUTCOME</div>
+      <div class="outcome-grid">${outcomeButtons}</div>
+      <input class="cc-notes" id="sessionNotes" placeholder="Quick note (optional)...">
+      <br>
+      <button class="cc-skip" onclick="skipLead()">Skip for now →</button>
+    </div>
+  `;
+}
+
+async function logOutcome(outcomeId) {
+  const lead = queue[0];
+  if (!lead) return;
+  const notes = document.getElementById('sessionNotes').value.trim();
+  const outcomeInfo = OUTCOMES.find(o => o.id === outcomeId);
+  const { error } = await supabaseClient.from('calls').insert({
+    client_id: currentClientId,
+    lead_name: lead.name,
+    phone: lead.phone,
+    outcome: outcomeId,
+    notes,
+    follow_up_date: null
+  });
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  await supabaseClient.from('dial_queue').delete().eq('id', lead.id);
+  queue.shift();
+  await loadQueue();
+  calledCount++;
+  if (outcomeInfo.connected) connectedCount++;
+  renderSession();
+}
+
+async function skipLead() {
+  const lead = queue.shift();
+  if (!lead) return;
+  queue.push(lead);
+  await saveQueue();
+  await loadQueue();
+  renderSession();
+}
+
+loadClientList();
+</script>
+</body>
+</html>

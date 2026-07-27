@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JAWSAI911 Form Builder</title>
+<style>
+  :root {
+    --navy: #010711; --navy-2: #0B1F33;
+    --cyan: #00B4FF; --teal: #00C4B4; --pink: #E8175D;
+    --ink: #1a2230; --ink-soft: #5A6472; --foam: #F7FAFB; --line: #E2E6EA;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Liberation Sans', Arial, sans-serif; }
+  body { background: var(--foam); color: var(--ink); }
+
+  .topbar {
+    background: var(--navy); color: white; padding: 14px 22px;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+  }
+  .brand { font-size: 15px; font-weight: 900; }
+  .brand span { color: var(--cyan); }
+  .picker { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .picker select, .picker input {
+    background: var(--navy-2); color: white; border: 1px solid rgba(255,255,255,0.15);
+    padding: 7px 10px; border-radius: 5px; font-size: 12.5px;
+  }
+  .picker button {
+    background: var(--teal); color: var(--navy); border: none; font-weight: 800;
+    padding: 7px 12px; border-radius: 5px; font-size: 12px; cursor: pointer;
+  }
+
+  .tabs { display: flex; gap: 4px; padding: 14px 22px 0 22px; border-bottom: 1px solid var(--line); background: white; }
+  .tab {
+    padding: 10px 16px; font-size: 12.5px; font-weight: 800; color: var(--ink-soft);
+    cursor: pointer; border-bottom: 3px solid transparent;
+  }
+  .tab.active { color: var(--navy); border-bottom-color: var(--teal); }
+
+  .panel { display: none; padding: 22px; max-width: 900px; margin: 0 auto; }
+  .panel.active { display: block; }
+
+  .status-msg { font-size: 11px; color: var(--ink-soft); margin-bottom: 16px; }
+
+  /* ---- FORM LIST / SELECT ---- */
+  .form-select-row { display:flex; gap:8px; align-items:center; margin-bottom: 18px; flex-wrap:wrap; }
+  .form-select-row select { padding: 8px 10px; border-radius: 5px; border: 1px solid var(--line); font-size: 13px; flex:1; min-width:180px; }
+  .btn { padding: 8px 14px; border-radius: 5px; border: none; font-weight: 800; font-size: 12.5px; cursor: pointer; }
+  .btn-teal { background: var(--teal); color: var(--navy); }
+  .btn-pink { background: var(--pink); color: white; }
+  .btn-outline { background: white; border: 1px solid var(--line) !important; color: var(--ink-soft); }
+
+  /* ---- BUILDER ---- */
+  .field-row {
+    background: white; border: 1px solid var(--line); border-radius: 8px;
+    padding: 12px 14px; margin-bottom: 10px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+  }
+  .field-row input[type=text] { flex: 1; min-width: 140px; padding: 7px 9px; border: 1px solid var(--line); border-radius: 5px; font-size: 12.5px; }
+  .field-row select { padding: 7px 9px; border: 1px solid var(--line); border-radius: 5px; font-size: 12.5px; }
+  .field-row label { font-size: 11px; color: var(--ink-soft); display:flex; align-items:center; gap:4px; }
+  .field-del { background:none; border:none; color: var(--ink-soft); cursor:pointer; font-size:15px; }
+  .field-del:hover { color: var(--pink); }
+  .add-field-btn {
+    width: 100%; padding: 10px; border: 1.5px dashed var(--line); background: none;
+    border-radius: 8px; color: var(--ink-soft); font-size: 12.5px; font-weight: 700; cursor: pointer; margin-top: 6px;
+  }
+  .add-field-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  /* ---- PREVIEW / LIVE FORM ---- */
+  .live-form {
+    background: white; border: 1px solid var(--line); border-radius: 10px; padding: 26px; max-width: 480px; margin: 0 auto;
+  }
+  .live-form h2 { font-size: 18px; margin-bottom: 4px; color: var(--navy); }
+  .live-form .lf-sub { font-size: 12px; color: var(--ink-soft); margin-bottom: 18px; }
+  .lf-field { margin-bottom: 14px; }
+  .lf-field label { display:block; font-size: 12px; font-weight: 700; margin-bottom: 5px; color: var(--ink); }
+  .lf-field input, .lf-field textarea, .lf-field select {
+    width: 100%; padding: 9px 11px; border: 1px solid var(--line); border-radius: 6px; font-size: 13px;
+  }
+  .lf-submit {
+    width: 100%; padding: 12px; background: var(--teal); color: var(--navy); border: none;
+    border-radius: 6px; font-weight: 900; font-size: 14px; cursor: pointer; margin-top: 6px;
+  }
+  .share-box {
+    background: var(--navy-2); color: white; padding: 10px 14px; border-radius: 6px; font-size: 11.5px;
+    margin-bottom: 18px; text-align:center;
+  }
+
+  /* ---- SUBMISSIONS ---- */
+  .sub-table { width: 100%; border-collapse: collapse; background: white; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  .sub-table th { background: var(--navy-2); color: white; font-size: 11px; text-align:left; padding: 9px 12px; letter-spacing:0.4px; }
+  .sub-table td { padding: 9px 12px; font-size: 12.5px; border-top: 1px solid var(--line); }
+  .empty-state { text-align:center; padding: 40px 20px; color: var(--ink-soft); font-size: 13px; }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="brand">JAWS<span>AI</span>911 <span style="font-weight:400;">Form Builder</span></div>
+    <div class="picker">
+      <select id="clientSelect"></select>
+      <input id="newClientName" placeholder="New client name...">
+      <button onclick="createClient()">+ Add Client</button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="builder" onclick="switchTab('builder')">Builder</div>
+    <div class="tab" data-tab="preview" onclick="switchTab('preview')">Preview / Fill Out</div>
+    <div class="tab" data-tab="submissions" onclick="switchTab('submissions')">Submissions</div>
+  </div>
+
+  <div class="panel active" id="panel-builder">
+    <div class="status-msg" id="statusMsg">Loading...</div>
+    <div class="form-select-row">
+      <select id="formSelect" onchange="onFormSelectChange()"></select>
+      <button class="btn btn-teal" onclick="createForm()">+ New Form</button>
+      <button class="btn btn-pink" onclick="deleteForm()">Delete Form</button>
+    </div>
+    <div id="fieldsContainer"></div>
+    <button class="add-field-btn" onclick="addField()">+ Add Field</button>
+  </div>
+
+  <div class="panel" id="panel-preview">
+    <div class="share-box" id="shareBox">Select a form to preview it</div>
+    <div class="live-form" id="liveFormContainer"></div>
+  </div>
+
+  <div class="panel" id="panel-submissions">
+    <div id="submissionsContainer"></div>
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+const SUPABASE_URL = 'https://owkqfledeuetwwmlvnmb.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93a3FmbGVkZXVldHd3bWx2bm1iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxMzM5MTQsImV4cCI6MjEwMDcwOTkxNH0.lOwjIzs-DyVtvKR8-b1L6RTdlb8iY9_1chgKbY2ml3c';
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let currentClient = null;
+let currentClientId = null;
+let currentFormId = null;
+let formsData = []; // list of {id, name, fields:[{id,label,type,required}]}
+
+function statusMsg(t) { document.getElementById('statusMsg').textContent = t; }
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+function escapeHtml(str) { const d = document.createElement('div'); d.textContent = str || ''; return d.innerHTML; }
+function normalizeForm(row) {
+  return {
+    id: row.id,
+    name: row.name || '',
+    fields: Array.isArray(row.fields) ? row.fields : []
+  };
+}
+
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  if (name === 'preview') renderLiveForm();
+  if (name === 'submissions') renderSubmissions();
+}
+
+async function loadClientList() {
+  try {
+    const { data, error } = await supabaseClient.from('clients').select('id, name').order('name');
+    if (error) throw error;
+    const select = document.getElementById('clientSelect');
+    select.innerHTML = '';
+    if (!data || data.length === 0) {
+      select.innerHTML = '<option value="">No clients yet</option>';
+      currentClient = null;
+      currentClientId = null;
+      return;
+    }
+    data.forEach(client => {
+      const opt = document.createElement('option');
+      opt.value = client.id;
+      opt.textContent = client.name;
+      select.appendChild(opt);
+    });
+    const selected = data.find(client => client.id === currentClientId) || data[0];
+    currentClientId = selected.id;
+    currentClient = selected.name;
+    select.value = currentClientId;
+    await loadForms();
+  } catch (e) {
+    statusMsg('No clients yet — add one to get started.');
+  }
+}
+
+async function createClient() {
+  const input = document.getElementById('newClientName');
+  const name = input.value.trim();
+  if (!name) return;
+  const { data, error } = await supabaseClient.from('clients').insert({ name }).select('id, name').single();
+  if (error) {
+    alert(error.message);
+    return;
+  }
+  input.value = '';
+  currentClientId = data.id;
+  currentClient = data.name;
+  await loadClientList();
+  await loadForms();
+}
+
+document.getElementById('clientSelect').addEventListener('change', async (e) => {
+  const option = e.target.selectedOptions[0];
+  currentClientId = e.target.value || null;
+  currentClient = option ? option.textContent : null;
+  await loadForms();
+});
+
+async function loadForms() {
+  if (!currentClientId) { formsData = []; renderFormSelect(); renderFields(); return; }
+  statusMsg('Loading forms for ' + currentClient + '...');
+  try {
+    const { data, error } = await supabaseClient
+      .from('forms')
+      .select('*')
+      .eq('client_id', currentClientId)
+      .order('created_at');
+    if (error) throw error;
+    formsData = (data || []).map(normalizeForm);
+  } catch (e) {
+    formsData = [];
+  }
+  currentFormId = formsData.length > 0 ? formsData[0].id : null;
+  statusMsg('Editing forms for ' + currentClient + ' — changes save automatically.');
+  renderFormSelect();
+  renderFields();
+}
+
+async function saveForms() {
+  if (!currentClientId) return;
+  for (const form of formsData) {
+    const { error } = await supabaseClient.from('forms').update({
+      name: form.name,
+      fields: form.fields
+    }).eq('id', form.id);
+    if (error) {
+      statusMsg('Save failed: ' + error.message);
+      return;
+    }
+  }
+}
+
+function renderFormSelect() {
+  const sel = document.getElementById('formSelect');
+  sel.innerHTML = '';
+  if (formsData.length === 0) {
+    sel.innerHTML = '<option value="">No forms yet — click + New Form</option>';
+    return;
+  }
+  formsData.forEach(f => {
+    const opt = document.createElement('option');
+    opt.value = f.id; opt.textContent = f.name;
+    sel.appendChild(opt);
+  });
+  sel.value = currentFormId;
+}
+
+function onFormSelectChange() {
+  currentFormId = document.getElementById('formSelect').value;
+  renderFields();
+}
+
+async function createForm() {
+  if (!currentClientId) { alert('Add a client first.'); return; }
+  const name = prompt('Form name (e.g. "Free Quote Request"):');
+  if (!name) return;
+  const newForm = {
+    name: name,
+    fields: [
+      { id: uid(), label: 'Name', type: 'text', required: true },
+      { id: uid(), label: 'Phone', type: 'tel', required: true },
+    ]
+  };
+  const { data, error } = await supabaseClient.from('forms').insert({
+    client_id: currentClientId,
+    name: newForm.name,
+    fields: newForm.fields
+  }).select('*').single();
+  if (error) {
+    alert(error.message);
+    return;
+  }
+  formsData.push(normalizeForm(data));
+  currentFormId = data.id;
+  renderFormSelect();
+  renderFields();
+}
+
+async function deleteForm() {
+  if (!currentFormId) return;
+  if (!confirm('Delete this form and all its fields?')) return;
+  await supabaseClient.from('form_submissions').delete().eq('form_id', currentFormId);
+  const { error } = await supabaseClient.from('forms').delete().eq('id', currentFormId);
+  if (error) {
+    alert(error.message);
+    return;
+  }
+  formsData = formsData.filter(f => f.id !== currentFormId);
+  currentFormId = formsData.length > 0 ? formsData[0].id : null;
+  renderFormSelect();
+  renderFields();
+}
+
+function getCurrentForm() {
+  return formsData.find(f => f.id === currentFormId);
+}
+
+function renderFields() {
+  const container = document.getElementById('fieldsContainer');
+  container.innerHTML = '';
+  const form = getCurrentForm();
+  if (!form) {
+    container.innerHTML = '<div class="empty-state">Create a form to start adding fields.</div>';
+    return;
+  }
+  form.fields.forEach((field, idx) => {
+    const row = document.createElement('div');
+    row.className = 'field-row';
+    row.innerHTML = `
+      <input type="text" value="${escapeHtml(field.label)}" onchange="updateField(${idx}, 'label', this.value)" placeholder="Field label">
+      <select onchange="updateField(${idx}, 'type', this.value)">
+        <option value="text" ${field.type==='text'?'selected':''}>Text</option>
+        <option value="tel" ${field.type==='tel'?'selected':''}>Phone</option>
+        <option value="email" ${field.type==='email'?'selected':''}>Email</option>
+        <option value="textarea" ${field.type==='textarea'?'selected':''}>Long Answer</option>
+      </select>
+      <label><input type="checkbox" ${field.required?'checked':''} onchange="updateField(${idx}, 'required', this.checked)"> Required</label>
+      <button class="field-del" onclick="deleteField(${idx})">✕</button>
+    `;
+    container.appendChild(row);
+  });
+}
+
+async function addField() {
+  const form = getCurrentForm();
+  if (!form) { alert('Create a form first.'); return; }
+  form.fields.push({ id: uid(), label: 'New Field', type: 'text', required: false });
+  await saveForms();
+  renderFields();
+}
+
+async function updateField(idx, key, value) {
+  const form = getCurrentForm();
+  form.fields[idx][key] = value;
+  await saveForms();
+}
+
+async function deleteField(idx) {
+  const form = getCurrentForm();
+  form.fields.splice(idx, 1);
+  await saveForms();
+  renderFields();
+}
+
+function renderLiveForm() {
+  const shareBox = document.getElementById('shareBox');
+  const container = document.getElementById('liveFormContainer');
+  const form = getCurrentForm();
+  if (!form) {
+    shareBox.textContent = 'Select or create a form in the Builder tab first';
+    container.innerHTML = '';
+    return;
+  }
+  shareBox.textContent = "This is what your client's customers will see. Submissions save to the Submissions tab.";
+  container.innerHTML = `
+    <h2>${escapeHtml(form.name)}</h2>
+    <div class="lf-sub">${escapeHtml(currentClient)}</div>
+    <form id="liveForm"></form>
+  `;
+  const liveForm = container.querySelector('#liveForm');
+  form.fields.forEach(field => {
+    const wrap = document.createElement('div');
+    wrap.className = 'lf-field';
+    const inputEl = field.type === 'textarea' ? 'textarea' : 'input';
+    const typeAttr = field.type === 'textarea' ? '' : `type="${field.type}"`;
+    wrap.innerHTML = `
+      <label>${escapeHtml(field.label)}${field.required ? ' *' : ''}</label>
+      <${inputEl} ${typeAttr} data-field-id="${field.id}" data-label="${escapeHtml(field.label)}" ${field.required ? 'required' : ''}></${inputEl}>
+    `;
+    liveForm.appendChild(wrap);
+  });
+  const submitBtn = document.createElement('button');
+  submitBtn.type = 'submit';
+  submitBtn.className = 'lf-submit';
+  submitBtn.textContent = 'Submit';
+  liveForm.appendChild(submitBtn);
+
+  liveForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const answers = {};
+    liveForm.querySelectorAll('[data-field-id]').forEach(el => {
+      answers[el.dataset.label] = el.value;
+    });
+    await saveSubmission(form.id, answers);
+    alert('Submitted! (This would normally close/thank the customer.)');
+    liveForm.reset();
+  });
+}
+
+async function saveSubmission(formId, answers) {
+  const { error } = await supabaseClient.from('form_submissions').insert({
+    form_id: formId,
+    answers
+  });
+  if (error) alert(error.message);
+}
+
+async function renderSubmissions() {
+  const container = document.getElementById('submissionsContainer');
+  const form = getCurrentForm();
+  if (!form) {
+    container.innerHTML = '<div class="empty-state">Select a form to see its submissions.</div>';
+    return;
+  }
+  let subs = [];
+  try {
+    const { data, error } = await supabaseClient
+      .from('form_submissions')
+      .select('*')
+      .eq('form_id', form.id)
+      .order('submitted_at', { ascending: false });
+    if (error) throw error;
+    subs = data || [];
+  } catch (e) { subs = []; }
+
+  if (subs.length === 0) {
+    container.innerHTML = `<div class="empty-state">No submissions yet for "${escapeHtml(form.name)}". Go to Preview / Fill Out to test it.</div>`;
+    return;
+  }
+
+  const fieldLabels = form.fields.map(f => f.label);
+  let html = '<table class="sub-table"><thead><tr>';
+  fieldLabels.forEach(l => html += `<th>${escapeHtml(l)}</th>`);
+  html += '<th>Submitted</th></tr></thead><tbody>';
+  subs.forEach(sub => {
+    html += '<tr>';
+    fieldLabels.forEach(l => html += `<td>${escapeHtml((sub.answers || {})[l] || '')}</td>`);
+    html += `<td>${new Date(sub.submitted_at).toLocaleString()}</td></tr>`;
+  });
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+
+loadClientList();
+</script>
+</body>
+</html>

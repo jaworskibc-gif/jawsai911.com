@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JAWSAI911 Content Planner</title>
+<style>
+  :root {
+    --navy: #010711; --navy-2: #0B1F33;
+    --cyan: #00B4FF; --teal: #00C4B4; --pink: #E8175D; --amber: #F2C879;
+    --ink: #1a2230; --ink-soft: #5A6472; --foam: #F7FAFB; --line: #E2E6EA;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Liberation Sans', Arial, sans-serif; }
+  body { background: var(--foam); color: var(--ink); }
+
+  .topbar { background: var(--navy); color: white; padding: 14px 22px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  .brand { font-size: 15px; font-weight: 900; }
+  .brand span { color: var(--cyan); }
+  .picker { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .picker select, .picker input { background: var(--navy-2); color: white; border: 1px solid rgba(255,255,255,0.15); padding: 7px 10px; border-radius: 5px; font-size: 12.5px; }
+  .picker button { background: var(--teal); color: var(--navy); border: none; font-weight: 800; padding: 7px 12px; border-radius: 5px; font-size: 12px; cursor: pointer; }
+
+  .wrap { max-width: 900px; margin: 0 auto; padding: 22px; }
+  .status-msg { font-size: 11px; color: var(--ink-soft); margin-bottom: 16px; }
+
+  .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+  .kpi-card { background: white; border: 1px solid var(--line); border-radius: 10px; padding: 14px; text-align:center; }
+  .kpi-num { font-size: 22px; font-weight: 900; color: var(--navy); }
+  .kpi-label { font-size: 10px; color: var(--ink-soft); letter-spacing: 0.4px; margin-top: 3px; }
+
+  .form-card { background: white; border: 1px solid var(--line); border-radius: 10px; padding: 20px; margin-bottom: 20px; }
+  .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .field label { font-size: 11px; font-weight: 700; color: var(--ink-soft); display:block; margin-bottom: 4px; }
+  .field input, .field select, .field textarea { width: 100%; padding: 9px 11px; border: 1px solid var(--line); border-radius: 6px; font-size: 13px; }
+
+  .platform-pill { display:inline-block; font-size: 10.5px; font-weight: 800; padding: 3px 9px; border-radius: 10px; }
+  .platform-instagram { background: #FCE4EC; color: #C2185B; }
+  .platform-tiktok { background: #E0F7FA; color: #00838F; }
+  .platform-facebook { background: #E3F2FD; color: #1565C0; }
+  .platform-google { background: #FFF3E0; color: #E65100; }
+
+  .filter-row { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; align-items:center; }
+  .filter-row select { padding: 7px 10px; border: 1px solid var(--line); border-radius: 5px; font-size: 12px; }
+
+  .day-group { margin-bottom: 18px; }
+  .day-head { font-size: 11.5px; font-weight: 800; color: var(--ink-soft); letter-spacing: 0.4px; margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+  .day-head.overdue { color: var(--pink); }
+  .day-head.today { color: var(--teal); }
+
+  .post-card { background: white; border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+  .post-caption { font-size: 12.5px; color: var(--ink); flex: 1; }
+  .post-meta { display: flex; gap: 6px; align-items: center; margin-top: 6px; flex-wrap: wrap; }
+  .post-actions { display: flex; gap: 6px; flex-shrink: 0; }
+  .post-actions button { background: none; border: 1px solid var(--line); border-radius: 5px; padding: 5px 9px; font-size: 10.5px; font-weight: 700; color: var(--ink-soft); cursor: pointer; }
+  .post-actions button:hover { border-color: var(--cyan); color: var(--cyan); }
+  .status-select { padding: 4px 6px; border: 1px solid var(--line); border-radius: 5px; font-size: 10.5px; }
+  .status-draft { color: var(--ink-soft); }
+  .status-scheduled { color: var(--cyan); }
+  .status-posted { color: #1FA37A; }
+
+  .empty-state { text-align: center; padding: 40px 20px; color: var(--ink-soft); font-size: 13px; }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="brand">JAWS<span>AI</span>911 <span style="font-weight:400;">Content Planner</span></div>
+    <div class="picker">
+      <select id="clientSelect"></select>
+      <input id="newClientName" placeholder="New client name...">
+      <button onclick="createClient()">+ Add Client</button>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="status-msg" id="statusMsg">Loading...</div>
+
+    <div class="kpi-row">
+      <div class="kpi-card"><div class="kpi-num" id="kpiDraft">0</div><div class="kpi-label">DRAFT</div></div>
+      <div class="kpi-card"><div class="kpi-num" id="kpiScheduled">0</div><div class="kpi-label">SCHEDULED</div></div>
+      <div class="kpi-card"><div class="kpi-num" id="kpiPosted">0</div><div class="kpi-label">POSTED</div></div>
+      <div class="kpi-card"><div class="kpi-num" id="kpiOverdue">0</div><div class="kpi-label">OVERDUE</div></div>
+    </div>
+
+    <div class="form-card">
+      <div class="row3">
+        <div class="field"><label>Platform</label>
+          <select id="postPlatform">
+            <option value="instagram">Instagram</option>
+            <option value="tiktok">TikTok</option>
+            <option value="facebook">Facebook</option>
+            <option value="google">Google Business Post</option>
+          </select>
+        </div>
+        <div class="field"><label>Date</label><input id="postDate" type="date"></div>
+        <div class="field"><label>Status</label>
+          <select id="postStatus"><option value="draft">Draft</option><option value="scheduled">Scheduled</option><option value="posted">Posted</option></select>
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:12px;"><label>Caption / Content Idea</label><textarea id="postCaption" rows="2" placeholder="What's the post about..."></textarea></div>
+      <button class="btn" style="background:var(--teal); color:var(--navy); border:none; padding:9px 16px; border-radius:6px; font-weight:800; font-size:12.5px; cursor:pointer;" onclick="addPost()">+ Add to Calendar</button>
+    </div>
+
+    <div class="filter-row">
+      <select id="platformFilter" onchange="renderPosts()">
+        <option value="">All platforms</option>
+        <option value="instagram">Instagram</option>
+        <option value="tiktok">TikTok</option>
+        <option value="facebook">Facebook</option>
+        <option value="google">Google Business Post</option>
+      </select>
+      <select id="statusFilter" onchange="renderPosts()">
+        <option value="">All statuses</option>
+        <option value="draft">Draft</option>
+        <option value="scheduled">Scheduled</option>
+        <option value="posted">Posted</option>
+      </select>
+    </div>
+
+    <div id="postsContainer"></div>
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+const SUPABASE_URL = 'https://owkqfledeuetwwmlvnmb.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93a3FmbGVkZXVldHd3bWx2bm1iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxMzM5MTQsImV4cCI6MjEwMDcwOTkxNH0.lOwjIzs-DyVtvKR8-b1L6RTdlb8iY9_1chgKbY2ml3c';
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let currentClient = null;
+let currentClientId = null;
+let posts = [];
+
+function statusMsg(t) { document.getElementById('statusMsg').textContent = t; }
+function escapeHtml(str) { const d = document.createElement('div'); d.textContent = str || ''; return d.innerHTML; }
+function todayStr() { return new Date().toISOString().slice(0,10); }
+function normalizePost(row) {
+  return {
+    id: row.id,
+    caption: row.caption || '',
+    platform: row.platform || 'instagram',
+    date: row.post_date || todayStr(),
+    status: row.status || 'draft',
+    createdAt: row.created_at || new Date().toISOString()
+  };
+}
+
+const PLATFORM_LABELS = { instagram: 'Instagram', tiktok: 'TikTok', facebook: 'Facebook', google: 'Google Post' };
+
+async function loadClientList() {
+  try {
+    const { data, error } = await supabaseClient.from('clients').select('id, name').order('name');
+    if (error) throw error;
+    const select = document.getElementById('clientSelect');
+    select.innerHTML = '';
+    if (!data || data.length === 0) {
+      select.innerHTML = '<option value="">No clients yet</option>';
+      currentClient = null;
+      currentClientId = null;
+      return;
+    }
+    data.forEach(client => {
+      const opt = document.createElement('option');
+      opt.value = client.id;
+      opt.textContent = client.name;
+      select.appendChild(opt);
+    });
+    const selected = data.find(client => client.id === currentClientId) || data[0];
+    currentClientId = selected.id;
+    currentClient = selected.name;
+    select.value = currentClientId;
+    await loadPosts();
+  } catch (e) {
+    statusMsg('No clients yet — add one to get started.');
+  }
+}
+
+async function createClient() {
+  const input = document.getElementById('newClientName');
+  const name = input.value.trim();
+  if (!name) return;
+  const { data, error } = await supabaseClient.from('clients').insert({ name }).select('id, name').single();
+  if (error) {
+    alert(error.message);
+    return;
+  }
+  input.value = '';
+  currentClientId = data.id;
+  currentClient = data.name;
+  await loadClientList();
+  await loadPosts();
+}
+
+document.getElementById('clientSelect').addEventListener('change', async (e) => {
+  const option = e.target.selectedOptions[0];
+  currentClientId = e.target.value || null;
+  currentClient = option ? option.textContent : null;
+  await loadPosts();
+});
+
+async function loadPosts() {
+  if (!currentClientId) { posts = []; renderPosts(); return; }
+  statusMsg('Content calendar for ' + currentClient + ' — changes save automatically.');
+  try {
+    const { data, error } = await supabaseClient
+      .from('content_posts')
+      .select('*')
+      .eq('client_id', currentClientId)
+      .order('post_date');
+    if (error) throw error;
+    posts = (data || []).map(normalizePost);
+  } catch (e) { posts = []; }
+  document.getElementById('postDate').value = todayStr();
+  renderPosts();
+}
+
+async function addPost() {
+  if (!currentClientId) { alert('Add a client first.'); return; }
+  const caption = document.getElementById('postCaption').value.trim();
+  if (!caption) { alert('Add a caption or content idea first.'); return; }
+  const platform = document.getElementById('postPlatform').value;
+  const date = document.getElementById('postDate').value || todayStr();
+  const status = document.getElementById('postStatus').value;
+
+  const { error } = await supabaseClient.from('content_posts').insert({
+    client_id: currentClientId,
+    platform,
+    caption,
+    post_date: date,
+    status
+  });
+  if (error) {
+    alert(error.message);
+    return;
+  }
+  await loadPosts();
+  document.getElementById('postCaption').value = '';
+  renderPosts();
+}
+
+async function updatePostStatus(id, status) {
+  const { error } = await supabaseClient.from('content_posts').update({ status }).eq('id', id);
+  if (error) {
+    alert(error.message);
+    return;
+  }
+  await loadPosts();
+  renderPosts();
+}
+
+async function deletePost(id) {
+  const { error } = await supabaseClient.from('content_posts').delete().eq('id', id);
+  if (error) {
+    alert(error.message);
+    return;
+  }
+  await loadPosts();
+  renderPosts();
+}
+
+function renderPosts() {
+  const container = document.getElementById('postsContainer');
+  const platformFilter = document.getElementById('platformFilter').value;
+  const statusFilterVal = document.getElementById('statusFilter').value;
+
+  document.getElementById('kpiDraft').textContent = posts.filter(p => p.status === 'draft').length;
+  document.getElementById('kpiScheduled').textContent = posts.filter(p => p.status === 'scheduled').length;
+  document.getElementById('kpiPosted').textContent = posts.filter(p => p.status === 'posted').length;
+  const today = todayStr();
+  document.getElementById('kpiOverdue').textContent = posts.filter(p => p.status !== 'posted' && p.date < today).length;
+
+  let filtered = posts.slice();
+  if (platformFilter) filtered = filtered.filter(p => p.platform === platformFilter);
+  if (statusFilterVal) filtered = filtered.filter(p => p.status === statusFilterVal);
+
+  if (!currentClient || filtered.length === 0) {
+    container.innerHTML = '<div class="empty-state">No posts planned yet. Add one above to start building the calendar.</div>';
+    return;
+  }
+
+  filtered.sort((a, b) => a.date.localeCompare(b.date));
+
+  const groups = {};
+  filtered.forEach(p => {
+    if (!groups[p.date]) groups[p.date] = [];
+    groups[p.date].push(p);
+  });
+
+  let html = '';
+  Object.keys(groups).sort().forEach(date => {
+    let headClass = '';
+    let headLabel = date;
+    if (date < today) { headClass = 'overdue'; headLabel = date + ' — OVERDUE'; }
+    else if (date === today) { headClass = 'today'; headLabel = date + ' — TODAY'; }
+
+    html += `<div class="day-group"><div class="day-head ${headClass}">${headLabel}</div>`;
+    groups[date].forEach(p => {
+      html += `<div class="post-card">
+        <div style="flex:1;">
+          <div class="post-caption">${escapeHtml(p.caption)}</div>
+          <div class="post-meta">
+            <span class="platform-pill platform-${p.platform}">${PLATFORM_LABELS[p.platform] || p.platform}</span>
+            <select class="status-select status-${p.status}" onchange="updatePostStatus('${p.id}', this.value)">
+              <option value="draft" ${p.status==='draft'?'selected':''}>Draft</option>
+              <option value="scheduled" ${p.status==='scheduled'?'selected':''}>Scheduled</option>
+              <option value="posted" ${p.status==='posted'?'selected':''}>Posted</option>
+            </select>
+          </div>
+        </div>
+        <div class="post-actions"><button onclick="deletePost('${p.id}')">Delete</button></div>
+      </div>`;
+    });
+    html += `</div>`;
+  });
+
+  container.innerHTML = html;
+}
+
+loadClientList();
+</script>
+</body>
+</html>
