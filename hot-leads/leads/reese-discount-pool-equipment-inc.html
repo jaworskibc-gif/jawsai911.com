@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reese Discount Pool Equipment Inc. | Pool Equipment Concept Site</title>
+<meta name="description" content="Concept homepage for Reese Discount Pool Equipment Inc. in Pompano Beach, FL. Includes review proof, service area, and call-first conversion layout.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+*{box-sizing:border-box}
+:root {
+  --ink:#0c1824;
+  --deep:#112536;
+  --mist:#edf5fb;
+  --panel:#ffffff;
+  --line:#d8e6f0;
+  --sky:#1196db;
+  --teal:#11b8a6;
+  --sun:#ffcb55;
+  --text:#153046;
+  --muted:#5f7890;
+  --shadow:0 18px 50px rgba(17,37,54,.12);
+}
+body {
+  margin:0;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(17,184,166,.12), transparent 26%),
+    linear-gradient(180deg, #f5fbff 0%, #edf5fb 100%);
+  color:var(--text);
+}
+.page {
+  max-width:1260px;
+  margin:0 auto;
+  padding:24px;
+}
+.topbar {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  margin-bottom:18px;
+}
+.brand {
+  font:800 24px/1 'Barlow Condensed',sans-serif;
+  letter-spacing:1.6px;
+  color:var(--deep);
+  text-transform:uppercase;
+}
+.brand span { color:var(--sky); }
+.meta-badges {
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.meta-badges span {
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:10px 14px;
+  font-size:12px;
+  font-weight:700;
+  color:var(--muted);
+}
+.hero {
+  display:grid;
+  grid-template-columns:1.25fr .75fr;
+  gap:18px;
+  align-items:stretch;
+}
+.hero-main, .hero-side, .section, .prep {
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:24px;
+  box-shadow:var(--shadow);
+}
+.hero-main {
+  padding:34px;
+  background:
+    linear-gradient(135deg, rgba(17,37,54,.98) 0%, rgba(18,54,78,.95) 60%, rgba(17,150,219,.93) 100%);
+  color:#fff;
+  position:relative;
+  overflow:hidden;
+}
+.eyebrow {
+  display:inline-block;
+  margin-bottom:14px;
+  padding:8px 12px;
+  border-radius:999px;
+  background:rgba(255,255,255,.12);
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+}
+h1 {
+  margin:0 0 12px;
+  font:800 clamp(48px, 6vw, 88px)/.9 'Barlow Condensed',sans-serif;
+  letter-spacing:.4px;
+  text-transform:uppercase;
+}
+.hero-sub {
+  max-width:700px;
+  font-size:18px;
+  line-height:1.75;
+  color:rgba(255,255,255,.9);
+}
+.hero-proof {
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin:24px 0 18px;
+}
+.proof-pill {
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:16px;
+  padding:14px 16px;
+  min-width:155px;
+}
+.proof-k {
+  font:800 34px/1 'Barlow Condensed',sans-serif;
+  color:#fff;
+}
+.proof-l {
+  margin-top:4px;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:1.4px;
+  color:rgba(255,255,255,.7);
+}
+.chip-row {
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:18px;
+}
+.chip {
+  border-radius:999px;
+  padding:10px 14px;
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.16);
+  font-size:12px;
+  font-weight:700;
+}
+.hero-side {
+  padding:24px;
+  display:grid;
+  gap:14px;
+  align-content:start;
+}
+.side-card {
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:18px;
+  background:linear-gradient(180deg, #ffffff 0%, #f7fbfe 100%);
+}
+.side-label {
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:8px;
+}
+.phone {
+  display:inline-block;
+  text-decoration:none;
+  color:var(--deep);
+  font:800 40px/1 'Barlow Condensed',sans-serif;
+}
+.rating-line {
+  font-size:15px;
+  color:var(--text);
+  font-weight:700;
+}
+.rating-line .stars { color:#f5b301; }
+.split {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+  margin-top:18px;
+}
+.section {
+  padding:26px;
+}
+.section-title {
+  margin:0 0 10px;
+  font:800 34px/1 'Barlow Condensed',sans-serif;
+  color:var(--deep);
+  text-transform:uppercase;
+}
+.section-copy {
+  margin:0;
+  color:var(--muted);
+  line-height:1.8;
+  font-size:15px;
+}
+.service-grid, .review-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  margin-top:18px;
+}
+.service-card, .review-card {
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:18px;
+  background:#fff;
+}
+.service-card h3 {
+  margin:0 0 8px;
+  font-size:17px;
+  color:var(--deep);
+}
+.service-card p {
+  margin:0;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.75;
+}
+.review-top {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:10px;
+}
+.review-stars {
+  color:#f5b301;
+  letter-spacing:2px;
+}
+.review-label {
+  font-size:11px;
+  font-weight:800;
+  color:var(--muted);
+  text-transform:uppercase;
+}
+.review-quote {
+  margin:0 0 14px;
+  color:var(--text);
+  line-height:1.8;
+  min-height:114px;
+  outline:none;
+}
+.review-author {
+  font-size:13px;
+  font-weight:800;
+  color:var(--deep);
+  outline:none;
+}
+.prep {
+  margin-top:18px;
+  padding:22px;
+}
+.prep-grid {
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:18px;
+}
+.prep-card {
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:18px;
+  background:#fff;
+}
+.prep-card h3 {
+  margin:0 0 12px;
+  font-size:14px;
+  letter-spacing:1.4px;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+.prep-card p, .prep-card li {
+  margin:0;
+  color:var(--text);
+  line-height:1.75;
+  font-size:14px;
+}
+.prep-card ul {
+  margin:0;
+  padding-left:18px;
+}
+.footer {
+  margin-top:16px;
+  text-align:center;
+  color:var(--muted);
+  font-size:12px;
+}
+[contenteditable="true"] {
+  transition:background-color .2s ease, box-shadow .2s ease;
+}
+[contenteditable="true"]:focus {
+  background:#fff9e5;
+  box-shadow:0 0 0 2px rgba(255,203,85,.5);
+  border-radius:8px;
+}
+@media (max-width: 980px) {
+  .hero, .split, .prep-grid, .service-grid, .review-grid {
+    grid-template-columns:1fr;
+  }
+  .page { padding:14px; }
+  .hero-main, .hero-side, .section, .prep { border-radius:18px; }
+}
+</style>
+</head>
+<body>
+  <div class="page">
+    <div class="topbar">
+      <div class="brand">Pool Lead <span>Mockup</span></div>
+      <div class="meta-badges">
+        <span>Rank #19</span>
+        <span>Tier B</span>
+        <span>Pompano Beach, FL</span>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="hero-main">
+        <div class="eyebrow">Pool Equipment concept page</div>
+        <h1>Reese Discount Pool Equipment Inc.</h1>
+        <p class="hero-sub">Equipment help, upgrades, replacements, and homeowner guidance for pool systems that need attention. Equipment buyers often compare quickly. A site gives them a reason to call instead of keep searching.</p>
+        <div class="hero-proof">
+          <div class="proof-pill">
+            <div class="proof-k">4.9</div>
+            <div class="proof-l">Google Rating</div>
+          </div>
+          <div class="proof-pill">
+            <div class="proof-k">35</div>
+            <div class="proof-l">Google Reviews</div>
+          </div>
+          <div class="proof-pill">
+            <div class="proof-k">Pompano Beach</div>
+            <div class="proof-l">Primary City</div>
+          </div>
+        </div>
+        <div class="chip-row"><span class="chip">Equipment replacement</span><span class="chip">System troubleshooting</span><span class="chip">Parts and upgrade guidance</span></div>
+      </div>
+
+      <aside class="hero-side">
+        <div class="side-card">
+          <div class="side-label">Call now</div>
+          <a class="phone" href="tel:(954) 918-2202">(954) 918-2202</a>
+          <div class="rating-line"><span class="stars">★★★★★</span> 4.9 stars • 35 Google reviews</div>
+        </div>
+        <div class="side-card">
+          <div class="side-label">Service area</div>
+          <div>Pompano Beach, FL and nearby homeowners looking for pool help without the usual runaround.</div>
+        </div>
+        <div class="side-card">
+          <div class="side-label">Fast quote path</div>
+          <div>Clear phone CTA, visible review proof, homeowner-first copy, and a cleaner first impression than a directory listing alone.</div>
+        </div>
+      </aside>
+    </section>
+
+    <div class="split">
+      <section class="section">
+        <h2 class="section-title">Why homeowners call Reese</h2>
+        <p class="section-copy">This concept page gives the business a stronger trust layer before the prospect ever taps the number. Instead of a thin listing, homeowners see review proof, service clarity, and a direct conversion path immediately.</p>
+        <div class="service-grid">
+          <article class="service-card">
+            <h3>Trust up front</h3>
+            <p>Real rating and review count shown in the hero so visitors know they are calling a proven local company.</p>
+          </article>
+          <article class="service-card">
+            <h3>Cleaner mobile conversion</h3>
+            <p>One obvious phone CTA, short service explanation, and no friction between interest and contact.</p>
+          </article>
+          <article class="service-card">
+            <h3>Better first impression</h3>
+            <p>A real website gives the business more authority than a listing profile by itself, especially in a local service category.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2 class="section-title">What customers already say</h2>
+        <p class="section-copy">These blocks are editable. Paste in actual Google review snippets before the Loom or during call prep so the page reflects the business more specifically.</p>
+        <div class="review-grid">
+          
+            <article class="review-card">
+              <div class="review-top">
+                <span class="review-stars">★★★★★</span>
+                <span class="review-label">Editable review #1</span>
+              </div>
+              <p class="review-quote" contenteditable="true">Paste a real 5-star review snippet for Reese Discount Pool Equipment Inc. here before the call.</p>
+              <div class="review-author" contenteditable="true">Customer name or initials</div>
+            </article>
+            
+            <article class="review-card">
+              <div class="review-top">
+                <span class="review-stars">★★★★★</span>
+                <span class="review-label">Editable review #2</span>
+              </div>
+              <p class="review-quote" contenteditable="true">Paste a real 5-star review snippet for Reese Discount Pool Equipment Inc. here before the call.</p>
+              <div class="review-author" contenteditable="true">Customer name or initials</div>
+            </article>
+            
+            <article class="review-card">
+              <div class="review-top">
+                <span class="review-stars">★★★★★</span>
+                <span class="review-label">Editable review #3</span>
+              </div>
+              <p class="review-quote" contenteditable="true">Paste a real 5-star review snippet for Reese Discount Pool Equipment Inc. here before the call.</p>
+              <div class="review-author" contenteditable="true">Customer name or initials</div>
+            </article>
+            
+        </div>
+      </section>
+    </div>
+
+    <section class="prep">
+      <div class="prep-grid">
+        <div class="prep-card">
+          <h3>Loom / Call Notes</h3>
+          <ul>
+            <li>Lead angle: 35 Google reviews, 4.9 rating, no website listed; strong &#x27;you&#x27;re already trusted, the site should reflect that&#x27; pitch</li>
+            <li>Call opening: Bryan here — I texted over a 60-second video earlier about Reese Discount Pool Equipment Inc.. Did you get a chance to see it?</li>
+            <li>Text line: Hey Reese Discount Pool Equipment Inc. — Bryan here. Made you a quick 60-second video on how your Google reviews could be turned into a simple site: [Loom link]</li>
+            <li>Prep note: Use 45-90 second Loom with review count, service area, phone CTA, and one specific local observation.</li>
+          </ul>
+        </div>
+        <div class="prep-card">
+          <h3>Directory Source</h3>
+          <p>Source profile: <a href="https://verifiedpoolpros.com/listing/reese-discount-pool-equipment-inc-pompano-beach-fl">https://verifiedpoolpros.com/listing/reese-discount-pool-equipment-inc-pompano-beach-fl</a></p>
+          <p style="margin-top:12px;">Local file: <code>/home/shark/jawsai911-site-fixed/pool-hot-leads/leads/reese-discount-pool-equipment-inc.html</code></p>
+          <p style="margin-top:12px;">Use this as a concept page for Loom. Paste 2-3 real reviews, mention the review count by name, and show how the business could look with a proper site.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">Concept site prepared July 27, 2026 by JAWSAI911 for outreach use.</div>
+  </div>
+</body>
+</html>
