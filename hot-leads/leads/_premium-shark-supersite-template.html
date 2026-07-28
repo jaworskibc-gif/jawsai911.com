@@ -10,20 +10,20 @@ Clone workflow:
 5. Do not downgrade the visual treatment into a generic contractor site.
 
 Minimum replacements before sending:
-- Blue Mirror Pools / Brighton Pools by Costa
-- (561) 377-7734 / 5613777734
-- Port St Lucie / FL
-- 4.9 / 74
-- 74 reviews at 4.9 and no website. 30-sec SuperSite demo for Blue Mirror / Brighton. / Hey, this is Bryan with JAWSAI. Blue Mirror and Brighton are sitting at 4.9 with 74 reviews. Good reputation, nothing converting it online. I built a quick demo - reviews up front, after-hours lead capture, follow-up so quotes don&#x27;t go cold. 30 seconds.
-- Very good experience, very knowledgeable and efficient. / Upfront, honest, easy to work with. / Anthony is amazing. He is very responsive to requests and takes great pride in his work.
-- https://verifiedpoolpros.com/listing/blue-mirror-pools-inc-port-st-lucie-fl / https://bluemirrorpools.com/
+- {{BUSINESS_NAME}}
+- {{PHONE_DISPLAY}} / {{PHONE_DIGITS}}
+- {{CITY}} / {{STATE}}
+- {{RATING}} / {{REVIEW_COUNT}}
+- {{TEXT_LINE}} / {{CALL_SCRIPT}}
+- {{REVIEW_QUOTE_1}} / {{REVIEW_QUOTE_2}} / {{REVIEW_QUOTE_3}}
+- {{SOURCE_URL_1}} / {{SOURCE_URL_2}}
 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Blue Mirror Pools / Brighton Pools by Costa | Shark SuperSite Demo</title>
-<meta name="description" content="Premium Shark SuperSite demo for Blue Mirror Pools / Brighton Pools by Costa in Port St Lucie, FL. Swap in business details, reviews, and images for outreach videos.">
+<title>{{BUSINESS_NAME}} | Shark SuperSite Demo</title>
+<meta name="description" content="Premium Shark SuperSite demo for {{BUSINESS_NAME}} in {{CITY}}, {{STATE}}. Swap in business details, reviews, and images for outreach videos.">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
 *{box-sizing:border-box}
@@ -60,7 +60,7 @@ a{color:inherit}
   min-height:96vh;
   background:
     linear-gradient(90deg, rgba(5,10,17,.88) 0%, rgba(5,10,17,.72) 34%, rgba(5,10,17,.34) 62%, rgba(5,10,17,.52) 100%),
-    url("https://static.wixstatic.com/media/5783dd_d08ab5779bb94aa8a1ef267797fbb98d~mv2.jpg/v1/fill/w_980,h_653,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/5783dd_d08ab5779bb94aa8a1ef267797fbb98d~mv2.jpg") center/cover no-repeat;
+    url("{{HERO_IMAGE_URL}}") center/cover no-repeat;
 }
 .hero::after{
   content:"";
@@ -222,7 +222,7 @@ h1{
   min-height:560px;
   background:
     linear-gradient(180deg, rgba(7,12,20,.08), rgba(7,12,20,.45)),
-    url("https://static.wixstatic.com/media/5783dd_6833d145d1a9490f89e8489f6a9d510cf000.jpg/v1/fill/w_300,h_534,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/5783dd_6833d145d1a9490f89e8489f6a9d510cf000.jpg") center/cover no-repeat;
+    url("{{GALLERY_IMAGE_1}}") center/cover no-repeat;
   position:relative;
 }
 .gallery-main .caption{
@@ -243,8 +243,8 @@ h1{
 .gallery-main .caption span{color:#d6e0ea;font-size:14px;line-height:1.7}
 .gallery-side{display:grid;gap:18px}
 .gallery-tile{min-height:271px}
-.gallery-tile.tile-a{background:url("https://static.wixstatic.com/media/5783dd_3789615726494420879f9d2fc15d2adff000.jpg/v1/fill/w_300,h_534,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/5783dd_3789615726494420879f9d2fc15d2adff000.jpg") center/cover no-repeat}
-.gallery-tile.tile-b{background:url("https://static.wixstatic.com/media/939ab2_52a156cf9bbe47f293f906b291a602dff000.jpg/v1/fill/w_300,h_534,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/939ab2_52a156cf9bbe47f293f906b291a602dff000.jpg") center/cover no-repeat}
+.gallery-tile.tile-a{background:url("{{GALLERY_IMAGE_2}}") center/cover no-repeat}
+.gallery-tile.tile-b{background:url("{{GALLERY_IMAGE_3}}") center/cover no-repeat}
 .why-grid,.process,.review-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -372,64 +372,64 @@ h1{
       <section class="hero">
         <div class="topbar">
           <div class="mark">
-            <div class="crest">BM</div>
+            <div class="crest">{{INITIALS}}</div>
             <div class="mark-copy">
               <small>Shark SuperSite Demo</small>
-              <strong>Blue Mirror Pools / Brighton Pools by Costa</strong>
+              <strong>{{BUSINESS_NAME}}</strong>
             </div>
           </div>
           <div class="phone-rail">
             <div>
               <small>Call The Business</small>
-              <a href="tel:5613777734">(561) 377-7734</a>
+              <a href="tel:{{PHONE_DIGITS}}">{{PHONE_DISPLAY}}</a>
             </div>
             <div>
-              <small>Port St Lucie, FL</small>
+              <small>{{CITY}}, {{STATE}}</small>
             </div>
           </div>
         </div>
 
         <div class="hero-grid">
           <div class="hero-copy">
-            <div class="eyebrow">Luxury Backyard Demo</div>
-            <h1>Design the backyard they already <span>deserve.</span></h1>
-            <p class="hero-sub">This is the text-message demo version: premium look, visible trust, and a clean path to quote. Instead of a thin listing, homeowners land on a site that feels established, expensive, and ready to book.</p>
+            <div class="eyebrow">{{EYEBROW}}</div>
+            <h1>{{HEADLINE_LINE_1}} <span>{{HEADLINE_LINE_2}}</span></h1>
+            <p class="hero-sub">{{HERO_SUBTEXT}}</p>
             <div class="stat-row">
               <div class="stat-chip">
-                <strong>4.9</strong>
+                <strong>{{RATING}}</strong>
                 <div class="stat-label">Google Rating</div>
               </div>
               <div class="stat-chip">
-                <strong>74</strong>
+                <strong>{{REVIEW_COUNT}}</strong>
                 <div class="stat-label">Google Reviews</div>
               </div>
               <div class="stat-chip">
-                <strong>10+</strong>
-                <div class="stat-label">Years In Trade</div>
+                <strong>{{TRUST_STAT}}</strong>
+                <div class="stat-label">{{TRUST_LABEL}}</div>
               </div>
             </div>
             <div class="hero-actions">
-              <a class="primary" href="tel:5613777734">Call Now</a>
-              <a class="secondary" href="https://bluemirrorpools.com/">See Live Business</a>
+              <a class="primary" href="tel:{{PHONE_DIGITS}}">Call Now</a>
+              <a class="secondary" href="{{WEBSITE_URL}}">See Live Business</a>
             </div>
           </div>
 
           <aside class="pitch-card">
             <div class="review-kicker">Video Talking Points</div>
-            <h2>74 reviews. 4.9 stars. No luxury front door.</h2>
-            <p>Lead with the proof they already earned, then show how the same reputation could be packaged into something that feels like a real design-build brand instead of another contractor listing.</p>
+            <h2>{{PITCH_HEADLINE}}</h2>
+            <p>{{PITCH_BODY}}</p>
             <div class="info-stack">
               <div class="info-box">
                 <strong>Text Line</strong>
-                <span>74 reviews at 4.9 and no website. 30-sec SuperSite demo for Blue Mirror / Brighton.</span>
+                <span>{{TEXT_LINE}}</span>
               </div>
               <div class="info-box">
                 <strong>Call Script</strong>
-                <span>Hey, this is Bryan with JAWSAI. Blue Mirror and Brighton are sitting at 4.9 with 74 reviews. Good reputation, nothing converting it online. I built a quick demo - reviews up front, after-hours lead capture, follow-up so quotes don&#x27;t go cold. 30 seconds.</span>
+                <span>{{CALL_SCRIPT}}</span>
               </div>
               <div class="info-box">
                 <strong>Source</strong>
-                <span><a href="https://verifiedpoolpros.com/listing/blue-mirror-pools-inc-port-st-lucie-fl">Verified Pool Pros</a> and <a href="https://bluemirrorpools.com/">Blue Mirror Pools</a></span>
+                <span><a href="{{SOURCE_URL_1}}">{{SOURCE_LABEL_1}}</a> and <a href="{{SOURCE_URL_2}}">{{SOURCE_LABEL_2}}</a></span>
               </div>
             </div>
           </aside>
@@ -438,14 +438,14 @@ h1{
 
       <section class="content">
         <div class="section-label">Portfolio Feel</div>
-        <h2 class="section-title">Show them a site that feels premium before they ever pick up.</h2>
-        <p class="section-copy">Liquid Luxe works because it sells aspiration, not just service. This demo follows that same idea: strong hero image, elegant type, review proof, and a quote path that feels more like a luxury brand than a local directory page.</p>
+        <h2 class="section-title">{{SECTION_TITLE}}</h2>
+        <p class="section-copy">{{SECTION_COPY}}</p>
 
         <div class="gallery">
           <div class="gallery-main">
             <div class="caption">
-              <strong>Luxury pool positioning, not commodity contractor energy.</strong>
-              <span>Use the Loom to frame this as a concept: better first impression, stronger trust, and a cleaner way to convert quote traffic that currently dies after hours.</span>
+              <strong>{{GALLERY_CAPTION_TITLE}}</strong>
+              <span>{{GALLERY_CAPTION_BODY}}</span>
             </div>
           </div>
           <div class="gallery-side">
@@ -456,16 +456,16 @@ h1{
 
         <div class="why-grid">
           <article class="why-card">
-            <strong>Reviews up front</strong>
-            <p>The rating and review count are in the hero immediately so a homeowner sees trust before they start comparing quotes.</p>
+            <strong>{{WHY_TITLE_1}}</strong>
+            <p>{{WHY_BODY_1}}</p>
           </article>
           <article class="why-card">
-            <strong>After-hours capture</strong>
-            <p>The pitch is not just aesthetics. It is a digital front door that catches nighttime demand and moves it into follow-up instead of losing it.</p>
+            <strong>{{WHY_TITLE_2}}</strong>
+            <p>{{WHY_BODY_2}}</p>
           </article>
           <article class="why-card">
-            <strong>Luxury brand framing</strong>
-            <p>The whole page positions the company as a design-driven backyard builder, which is a better pricing conversation than looking like a generic service listing.</p>
+            <strong>{{WHY_TITLE_3}}</strong>
+            <p>{{WHY_BODY_3}}</p>
           </article>
         </div>
 
@@ -476,21 +476,21 @@ h1{
           <div class="review-grid">
             <article class="review-card">
               <div class="stars">★★★★★</div>
-              <blockquote>Very good experience, very knowledgeable and efficient.</blockquote>
-              <cite>Robert M.</cite>
-              <small>Review excerpt surfaced via Angi for Blue Mirror Pools.</small>
+              <blockquote>{{REVIEW_QUOTE_1}}</blockquote>
+              <cite>{{REVIEW_AUTHOR_1}}</cite>
+              <small>{{REVIEW_SOURCE_1}}</small>
             </article>
             <article class="review-card">
               <div class="stars">★★★★★</div>
-              <blockquote>Upfront, honest, easy to work with.</blockquote>
-              <cite>Ted M.</cite>
-              <small>Review excerpt surfaced via Angi for Blue Mirror Pools.</small>
+              <blockquote>{{REVIEW_QUOTE_2}}</blockquote>
+              <cite>{{REVIEW_AUTHOR_2}}</cite>
+              <small>{{REVIEW_SOURCE_2}}</small>
             </article>
             <article class="review-card">
               <div class="stars">★★★★★</div>
-              <blockquote>Anthony is amazing. He is very responsive to requests and takes great pride in his work.</blockquote>
-              <cite>Steve Bellefontaine</cite>
-              <small>Review excerpt surfaced on the Blue Mirror Pools site.</small>
+              <blockquote>{{REVIEW_QUOTE_3}}</blockquote>
+              <cite>{{REVIEW_AUTHOR_3}}</cite>
+              <small>{{REVIEW_SOURCE_3}}</small>
             </article>
           </div>
         </div>
@@ -499,40 +499,40 @@ h1{
           <article class="process-card">
             <div class="step">01</div>
             <strong>Text the demo</strong>
-            <p>Send this page link with the short line. Let the page do the heavy lifting before the call even starts.</p>
+            <p>{{PROCESS_BODY_1}}</p>
           </article>
           <article class="process-card">
             <div class="step">02</div>
             <strong>Record the Loom</strong>
-            <p>Walk the hero, the review proof, and the quote path in under a minute. Focus on what this changes for after-hours leads and trust.</p>
+            <p>{{PROCESS_BODY_2}}</p>
           </article>
           <article class="process-card">
             <div class="step">03</div>
             <strong>Close on positioning</strong>
-            <p>The pitch is simple: the business already earned the reputation. The site should finally look like it.</p>
+            <p>{{PROCESS_BODY_3}}</p>
           </article>
         </div>
 
         <div class="cta">
           <div>
-            <h3>This is the template to clone.</h3>
-            <p>Keep the layout, keep the premium pool photography, and just swap business name, phone, city, and review proof. That is stronger than sending twenty thin pages that all feel disposable.</p>
+            <h3>{{CTA_TITLE}}</h3>
+            <p>{{CTA_BODY}}</p>
           </div>
-          <a href="tel:5613777734">Call (561) 377-7734</a>
+          <a href="tel:{{PHONE_DIGITS}}">Call {{PHONE_DISPLAY}}</a>
         </div>
 
         <div class="operator-notes">
           <h4>Operator Notes</h4>
           <ul>
-            <li>Primary source page: <a href="https://verifiedpoolpros.com/listing/blue-mirror-pools-inc-port-st-lucie-fl">https://verifiedpoolpros.com/listing/blue-mirror-pools-inc-port-st-lucie-fl</a></li>
-            <li>Secondary source page: <a href="https://bluemirrorpools.com/">https://bluemirrorpools.com/</a></li>
-            <li>Logo/photo source: Use generic premium pool imagery by default. Swap to business-specific Google profile photos only when they are strong enough to help.</li>
-            <li>Best Loom angle: Lead with premium positioning, review proof, and after-hours conversion instead of talking about a generic website redesign.</li>
-            <li>Optional live website link: https://bluemirrorpools.com/</li>
+            <li>Primary source page: <a href="{{SOURCE_URL_1}}">{{SOURCE_URL_1}}</a></li>
+            <li>Secondary source page: <a href="{{SOURCE_URL_2}}">{{SOURCE_URL_2}}</a></li>
+            <li>Logo/photo source: {{PHOTO_SOURCE_NOTE}}</li>
+            <li>Best Loom angle: {{LOOM_ANGLE}}</li>
+            <li>Optional live website link: {{WEBSITE_URL}}</li>
           </ul>
         </div>
 
-        <div class="footer-note">Reference direction: Liquid Luxe hero and luxury-pool positioning. Review excerpts sourced from Angi and the Blue Mirror Pools website on July 28, 2026.</div>
+        <div class="footer-note">{{FOOTER_NOTE}}</div>
       </section>
     </div>
   </div>
