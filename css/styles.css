@@ -8,7 +8,9 @@
   --accent-2: #0077cc;
   --text: #e8eef7;
   --text-muted: #94a3b8;
-  --border: #1e293b;
+  --border: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.22);
+  --panel-glow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
   --success: #22c55e;
   --radius: 12px;
   --font: Inter, system-ui, -apple-system, sans-serif;
@@ -33,6 +35,7 @@ a:hover { color: #5cc8ff; }
   background: rgba(10, 14, 23, 0.92);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
+  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.04);
 }
 .header-inner {
   display: flex; align-items: center; justify-content: space-between; height: 72px;
@@ -92,6 +95,7 @@ a:hover { color: #5cc8ff; }
   display: inline-block; padding: 6px 14px; background: var(--bg-elevated);
   border: 1px solid var(--border); border-radius: 100px; font-size: 0.85rem;
   color: var(--accent); margin-bottom: 24px; letter-spacing: 0.03em;
+  box-shadow: var(--panel-glow);
 }
 .hero h1 {
   font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 800; line-height: 1.15;
@@ -129,6 +133,7 @@ section { padding: 80px 0; }
   background: var(--bg-card);
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), inset 0 -1px 0 rgba(255,255,255,0.03);
 }
 
 .card-grid {
@@ -136,11 +141,12 @@ section { padding: 80px 0; }
 }
 .card {
   background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
-  padding: 28px; transition: border-color 0.2s, transform 0.2s;
+  padding: 28px; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  box-shadow: var(--panel-glow);
 }
-.card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.card:hover { border-color: rgba(255, 255, 255, 0.3); transform: translateY(-2px); box-shadow: var(--panel-glow), 0 12px 30px rgba(0,0,0,0.18); }
 .card-icon {
-  width: 48px; height: 48px; background: var(--bg-elevated); border-radius: 10px;
+  width: 48px; height: 48px; background: var(--bg-elevated); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px;
   display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 18px;
 }
 .card h3 { font-size: 1.15rem; margin-bottom: 10px; }
@@ -152,15 +158,15 @@ section { padding: 80px 0; }
 @media (max-width: 700px) { .stack-visual { grid-template-columns: 1fr; } }
 .stack-layer {
   background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
-  padding: 32px; position: relative;
+  padding: 32px; position: relative; box-shadow: var(--panel-glow);
 }
 .stack-layer.front {
-  border-color: var(--accent); box-shadow: 0 0 40px var(--accent-glow);
+  border-color: rgba(255, 255, 255, 0.28); box-shadow: var(--panel-glow), 0 0 40px var(--accent-glow);
 }
 .stack-label {
   position: absolute; top: -12px; left: 20px; background: var(--bg-dark);
   padding: 4px 12px; font-size: 0.75rem; font-weight: 700; color: var(--accent);
-  border: 1px solid var(--border); border-radius: 6px; letter-spacing: 0.05em;
+  border: 1px solid var(--border-strong); border-radius: 6px; letter-spacing: 0.05em;
 }
 .stack-layer h3 { margin-bottom: 12px; font-size: 1.3rem; }
 .stack-copy { color: var(--text-muted); font-size: 0.95rem; }
@@ -175,9 +181,9 @@ section { padding: 80px 0; }
 .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 @media (max-width: 700px) { .compare { grid-template-columns: 1fr; } }
 .compare-box {
-  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px;
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; box-shadow: var(--panel-glow);
 }
-.compare-box.good { border-color: var(--accent); }
+.compare-box.good { border-color: rgba(255, 255, 255, 0.28); }
 .compare-box h3 { margin-bottom: 16px; font-size: 1.1rem; }
 .compare-box ul { list-style: none; }
 .compare-box li { padding: 8px 0; color: var(--text-muted); font-size: 0.95rem; }
@@ -255,6 +261,7 @@ section { padding: 80px 0; }
   background: linear-gradient(135deg, #0c1929 0%, #111827 100%);
   border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
   text-align: center; padding: 64px 0;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), inset 0 -1px 0 rgba(255,255,255,0.03);
 }
 .cta-band h2 { font-size: 1.8rem; margin-bottom: 12px; }
 .cta-band p { color: var(--text-muted); margin-bottom: 28px; }
@@ -304,7 +311,7 @@ section { padding: 80px 0; }
 .portal-modal.open { display: flex; }
 .portal-box {
   background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
-  padding: 32px; width: 100%; max-width: 380px; text-align: center;
+  padding: 32px; width: 100%; max-width: 380px; text-align: center; box-shadow: var(--panel-glow), 0 20px 60px rgba(0,0,0,0.35);
 }
 .portal-box h3 { margin-bottom: 8px; }
 .portal-box p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; }
@@ -364,10 +371,11 @@ section { padding: 80px 0; }
 
 .bp-card {
   background: #0f172a;
-  border: 1px solid #1e293b;
+  border: 1px solid rgba(255,255,255,0.12);
   border-radius: 10px;
   padding: 18px 14px;
   text-align: center;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
 }
 
 .bp-card.compact { padding: 14px 10px; }
@@ -405,10 +413,11 @@ section { padding: 80px 0; }
 
 .bp-stat {
   background: #0f172a;
-  border: 1px solid #1e293b;
+  border: 1px solid rgba(255,255,255,0.12);
   border-radius: 10px;
   padding: 20px 12px;
   text-align: center;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
 }
 
 .stat-num {
@@ -448,12 +457,13 @@ section { padding: 80px 0; }
 
 .compliance-screen {
   background: #0f172a;
-  border: 1px solid #1e293b;
+  border: 1px solid rgba(255,255,255,0.12);
   border-radius: 12px;
   overflow: hidden;
   position: relative;
   min-height: 220px;
   transition: background 0.4s, border-color 0.4s;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
 }
 
 .compliance-screen.locked {
@@ -563,6 +573,7 @@ section { padding: 80px 0; }
 
 .growth-price-card {
   background: #fff;
+  border: 1px solid rgba(255,255,255,0.35);
   border-radius: 14px;
   overflow: hidden;
   display: flex;
