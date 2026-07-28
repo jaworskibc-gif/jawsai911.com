@@ -317,3 +317,220 @@ section { padding: 80px 0; }
 }
 .portal-actions { display: flex; gap: 12px; justify-content: center; }
 
+/* Dealership Blueprint */
+.blueprint-section {
+  background: var(--bg-dark, #0a0e17);
+  padding: 80px 0;
+  border-top: 1px solid var(--border, #1e293b);
+}
+
+.bp-block { margin-bottom: 40px; }
+
+.bp-header {
+  background: #0f172a;
+  color: #e2e8f0;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  padding: 12px 18px;
+  border-radius: 8px 8px 0 0;
+  margin-bottom: 0;
+}
+
+.bp-grid {
+  display: grid;
+  gap: 12px;
+  background: #111827;
+  padding: 16px;
+  border-radius: 0 0 10px 10px;
+  border: 1px solid #1e293b;
+  border-top: none;
+}
+
+.bp-grid.four { grid-template-columns: repeat(4, 1fr); }
+.bp-grid.five { grid-template-columns: repeat(5, 1fr); }
+.bp-grid.seven { grid-template-columns: repeat(7, 1fr); }
+
+@media (max-width: 900px) {
+  .bp-grid.four,
+  .bp-grid.five,
+  .bp-grid.seven { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 520px) {
+  .bp-grid.four,
+  .bp-grid.five,
+  .bp-grid.seven { grid-template-columns: 1fr; }
+}
+
+.bp-card {
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: 10px;
+  padding: 18px 14px;
+  text-align: center;
+}
+
+.bp-card.compact { padding: 14px 10px; }
+
+.bp-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  margin: 0 auto 12px;
+  font-weight: 700;
+}
+
+.bp-icon.red { background: #450a0a; color: #f87171; }
+.bp-icon.purple { background: #2e1065; color: #c084fc; }
+.bp-icon.orange { background: #431407; color: #fb923c; }
+.bp-icon.green { background: #052e16; color: #4ade80; }
+.bp-icon.blue { background: #0c4a6e; color: #38bdf8; }
+
+.bp-card h4 {
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+  color: #f1f5f9;
+}
+
+.bp-card p {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.bp-stat {
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: 10px;
+  padding: 20px 12px;
+  text-align: center;
+}
+
+.stat-num {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #22d3ee;
+  margin-bottom: 6px;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.blueprint-cta {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.blueprint-cta p {
+  color: #94a3b8;
+  margin-bottom: 16px;
+}
+
+/* Compliance Lock */
+.compliance-section {
+  background: #0a0e17;
+  padding: 80px 0;
+  border-top: 1px solid #1e293b;
+}
+
+.compliance-demo {
+  max-width: 520px;
+  margin: 40px auto;
+  text-align: center;
+}
+
+.compliance-screen {
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  min-height: 220px;
+  transition: background 0.4s, border-color 0.4s;
+}
+
+.compliance-screen.locked {
+  background: #450a0a;
+  border-color: #ef4444;
+}
+
+.screen-header {
+  background: #1e293b;
+  padding: 10px 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #94a3b8;
+}
+
+.compliance-screen.locked .screen-header {
+  background: #7f1d1d;
+  color: #fecaca;
+}
+
+.screen-body {
+  padding: 20px 16px;
+  text-align: left;
+}
+
+.screen-line {
+  font-size: 0.9rem;
+  color: #e2e8f0;
+  margin-bottom: 10px;
+}
+
+.screen-line.muted { color: #64748b; }
+
+.screen-line.warning {
+  color: #fbbf24;
+  font-weight: 600;
+}
+
+.screen-lock {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background: rgba(127, 29, 29, 0.95);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+}
+
+.compliance-screen.locked .screen-lock {
+  display: flex;
+}
+
+.lock-icon { font-size: 2.2rem; margin-bottom: 8px; }
+.lock-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #fecaca;
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+.lock-text {
+  font-size: 0.85rem;
+  color: #fca5a5;
+  max-width: 280px;
+}
+
+.compliance-points {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 48px;
+}
+
+.compliance-btn { margin-top: 20px; }
+
+@media (max-width: 700px) {
+  .compliance-points { grid-template-columns: 1fr; }
+}

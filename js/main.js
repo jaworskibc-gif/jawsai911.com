@@ -74,4 +74,28 @@ document.addEventListener("DOMContentLoaded", function () {
     if (event.key === "Escape" && modal && modal.classList.contains("open")) closeModal();
   });
   if (form) form.addEventListener("submit", handlePortalSubmit);
+
+  const demoBtn = document.getElementById("demo-trigger");
+  const complianceScreen = document.getElementById("compliance-screen");
+  const warningLine = document.getElementById("warning-line");
+
+  if (demoBtn && complianceScreen) {
+    demoBtn.addEventListener("click", function () {
+      complianceScreen.classList.remove("locked");
+      if (warningLine) warningLine.style.display = "none";
+
+      setTimeout(() => {
+        if (warningLine) warningLine.style.display = "block";
+      }, 600);
+
+      setTimeout(() => {
+        complianceScreen.classList.add("locked");
+      }, 1400);
+
+      setTimeout(() => {
+        complianceScreen.classList.remove("locked");
+        if (warningLine) warningLine.style.display = "none";
+      }, 5000);
+    });
+  }
 });
