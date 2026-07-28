@@ -94,11 +94,11 @@
       <button onclick="createClient()">+ Add Client</button>
     </div>
   </div>
-  <div class="banner">⚠ Click-to-call opens your phone's native dialer — this doesn't auto-dial or run VoIP itself. Once your Twilio/phone setup is live, this becomes the queue front-end for it. Outcomes log into the same call history as the Call Tracker tool.</div>
+  <div class="banner">Click-to-call opens your phone's native dialer. Use this to work a fast queue while keeping call outcomes and follow-up activity tied to the CRM record.</div>
 
   <div class="tabs">
-    <div class="tab active" data-tab="queue" onclick="switchTab('queue')">Build Queue</div>
-    <div class="tab" data-tab="session" onclick="switchTab('session')">Dial Session</div>
+    <div class="tab active" data-tab="queue" onclick="switchTab('queue')">Queue Setup</div>
+    <div class="tab" data-tab="session" onclick="switchTab('session')">Call Session</div>
   </div>
 
   <div class="panel active" id="panel-queue">
@@ -107,7 +107,8 @@
       <label style="font-size:11px; font-weight:700; color:var(--ink-soft); display:block; margin-bottom:6px;">Paste Leads (one per line: Name, Phone)</label>
       <textarea id="bulkInput" rows="6" placeholder="Coastal Blue Pool Care, (561) 555-0134&#10;Sunshine Pool Service, (561) 555-0198&#10;Deep Blue Pools, (954) 555-0122"></textarea>
       <div class="setup-hint">Format: Name, Phone — one lead per line</div>
-      <button class="btn btn-teal" onclick="addBulk()">+ Add to Queue</button>
+      <button class="btn btn-teal" onclick="addBulk()">Add to Queue</button>
+      <button class="btn btn-outline" onclick="importPipelineLeads()">Import Open CRM Leads</button>
     </div>
     <div class="queue-list" id="queueList"></div>
   </div>
@@ -120,9 +121,10 @@
       <div class="stat-box"><div class="stat-num" id="statConnected">0</div><div class="stat-label">CONNECTED</div></div>
     </div>
     <div id="sessionContainer"></div>
-  </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="crm-shared.js"></script>
 <script>
 const SUPABASE_URL = 'https://owkqfledeuetwwmlvnmb.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93a3FmbGVkZXVldHd3bWx2bm1iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxMzM5MTQsImV4cCI6MjEwMDcwOTkxNH0.lOwjIzs-DyVtvKR8-b1L6RTdlb8iY9_1chgKbY2ml3c';
@@ -244,23 +246,51 @@ async function addBulk() {
   const text = document.getElementById('bulkInput').value.trim();
   if (!text) return;
   const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
-  const maxPosition = queue.length;
   const rows = [];
   lines.forEach((line, index) => {
     const parts = line.split(',');
     const name = (parts[0] || '').trim();
     const phone = (parts.slice(1).join(',') || '').trim();
-    if (name) rows.push({ client_id: currentClientId, name, phone, position: maxPosition + index });
+    if (name) rows.push({ name, phone });
   });
   if (rows.length === 0) return;
-  const { error } = await supabaseClient.from('dial_queue').insert(rows);
-  if (error) {
-    alert(error.message);
+  try {
+    for (const row of rows) {
+      await window.JAWSCRM.upsertCrmLead(supabaseClient, currentClientId, {
+        full_name: row.name,
+        company: row.name,
+        phone: row.phone,
+        status: 'new',
+        source: 'dialer',
+        notes: ''
+      });
+      await window.JAWSCRM.upsertDialQueueLead(supabaseClient, currentClientId, row);
+    }
+  } catch (e) {
+    alert(e.message);
     return;
   }
   document.getElementById('bulkInput').value = '';
   await loadQueue();
   renderQueueList();
+}
+
+async function importPipelineLeads() {
+  if (!currentClientId) { alert('Add a client first.'); return; }
+  try {
+    const leads = await window.JAWSCRM.listCrmLeads(supabaseClient, currentClientId);
+    const candidates = leads.filter(lead => ['new', 'contacted', 'warm', 'nurture'].includes(lead.status));
+    for (const lead of candidates) {
+      await window.JAWSCRM.upsertDialQueueLead(supabaseClient, currentClientId, {
+        name: lead.full_name || lead.company || '',
+        phone: lead.phone || ''
+      });
+    }
+    await loadQueue();
+    statusMsg('Imported ' + candidates.length + ' CRM leads into the dial queue for ' + currentClient + '.');
+  } catch (e) {
+    alert(e.message);
+  }
 }
 
 function renderQueueList() {
@@ -303,7 +333,7 @@ function renderSession() {
     if (calledCount > 0) {
       container.innerHTML = `<div class="done-state"><div class="big">🎉 Queue Complete</div><div style="color:var(--ink-soft); font-size:13px;">Called ${calledCount}, connected with ${connectedCount}. Build a new queue to keep going.</div></div>`;
     } else {
-      container.innerHTML = '<div class="empty-state">No leads in queue. Go to "Build Queue" to add some.</div>';
+      container.innerHTML = '<div class="empty-state">No leads in queue. Go to "Queue Setup" to add some.</div>';
     }
     return;
   }
@@ -331,26 +361,27 @@ async function logOutcome(outcomeId) {
   const lead = queue[0];
   if (!lead) return;
   const notes = document.getElementById('sessionNotes').value.trim();
-  const outcomeInfo = OUTCOMES.find(o => o.id === outcomeId);
-  const { error } = await supabaseClient.from('calls').insert({
-    client_id: currentClientId,
-    lead_name: lead.name,
-    phone: lead.phone,
-    outcome: outcomeId,
-    notes,
-    follow_up_date: null
-  });
-  if (error) {
-    alert(error.message);
+  try {
+    const outcomeInfo = OUTCOMES.find(o => o.id === outcomeId);
+    await window.JAWSCRM.logCrmCall(supabaseClient, {
+      clientId: currentClientId,
+      full_name: lead.name,
+      phone: lead.phone,
+      notes,
+      outcome: outcomeId,
+      called_by: 'power_dialer'
+    });
+    await supabaseClient.from('dial_queue').delete().eq('id', lead.id);
+    queue.shift();
+    await loadQueue();
+    calledCount++;
+    if (outcomeInfo.connected) connectedCount++;
+    renderSession();
+    statusMsg('Dial outcome logged. CRM updated and follow-up process evaluated automatically.');
+  } catch (e) {
+    alert(e.message);
     return;
   }
-
-  await supabaseClient.from('dial_queue').delete().eq('id', lead.id);
-  queue.shift();
-  await loadQueue();
-  calledCount++;
-  if (outcomeInfo.connected) connectedCount++;
-  renderSession();
 }
 
 async function skipLead() {

@@ -89,6 +89,8 @@
   .badge-draft { background: #EDEFF2; color: var(--ink-soft); }
   .badge-sent { background: #EAF6FF; color: var(--cyan); }
   .badge-paid { background: #E6F9F1; color: #1FA37A; }
+  .badge-approved { background: #E6F9F1; color: #1FA37A; }
+  .badge-changes_requested { background: #FFF4E5; color: #B76E00; }
   .empty-state { text-align: center; padding: 40px 20px; color: var(--ink-soft); font-size: 13px; }
 
   /* ---- PRINT PREVIEW ---- */
@@ -154,6 +156,8 @@
             <option value="draft">Draft</option>
             <option value="sent">Sent</option>
             <option value="paid">Paid</option>
+            <option value="approved">Approved</option>
+            <option value="changes_requested">Changes Requested</option>
           </select>
         </div>
       </div>
@@ -197,6 +201,7 @@
 const SUPABASE_URL = 'https://owkqfledeuetwwmlvnmb.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93a3FmbGVkZXVldHd3bWx2bm1iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxMzM5MTQsImV4cCI6MjEwMDcwOTkxNH0.lOwjIzs-DyVtvKR8-b1L6RTdlb8iY9_1chgKbY2ml3c';
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const params = new URLSearchParams(window.location.search);
 
 let currentClient = null;
 let currentClientId = null;
@@ -204,6 +209,7 @@ let currentInvoiceId = null;
 let currentType = 'estimate';
 let lineItems = [];
 let invoicesData = [];
+let currentLeadId = params.get('lead_id') || '';
 
 function statusMsg(t) { document.getElementById('statusMsg').textContent = t; }
 function escapeHtml(str) { const d = document.createElement('div'); d.textContent = str || ''; return d.innerHTML; }
@@ -251,7 +257,8 @@ async function loadClientList() {
       opt.textContent = client.name;
       select.appendChild(opt);
     });
-    const selected = data.find(client => client.id === currentClientId) || data[0];
+    const queryClientId = params.get('client_id') || currentClientId;
+    const selected = data.find(client => client.id === queryClientId) || data.find(client => client.id === currentClientId) || data[0];
     currentClientId = selected.id;
     currentClient = selected.name;
     select.value = currentClientId;
@@ -299,6 +306,7 @@ async function loadInvoices() {
     invoicesData = [];
   }
   newInvoice();
+  await applyLeadPrefill();
 }
 
 function setType(type) {
@@ -309,7 +317,7 @@ function setType(type) {
 
 function newInvoice() {
   currentInvoiceId = null;
-  setType('estimate');
+  setType(params.get('type') === 'invoice' ? 'invoice' : 'estimate');
   document.getElementById('customerName').value = '';
   document.getElementById('statusSelect').value = 'draft';
   document.getElementById('invoiceNotes').value = '';
@@ -317,6 +325,19 @@ function newInvoice() {
   lineItems = [{ desc: '', qty: 1, price: 0 }];
   renderLineItems();
   recalc();
+}
+
+async function applyLeadPrefill() {
+  if (!currentLeadId) return;
+  const { data, error } = await supabaseClient.from('crm_leads').select('*').eq('id', currentLeadId).maybeSingle();
+  if (error || !data) return;
+  document.getElementById('customerName').value = data.full_name || data.company || '';
+  const notePrefix = params.get('type') === 'invoice'
+    ? 'Invoice prepared for ' + (data.full_name || data.company || 'lead') + '.'
+    : 'Estimate prepared for ' + (data.full_name || data.company || 'lead') + '.';
+  if (!document.getElementById('invoiceNotes').value.trim()) {
+    document.getElementById('invoiceNotes').value = notePrefix + (data.notes ? '\n\nLead Notes:\n' + data.notes : '');
+  }
 }
 
 function renderLineItems() {
@@ -405,6 +426,19 @@ async function saveInvoice() {
   await loadInvoices();
   currentInvoiceId = savedId;
   if (savedId) loadInvoiceIntoBuilder(savedId);
+  if (savedId && currentLeadId) {
+    const { data: leadRow } = await supabaseClient.from('crm_leads').select('custom_fields').eq('id', currentLeadId).maybeSingle();
+    const docs = leadRow && leadRow.custom_fields && Array.isArray(leadRow.custom_fields.documents) ? leadRow.custom_fields.documents.slice() : [];
+    docs.push({
+      name: invoiceNumber + ' ' + (currentType === 'invoice' ? 'Invoice' : 'Estimate'),
+      type: currentType,
+      url: 'Customer_Portal.html?invoice_id=' + savedId,
+      created_at: new Date().toISOString()
+    });
+    await supabaseClient.from('crm_leads').update({
+      custom_fields: Object.assign({}, (leadRow && leadRow.custom_fields) || {}, { documents: docs })
+    }).eq('id', currentLeadId);
+  }
   statusMsg('Saved ' + invoiceNumber + ' for ' + currentClient + '.');
 }
 

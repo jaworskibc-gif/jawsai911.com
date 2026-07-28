@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JAWSAI911 Lead Detail</title>
+<script src="../hub-auth.js"></script>
+<script src="crm-shared.js"></script>
+<style>
+  :root {
+    --navy:#010711; --navy-2:#0B1F33; --cyan:#00B4FF; --teal:#00C4B4; --pink:#E8175D; --amber:#F2C879;
+    --ink:#1a2230; --ink-soft:#5A6472; --foam:#F7FAFB; --line:#E2E6EA;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Liberation Sans', Arial, sans-serif; }
+  body { background:var(--foam); color:var(--ink); }
+  .topbar { background:var(--navy); color:#fff; padding:16px 22px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+  .brand { font-size:16px; font-weight:900; }
+  .brand span { color:var(--cyan); }
+  .picker { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+  .picker select {
+    background:var(--navy-2); color:#fff; border:1px solid rgba(255,255,255,.15);
+    padding:8px 10px; border-radius:6px; font-size:12px;
+  }
+  .back-link { color:rgba(255,255,255,.86); text-decoration:none; font-size:12px; font-weight:700; }
+  .banner { background:#EAF6FF; color:#0A5A80; font-size:11.5px; padding:8px 22px; border-bottom:1px solid #C8E8F7; }
+  .wrap { max-width:1280px; margin:0 auto; padding:22px; }
+  .status-msg { font-size:11px; color:var(--ink-soft); margin-bottom:16px; }
+  .hero { display:grid; grid-template-columns:1.15fr .85fr; gap:16px; margin-bottom:16px; }
+  .panel { background:#fff; border:1px solid var(--line); border-radius:10px; padding:18px; }
+  .hero h1 { font-size:28px; line-height:1.05; margin-bottom:8px; }
+  .meta { font-size:13px; color:var(--ink-soft); line-height:1.7; }
+  .badges { display:flex; gap:8px; flex-wrap:wrap; margin:14px 0; }
+  .badge { font-size:10px; font-weight:800; padding:4px 9px; border-radius:999px; background:var(--foam); color:var(--ink-soft); }
+  .badge.stage { background:#EAF6FF; color:var(--cyan); }
+  .badge.owner { background:#E6F9F1; color:#1FA37A; }
+  .actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; }
+  .btn { padding:10px 14px; border-radius:8px; border:1px solid var(--line); background:#fff; color:var(--ink); font-size:12px; font-weight:800; text-decoration:none; cursor:pointer; }
+  .btn.primary { background:var(--teal); border-color:var(--teal); color:var(--navy); }
+  .btn.navy { background:var(--navy); border-color:var(--navy); color:#fff; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .edit-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px; }
+  .edit-grid.full { grid-template-columns:1fr; }
+  .field label { display:block; font-size:11px; color:var(--ink-soft); font-weight:700; margin-bottom:4px; }
+  .field input, .field select, .field textarea {
+    width:100%; padding:10px; border:1px solid var(--line); border-radius:8px; font-size:13px;
+  }
+  .field textarea { min-height:84px; resize:vertical; }
+  .section-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+  .section-head h2 { font-size:13px; font-weight:900; }
+  .mini { font-size:11px; color:var(--ink-soft); }
+  .list { display:grid; gap:8px; }
+  .item { border:1px solid var(--line); background:var(--foam); border-radius:8px; padding:12px; }
+  .item-title { font-size:13px; font-weight:800; }
+  .item-meta { font-size:11px; color:var(--ink-soft); margin-top:4px; line-height:1.5; }
+  .item-actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+  .doc-form { display:grid; grid-template-columns:1.1fr .8fr .9fr .9fr auto; gap:8px; margin-top:12px; }
+  .doc-form input, .doc-form select {
+    width:100%; padding:10px; border:1px solid var(--line); border-radius:8px; font-size:13px;
+  }
+  .smartsite-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; }
+  .smartsite-actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+  .empty { padding:20px; text-align:center; color:var(--ink-soft); font-size:12px; }
+  @media (max-width:1000px) { .hero,.grid,.doc-form,.smartsite-grid { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div>
+      <div class="brand">JAWS<span>AI</span>911 <span style="font-weight:400;color:#fff">Lead Detail</span></div>
+      <a class="back-link" href="Sales_Console.html">← Back to Sales Console</a>
+    </div>
+    <div class="picker">
+      <select id="clientSelect"></select>
+    </div>
+  </div>
+  <div class="banner">Lead record for calls, tasks, invoices, receipts, proposal links, and document references tied to one CRM lead.</div>
+
+  <main class="wrap">
+    <div class="status-msg" id="statusMsg">Loading...</div>
+    <section class="hero">
+      <div class="panel" id="leadHero"></div>
+      <div class="panel">
+        <div class="section-head">
+          <h2>Quick Actions</h2>
+          <span class="mini">Move fast from one lead record</span>
+        </div>
+        <div class="actions">
+          <a class="btn primary" id="callBtn" href="#">Call Lead</a>
+          <a class="btn" id="textBtn" href="#">Text Lead</a>
+          <a class="btn navy" id="proposalBtn" href="#">Generate Proposal</a>
+          <a class="btn" id="invoiceBtn" href="#">Open Invoicing</a>
+          <a class="btn" id="docsBtn" href="#">Open Sales Docs</a>
+        </div>
+        <div class="edit-grid">
+          <div class="field">
+            <label>Lead Stage</label>
+            <select id="leadStatus">
+              <option value="new">New</option>
+              <option value="contacted">Contacted</option>
+              <option value="warm">Warm</option>
+              <option value="booked">Booked</option>
+              <option value="showed">Showed</option>
+              <option value="closed_won">Closed Won</option>
+              <option value="closed_lost">Closed Lost</option>
+              <option value="nurture">Nurture</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Assigned To</label>
+            <input id="leadOwner" placeholder="Operator or rep name">
+          </div>
+        </div>
+        <div class="edit-grid">
+          <div class="field">
+            <label>Email</label>
+            <input id="leadEmail" placeholder="name@example.com">
+          </div>
+          <div class="field">
+            <label>Phone</label>
+            <input id="leadPhoneEdit" placeholder="(555) 555-5555">
+          </div>
+        </div>
+        <div class="edit-grid full">
+          <div class="field">
+            <label>Lead Notes</label>
+            <textarea id="leadNotesEdit" placeholder="Store rep notes, objections, project details, and next-step context."></textarea>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" type="button" onclick="saveLeadEdits()">Save Lead Updates</button>
+          <a class="btn navy" id="newInvoiceBtn" href="#">New Invoice</a>
+          <a class="btn" id="newProposalBtn" href="#">New Proposal</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="panel">
+        <div class="section-head">
+          <h2>Call History</h2>
+          <span class="mini">Recent CRM call activity</span>
+        </div>
+        <div id="callsList" class="list"></div>
+      </div>
+      <div class="panel">
+        <div class="section-head">
+          <h2>Open Tasks</h2>
+          <span class="mini">Next actions for this lead</span>
+        </div>
+        <div id="tasksList" class="list"></div>
+      </div>
+      <div class="panel">
+        <div class="section-head">
+          <h2>Invoices & Proposals</h2>
+          <span class="mini">Estimate, invoice, and proposal records</span>
+        </div>
+        <div id="invoicesList" class="list"></div>
+      </div>
+      <div class="panel">
+        <div class="section-head">
+          <h2>Lead Documents</h2>
+          <span class="mini">Links to receipts, docs, and files</span>
+        </div>
+        <div id="documentsList" class="list"></div>
+        <div class="doc-form">
+          <input id="docName" placeholder="Document name">
+          <select id="docType">
+            <option value="receipt">Receipt</option>
+            <option value="proposal">Proposal</option>
+            <option value="invoice">Invoice</option>
+            <option value="doc">General Doc</option>
+          </select>
+          <input id="docUrl" placeholder="https://document-link">
+          <input id="docFile" type="file">
+          <button class="btn primary" type="button" onclick="addDocument()">Save</button>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="section-head">
+          <h2>Smart Site Demo</h2>
+          <span class="mini">Track the demo URL, stage, and send status</span>
+        </div>
+        <div id="smartSiteSummary" class="list"></div>
+        <div class="smartsite-grid">
+          <div class="field">
+            <label>Demo Name</label>
+            <input id="smartSiteName" placeholder="Pool SuperSite Demo">
+          </div>
+          <div class="field">
+            <label>Demo Status</label>
+            <select id="smartSiteStatus">
+              <option value="not_started">Not Started</option>
+              <option value="draft">Draft</option>
+              <option value="ready">Ready</option>
+              <option value="sent">Sent</option>
+              <option value="viewed">Viewed</option>
+              <option value="feedback">Feedback</option>
+              <option value="approved">Approved</option>
+            </select>
+          </div>
+        </div>
+        <div class="edit-grid full">
+          <div class="field">
+            <label>Demo URL</label>
+            <input id="smartSiteUrl" placeholder="https://demo-link">
+          </div>
+        </div>
+        <div class="edit-grid full">
+          <div class="field">
+            <label>Smart Site Notes</label>
+            <textarea id="smartSiteNotes" placeholder="What was built, what is pending, and how this demo should be sent."></textarea>
+          </div>
+        </div>
+        <div class="smartsite-actions">
+          <button class="btn primary" type="button" onclick="saveSmartSite()">Save Smart Site</button>
+          <a class="btn navy" id="openSmartSiteBtn" href="#" target="_blank" rel="noopener">Open Demo</a>
+          <button class="btn" type="button" onclick="markSmartSiteSent()">Mark Demo Sent</button>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="section-head">
+          <h2>Portal Activity</h2>
+          <span class="mini">Customer approval and response trail</span>
+        </div>
+        <div id="portalEventsList" class="list"></div>
+      </div>
+    </section>
+  </main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+const SUPABASE_URL = 'https://owkqfledeuetwwmlvnmb.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93a3FmbGVkZXVldHd3bWx2bm1iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxMzM5MTQsImV4cCI6MjEwMDcwOTkxNH0.lOwjIzs-DyVtvKR8-b1L6RTdlb8iY9_1chgKbY2ml3c';
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const DOC_BUCKET = 'sales-documents';
+
+let currentClientId = null;
+let currentLeadId = null;
+let lead = null;
+let calls = [];
+let tasks = [];
+let invoices = [];
+let portalEvents = [];
+
+function statusMsg(text) { document.getElementById('statusMsg').textContent = text; }
+function escapeHtml(value) { const div = document.createElement('div'); div.textContent = value || ''; return div.innerHTML; }
+function queryValue(name) { return new URLSearchParams(window.location.search).get(name); }
+function telHref(phone) { return 'tel:' + String(phone || '').replace(/[^0-9+]/g, ''); }
+function smsHref(phone) { return 'sms:' + String(phone || '').replace(/[^0-9+]/g, ''); }
+function leadDocuments() {
+  const docs = lead && lead.custom_fields ? lead.custom_fields.documents : [];
+  return Array.isArray(docs) ? docs : [];
+}
+
+function smartSiteData() {
+  const data = lead && lead.custom_fields ? lead.custom_fields.smart_site_demo : null;
+  return data && typeof data === 'object' ? data : {};
+}
+
+async function loadClientList() {
+  const { data, error } = await supabaseClient.from('clients').select('id, name').order('name');
+  if (error) throw error;
+  const select = document.getElementById('clientSelect');
+  select.innerHTML = '';
+  (data || []).forEach(client => {
+    const opt = document.createElement('option');
+    opt.value = client.id;
+    opt.textContent = client.name;
+    select.appendChild(opt);
+  });
+  if (currentClientId) select.value = currentClientId;
+}
+
+async function loadLeadDetail() {
+  if (!currentLeadId) {
+    statusMsg('Missing lead id.');
+    return;
+  }
+  statusMsg('Loading lead detail...');
+  lead = await window.JAWSCRM.getCrmLeadById(supabaseClient, currentLeadId);
+  if (!lead) {
+    statusMsg('Lead not found.');
+    return;
+  }
+  currentClientId = lead.client_id;
+  await loadClientList();
+  const [{ data: callRows, error: callError }, taskRows, { data: invoiceRows, error: invoiceError }, portalEventResult] = await Promise.all([
+    supabaseClient.from('crm_calls').select('*').eq('lead_id', currentLeadId).order('called_at', { ascending: false }).limit(12),
+    window.JAWSCRM.getCrmTasks(supabaseClient, currentClientId, { status: 'open' }),
+    supabaseClient.from('invoices').select('*').eq('client_id', currentClientId).eq('customer_name', lead.full_name || lead.company || '').order('invoice_date', { ascending: false }).limit(12),
+    supabaseClient.from('crm_portal_events').select('*').eq('lead_id', currentLeadId).order('created_at', { ascending: false }).limit(12)
+  ]);
+  if (callError || invoiceError) throw (callError || invoiceError);
+  calls = callRows || [];
+  tasks = (taskRows || []).filter(row => row.lead_id === currentLeadId);
+  invoices = invoiceRows || [];
+  portalEvents = portalEventResult && !portalEventResult.error ? (portalEventResult.data || []) : [];
+  renderLead();
+  renderCalls();
+  renderTasks();
+  renderInvoices();
+  renderDocuments();
+  renderSmartSite();
+  renderPortalEvents();
+  statusMsg('Lead detail ready.');
+}
+
+function renderLead() {
+  const hero = document.getElementById('leadHero');
+  hero.innerHTML = '<h1>' + escapeHtml(lead.full_name || lead.company || 'Unnamed Lead') + '</h1>' +
+    '<div class="meta">' + escapeHtml(lead.phone || 'No phone') + '<br>' +
+    escapeHtml((lead.city || 'No city') + ', ' + (lead.state || 'FL')) + '<br>' +
+    escapeHtml(lead.email || 'No email on file') + '</div>' +
+    '<div class="badges">' +
+    '<span class="badge stage">' + escapeHtml(lead.status || 'new') + '</span>' +
+    '<span class="badge owner">' + escapeHtml(lead.assigned_to || 'Unassigned') + '</span>' +
+    '<span class="badge">' + escapeHtml((lead.call_attempts || 0) + ' call attempts') + '</span>' +
+    '</div>' +
+    '<div class="meta">Last outcome: ' + escapeHtml(lead.last_call_outcome || 'none') + '<br>' +
+    'Next follow-up: ' + escapeHtml(lead.next_follow_up_at ? new Date(lead.next_follow_up_at).toLocaleString() : 'none scheduled') + '<br>' +
+    'Notes: ' + escapeHtml(lead.notes || 'No notes yet.') + '</div>';
+
+  document.getElementById('callBtn').href = telHref(lead.phone);
+  document.getElementById('textBtn').href = smsHref(lead.phone);
+  document.getElementById('proposalBtn').href = 'Proposal_Generator.html?client_id=' + encodeURIComponent(currentClientId) + '&lead_id=' + encodeURIComponent(currentLeadId);
+  document.getElementById('invoiceBtn').href = 'JAWSAI911_Invoicing.html?client_id=' + encodeURIComponent(currentClientId) + '&lead_id=' + encodeURIComponent(currentLeadId) + '&type=invoice';
+  document.getElementById('docsBtn').href = 'Sales_Documents.html?client_id=' + encodeURIComponent(currentClientId) + '&lead_id=' + encodeURIComponent(currentLeadId);
+  document.getElementById('newInvoiceBtn').href = 'JAWSAI911_Invoicing.html?client_id=' + encodeURIComponent(currentClientId) + '&lead_id=' + encodeURIComponent(currentLeadId) + '&type=invoice';
+  document.getElementById('newProposalBtn').href = 'Proposal_Generator.html?client_id=' + encodeURIComponent(currentClientId) + '&lead_id=' + encodeURIComponent(currentLeadId);
+  document.getElementById('leadStatus').value = lead.status || 'new';
+  document.getElementById('leadOwner').value = lead.assigned_to || '';
+  document.getElementById('leadEmail').value = lead.email || '';
+  document.getElementById('leadPhoneEdit').value = lead.phone || '';
+  document.getElementById('leadNotesEdit').value = lead.notes || '';
+}
+
+function renderCalls() {
+  const container = document.getElementById('callsList');
+  if (!calls.length) {
+    container.innerHTML = '<div class="empty">No calls logged yet.</div>';
+    return;
+  }
+  container.innerHTML = calls.map(call => '<div class="item"><div class="item-title">' + escapeHtml(call.outcome || 'call') + '</div><div class="item-meta">' + escapeHtml(call.notes || 'No notes') + '<br>' + escapeHtml(new Date(call.called_at).toLocaleString()) + '</div></div>').join('');
+}
+
+function renderTasks() {
+  const container = document.getElementById('tasksList');
+  if (!tasks.length) {
+    container.innerHTML = '<div class="empty">No open tasks for this lead.</div>';
+    return;
+  }
+  container.innerHTML = tasks.map(task => '<div class="item"><div class="item-title">' + escapeHtml(task.title) + '</div><div class="item-meta">' + escapeHtml(task.task_type || 'task') + ' · due ' + escapeHtml(task.due_at ? new Date(task.due_at).toLocaleString() : 'unscheduled') + '</div></div>').join('');
+}
+
+function renderInvoices() {
+  const container = document.getElementById('invoicesList');
+  if (!invoices.length) {
+    container.innerHTML = '<div class="empty">No proposals, estimates, or invoices yet.</div>';
+    return;
+  }
+  container.innerHTML = invoices.map(inv => {
+    const typeLabel = inv.type === 'invoice' ? 'Invoice' : (inv.notes || '').includes('[PROPOSAL]') ? 'Proposal' : 'Estimate';
+    const sendType = typeLabel === 'Proposal' ? 'proposal_sent' : 'invoice_sent';
+    return '<div class="item"><div class="item-title">' + escapeHtml(inv.number || 'Draft') + ' · ' + escapeHtml(typeLabel) + '</div><div class="item-meta">' + escapeHtml(inv.status || 'draft') + ' · ' + escapeHtml(new Date(inv.invoice_date || inv.updated_at).toLocaleDateString()) + ' · $' + escapeHtml(Number(inv.total || 0).toFixed(2)) + '</div><div class="item-actions"><a class="btn" href="JAWSAI911_Invoicing.html?client_id=' + encodeURIComponent(currentClientId) + '&lead_id=' + encodeURIComponent(currentLeadId) + '">Open Invoicing</a><a class="btn" href="Customer_Portal.html?invoice_id=' + encodeURIComponent(inv.id) + '" target="_blank" rel="noopener">Portal Link</a><button class="btn" type="button" onclick="markDocumentSent(\'' + encodeURIComponent(inv.id) + '\', \'' + sendType + '\')">Mark Sent</button></div></div>';
+  }).join('');
+}
+
+function renderDocuments() {
+  const container = document.getElementById('documentsList');
+  const docs = leadDocuments();
+  if (!docs.length) {
+    container.innerHTML = '<div class="empty">No linked documents yet.</div>';
+    return;
+  }
+  container.innerHTML = docs.map((doc, index) => '<div class="item"><div class="item-title">' + escapeHtml(doc.name || 'Document') + '</div><div class="item-meta">' + escapeHtml(doc.type || 'doc') + ' · ' + escapeHtml(doc.created_at ? new Date(doc.created_at).toLocaleDateString() : '') + '</div><div class="item-actions"><a class="btn" href="' + escapeHtml(doc.url || '#') + '" target="_blank" rel="noopener">Open Link</a><button class="btn" type="button" onclick="removeDocument(' + index + ')">Remove</button></div></div>').join('');
+}
+
+function renderSmartSite() {
+  const data = smartSiteData();
+  document.getElementById('smartSiteName').value = data.name || '';
+  document.getElementById('smartSiteUrl').value = data.url || '';
+  document.getElementById('smartSiteStatus').value = data.status || 'not_started';
+  document.getElementById('smartSiteNotes').value = data.notes || '';
+  document.getElementById('openSmartSiteBtn').href = data.url || '#';
+  const summary = document.getElementById('smartSiteSummary');
+  if (!data.url && !data.name) {
+    summary.innerHTML = '<div class="empty">No Smart Site demo saved yet.</div>';
+    return;
+  }
+  const meta = [
+    data.status || 'not_started',
+    data.sent_at ? 'sent ' + new Date(data.sent_at).toLocaleString() : '',
+    data.last_updated_at ? 'updated ' + new Date(data.last_updated_at).toLocaleString() : ''
+  ].filter(Boolean).join(' · ');
+  summary.innerHTML = '<div class="item"><div class="item-title">' + escapeHtml(data.name || 'Smart Site Demo') + '</div><div class="item-meta">' + escapeHtml(meta) + (data.url ? '<br>' + escapeHtml(data.url) : '') + (data.notes ? '<br>' + escapeHtml(data.notes) : '') + '</div></div>';
+}
+
+function renderPortalEvents() {
+  const container = document.getElementById('portalEventsList');
+  if (!portalEvents.length) {
+    container.innerHTML = '<div class="empty">No customer portal events yet.</div>';
+    return;
+  }
+  container.innerHTML = portalEvents.map(event => {
+    const title = String(event.event_type || 'portal_event').replace(/_/g, ' ');
+    const meta = [
+      event.actor_name || 'Unknown customer',
+      event.actor_title || '',
+      event.created_at ? new Date(event.created_at).toLocaleString() : ''
+    ].filter(Boolean).join(' · ');
+    return '<div class="item"><div class="item-title">' + escapeHtml(title) + '</div><div class="item-meta">' + escapeHtml(meta) + (event.notes ? '<br>' + escapeHtml(event.notes) : '') + '</div></div>';
+  }).join('');
+}
+
+async function markDocumentSent(encodedInvoiceId, eventType) {
+  const invoiceId = decodeURIComponent(encodedInvoiceId);
+  const invoice = invoices.find(item => item.id === invoiceId);
+  if (!invoice) {
+    statusMsg('Document not found.');
+    return;
+  }
+  const senderName = window.prompt('Sent by who?', lead.assigned_to || '');
+  if (senderName === null) return;
+  const trimmedSender = senderName.trim();
+  if (!trimmedSender) {
+    statusMsg('Sender name is required.');
+    return;
+  }
+  const sendChannel = window.prompt('Sent how? Enter channel like email, text, or loom.', 'email');
+  if (sendChannel === null) return;
+  const trimmedChannel = sendChannel.trim() || 'email';
+  statusMsg('Recording send event...');
+  const note = 'Sent via ' + trimmedChannel + '.';
+  const { error: eventError } = await supabaseClient.from('crm_portal_events').insert({
+    lead_id: currentLeadId,
+    invoice_id: invoice.id,
+    client_id: currentClientId,
+    event_type: eventType,
+    actor_name: trimmedSender,
+    notes: note,
+    metadata: {
+      document_number: invoice.number || null,
+      document_type: eventType === 'proposal_sent' ? 'proposal' : 'invoice',
+      channel: trimmedChannel
+    }
+  });
+  if (eventError) {
+    statusMsg(eventError.message);
+    return;
+  }
+  if (invoice.status === 'draft') {
+    const { error: updateError } = await supabaseClient.from('invoices').update({ status: 'sent' }).eq('id', invoice.id);
+    if (!updateError) {
+      invoice.status = 'sent';
+    }
+  }
+  const { data: portalRows } = await supabaseClient.from('crm_portal_events').select('*').eq('lead_id', currentLeadId).order('created_at', { ascending: false }).limit(12);
+  portalEvents = portalRows || portalEvents;
+  renderInvoices();
+  renderPortalEvents();
+  statusMsg('Send event saved for ' + (invoice.number || 'document') + '.');
+}
+
+async function saveSmartSite() {
+  const existing = smartSiteData();
+  const nextData = {
+    name: document.getElementById('smartSiteName').value.trim() || null,
+    url: document.getElementById('smartSiteUrl').value.trim() || null,
+    status: document.getElementById('smartSiteStatus').value || 'not_started',
+    notes: document.getElementById('smartSiteNotes').value.trim() || null,
+    sent_at: existing.sent_at || null,
+    last_updated_at: new Date().toISOString()
+  };
+  const nextCustomFields = Object.assign({}, lead.custom_fields || {}, { smart_site_demo: nextData });
+  const { data, error } = await supabaseClient
+    .from('crm_leads')
+    .update({ custom_fields: nextCustomFields })
+    .eq('id', currentLeadId)
+    .select('*')
+    .single();
+  if (error) {
+    statusMsg(error.message);
+    return;
+  }
+  const firstCreated = !existing.url && !!nextData.url;
+  lead = data;
+  renderSmartSite();
+  if (firstCreated) {
+    await supabaseClient.from('crm_portal_events').insert({
+      lead_id: currentLeadId,
+      client_id: currentClientId,
+      event_type: 'smart_site_created',
+      actor_name: lead.assigned_to || 'JAWSAI911',
+      notes: nextData.name || 'Smart Site demo created.',
+      metadata: { demo_url: nextData.url, demo_status: nextData.status }
+    });
+    const { data: portalRows } = await supabaseClient.from('crm_portal_events').select('*').eq('lead_id', currentLeadId).order('created_at', { ascending: false }).limit(12);
+    portalEvents = portalRows || portalEvents;
+    renderPortalEvents();
+  }
+  statusMsg('Smart Site details saved.');
+}
+
+async function markSmartSiteSent() {
+  const data = smartSiteData();
+  if (!data.url) {
+    statusMsg('Save a Smart Site URL first.');
+    return;
+  }
+  const senderName = window.prompt('Demo sent by who?', lead.assigned_to || '');
+  if (senderName === null) return;
+  const trimmedSender = senderName.trim();
+  if (!trimmedSender) {
+    statusMsg('Sender name is required.');
+    return;
+  }
+  const sendChannel = window.prompt('Sent how? Enter channel like text, email, loom, or call.', 'text');
+  if (sendChannel === null) return;
+  const trimmedChannel = sendChannel.trim() || 'text';
+  const nextData = Object.assign({}, data, {
+    status: 'sent',
+    sent_at: new Date().toISOString(),
+    last_updated_at: new Date().toISOString()
+  });
+  const { data: leadRow, error: leadError } = await supabaseClient
+    .from('crm_leads')
+    .update({ custom_fields: Object.assign({}, lead.custom_fields || {}, { smart_site_demo: nextData }) })
+    .eq('id', currentLeadId)
+    .select('*')
+    .single();
+  if (leadError) {
+    statusMsg(leadError.message);
+    return;
+  }
+  lead = leadRow;
+  const { error: eventError } = await supabaseClient.from('crm_portal_events').insert({
+    lead_id: currentLeadId,
+    client_id: currentClientId,
+    event_type: 'smart_site_sent',
+    actor_name: trimmedSender,
+    notes: 'Smart Site sent via ' + trimmedChannel + '.',
+    metadata: {
+      demo_name: nextData.name || null,
+      demo_url: nextData.url,
+      demo_status: nextData.status,
+      channel: trimmedChannel
+    }
+  });
+  if (eventError) {
+    statusMsg(eventError.message);
+    return;
+  }
+  const { data: portalRows } = await supabaseClient.from('crm_portal_events').select('*').eq('lead_id', currentLeadId).order('created_at', { ascending: false }).limit(12);
+  portalEvents = portalRows || portalEvents;
+  renderSmartSite();
+  renderPortalEvents();
+  statusMsg('Smart Site send event saved.');
+}
+
+async function persistDocuments(nextDocs) {
+  const nextCustomFields = Object.assign({}, lead.custom_fields || {}, { documents: nextDocs });
+  const { data, error } = await supabaseClient
+    .from('crm_leads')
+    .update({ custom_fields: nextCustomFields })
+    .eq('id', currentLeadId)
+    .select('*')
+    .single();
+  if (error) throw error;
+  lead = data;
+  renderDocuments();
+}
+
+async function addDocument() {
+  const name = document.getElementById('docName').value.trim();
+  const type = document.getElementById('docType').value;
+  let url = document.getElementById('docUrl').value.trim();
+  const fileInput = document.getElementById('docFile');
+  const file = fileInput.files && fileInput.files[0];
+  if (file) {
+    statusMsg('Uploading document...');
+    const safeLead = String(lead.full_name || lead.company || 'lead').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    const ext = file.name.includes('.') ? '.' + file.name.split('.').pop() : '';
+    const path = (currentClientId || 'client') + '/' + (currentLeadId || 'lead') + '/' + safeLead + '-' + Date.now() + ext;
+    const { error: uploadError } = await supabaseClient.storage.from(DOC_BUCKET).upload(path, file, { upsert: true });
+    if (uploadError) {
+      statusMsg('Upload failed: ' + uploadError.message + '. Create a public bucket named "' + DOC_BUCKET + '" in Supabase Storage.');
+      return;
+    }
+    const { data } = supabaseClient.storage.from(DOC_BUCKET).getPublicUrl(path);
+    url = data && data.publicUrl ? data.publicUrl : url;
+  }
+  if (!name || !url) return;
+  const nextDocs = leadDocuments().concat([{ name: name, type: type, url: url, created_at: new Date().toISOString() }]);
+  await persistDocuments(nextDocs);
+  document.getElementById('docName').value = '';
+  document.getElementById('docUrl').value = '';
+  document.getElementById('docFile').value = '';
+  statusMsg('Document saved to lead record.');
+}
+
+async function removeDocument(index) {
+  const nextDocs = leadDocuments().filter((_, idx) => idx !== index);
+  await persistDocuments(nextDocs);
+}
+
+async function saveLeadEdits() {
+  const payload = {
+    status: document.getElementById('leadStatus').value,
+    assigned_to: document.getElementById('leadOwner').value.trim() || null,
+    email: document.getElementById('leadEmail').value.trim() || null,
+    phone: document.getElementById('leadPhoneEdit').value.trim() || null,
+    notes: document.getElementById('leadNotesEdit').value.trim() || null
+  };
+  const { data, error } = await supabaseClient
+    .from('crm_leads')
+    .update(payload)
+    .eq('id', currentLeadId)
+    .select('*')
+    .single();
+  if (error) {
+    statusMsg(error.message);
+    return;
+  }
+  lead = data;
+  renderLead();
+  renderSmartSite();
+  statusMsg('Lead updates saved.');
+}
+
+currentLeadId = queryValue('lead_id');
+currentClientId = queryValue('client_id');
+loadLeadDetail().catch(err => statusMsg(err.message));
+</script>
+</body>
+</html>

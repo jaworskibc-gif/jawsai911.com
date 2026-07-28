@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JAWSAI911 Sales Console</title>
+<script src="../hub-auth.js"></script>
+<script src="crm-shared.js"></script>
+<style>
+  :root{
+    --navy:#010711; --navy-2:#0b1f33; --cyan:#00b4ff; --teal:#00c4b4; --pink:#e8175d;
+    --amber:#f2c879; --ink:#1a2230; --ink-soft:#5a6472; --foam:#f7fafb; --line:#e2e6ea;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Liberation Sans',Arial,sans-serif}
+  body{background:var(--foam);color:var(--ink)}
+  .topbar{background:var(--navy);color:#fff;padding:16px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .brand{font-size:16px;font-weight:900}
+  .brand span{color:var(--cyan)}
+  .picker{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .picker select,.picker input{
+    background:var(--navy-2);color:#fff;border:1px solid rgba(255,255,255,.15);padding:8px 10px;border-radius:6px;font-size:12px;
+  }
+  .banner{background:#eaf6ff;color:#0a5a80;font-size:11.5px;padding:8px 22px;border-bottom:1px solid #c8e8f7}
+  .wrap{max-width:1400px;margin:0 auto;padding:22px}
+  .status-msg{font-size:11px;color:var(--ink-soft);margin-bottom:14px}
+  .hero{display:grid;grid-template-columns:1.3fr .7fr;gap:16px;margin-bottom:16px}
+  .card,.lead-card,.quick-log{background:#fff;border:1px solid var(--line);border-radius:10px}
+  .card{padding:18px}
+  .hero h1{font-size:28px;line-height:1.05;margin-bottom:10px}
+  .hero p{font-size:14px;line-height:1.65;color:var(--ink-soft)}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .stat{padding:14px;border:1px solid var(--line);border-radius:8px;background:var(--foam)}
+  .stat strong{display:block;font-size:24px;color:var(--navy)}
+  .stat span{display:block;margin-top:4px;font-size:10px;color:var(--ink-soft);letter-spacing:.5px}
+  .console{display:grid;grid-template-columns:.9fr 1fr .9fr;gap:16px}
+  .section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+  .section-head h2{font-size:13px;font-weight:900}
+  .mini{font-size:11px;color:var(--ink-soft)}
+  .pipeline-list,.task-list{display:grid;gap:8px}
+  .pipe-row,.task-row,.lead-card{padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--foam)}
+  .pipe-row{cursor:pointer}
+  .pipe-row.active{border-color:var(--cyan);background:#eaf6ff}
+  .pipe-title{font-size:13px;font-weight:800}
+  .pipe-meta,.task-meta{font-size:11px;color:var(--ink-soft);margin-top:4px;line-height:1.5}
+  .queue-empty{padding:26px;text-align:center;color:var(--ink-soft);font-size:12px}
+  .lead-card{background:#fff}
+  .lead-card h3{font-size:22px;line-height:1.1;margin-bottom:6px}
+  .lead-meta{font-size:13px;color:var(--ink-soft);margin-bottom:18px}
+  .action-row,.outcome-row{display:flex;gap:8px;flex-wrap:wrap}
+  .btn,.outcome-btn{
+    padding:10px 14px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--ink);font-size:12px;font-weight:800;cursor:pointer
+  }
+  .btn.primary{background:var(--teal);border-color:var(--teal);color:var(--navy)}
+  .outcome-btn.selected{background:#eaf6ff;border-color:var(--cyan);color:var(--navy)}
+  .quick-log{margin-top:16px;padding:18px}
+  .quick-grid{display:grid;grid-template-columns:1.1fr .9fr auto;gap:10px;align-items:end}
+  .field label{display:block;font-size:11px;color:var(--ink-soft);font-weight:700;margin-bottom:4px}
+  .field input,.field textarea,.field select{
+    width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;font-size:13px
+  }
+  .field textarea{min-height:80px;resize:vertical}
+  .task-row.done{opacity:.55}
+  .task-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  @media (max-width:1100px){.hero,.console,.quick-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="brand">JAWS<span>AI</span>911 <span style="font-weight:400;color:#fff">Sales Console</span></div>
+    <div class="picker">
+      <input id="operatorName" placeholder="Operator name">
+      <select id="clientSelect"></select>
+      <select id="ownerFilter">
+        <option value="">Assigned: All</option>
+        <option value="me">Assigned: Me</option>
+      </select>
+    </div>
+  </div>
+  <div class="banner">Caller workspace for owned leads, next actions, and follow-up. Use this as the main sales screen once the CRM tables are live.</div>
+
+  <main class="wrap">
+    <div class="status-msg" id="statusMsg">Loading...</div>
+    <section class="hero">
+      <div class="card">
+        <h1>One screen for leads, calls, and follow-up.</h1>
+        <p>Work the next lead, log the outcome, create the next action automatically, and keep moving without bouncing between tools.</p>
+      </div>
+      <div class="stats">
+        <div class="stat"><strong id="statOpen">0</strong><span>OPEN LEADS</span></div>
+        <div class="stat"><strong id="statDue">0</strong><span>FOLLOW-UPS DUE</span></div>
+        <div class="stat"><strong id="statCalls">0</strong><span>CALLS LOGGED</span></div>
+      </div>
+    </section>
+
+    <section class="console">
+      <div class="card">
+        <div class="section-head">
+          <h2>Lead Queue</h2>
+          <span class="mini" id="pipelineMeta">Grouped by stage</span>
+        </div>
+        <div id="pipelineContainer" class="pipeline-list"></div>
+      </div>
+
+      <div class="lead-card">
+        <div class="section-head">
+          <h2>Current Lead</h2>
+          <span class="mini" id="nextMeta">Select a lead</span>
+        </div>
+        <div id="nextLeadContainer" class="queue-empty">No lead selected.</div>
+      </div>
+
+      <div class="card">
+        <div class="section-head">
+          <h2>Follow-Up Queue</h2>
+          <span class="mini" id="tasksMeta">Open tasks sorted by due time</span>
+        </div>
+        <div id="taskContainer" class="task-list"></div>
+      </div>
+    </section>
+
+    <section class="quick-log">
+      <div class="section-head">
+        <h2>Call Outcome</h2>
+        <span class="mini">Set the result, add a note, then move to the next lead</span>
+      </div>
+      <div class="outcome-row" id="outcomeRow"></div>
+      <div class="quick-grid" style="margin-top:14px">
+        <div class="field">
+          <label>Notes</label>
+          <textarea id="logNotes" placeholder="What happened on the call?"></textarea>
+        </div>
+        <div class="field">
+          <label>Lead Stage After Call</label>
+          <select id="stageSelect">
+            <option value="new">New</option>
+            <option value="contacted">Contacted</option>
+            <option value="warm">Warm</option>
+            <option value="booked">Booked</option>
+            <option value="showed">Showed</option>
+            <option value="closed_won">Closed Won</option>
+            <option value="closed_lost">Closed Lost</option>
+            <option value="nurture">Nurture</option>
+          </select>
+        </div>
+        <button class="btn primary" id="saveNextBtn" type="button">Save &amp; Next</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script>
+  const SUPABASE_URL = 'https://owkqfledeuetwwmlvnmb.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93a3FmbGVkZXVldHd3bWx2bm1iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxMzM5MTQsImV4cCI6MjEwMDcwOTkxNH0.lOwjIzs-DyVtvKR8-b1L6RTdlb8iY9_1chgKbY2ml3c';
+  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const STATUS_ORDER = ['new','contacted','warm','booked','showed','closed_won','closed_lost','nurture'];
+  const OUTCOMES = [
+    { id: 'no_answer', label: 'No Answer', stage: 'contacted' },
+    { id: 'voicemail', label: 'Voicemail', stage: 'contacted' },
+    { id: 'spoke', label: 'Spoke', stage: 'warm' },
+    { id: 'scheduled', label: 'Booked', stage: 'booked' },
+    { id: 'not_interested', label: 'Not Interested', stage: 'closed_lost' },
+    { id: 'won', label: 'Closed Won', stage: 'closed_won' }
+  ];
+
+  let currentClientId = null;
+  let currentClientName = null;
+  let leads = [];
+  let tasks = [];
+  let selectedLeadId = null;
+  let selectedOutcome = 'no_answer';
+  let callsLogged = 0;
+  let operatorName = '';
+
+  function statusMsg(text) { document.getElementById('statusMsg').textContent = text; }
+  function escapeHtml(value) { const div = document.createElement('div'); div.textContent = value || ''; return div.innerHTML; }
+  function todayIso() { return new Date().toISOString(); }
+  function telHref(phone) { return 'tel:' + String(phone || '').replace(/[^0-9+]/g, ''); }
+  function smsHref(phone) { return 'sms:' + String(phone || '').replace(/[^0-9+]/g, ''); }
+  function storageKey() { return 'jawscrm_operator_name'; }
+  function currentOwnerFilter() { return document.getElementById('ownerFilter').value || ''; }
+  function readOperatorName() { return String(document.getElementById('operatorName').value || '').trim(); }
+
+  function loadOperatorName() {
+    operatorName = String(window.localStorage.getItem(storageKey()) || '').trim();
+    document.getElementById('operatorName').value = operatorName;
+  }
+
+  function saveOperatorName() {
+    operatorName = readOperatorName();
+    window.localStorage.setItem(storageKey(), operatorName);
+  }
+
+  async function loadClientList() {
+    const { data, error } = await supabaseClient.from('clients').select('id, name').order('name');
+    if (error) throw error;
+    const select = document.getElementById('clientSelect');
+    select.innerHTML = '';
+    if (!data || data.length === 0) {
+      select.innerHTML = '<option value="">No clients yet</option>';
+      statusMsg('Create a client in the toolkit first.');
+      return;
+    }
+    data.forEach(client => {
+      const opt = document.createElement('option');
+      opt.value = client.id;
+      opt.textContent = client.name;
+      select.appendChild(opt);
+    });
+    currentClientId = data[0].id;
+    currentClientName = data[0].name;
+    select.value = currentClientId;
+    await loadConsole();
+  }
+
+  async function loadConsole() {
+    if (!currentClientId) return;
+    statusMsg('Loading Sales Console for ' + currentClientName + '...');
+    try {
+      const filterMode = currentOwnerFilter();
+      const leadFilters = filterMode === 'me' && operatorName ? { assignedTo: operatorName } : {};
+      const [leadRows, taskRows, callCount] = await Promise.all([
+        window.JAWSCRM.listCrmLeads(supabaseClient, currentClientId, leadFilters),
+        window.JAWSCRM.getCrmTasks(supabaseClient, currentClientId, { status: 'open' }),
+        window.JAWSCRM.countCrmCalls(supabaseClient, currentClientId)
+      ]);
+      leads = leadRows || [];
+      tasks = taskRows || [];
+      callsLogged = callCount || 0;
+      if (!selectedLeadId && leads.length) {
+        const nextLead = window.JAWSCRM.getNextCrmLead(leads);
+        selectedLeadId = nextLead ? nextLead.id : leads[0].id;
+      }
+      if (selectedLeadId && !leads.find(lead => lead.id === selectedLeadId)) {
+        const nextLead = window.JAWSCRM.getNextCrmLead(leads);
+        selectedLeadId = nextLead ? nextLead.id : (leads.length ? leads[0].id : null);
+      }
+      renderOutcomeButtons();
+      renderPipeline();
+      renderNextLead();
+      renderTasks();
+      renderStats();
+      statusMsg('Sales Console live for ' + currentClientName + '.');
+    } catch (error) {
+      statusMsg(error.message || 'Unable to load Sales Console.');
+      return;
+    }
+  }
+
+  function renderStats() {
+    const openStatuses = ['new','contacted','warm','booked','showed','nurture'];
+    document.getElementById('statOpen').textContent = leads.filter(lead => openStatuses.includes(lead.status)).length;
+    document.getElementById('statDue').textContent = tasks.filter(task => !task.due_at || task.due_at <= todayIso()).length;
+    document.getElementById('statCalls').textContent = callsLogged;
+  }
+
+  function renderOutcomeButtons() {
+    const row = document.getElementById('outcomeRow');
+    row.innerHTML = '';
+    OUTCOMES.forEach(outcome => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'outcome-btn' + (outcome.id === selectedOutcome ? ' selected' : '');
+      btn.textContent = outcome.label;
+      btn.onclick = function () {
+        selectedOutcome = outcome.id;
+        document.getElementById('stageSelect').value = outcome.stage;
+        renderOutcomeButtons();
+      };
+      row.appendChild(btn);
+    });
+    const defaultOutcome = OUTCOMES.find(item => item.id === selectedOutcome);
+    if (defaultOutcome) document.getElementById('stageSelect').value = defaultOutcome.stage;
+  }
+
+  function renderPipeline() {
+    const container = document.getElementById('pipelineContainer');
+    if (!leads.length) {
+      container.innerHTML = '<div class="queue-empty">No crm_leads records yet. Run the migration and start logging calls into the new model.</div>';
+      return;
+    }
+    const groups = {};
+    STATUS_ORDER.forEach(status => { groups[status] = []; });
+    leads.forEach(lead => {
+      if (!groups[lead.status]) groups[lead.status] = [];
+      groups[lead.status].push(lead);
+    });
+    container.innerHTML = '';
+    STATUS_ORDER.forEach(status => {
+      const rows = groups[status] || [];
+      if (!rows.length) return;
+      rows.forEach(lead => {
+        const card = document.createElement('div');
+        card.className = 'pipe-row' + (lead.id === selectedLeadId ? ' active' : '');
+        card.onclick = function () {
+          selectedLeadId = lead.id;
+          renderPipeline();
+          renderNextLead();
+        };
+        card.innerHTML = '<div class="pipe-title">' + escapeHtml(lead.full_name || lead.company || 'Unnamed Lead') + '</div>' +
+          '<div class="pipe-meta">' + escapeHtml(status) + ' · ' + escapeHtml(lead.phone || 'No phone') + (lead.next_follow_up_at ? ' · next ' + escapeHtml(new Date(lead.next_follow_up_at).toLocaleString()) : '') + '</div>';
+        container.appendChild(card);
+      });
+    });
+  }
+
+  function renderNextLead() {
+    const container = document.getElementById('nextLeadContainer');
+    const lead = leads.find(item => item.id === selectedLeadId);
+    if (!lead) {
+      container.className = 'queue-empty';
+      container.textContent = 'No lead selected.';
+      return;
+    }
+    document.getElementById('nextMeta').textContent = 'Current lead: ' + (lead.full_name || lead.company || 'Unnamed Lead');
+    container.className = 'lead-card';
+    container.innerHTML = '<h3>' + escapeHtml(lead.full_name || lead.company || 'Unnamed Lead') + '</h3>' +
+      '<div class="lead-meta">' + escapeHtml(lead.phone || 'No phone') + ' · ' + escapeHtml(lead.city || 'No city') + ', ' + escapeHtml(lead.state || 'FL') + '</div>' +
+      '<div class="action-row">' +
+      '<a class="btn primary" href="' + escapeHtml(telHref(lead.phone)) + '">Call</a>' +
+      '<a class="btn" href="' + escapeHtml(smsHref(lead.phone)) + '">Text</a>' +
+      '<a class="btn" href="Lead_Detail.html?client_id=' + escapeHtml(encodeURIComponent(currentClientId || '')) + '&lead_id=' + escapeHtml(encodeURIComponent(lead.id)) + '">Lead Detail</a>' +
+      '</div>' +
+      '<div class="pipe-meta" style="margin-top:14px">Status: ' + escapeHtml(lead.status) + ' · Last outcome: ' + escapeHtml(lead.last_call_outcome || 'none') + ' · Attempts: ' + escapeHtml(String(lead.call_attempts || 0)) + '</div>' +
+      '<div class="pipe-meta" style="margin-top:8px">' + escapeHtml(lead.notes || 'No notes yet.') + '</div>';
+  }
+
+  function renderTasks() {
+    const container = document.getElementById('taskContainer');
+    if (!tasks.length) {
+      container.innerHTML = '<div class="queue-empty">No open crm_tasks yet.</div>';
+      return;
+    }
+    container.innerHTML = '';
+    tasks.forEach(task => {
+      const row = document.createElement('div');
+      row.className = 'task-row';
+      row.innerHTML = '<div class="pipe-title">' + escapeHtml(task.title) + '</div>' +
+        '<div class="task-meta">' + escapeHtml(task.crm_leads?.full_name || '') + ' · ' + escapeHtml(task.task_type || 'task') + ' · due ' + escapeHtml(task.due_at ? new Date(task.due_at).toLocaleString() : 'unscheduled') + '</div>' +
+        '<div class="task-actions">' +
+        '<a class="btn" href="Lead_Detail.html?client_id=' + escapeHtml(encodeURIComponent(currentClientId || '')) + '&lead_id=' + escapeHtml(encodeURIComponent(task.lead_id || '')) + '">Open Lead</a>' +
+        '<button class="btn primary" type="button" onclick="markTaskDone(\'' + escapeHtml(task.id) + '\')">Mark Done</button>' +
+        '</div>';
+      container.appendChild(row);
+    });
+  }
+
+  async function markTaskDone(taskId) {
+    if (!taskId) return;
+    try {
+      await window.JAWSCRM.completeCrmTask(supabaseClient, taskId, 'done');
+      await loadConsole();
+      statusMsg('Task completed and queue refreshed.');
+    } catch (error) {
+      statusMsg(error.message || 'Unable to complete task.');
+    }
+  }
+
+  async function logCallAndAdvance() {
+    const lead = leads.find(item => item.id === selectedLeadId);
+    if (!lead) return;
+    saveOperatorName();
+    const notes = document.getElementById('logNotes').value.trim();
+    const nextStage = document.getElementById('stageSelect').value;
+    const dueAt = ['no_answer', 'voicemail'].includes(selectedOutcome)
+      ? new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
+      : selectedOutcome === 'spoke'
+        ? new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString()
+        : selectedOutcome === 'scheduled'
+          ? new Date().toISOString()
+          : null;
+
+    try {
+      await window.JAWSCRM.logCrmCall(supabaseClient, {
+        clientId: currentClientId,
+        leadId: lead.id,
+        outcome: selectedOutcome,
+        status: nextStage,
+        notes: notes || null,
+        followUpAt: dueAt,
+        assigned_to: operatorName || null,
+        called_by: operatorName || 'sales_console'
+      });
+    } catch (error) {
+      statusMsg(error.message || 'Unable to log call.');
+      return;
+    }
+
+    document.getElementById('logNotes').value = '';
+    await loadConsole();
+    const nextLead = window.JAWSCRM.getNextCrmLead(leads, lead.id) || leads[0];
+    selectedLeadId = nextLead ? nextLead.id : null;
+    renderPipeline();
+    renderNextLead();
+    statusMsg('Call saved to crm_calls, lead updated in crm_leads, and next follow-up created where needed.');
+  }
+
+  document.getElementById('clientSelect').addEventListener('change', async function (event) {
+    const option = event.target.selectedOptions[0];
+    currentClientId = event.target.value || null;
+    currentClientName = option ? option.textContent : null;
+    selectedLeadId = null;
+    await loadConsole();
+  });
+  document.getElementById('ownerFilter').addEventListener('change', async function () {
+    selectedLeadId = null;
+    await loadConsole();
+  });
+  document.getElementById('operatorName').addEventListener('change', async function () {
+    saveOperatorName();
+    if (currentOwnerFilter() === 'me') {
+      selectedLeadId = null;
+      await loadConsole();
+    }
+  });
+  document.getElementById('saveNextBtn').addEventListener('click', logCallAndAdvance);
+  loadOperatorName();
+  loadClientList();
+  </script>
+</body>
+</html>

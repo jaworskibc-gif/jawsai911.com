@@ -93,28 +93,34 @@
   </div>
 
   <div class="tabs">
-    <div class="tab active" data-tab="log" onclick="switchTab('log')">Log a Call</div>
-    <div class="tab" data-tab="all" onclick="switchTab('all')">All Calls</div>
+    <div class="tab active" data-tab="log" onclick="switchTab('log')">Log Call</div>
+    <div class="tab" data-tab="all" onclick="switchTab('all')">Call History</div>
     <div class="tab" data-tab="followups" onclick="switchTab('followups')">Follow-Ups Due <span class="tab-count" id="followupCount" style="display:none;">0</span></div>
   </div>
 
   <div class="panel active" id="panel-log">
     <div class="status-msg" id="statusMsg">Loading...</div>
     <div class="form-card">
-      <div class="row2">
+      <div class="row3">
+        <div class="field">
+          <label>Existing Lead</label>
+          <select id="existingLeadSelect">
+            <option value="">Select from pipeline...</option>
+          </select>
+        </div>
         <div class="field"><label>Lead / Business Name</label><input id="leadName" placeholder="e.g. Coastal Blue Pool Care"></div>
         <div class="field"><label>Phone</label><input id="leadPhone" placeholder="(561) 555-0134"></div>
       </div>
 
-      <label style="font-size:11px; font-weight:700; color:var(--ink-soft); display:block; margin-bottom:8px;">Outcome</label>
+      <label style="font-size:11px; font-weight:700; color:var(--ink-soft); display:block; margin-bottom:8px;">Call Outcome</label>
       <div class="outcome-grid" id="outcomeGrid"></div>
 
       <div class="row2">
         <div class="field"><label>Follow-Up Date (optional)</label><input id="followUpDate" type="date"></div>
-        <div class="field"><label>Notes</label><input id="callNotes" placeholder="What happened on the call..."></div>
+        <div class="field"><label>Call Notes</label><input id="callNotes" placeholder="What happened on the call..."></div>
       </div>
 
-      <button class="btn btn-teal" onclick="logCall()">Save Call Log</button>
+      <button class="btn btn-teal" onclick="logCall()">Save Call</button>
     </div>
   </div>
 
@@ -138,6 +144,7 @@
   </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="crm-shared.js"></script>
 <script>
 const SUPABASE_URL = 'https://owkqfledeuetwwmlvnmb.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93a3FmbGVkZXVldHd3bWx2bm1iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxMzM5MTQsImV4cCI6MjEwMDcwOTkxNH0.lOwjIzs-DyVtvKR8-b1L6RTdlb8iY9_1chgKbY2ml3c';
@@ -156,6 +163,8 @@ let currentClient = null;
 let currentClientId = null;
 let selectedOutcome = 'no_answer';
 let callsData = [];
+let pipelineLeads = [];
+let followupTasks = [];
 
 function statusMsg(t) { document.getElementById('statusMsg').textContent = t; }
 function escapeHtml(str) { const d = document.createElement('div'); d.textContent = str || ''; return d.innerHTML; }
@@ -163,12 +172,12 @@ function todayStr() { return new Date().toISOString().slice(0,10); }
 function normalizeCall(row) {
   return {
     id: row.id,
-    leadName: row.lead_name || '',
-    phone: row.phone || '',
+    leadName: row.crm_leads?.full_name || row.full_name || '',
+    phone: row.crm_leads?.phone || row.phone || '',
     outcome: row.outcome || 'no_answer',
     notes: row.notes || '',
-    followUpDate: row.follow_up_date || '',
-    loggedAt: row.logged_at || row.created_at || new Date().toISOString()
+    followUpDate: row.next_follow_up_at ? row.next_follow_up_at.slice(0, 10) : '',
+    loggedAt: row.called_at || row.created_at || new Date().toISOString()
   };
 }
 
@@ -178,6 +187,25 @@ function switchTab(name) {
   document.getElementById('panel-' + name).classList.add('active');
   if (name === 'all') renderAllCalls();
   if (name === 'followups') renderFollowups();
+}
+
+function renderLeadOptions() {
+  const select = document.getElementById('existingLeadSelect');
+  select.innerHTML = '<option value="">Select from pipeline...</option>';
+  pipelineLeads.forEach(lead => {
+    const opt = document.createElement('option');
+    opt.value = lead.id;
+    opt.textContent = (lead.full_name || lead.name || '') + (lead.phone ? ' — ' + lead.phone : '');
+    select.appendChild(opt);
+  });
+}
+
+function syncSelectedLead() {
+  const select = document.getElementById('existingLeadSelect');
+  const lead = pipelineLeads.find(row => row.id === select.value);
+  if (!lead) return;
+  document.getElementById('leadName').value = lead.full_name || lead.name || '';
+  document.getElementById('leadPhone').value = lead.phone || '';
 }
 
 function renderOutcomeGrid() {
@@ -244,19 +272,38 @@ document.getElementById('clientSelect').addEventListener('change', async (e) => 
 });
 
 async function loadCalls() {
-  if (!currentClientId) { callsData = []; updateFollowupBadge(); return; }
-  statusMsg('Logging calls for ' + currentClient + ' — entries save automatically.');
+  if (!currentClientId) { callsData = []; pipelineLeads = []; followupTasks = []; updateFollowupBadge(); return; }
+  statusMsg('Logging calls for ' + currentClient + ' — outcomes now update the CRM stage and create follow-up tasks automatically.');
   try {
-    const { data, error } = await supabaseClient
-      .from('calls')
-      .select('*')
-      .eq('client_id', currentClientId)
-      .order('logged_at', { ascending: false });
-    if (error) throw error;
-    callsData = (data || []).map(normalizeCall);
+    const leadsRes = await window.JAWSCRM.listCrmLeads(supabaseClient, currentClientId);
+    const leadIds = (leadsRes || []).map(lead => lead.id).filter(Boolean);
+    let callsRows = [];
+    if (leadIds.length) {
+      const { data, error } = await supabaseClient
+        .from('crm_calls')
+        .select('*, crm_leads!inner(full_name, phone, next_follow_up_at, client_id)')
+        .in('lead_id', leadIds)
+        .order('called_at', { ascending: false });
+      if (error) throw error;
+      callsRows = data || [];
+    }
+    callsData = callsRows.map(normalizeCall);
+    pipelineLeads = leadsRes || [];
+    const taskRows = await window.JAWSCRM.getCrmTasks(supabaseClient, currentClientId, { status: 'open' });
+    followupTasks = (taskRows || []).map(row => ({
+      leadName: row.crm_leads?.full_name || '',
+      phone: row.crm_leads?.phone || '',
+      type: row.task_type || 'task',
+      script: row.title || '',
+      dueDate: row.due_at ? row.due_at.slice(0, 10) : '',
+      workflowName: 'CRM Task'
+    }));
   } catch (e) {
     callsData = [];
+    pipelineLeads = [];
+    followupTasks = [];
   }
+  renderLeadOptions();
   updateFollowupBadge();
 }
 
@@ -268,27 +315,32 @@ async function logCall() {
   const notes = document.getElementById('callNotes').value.trim();
   const followUpDate = document.getElementById('followUpDate').value;
 
-  const { error } = await supabaseClient.from('calls').insert({
-    client_id: currentClientId,
-    lead_name: leadName,
-    phone,
-    outcome: selectedOutcome,
-    notes,
-    follow_up_date: followUpDate || null
-  });
-  if (error) {
-    alert(error.message);
+  try {
+    const selectedLead = pipelineLeads.find(lead => lead.id === document.getElementById('existingLeadSelect').value);
+    const result = await window.JAWSCRM.logCrmCall(supabaseClient, {
+      clientId: currentClientId,
+      leadId: selectedLead ? selectedLead.id : null,
+      full_name: leadName,
+      phone,
+      notes,
+      outcome: selectedOutcome,
+      followUpAt: followUpDate ? followUpDate + 'T09:00:00.000Z' : null,
+      called_by: 'call_tracker'
+    });
+    await loadCalls();
+    document.getElementById('existingLeadSelect').value = '';
+    document.getElementById('leadName').value = '';
+    document.getElementById('leadPhone').value = '';
+    document.getElementById('callNotes').value = '';
+    document.getElementById('followUpDate').value = '';
+    selectedOutcome = 'no_answer';
+    renderOutcomeGrid();
+    const taskText = result.task ? ' Auto follow-up activated.' : '';
+    statusMsg('Logged and synced to CRM.' + taskText);
+  } catch (e) {
+    alert(e.message);
     return;
   }
-  await loadCalls();
-
-  document.getElementById('leadName').value = '';
-  document.getElementById('leadPhone').value = '';
-  document.getElementById('callNotes').value = '';
-  document.getElementById('followUpDate').value = '';
-  selectedOutcome = 'no_answer';
-  renderOutcomeGrid();
-  statusMsg('Logged. ' + callsData.length + ' total calls for ' + currentClient + '.');
 }
 
 function renderAllCalls() {
@@ -323,11 +375,12 @@ function getDueFollowups() {
 }
 
 function updateFollowupBadge() {
-  const due = getDueFollowups();
+  const today = todayStr();
+  const due = getDueFollowups().length + followupTasks.filter(t => t.dueDate && t.dueDate <= today).length;
   const badge = document.getElementById('followupCount');
-  if (due.length > 0) {
+  if (due > 0) {
     badge.style.display = 'inline-block';
-    badge.textContent = due.length;
+    badge.textContent = due;
   } else {
     badge.style.display = 'none';
   }
@@ -336,26 +389,28 @@ function updateFollowupBadge() {
 function renderFollowups() {
   const container = document.getElementById('followupsContainer');
   const today = todayStr();
-  const due = callsData
+  const callFollowups = callsData
     .filter(c => c.followUpDate)
-    .slice()
-    .sort((a, b) => a.followUpDate.localeCompare(b.followUpDate));
+    .map(c => ({ kind: 'call', leadName: c.leadName, phone: c.phone, outcome: c.outcome, dueDate: c.followUpDate, notes: c.notes }));
+  const taskFollowups = followupTasks.map(t => ({ kind: 'task', leadName: t.leadName, phone: '', outcome: t.type, dueDate: t.dueDate, notes: t.script }));
+  const due = callFollowups.concat(taskFollowups).sort((a, b) => a.dueDate.localeCompare(b.dueDate));
 
   if (!currentClient || due.length === 0) {
-    container.innerHTML = '<div class="empty-state">No follow-ups scheduled. Set a follow-up date when logging a call.</div>';
+    container.innerHTML = '<div class="empty-state">No follow-ups scheduled. Logging a call now creates automatic follow-up tasks where they make sense.</div>';
     return;
   }
 
-  let html = '<table class="call-table"><thead><tr><th>Lead</th><th>Phone</th><th>Last Outcome</th><th>Follow-Up Date</th><th>Notes</th></tr></thead><tbody>';
+  let html = '<table class="call-table"><thead><tr><th>Lead</th><th>Phone</th><th>Source</th><th>Follow-Up Date</th><th>Notes / Task</th></tr></thead><tbody>';
   due.forEach(c => {
     let tagClass = 'followup-future', tagLabel = c.followUpDate;
     if (c.followUpDate < today) { tagClass = 'followup-overdue'; tagLabel = 'OVERDUE — ' + c.followUpDate; }
     else if (c.followUpDate === today) { tagClass = 'followup-today'; tagLabel = 'TODAY'; }
     const oc = OUTCOMES.find(o => o.id === c.outcome);
+    const sourceLabel = c.kind === 'task' ? 'Auto Follow-Up Task' : (oc ? oc.label : c.outcome);
     html += `<tr>
       <td>${escapeHtml(c.leadName)}</td>
-      <td>${escapeHtml(c.phone)}</td>
-      <td><span class="badge badge-${c.outcome}">${oc ? oc.label : c.outcome}</span></td>
+      <td>${escapeHtml(c.phone || '—')}</td>
+      <td>${escapeHtml(sourceLabel)}</td>
       <td><span class="followup-tag ${tagClass}">${escapeHtml(tagLabel)}</span></td>
       <td>${escapeHtml(c.notes)}</td>
     </tr>`;
@@ -365,6 +420,7 @@ function renderFollowups() {
 }
 
 renderOutcomeGrid();
+document.getElementById('existingLeadSelect').addEventListener('change', syncSelectedLead);
 loadClientList();
 </script>
 </body>

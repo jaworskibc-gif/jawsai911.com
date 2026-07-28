@@ -118,7 +118,7 @@
       <button onclick="createClient()">+ Add Client</button>
     </div>
   </div>
-  <div class="status-msg" id="statusMsg">Loading...</div>
+  <div class="status-msg" id="statusMsg">Loading lead board...</div>
 
   <div class="board-wrap">
     <div class="board" id="board"></div>
@@ -126,21 +126,22 @@
 
   <div class="modal-overlay" id="modalOverlay">
     <div class="modal">
-      <h3>New Lead</h3>
-      <label>Name / Business</label>
+      <h3>Add Lead</h3>
+      <label>Lead / Business Name</label>
       <input id="leadName" placeholder="e.g. Coastal Blue Pool Care">
       <label>Phone</label>
       <input id="leadPhone" placeholder="(561) 555-0134">
       <label>Notes</label>
-      <textarea id="leadNotes" rows="3" placeholder="Reviews, source, context..."></textarea>
+      <textarea id="leadNotes" rows="3" placeholder="Context, notes, source, or last conversation..."></textarea>
       <div class="modal-actions">
         <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-        <button class="btn-save" onclick="saveLead()">Add Lead</button>
+        <button class="btn-save" onclick="saveLead()">Save Lead</button>
       </div>
     </div>
   </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="crm-shared.js"></script>
 <script>
 const SUPABASE_URL = 'https://owkqfledeuetwwmlvnmb.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93a3FmbGVkZXVldHd3bWx2bm1iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxMzM5MTQsImV4cCI6MjEwMDcwOTkxNH0.lOwjIzs-DyVtvKR8-b1L6RTdlb8iY9_1chgKbY2ml3c';
@@ -149,10 +150,12 @@ const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_
 const STAGES = [
   { id: 'new',        name: 'New Lead',        color: '#00B4FF' },
   { id: 'contacted',  name: 'Contacted',        color: '#00C4B4' },
-  { id: 'video_sent',  name: 'Video/Demo Sent', color: '#F2C879' },
-  { id: 'scheduled',  name: 'Call Scheduled',  color: '#E8175D' },
-  { id: 'won',        name: 'Won',              color: '#1FA37A' },
-  { id: 'lost',       name: 'Lost / Cold',      color: '#8A94A0' },
+  { id: 'warm',       name: 'Warm',             color: '#F2C879' },
+  { id: 'booked',     name: 'Booked',           color: '#E8175D' },
+  { id: 'showed',     name: 'Showed',           color: '#9A6DF0' },
+  { id: 'closed_won', name: 'Closed Won',       color: '#1FA37A' },
+  { id: 'closed_lost',name: 'Closed Lost',      color: '#8A94A0' },
+  { id: 'nurture',    name: 'Nurture',          color: '#5A6472' },
 ];
 
 let currentClient = null;
@@ -166,11 +169,10 @@ function statusMsg(text) {
 function normalizeLead(row) {
   return {
     id: row.id,
-    name: row.name || '',
+    name: row.full_name || row.company || '',
     phone: row.phone || '',
     notes: row.notes || '',
-    stage: row.stage || 'new',
-    position: row.position || 0
+    stage: row.status || 'new'
   };
 }
 function buildEmptyPipeline() {
@@ -235,12 +237,7 @@ async function loadPipeline(clientName) {
   if (!currentClientId) { pipelineData = buildEmptyPipeline(); renderBoard(); return; }
   statusMsg('Loading pipeline for ' + clientName + '...');
   try {
-    const { data, error } = await supabaseClient
-      .from('pipeline_leads')
-      .select('*')
-      .eq('client_id', currentClientId)
-      .order('position');
-    if (error) throw error;
+    const data = await window.JAWSCRM.listCrmLeads(supabaseClient, currentClientId);
     pipelineData = buildEmptyPipeline();
     (data || []).map(normalizeLead).forEach(lead => {
       if (!pipelineData[lead.stage]) pipelineData[lead.stage] = [];
@@ -261,10 +258,9 @@ async function savePipeline() {
       for (let idx = 0; idx < leads.length; idx++) {
         const lead = leads[idx];
         lead.stage = stage.id;
-        lead.position = idx;
         const { error } = await supabaseClient
-          .from('pipeline_leads')
-          .update({ stage: stage.id, position: idx })
+          .from('crm_leads')
+          .update({ status: stage.id })
           .eq('id', lead.id);
         if (error) throw error;
       }
@@ -355,28 +351,28 @@ async function saveLead() {
   if (!name) return;
   const phone = document.getElementById('leadPhone').value.trim();
   const notes = document.getElementById('leadNotes').value.trim();
-  const position = (pipelineData[addingToStage] || []).length;
-  const { data, error } = await supabaseClient.from('pipeline_leads').insert({
-    client_id: currentClientId,
-    stage: addingToStage,
-    name,
-    phone,
-    notes,
-    position
-  }).select('*').single();
-  if (error) {
-    statusMsg('Save failed: ' + error.message);
+  try {
+    const data = await window.JAWSCRM.upsertCrmLead(supabaseClient, currentClientId, {
+      full_name: name,
+      company: name,
+      phone: phone || null,
+      notes: notes || null,
+      status: addingToStage,
+      source: 'pipeline'
+    });
+    pipelineData[addingToStage].push(normalizeLead(data));
+    closeModal();
+    renderBoard();
+  } catch (e) {
+    statusMsg('Save failed: ' + e.message);
     return;
   }
-  pipelineData[addingToStage].push(normalizeLead(data));
-  closeModal();
-  renderBoard();
 }
 
 async function deleteLead(stageId, idx) {
   const [lead] = pipelineData[stageId].splice(idx, 1);
   if (lead) {
-    const { error } = await supabaseClient.from('pipeline_leads').delete().eq('id', lead.id);
+    const { error } = await supabaseClient.from('crm_leads').delete().eq('id', lead.id);
     if (error) {
       statusMsg('Delete failed: ' + error.message);
       return;

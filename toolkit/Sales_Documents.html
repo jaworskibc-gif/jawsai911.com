@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JAWSAI911 Sales Documents</title>
+<script src="../hub-auth.js"></script>
+<script src="crm-shared.js"></script>
+<style>
+  :root {
+    --navy:#010711; --navy-2:#0B1F33; --cyan:#00B4FF; --teal:#00C4B4; --pink:#E8175D;
+    --ink:#1a2230; --ink-soft:#5A6472; --foam:#F7FAFB; --line:#E2E6EA;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Liberation Sans', Arial, sans-serif; }
+  body { background:var(--foam); color:var(--ink); }
+  .topbar { background:var(--navy); color:#fff; padding:16px 22px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+  .brand { font-size:16px; font-weight:900; }
+  .brand span { color:var(--cyan); }
+  .picker { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+  .picker select { background:var(--navy-2); color:#fff; border:1px solid rgba(255,255,255,.15); padding:8px 10px; border-radius:6px; font-size:12px; }
+  .back-link { color:rgba(255,255,255,.86); text-decoration:none; font-size:12px; font-weight:700; }
+  .banner { background:#EAF6FF; color:#0A5A80; font-size:11.5px; padding:8px 22px; border-bottom:1px solid #C8E8F7; }
+  .wrap { max-width:1180px; margin:0 auto; padding:22px; }
+  .status-msg { font-size:11px; color:var(--ink-soft); margin-bottom:16px; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .panel { background:#fff; border:1px solid var(--line); border-radius:10px; padding:18px; }
+  .section-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+  .section-head h2 { font-size:13px; font-weight:900; }
+  .mini { font-size:11px; color:var(--ink-soft); }
+  .list { display:grid; gap:8px; }
+  .item { border:1px solid var(--line); border-radius:8px; padding:12px; background:var(--foam); }
+  .item-title { font-size:13px; font-weight:800; }
+  .item-meta { font-size:11px; color:var(--ink-soft); margin-top:4px; line-height:1.5; }
+  .item-actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+  .btn { padding:10px 14px; border-radius:8px; border:1px solid var(--line); background:#fff; color:var(--ink); font-size:12px; font-weight:800; text-decoration:none; cursor:pointer; }
+  .btn.primary { background:var(--teal); border-color:var(--teal); color:var(--navy); }
+  .empty { text-align:center; padding:24px; color:var(--ink-soft); font-size:12px; }
+  @media (max-width:900px) { .grid { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div>
+      <div class="brand">JAWS<span>AI</span>911 <span style="font-weight:400;color:#fff">Sales Documents</span></div>
+      <a class="back-link" href="Lead_Detail.html">← Back to Lead Detail</a>
+    </div>
+    <div class="picker">
+      <select id="clientSelect"></select>
+    </div>
+  </div>
+  <div class="banner">One place for receipts, invoices, estimates, proposal links, and lead-level document references.</div>
+
+  <main class="wrap">
+    <div class="status-msg" id="statusMsg">Loading...</div>
+    <section class="grid">
+      <div class="panel">
+        <div class="section-head">
+          <h2>Invoices & Estimates</h2>
+          <span class="mini">Saved billing and proposal records</span>
+        </div>
+        <div id="invoiceDocs" class="list"></div>
+      </div>
+      <div class="panel">
+        <div class="section-head">
+          <h2>Lead Document Links</h2>
+          <span class="mini">Receipts, files, and external docs</span>
+        </div>
+        <div id="leadDocs" class="list"></div>
+      </div>
+    </section>
+  </main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+const SUPABASE_URL = 'https://owkqfledeuetwwmlvnmb.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93a3FmbGVkZXVldHd3bWx2bm1iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxMzM5MTQsImV4cCI6MjEwMDcwOTkxNH0.lOwjIzs-DyVtvKR8-b1L6RTdlb8iY9_1chgKbY2ml3c';
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let currentClientId = new URLSearchParams(window.location.search).get('client_id') || '';
+let currentLeadId = new URLSearchParams(window.location.search).get('lead_id') || '';
+let leads = [];
+let invoices = [];
+
+function statusMsg(text) { document.getElementById('statusMsg').textContent = text; }
+function escapeHtml(value) { const div = document.createElement('div'); div.textContent = value || ''; return div.innerHTML; }
+
+async function loadClientList() {
+  const { data, error } = await supabaseClient.from('clients').select('id, name').order('name');
+  if (error) throw error;
+  const select = document.getElementById('clientSelect');
+  select.innerHTML = '';
+  (data || []).forEach(client => {
+    const opt = document.createElement('option');
+    opt.value = client.id;
+    opt.textContent = client.name;
+    select.appendChild(opt);
+  });
+  if (currentClientId) select.value = currentClientId;
+}
+
+async function loadDocuments() {
+  if (!currentClientId) {
+    statusMsg('Pick a client first.');
+    return;
+  }
+  statusMsg('Loading sales documents...');
+  leads = await window.JAWSCRM.listCrmLeads(supabaseClient, currentClientId);
+  const { data, error } = await supabaseClient.from('invoices').select('*').eq('client_id', currentClientId).order('invoice_date', { ascending: false });
+  if (error) throw error;
+  invoices = data || [];
+  renderInvoiceDocs();
+  renderLeadDocs();
+  statusMsg('Sales documents ready.');
+}
+
+function renderInvoiceDocs() {
+  const container = document.getElementById('invoiceDocs');
+  if (!invoices.length) {
+    container.innerHTML = '<div class="empty">No saved invoices, estimates, or proposals yet.</div>';
+    return;
+  }
+  container.innerHTML = invoices.map(inv => {
+    const typeLabel = inv.type === 'invoice' ? 'Invoice' : ((inv.notes || '').includes('[PROPOSAL]') ? 'Proposal' : 'Estimate');
+    const matchingLead = (leads || []).find(lead => (lead.full_name || lead.company || '').trim().toLowerCase() === String(inv.customer_name || '').trim().toLowerCase());
+    const actions = [
+      '<a class="btn" href="JAWSAI911_Invoicing.html?client_id=' + encodeURIComponent(currentClientId) + (matchingLead ? '&lead_id=' + encodeURIComponent(matchingLead.id) : '') + '">Open Invoicing</a>',
+      '<a class="btn primary" href="Customer_Portal.html?invoice_id=' + encodeURIComponent(inv.id) + '" target="_blank" rel="noopener">Portal Link</a>'
+    ];
+    if (matchingLead) {
+      actions.push('<a class="btn" href="Lead_Detail.html?client_id=' + encodeURIComponent(matchingLead.client_id) + '&lead_id=' + encodeURIComponent(matchingLead.id) + '">Open Lead</a>');
+    }
+    return '<div class="item"><div class="item-title">' + escapeHtml(inv.number || 'Draft') + ' · ' + escapeHtml(typeLabel) + '</div><div class="item-meta">' + escapeHtml(inv.customer_name || '') + ' · ' + escapeHtml(inv.status || 'draft') + ' · $' + escapeHtml(Number(inv.total || 0).toFixed(2)) + '</div><div class="item-actions">' + actions.join('') + '</div></div>';
+  }).join('');
+}
+
+function renderLeadDocs() {
+  const container = document.getElementById('leadDocs');
+  const docItems = [];
+  (leads || []).forEach(lead => {
+    if (currentLeadId && lead.id !== currentLeadId) return;
+    const docs = lead.custom_fields && Array.isArray(lead.custom_fields.documents) ? lead.custom_fields.documents : [];
+    docs.forEach(doc => {
+      docItems.push({ lead: lead, doc: doc });
+    });
+  });
+  if (!docItems.length) {
+    container.innerHTML = '<div class="empty">No linked lead documents yet.</div>';
+    return;
+  }
+  container.innerHTML = docItems.map(item => '<div class="item"><div class="item-title">' + escapeHtml(item.doc.name || 'Document') + '</div><div class="item-meta">' + escapeHtml(item.lead.full_name || item.lead.company || '') + ' · ' + escapeHtml(item.doc.type || 'doc') + '</div><div class="item-actions"><a class="btn" href="' + escapeHtml(item.doc.url || '#') + '" target="_blank" rel="noopener">Open Link</a><a class="btn" href="Lead_Detail.html?client_id=' + encodeURIComponent(item.lead.client_id) + '&lead_id=' + encodeURIComponent(item.lead.id) + '">Open Lead</a></div></div>').join('');
+}
+
+document.getElementById('clientSelect').addEventListener('change', function (event) {
+  currentClientId = event.target.value || '';
+  const next = 'Sales_Documents.html?client_id=' + encodeURIComponent(currentClientId) + (currentLeadId ? '&lead_id=' + encodeURIComponent(currentLeadId) : '');
+  window.location.href = next;
+});
+
+loadClientList().then(loadDocuments).catch(err => statusMsg(err.message));
+</script>
+</body>
+</html>

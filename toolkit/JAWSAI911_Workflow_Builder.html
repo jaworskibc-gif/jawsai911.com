@@ -135,7 +135,10 @@
     <div class="apply-card" id="applyCard" style="display:none;">
       <h4 style="font-size:13px; margin-bottom:12px;">Apply This Playbook to a Lead</h4>
       <div class="row2">
+        <div class="field"><label>Existing CRM Lead</label><select id="applyLeadSelect"><option value="">Select from pipeline...</option></select></div>
         <div class="field"><label>Lead / Business Name</label><input id="applyLeadName" placeholder="e.g. Coastal Blue Pool Care"></div>
+      </div>
+      <div class="row2">
         <div class="field"><label>Start Date</label><input id="applyStartDate" type="date"></div>
       </div>
       <button class="btn btn-teal" onclick="applyWorkflow()">Generate Task Checklist</button>
@@ -147,6 +150,7 @@
   </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="crm-shared.js"></script>
 <script>
 const SUPABASE_URL = 'https://owkqfledeuetwwmlvnmb.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93a3FmbGVkZXVldHd3bWx2bm1iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxMzM5MTQsImV4cCI6MjEwMDcwOTkxNH0.lOwjIzs-DyVtvKR8-b1L6RTdlb8iY9_1chgKbY2ml3c';
@@ -165,6 +169,7 @@ let workflows = [];
 let currentWfId = null;
 let steps = [];
 let tasks = [];
+let pipelineLeads = [];
 
 function statusMsg(t) { document.getElementById('statusMsg').textContent = t; }
 function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
@@ -186,12 +191,12 @@ function normalizeWorkflow(row) {
 function normalizeTask(row) {
   return {
     id: row.id,
-    leadName: row.lead_name || '',
-    workflowName: row.workflow_name || '',
-    type: row.type || 'task',
-    script: row.script || '',
-    dueDate: row.due_date || todayStr(),
-    done: !!row.done,
+    leadName: row.crm_leads?.full_name || '',
+    workflowName: row.task_type === 'workflow' ? 'Workflow Task' : 'CRM Task',
+    type: row.task_type || 'task',
+    script: row.title || '',
+    dueDate: row.due_at ? row.due_at.slice(0, 10) : todayStr(),
+    done: row.status === 'done',
     createdAt: row.created_at || new Date().toISOString()
   };
 }
@@ -202,6 +207,25 @@ function switchTab(name) {
   document.getElementById('panel-' + name).classList.add('active');
   if (name === 'playbooks') renderWfList();
   if (name === 'tasks') renderTasks();
+}
+
+function renderLeadSelect() {
+  const select = document.getElementById('applyLeadSelect');
+  if (!select) return;
+  select.innerHTML = '<option value="">Select from pipeline...</option>';
+  pipelineLeads.forEach(lead => {
+    const opt = document.createElement('option');
+    opt.value = lead.id;
+    opt.textContent = (lead.full_name || lead.name || '') + (lead.phone ? ' — ' + lead.phone : '');
+    select.appendChild(opt);
+  });
+}
+
+function syncApplyLead() {
+  const select = document.getElementById('applyLeadSelect');
+  const lead = pipelineLeads.find(row => row.id === select.value);
+  if (!lead) return;
+  document.getElementById('applyLeadName').value = lead.full_name || lead.name || '';
 }
 
 async function loadClientList() {
@@ -256,7 +280,7 @@ document.getElementById('clientSelect').addEventListener('change', async (e) => 
 });
 
 async function loadData() {
-  if (!currentClientId) { workflows = []; tasks = []; renderWfList(); updateTaskBadge(); return; }
+  if (!currentClientId) { workflows = []; tasks = []; pipelineLeads = []; renderWfList(); updateTaskBadge(); return; }
   statusMsg('Playbooks for ' + currentClient + ' — changes save automatically.');
   try {
     const { data, error } = await supabaseClient.from('workflows').select('*').eq('client_id', currentClientId).order('created_at');
@@ -264,10 +288,15 @@ async function loadData() {
     workflows = (data || []).map(normalizeWorkflow);
   } catch (e) { workflows = []; }
   try {
-    const { data, error } = await supabaseClient.from('workflow_tasks').select('*').eq('client_id', currentClientId).order('due_date');
-    if (error) throw error;
+    const data = await window.JAWSCRM.getCrmTasks(supabaseClient, currentClientId);
     tasks = (data || []).map(normalizeTask);
   } catch (e) { tasks = []; }
+  try {
+    pipelineLeads = await window.JAWSCRM.listCrmLeads(supabaseClient, currentClientId);
+  } catch (e) {
+    pipelineLeads = [];
+  }
+  renderLeadSelect();
   renderWfList();
   updateTaskBadge();
 }
@@ -415,25 +444,35 @@ async function applyWorkflow() {
   const wf = workflows.find(w => w.id === currentWfId);
   if (!wf) { alert('Save the playbook first.'); return; }
   const leadName = document.getElementById('applyLeadName').value.trim();
+  const leadId = document.getElementById('applyLeadSelect').value;
   const startDate = document.getElementById('applyStartDate').value || todayStr();
   if (!leadName) { alert('Enter a lead name.'); return; }
-  const rows = wf.steps.map(step => ({
-    client_id: currentClientId,
-    workflow_id: currentWfId,
-    workflow_name: wf.name,
-    lead_name: leadName,
-    type: step.type,
-    script: step.script,
-    due_date: addDays(startDate, step.day),
-    done: false
-  }));
-  const { error } = await supabaseClient.from('workflow_tasks').insert(rows);
-  if (error) {
+  try {
+    let lead = pipelineLeads.find(row => row.id === leadId);
+    if (!lead) {
+      lead = await window.JAWSCRM.upsertCrmLead(supabaseClient, currentClientId, {
+        full_name: leadName,
+        company: leadName,
+        status: 'contacted',
+        source: 'workflow'
+      });
+    }
+    const rows = wf.steps.map(step => ({
+      lead_id: lead.id,
+      title: step.script || (wf.name + ' · ' + STEP_TYPES.find(t => t.id === step.type).label),
+      due_at: addDays(startDate, step.day) + 'T09:00:00.000Z',
+      status: 'open',
+      task_type: step.type
+    }));
+    const { error } = await supabaseClient.from('crm_tasks').insert(rows);
+    if (error) throw error;
+  } catch (error) {
     alert(error.message);
     return;
   }
   await loadData();
   document.getElementById('applyLeadName').value = '';
+  document.getElementById('applyLeadSelect').value = '';
   statusMsg('Applied "' + wf.name + '" to ' + leadName + ' — ' + wf.steps.length + ' tasks added.');
   switchTab('tasks');
 }
@@ -483,8 +522,9 @@ function renderTasks() {
 async function toggleTask(id) {
   const task = tasks.find(t => t.id === id);
   if (!task) return;
-  const { error } = await supabaseClient.from('workflow_tasks').update({ done: !task.done }).eq('id', id);
-  if (error) {
+  try {
+    await window.JAWSCRM.completeCrmTask(supabaseClient, id, task.done ? 'open' : 'done');
+  } catch (error) {
     alert(error.message);
     return;
   }
@@ -493,6 +533,7 @@ async function toggleTask(id) {
 }
 
 loadClientList();
+document.getElementById('applyLeadSelect').addEventListener('change', syncApplyLead);
 </script>
 </body>
 </html>

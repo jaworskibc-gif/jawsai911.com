@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JAWSAI911 Proposal Generator</title>
+<script src="../hub-auth.js"></script>
+<script src="crm-shared.js"></script>
+<style>
+  :root {
+    --navy:#010711; --navy-2:#0B1F33; --cyan:#00B4FF; --teal:#00C4B4; --pink:#E8175D;
+    --ink:#1a2230; --ink-soft:#5A6472; --foam:#F7FAFB; --line:#E2E6EA;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Liberation Sans', Arial, sans-serif; }
+  body { background:var(--foam); color:var(--ink); }
+  .topbar { background:var(--navy); color:#fff; padding:16px 22px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+  .brand { font-size:16px; font-weight:900; }
+  .brand span { color:var(--cyan); }
+  .back-link { color:rgba(255,255,255,.86); text-decoration:none; font-size:12px; font-weight:700; }
+  .banner { background:#EAF6FF; color:#0A5A80; font-size:11.5px; padding:8px 22px; border-bottom:1px solid #C8E8F7; }
+  .wrap { max-width:1180px; margin:0 auto; padding:22px; }
+  .status-msg { font-size:11px; color:var(--ink-soft); margin-bottom:16px; }
+  .grid { display:grid; grid-template-columns:1fr .95fr; gap:16px; }
+  .panel { background:#fff; border:1px solid var(--line); border-radius:10px; padding:18px; }
+  .section-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+  .section-head h2 { font-size:13px; font-weight:900; }
+  .mini { font-size:11px; color:var(--ink-soft); }
+  .field { margin-bottom:12px; }
+  .field label { display:block; font-size:11px; color:var(--ink-soft); font-weight:700; margin-bottom:4px; }
+  .field input, .field textarea {
+    width:100%; padding:10px; border:1px solid var(--line); border-radius:8px; font-size:13px;
+  }
+  .field textarea { min-height:96px; resize:vertical; }
+  .line-head, .line-row { display:grid; grid-template-columns:1fr 70px 90px 30px; gap:8px; }
+  .line-head { font-size:10.5px; font-weight:700; color:var(--ink-soft); margin-bottom:6px; }
+  .line-row { margin-bottom:8px; align-items:center; }
+  .line-row input { width:100%; padding:8px; border:1px solid var(--line); border-radius:6px; font-size:12.5px; }
+  .line-row button { background:none; border:none; color:var(--ink-soft); cursor:pointer; font-size:15px; }
+  .btn { padding:10px 14px; border-radius:8px; border:1px solid var(--line); background:#fff; color:var(--ink); font-size:12px; font-weight:800; cursor:pointer; text-decoration:none; }
+  .btn.primary { background:var(--teal); border-color:var(--teal); color:var(--navy); }
+  .btn.navy { background:var(--navy); border-color:var(--navy); color:#fff; }
+  .actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+  .sheet { background:#fff; border:1px solid var(--line); border-radius:10px; padding:30px; }
+  .sheet-head { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:28px; }
+  .sheet-brand { font-size:20px; font-weight:900; color:var(--navy); }
+  .sheet-brand span { color:var(--cyan); }
+  .sheet-type { font-size:24px; font-weight:900; color:var(--cyan); text-align:right; }
+  .sheet-meta { font-size:11px; color:var(--ink-soft); text-align:right; margin-top:4px; }
+  .sheet-to { margin-bottom:20px; font-size:13px; }
+  .sheet-to b { display:block; font-size:11px; color:var(--ink-soft); margin-bottom:4px; }
+  .sheet-table { width:100%; border-collapse:collapse; margin-bottom:18px; }
+  .sheet-table th { text-align:left; font-size:10.5px; color:var(--ink-soft); border-bottom:2px solid var(--navy); padding:6px 4px; }
+  .sheet-table td { font-size:12.5px; padding:8px 4px; border-bottom:1px solid var(--line); }
+  .num { text-align:right; }
+  .totals { display:flex; justify-content:flex-end; }
+  .totals-box { width:240px; }
+  .totals-row { display:flex; justify-content:space-between; font-size:12.5px; padding:4px 0; color:var(--ink-soft); }
+  .totals-row.grand { font-size:16px; font-weight:900; color:var(--navy); border-top:1px solid var(--line); margin-top:4px; padding-top:8px; }
+  .notes { margin-top:20px; font-size:11.5px; color:var(--ink-soft); line-height:1.7; white-space:pre-wrap; }
+  @media (max-width:1000px) { .grid { grid-template-columns:1fr; } }
+  @media print {
+    .topbar, .banner, .status-msg, .panel, .back-link { display:none !important; }
+    .wrap { max-width:none; padding:0; }
+    .grid { display:block; }
+    .sheet { border:none; border-radius:0; }
+  }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div>
+      <div class="brand">JAWS<span>AI</span>911 <span style="font-weight:400;color:#fff">Proposal Generator</span></div>
+      <a class="back-link" id="backLink" href="Lead_Detail.html">← Back to Lead Detail</a>
+    </div>
+  </div>
+  <div class="banner">Generate a JAWSAI911-branded proposal from the lead record, then save it into the same invoice/estimate system for the sales team.</div>
+
+  <main class="wrap">
+    <div class="status-msg" id="statusMsg">Loading...</div>
+    <section class="grid">
+      <div class="panel">
+        <div class="section-head">
+          <h2>Proposal Builder</h2>
+          <span class="mini">Create a proposal tied to this lead</span>
+        </div>
+        <div class="field"><label>Lead / Customer</label><input id="customerName"></div>
+        <div class="field"><label>Proposal Title</label><input id="proposalTitle" placeholder="e.g. Website + CRM + Follow-Up System"></div>
+        <div class="field"><label>Scope Summary</label><textarea id="proposalNotes" placeholder="Summarize the scope, deliverables, timing, and next steps."></textarea></div>
+        <div class="line-head"><div>Deliverable</div><div>Qty</div><div>Price</div><div></div></div>
+        <div id="lineItems"></div>
+        <div class="actions">
+          <button class="btn" type="button" onclick="addLine()">Add Line</button>
+          <button class="btn primary" type="button" onclick="saveProposal()">Save Proposal</button>
+          <button class="btn navy" type="button" onclick="window.print()">Print / PDF</button>
+        </div>
+      </div>
+      <div class="sheet" id="proposalSheet"></div>
+    </section>
+  </main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+const SUPABASE_URL = 'https://owkqfledeuetwwmlvnmb.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93a3FmbGVkZXVldHd3bWx2bm1iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxMzM5MTQsImV4cCI6MjEwMDcwOTkxNH0.lOwjIzs-DyVtvKR8-b1L6RTdlb8iY9_1chgKbY2ml3c';
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const params = new URLSearchParams(window.location.search);
+let currentClientId = params.get('client_id') || '';
+let currentLeadId = params.get('lead_id') || '';
+let lead = null;
+let lineItems = [{ desc: '', qty: 1, price: 0 }];
+
+function statusMsg(text) { document.getElementById('statusMsg').textContent = text; }
+function escapeHtml(value) { const div = document.createElement('div'); div.textContent = value || ''; return div.innerHTML; }
+function fmtMoney(value) { return '$' + (isNaN(value) ? 0 : Number(value).toFixed(2)); }
+function todayString() { return new Date().toLocaleDateString(); }
+
+async function loadLead() {
+  if (!currentLeadId) {
+    statusMsg('Missing lead id.');
+    return;
+  }
+  lead = await window.JAWSCRM.getCrmLeadById(supabaseClient, currentLeadId);
+  if (!lead) {
+    statusMsg('Lead not found.');
+    return;
+  }
+  currentClientId = lead.client_id;
+  document.getElementById('customerName').value = lead.full_name || lead.company || '';
+  document.getElementById('proposalTitle').value = 'JAWSAI911 Proposal';
+  document.getElementById('backLink').href = 'Lead_Detail.html?client_id=' + encodeURIComponent(currentClientId) + '&lead_id=' + encodeURIComponent(currentLeadId);
+  renderLines();
+  renderPreview();
+  statusMsg('Proposal generator ready.');
+}
+
+function renderLines() {
+  const container = document.getElementById('lineItems');
+  container.innerHTML = '';
+  lineItems.forEach((item, index) => {
+    const row = document.createElement('div');
+    row.className = 'line-row';
+    row.innerHTML = '<input value="' + escapeHtml(item.desc) + '" placeholder="Deliverable or service" oninput="updateLine(' + index + ', \'desc\', this.value)">' +
+      '<input type="number" value="' + item.qty + '" min="0" step="1" oninput="updateLine(' + index + ', \'qty\', this.value)">' +
+      '<input type="number" value="' + item.price + '" min="0" step="0.01" oninput="updateLine(' + index + ', \'price\', this.value)">' +
+      '<button type="button" onclick="removeLine(' + index + ')">✕</button>';
+    container.appendChild(row);
+  });
+}
+
+function updateLine(index, key, value) {
+  lineItems[index][key] = (key === 'qty' || key === 'price') ? parseFloat(value) || 0 : value;
+  renderPreview();
+}
+
+function addLine() {
+  lineItems.push({ desc: '', qty: 1, price: 0 });
+  renderLines();
+  renderPreview();
+}
+
+function removeLine(index) {
+  lineItems.splice(index, 1);
+  if (!lineItems.length) lineItems.push({ desc: '', qty: 1, price: 0 });
+  renderLines();
+  renderPreview();
+}
+
+function totals() {
+  const subtotal = lineItems.reduce((sum, item) => sum + ((item.qty || 0) * (item.price || 0)), 0);
+  return { subtotal: subtotal, total: subtotal };
+}
+
+function renderPreview() {
+  const sheet = document.getElementById('proposalSheet');
+  const customerName = document.getElementById('customerName').value || 'Customer Name';
+  const proposalTitle = document.getElementById('proposalTitle').value || 'JAWSAI911 Proposal';
+  const notes = document.getElementById('proposalNotes').value || '';
+  const calc = totals();
+  const rows = lineItems.map(item => '<tr><td>' + escapeHtml(item.desc || '') + '</td><td class="num">' + escapeHtml(String(item.qty || 0)) + '</td><td class="num">' + fmtMoney(item.price || 0) + '</td><td class="num">' + fmtMoney((item.qty || 0) * (item.price || 0)) + '</td></tr>').join('');
+  sheet.innerHTML = '<div class="sheet-head"><div><div class="sheet-brand">JAWS<span>AI</span>911</div><div style="font-size:11px;color:var(--ink-soft);margin-top:3px;">Proposal Template</div></div><div><div class="sheet-type">PROPOSAL</div><div class="sheet-meta">' + escapeHtml(todayString()) + '</div></div></div>' +
+    '<div class="sheet-to"><b>PREPARED FOR</b>' + escapeHtml(customerName) + '<br><br><b>PROPOSAL TITLE</b>' + escapeHtml(proposalTitle) + '</div>' +
+    '<table class="sheet-table"><thead><tr><th>Deliverable</th><th class="num">Qty</th><th class="num">Price</th><th class="num">Total</th></tr></thead><tbody>' + rows + '</tbody></table>' +
+    '<div class="totals"><div class="totals-box"><div class="totals-row"><span>Subtotal</span><span>' + fmtMoney(calc.subtotal) + '</span></div><div class="totals-row grand"><span>Total</span><span>' + fmtMoney(calc.total) + '</span></div></div></div>' +
+    '<div class="notes">' + escapeHtml(notes) + '</div>';
+}
+
+async function saveProposal() {
+  if (!currentClientId || !lead) {
+    alert('Lead is required before saving a proposal.');
+    return;
+  }
+  const customerName = document.getElementById('customerName').value.trim();
+  const proposalTitle = document.getElementById('proposalTitle').value.trim();
+  if (!customerName || !proposalTitle) {
+    alert('Enter the customer name and proposal title first.');
+    return;
+  }
+  const calc = totals();
+  const { count } = await supabaseClient.from('invoices').select('*', { count: 'exact', head: true }).eq('client_id', currentClientId);
+  const payload = {
+    client_id: currentClientId,
+    number: '#P' + ((count || 0) + 1001),
+    type: 'estimate',
+    customer_name: customerName,
+    line_items: JSON.parse(JSON.stringify(lineItems)),
+    tax_pct: 0,
+    subtotal: calc.subtotal,
+    total: calc.total,
+    status: 'draft',
+    notes: '[PROPOSAL] ' + proposalTitle + '\n' + document.getElementById('proposalNotes').value.trim(),
+    invoice_date: new Date().toISOString()
+  };
+  const { data: savedProposal, error } = await supabaseClient.from('invoices').insert(payload).select('*').single();
+  if (error) {
+    alert(error.message);
+    return;
+  }
+  const portalUrl = 'Customer_Portal.html?invoice_id=' + encodeURIComponent(savedProposal.id);
+  const docs = lead.custom_fields && Array.isArray(lead.custom_fields.documents) ? lead.custom_fields.documents.slice() : [];
+  docs.push({
+    name: proposalTitle,
+    type: 'proposal',
+    url: portalUrl,
+    created_at: new Date().toISOString()
+  });
+  const { error: leadError } = await supabaseClient.from('crm_leads').update({
+    custom_fields: Object.assign({}, lead.custom_fields || {}, { documents: docs })
+  }).eq('id', currentLeadId);
+  if (leadError) {
+    alert(leadError.message);
+    return;
+  }
+  await supabaseClient.from('crm_portal_events').insert({
+    lead_id: currentLeadId,
+    invoice_id: savedProposal.id,
+    client_id: currentClientId,
+    event_type: 'proposal_created',
+    actor_name: lead.assigned_to || 'JAWSAI911',
+    notes: 'Proposal created in Proposal Generator.',
+    metadata: {
+      document_number: savedProposal.number || null,
+      document_type: 'proposal',
+      portal_url: portalUrl
+    }
+  });
+  lead.custom_fields = Object.assign({}, lead.custom_fields || {}, { documents: docs });
+  statusMsg('Proposal saved and linked to the lead portal view: ' + portalUrl);
+}
+
+document.getElementById('customerName').addEventListener('input', renderPreview);
+document.getElementById('proposalTitle').addEventListener('input', renderPreview);
+document.getElementById('proposalNotes').addEventListener('input', renderPreview);
+loadLead().catch(err => statusMsg(err.message));
+</script>
+</body>
+</html>
