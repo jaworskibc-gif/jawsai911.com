@@ -1,0 +1,222 @@
+window.POOL_HOT_LEADS = {
+  "teca-solar-inc": {
+    name: "Teca Solar Inc",
+    city: "Coral Springs, FL",
+    phone: "(561) 783-5278",
+    rating: "4.9",
+    reviewCount: "588 reviews",
+    slug: "teca-solar-inc",
+    accent: "solar",
+    textMessage: "Almost 600 reviews and no website collecting them. Quick 30-sec video showing what a SuperSite would look like for Teca.",
+    videoScript: "Hey, this is Bryan with JAWSAI. I was looking at Teca Solar - almost 600 Google reviews. That's serious. The only problem is there's no website collecting those people when they search. Most of your buyers are looking at night. I put together a quick version of what a Shark SuperSite would look like for Teca - your reviews front and center, after-hours lead capture, and a system that keeps new reviews coming in. Takes about 30 seconds.",
+    serviceLane: "Solar / pool heat lead capture",
+    headline: "Turn 588 Google reviews into after-hours estimate requests.",
+    subhead: "A Shark SuperSite demo for Teca Solar focused on trust, quote capture, and a review engine that keeps the reputation compounding.",
+    reviewSource: "Source notes: SolarReviews and Verified Pool Pros snippets.",
+    reviews: [
+      "Excellent service and products. Great experience from start to finish and the price was competitive.",
+      "Awesome solar heat panel company and installer. Professional, fair on price, and accomplished the goal.",
+      "Customer service at its best. Neat, honest, efficient, and reasonably priced."
+    ],
+    photoNotes: ["Use Google profile roof/panel install photo.", "Use pool-heater equipment or panel shot.", "Use clean exterior/project completion image."],
+    logoNote: "Use tecasolar.com logo if available; otherwise use TECA wordmark fallback."
+  },
+  "jd-pool-clean-inc": {
+    name: "JD Pool Clean Inc.",
+    city: "Port St. Lucie, FL",
+    phone: "(772) 201-2958",
+    rating: "4.9",
+    reviewCount: "429 reviews",
+    slug: "jd-pool-clean-inc",
+    accent: "water",
+    textMessage: "429 reviews at 4.9 and no system turning them into new jobs. 30-sec video of what this would look like for JD Pool Clean.",
+    videoScript: "Hey, this is Bryan with JAWSAI. JD Pool Clean is sitting at 4.9 with over 400 reviews. That's excellent. But there's no website turning those reviews into new jobs. Service companies lose a ton of work after hours. I built a quick demo - missed-call recovery, automatic follow-up, and a review engine. 30 seconds to look at.",
+    serviceLane: "Pool service lead capture",
+    headline: "A cleaner front door for a high-trust service brand.",
+    subhead: "This quick demo turns JD Pool Clean's review volume into quote requests, missed-call recovery, and follow-up that keeps jobs from going cold.",
+    reviewSource: "Source notes: Yahoo Local and Angi snippets.",
+    reviews: [
+      "Quick and easy. The owner even came out to make sure the job was done correctly and that we were happy.",
+      "I highly recommend JD Pool Clean. Joel and William arrived earlier than expected and did a great job.",
+      "He informed us we didn't need everything we had ordered and ended up saving us money."
+    ],
+    photoNotes: ["Use pool cleaning/action photo from Google profile.", "Use equipment repair or service truck image.", "Use bright clean pool transformation image."],
+    logoNote: "No confirmed logo found. Use JD Pool Clean text lockup."
+  },
+  "j-m-c-pool-construction-inc": {
+    name: "JMC Pools",
+    city: "Lantana, FL",
+    phone: "(561) 866-5913",
+    rating: "4.9",
+    reviewCount: "200+ reviews",
+    slug: "j-m-c-pool-construction-inc",
+    accent: "builder",
+    textMessage: "200 reviews at 4.9 and no strong system converting them. Quick video of a SuperSite built for JMC Pools.",
+    videoScript: "Hey, this is Bryan with JAWSAI. JMC has around 200 reviews at 4.9 stars - real builder reputation. The gap is turning that reputation into appointments, especially after hours. I put together a quick SuperSite demo for JMC - reviews up front, after-hours capture, and automatic follow-up so quotes don't go cold. Takes half a minute.",
+    serviceLane: "Pool builder lead capture",
+    headline: "Builder-grade trust signals with follow-up that keeps quotes alive.",
+    subhead: "This version puts JMC's reputation front and center and gives the sales side a cleaner path from website visit to design consultation.",
+    reviewSource: "Source notes: user-provided Google review copy.",
+    reviews: [
+      "JMC Pools was fantastic to work with from start to finish. Marcelo, the owner, was friendly, professional, and always easy to communicate with.",
+      "From beginning to end JMC Pools is one of the few companies that will complete the pool process with your desires and stay on time. We love our beach entry pool.",
+      "A totally amazing transformation of my pool, the equipment, landscaping, lighting and backyard."
+    ],
+    photoNotes: ["Use jmcpools.com project hero photo.", "Use completed luxury backyard image.", "Use beach-entry or lighting detail image."],
+    logoNote: "Use jmcpools.com logo if available; otherwise use JMC Pools text logo."
+  },
+  "tampapoolpro-com-llc": {
+    name: "TampaPoolPro.com LLC",
+    city: "Tampa, FL",
+    phone: "(352) 467-9383",
+    rating: "5.0",
+    reviewCount: "132 reviews",
+    slug: "tampapoolpro-com-llc",
+    accent: "water",
+    textMessage: "Company is called Tampapoolpro.com and still no website. 30-sec video of what it should look like.",
+    videoScript: "Hey, this is Bryan with JAWSAI. Your company is called Tampapoolpro.com and there's still no website. You've got strong reviews but nothing collecting the people who find you. I built a quick version - reviews front and center, after-hours capture, review engine. 30 seconds.",
+    serviceLane: "Pool repair / renovation lead capture",
+    headline: "If the name says dot-com, the website should convert like it matters.",
+    subhead: "This demo shows what a review-driven Tampa pool brand looks like when the site actually acts like a sales rep after hours.",
+    reviewSource: "Source notes: Birdeye snippets. Verify and replace with your final chosen three before outreach if needed.",
+    reviews: [
+      "I had an excellent experience with TampaPoolProcom, LLC. Their professionalism and expertise stood out from start to finish.",
+      "Andre was very knowledgeable, professional and friendly. He was quick and efficient with his work.",
+      "Noelle in the office was always so nice to talk to and very helpful."
+    ],
+    photoNotes: ["Use Google profile renovation/project photo.", "Use clean pool finish or tile work image.", "Use team/service photo if available."],
+    logoNote: "Use text lockup or website mark from tampapoolpro.com if recoverable."
+  },
+  "monarch-estate-services-llc": {
+    name: "Monarch Estate Services, LLC",
+    city: "Cape Coral, FL",
+    phone: "(239) 542-2421",
+    rating: "5.0",
+    reviewCount: "128 reviews",
+    slug: "monarch-estate-services-llc",
+    accent: "estate",
+    textMessage: "128 five-star reviews and no digital front door for estate clients. Quick SuperSite demo for Monarch.",
+    videoScript: "Hey, this is Bryan with JAWSAI. Monarch is at 5.0 with 128 reviews - that estate-level positioning is clear. The only missing piece is a website that matches it and actually captures the lead. I put together a quick SuperSite demo for Monarch - clean, premium, reviews up front, after-hours capture. Takes about 30 seconds.",
+    serviceLane: "Premium estate / outdoor services",
+    headline: "A premium digital front door for premium estate work.",
+    subhead: "This version leads with clean presentation, luxury trust signals, and a quieter premium tone built for higher-end homeowners.",
+    reviewSource: "Review slots still need exact Google review paste-in.",
+    reviews: [
+      "Paste top 5-star Google review here.",
+      "Paste top 5-star Google review here.",
+      "Paste top 5-star Google review here."
+    ],
+    photoNotes: ["Use clean luxury project image from Google profile.", "Use estate exterior/service photo.", "Use polished before/after or detail shot."],
+    logoNote: "No confirmed logo recovered. Use MONARCH ESTATE SERVICES text lockup."
+  },
+  "aquatica-pools-spas-llc": {
+    name: "Aquatica Pools & Spas LLC",
+    city: "Jacksonville, FL",
+    phone: "(904) 619-3281",
+    rating: "5.0",
+    reviewCount: "125 reviews",
+    slug: "aquatica-pools-spas-llc",
+    accent: "aqua",
+    textMessage: "125 five-star reviews in Jacksonville and no website. 30-sec video of what this would look like for Aquatica.",
+    videoScript: "Hey, this is Bryan with JAWSAI. Aquatica is sitting at 5.0 with 125 reviews in Jacksonville. Solid. There's just no website turning that into new work. I built a quick demo - reviews front and center, after-hours capture, review engine. 30 seconds.",
+    serviceLane: "Pool builder lead capture",
+    headline: "Jacksonville trust, now packaged into a cleaner lead machine.",
+    subhead: "This demo keeps Aquatica premium but practical: reviews up top, fast quote capture, and follow-up baked in for nights and weekends.",
+    reviewSource: "Review slots still need exact Google review paste-in.",
+    reviews: [
+      "Paste top 5-star Google review here.",
+      "Paste top 5-star Google review here.",
+      "Paste top 5-star Google review here."
+    ],
+    photoNotes: ["Use Google profile build photo.", "Use spa / water feature image.", "Use finished backyard or dusk shot."],
+    logoNote: "Use text lockup unless official logo is pulled from Google profile."
+  },
+  "gates-melody-pool-service-llc": {
+    name: "Gates Melody Pool Service LLC",
+    city: "Pompano Beach, FL",
+    phone: "(954) 742-3316",
+    rating: "4.8",
+    reviewCount: "125 reviews",
+    slug: "gates-melody-pool-service-llc",
+    accent: "legacy",
+    textMessage: "125 reviews and no system catching after-hours jobs. Quick video of a SuperSite for Gates Melody.",
+    videoScript: "Hey, this is Bryan with JAWSAI. Gates Melody has 125 reviews at 4.8 - real service reputation. The problem is there's no system catching the next job when the phone isn't answered. I put together a quick SuperSite demo - missed-call text-back, automatic follow-up, and a review engine. Takes 30 seconds.",
+    serviceLane: "Legacy pool service lead capture",
+    headline: "A family pool-service brand with a better after-hours system.",
+    subhead: "This demo leans on long-standing trust, service reliability, and quicker capture for the next repair or renovation inquiry.",
+    reviewSource: "Review slots still need exact Google review paste-in.",
+    reviews: [
+      "Paste top 5-star Google review here.",
+      "Paste top 5-star Google review here.",
+      "Paste top 5-star Google review here."
+    ],
+    photoNotes: ["Use service truck or crew photo from site/profile.", "Use renovation or equipment image.", "Use clean finished pool image."],
+    logoNote: "Use Gates Melody text lockup or site logo from gatesmelodypools.com."
+  },
+  "fl-custom-pools-group": {
+    name: "FL Custom Pools / Legacy Custom Pools / TGS Pools & Pavers",
+    city: "Port St. Lucie, FL",
+    phone: "(772) 400-2424",
+    rating: "5.0",
+    reviewCount: "122 reviews",
+    slug: "fl-custom-pools-group",
+    accent: "group",
+    textMessage: "122 five-star reviews across the group and still no website. 30-sec SuperSite demo that covers all three.",
+    videoScript: "Hey, this is Bryan with JAWSAI. Between FL Custom, Legacy, and TGS you've got 122 five-star reviews under the same operation. Strong work - zero website collecting it. I built a quick SuperSite demo that can cover the group - reviews up front, after-hours capture, automatic follow-up. 30 seconds.",
+    serviceLane: "Multi-brand pool group lead capture",
+    headline: "One front-end site for a multi-brand pool operation.",
+    subhead: "This version is positioned as a group-level digital front door that can route by service line while consolidating the trust proof in one place.",
+    reviewSource: "Review slots still need exact Google review paste-in.",
+    reviews: [
+      "Paste top 5-star Google review here.",
+      "Paste top 5-star Google review here.",
+      "Paste top 5-star Google review here."
+    ],
+    photoNotes: ["Use FL Custom Pools project image.", "Use pavers/backyard finish shot.", "Use group brand/service image."],
+    logoNote: "Use group wordmark with FL Custom / Legacy / TGS lockup."
+  },
+  "classon-pools-group": {
+    name: "Classon Pools Group",
+    city: "Cape Coral / Fort Myers / Naples, FL",
+    phone: "(239) 631-5502",
+    rating: "5.0",
+    reviewCount: "106 reviews",
+    slug: "classon-pools-group",
+    accent: "group",
+    textMessage: "106 five-star reviews across multiple brands and zero website. Quick video of a SuperSite for the group.",
+    videoScript: "Hey, this is Bryan with JAWSAI. You're running multiple pool brands across Southwest Florida with 106 five-star reviews and still no website. That's a lot of good work with no digital front door. I put together a quick SuperSite demo that can sit in front of the whole group. Takes about 30 seconds.",
+    serviceLane: "Southwest Florida pool group",
+    headline: "A shared digital front door for a multi-brand Southwest Florida group.",
+    subhead: "This demo is structured to present one operating group clearly while still feeling premium enough for multiple local service areas.",
+    reviewSource: "Review slots still need exact Google review paste-in.",
+    reviews: [
+      "Paste top 5-star Google review here.",
+      "Paste top 5-star Google review here.",
+      "Paste top 5-star Google review here."
+    ],
+    photoNotes: ["Use strongest completed project image.", "Use market/service area photo.", "Use pool detail or transformation image."],
+    logoNote: "No confirmed logo recovered. Use Classon Pools Group text lockup."
+  },
+  "built-right-pool-heaters": {
+    name: "Built Right Pool Heaters / Geothermal Innovations",
+    city: "Cape Coral / Fort Myers, FL",
+    phone: "(239) 560-3858",
+    rating: "5.0",
+    reviewCount: "94 reviews",
+    slug: "built-right-pool-heaters",
+    accent: "heat",
+    textMessage: "94 five-star reviews in a specialized niche and no site owning the traffic. 30-sec SuperSite demo for Built Right.",
+    videoScript: "Hey, this is Bryan with JAWSAI. Built Right and Geothermal are at 5.0 with 94 reviews in a specialized niche. That's strong positioning - and there's still no website owning the search traffic. I built a quick SuperSite demo for you - niche-focused, reviews front and center, after-hours capture. 30 seconds.",
+    serviceLane: "Pool heater / geothermal niche lead capture",
+    headline: "Own the niche search traffic before it leaks to generalists.",
+    subhead: "This demo is built for a specialized pool-heater brand: clearer positioning, tighter trust proof, and a better path to quote requests after hours.",
+    reviewSource: "Source notes: BestProsInTown summary plus review slots for final Google paste-in.",
+    reviews: [
+      "Reliable and professional with knowledgeable technicians who solve problems efficiently.",
+      "A seamless transition from costly propane heaters to Built Right units with excellent heating results.",
+      "The team stands behind its products and is highly recommended for pool heater needs."
+    ],
+    photoNotes: ["Use heater equipment photo.", "Use installation detail image.", "Use branded service or truck photo if available."],
+    logoNote: "Use Built Right Pool Heaters text lockup with Geothermal Innovations subline."
+  }
+};

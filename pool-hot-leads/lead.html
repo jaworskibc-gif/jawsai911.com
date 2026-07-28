@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lead Demo</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="wrap" id="app"></div>
+
+  <script src="data.js"></script>
+  <script>
+    (function () {
+      const slug = (location.hash || "").replace(/^#/, "");
+      const lead = window.POOL_HOT_LEADS && window.POOL_HOT_LEADS[slug];
+      const app = document.getElementById("app");
+
+      if (!lead) {
+        app.innerHTML = '<div class="card panel"><div class="brand">JAWSAI911 Lead Demo</div><h1 style="margin:16px 0 8px;">Lead not found</h1><p style="color:var(--muted);">Use a valid lead hash or open this page from the batch index.</p><div style="margin-top:18px;"><a class="btn" href="index.html">Open batch index</a></div></div>';
+        return;
+      }
+
+      document.title = lead.name + " - Lead Demo";
+      const initials = lead.name.split(/[^A-Za-z0-9]+/).filter(Boolean).slice(0, 2).map(function (part) { return part[0].toUpperCase(); }).join("");
+
+      app.innerHTML = `
+        <div class="topbar">
+          <div class="brand">JAWSAI911 Pool Hot Leads</div>
+          <div class="toplinks">
+            <a class="chip" href="index.html">Batch index</a>
+            <a class="chip" href="../index.html">Main site</a>
+            <a class="btn" href="tel:${lead.phone.replace(/[^0-9]/g, "")}">Call ${lead.phone}</a>
+          </div>
+        </div>
+
+        <section class="hero">
+          <div class="card hero-copy">
+            <div class="eyebrow">${lead.serviceLane}</div>
+            <h1>${lead.name}</h1>
+            <p>${lead.headline}</p>
+            <div class="meta">
+              <div class="meta-pill">${lead.city}</div>
+              <div class="meta-pill">${lead.phone}</div>
+              <div class="meta-pill">${lead.rating} · ${lead.reviewCount}</div>
+            </div>
+            <div class="note">${lead.subhead}</div>
+          </div>
+
+          <aside class="card hero-side">
+            <div class="logo-badge ${lead.accent}">${initials}</div>
+            <h2 class="side-title">Demo page ready for outreach recording</h2>
+            <p class="side-copy">Use this page for the 30-second walk-through, then screen-record it with the supplied script and text.</p>
+            <div class="stats">
+              <div class="stat"><strong>${lead.rating}</strong><span>Google rating used in the pitch.</span></div>
+              <div class="stat"><strong>${lead.reviewCount}</strong><span>Review count shown as social proof.</span></div>
+              <div class="stat"><strong>3</strong><span>Review blocks ready on-page.</span></div>
+              <div class="stat"><strong>30 sec</strong><span>Target video demo length.</span></div>
+            </div>
+          </aside>
+        </section>
+
+        <section class="grid two">
+          <div class="card panel">
+            <h2 class="section-head">Review proof</h2>
+            <div class="reviews">
+              ${lead.reviews.map(function (review) {
+                return `<div class="review"><p>${review}</p><small>Google review slot</small></div>`;
+              }).join("")}
+            </div>
+            <div class="note">${lead.reviewSource}</div>
+          </div>
+
+          <div class="card panel">
+            <h2 class="section-head">Photo and logo placement</h2>
+            <div class="grid three">
+              ${lead.photoNotes.map(function (note, index) {
+                return `<div class="asset-slot"><div><strong>Photo ${index + 1}</strong>${note}</div></div>`;
+              }).join("")}
+            </div>
+            <div class="note">${lead.logoNote}</div>
+          </div>
+        </section>
+
+        <section class="grid two section">
+          <div class="card panel">
+            <h2 class="section-head">SuperSite positioning</h2>
+            <ul class="lane-list">
+              <li><strong>After-hours capture:</strong> lead form, missed-call recovery, and fast response angle.</li>
+              <li><strong>Trust layer:</strong> review volume stays front and center instead of hidden on Google.</li>
+              <li><strong>Follow-up system:</strong> the site is framed as a sales asset, not just a brochure.</li>
+              <li><strong>Recording cue:</strong> scroll top to bottom once and keep the walkthrough under 30 seconds.</li>
+            </ul>
+          </div>
+
+          <div class="card panel">
+            <h2 class="section-head">Outreach package</h2>
+            <div class="outreach">
+              <div class="outreach-box">
+                <h3>Text Message</h3>
+                <p>${lead.textMessage}</p>
+              </div>
+              <div class="outreach-box">
+                <h3>Video Script</h3>
+                <p>${lead.videoScript}</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="card panel">
+            <h2 class="section-head">Final prep checklist</h2>
+            <ul class="action-list">
+              <li><strong>1.</strong> If a review block still says paste here, replace it with the final exact Google quote before sending.</li>
+              <li><strong>2.</strong> Drop in logo and 1–3 real photos if you have them; otherwise record from this placeholder layout as builder-ready content.</li>
+              <li><strong>3.</strong> Screen-record the page with the script, then send the video and short text before calling.</li>
+            </ul>
+          </div>
+        </section>
+      `;
+    })();
+  </script>
+</body>
+</html>
