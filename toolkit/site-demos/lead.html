@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Lead Demo</title>
+  <script src="../../hub-auth.js"></script>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -27,11 +28,11 @@
       app.innerHTML = `
         <div class="topbar">
           <div class="brand">JAWSAI911 Pool Hot Leads</div>
-          <div class="toplinks">
-            <a class="chip" href="index.html">Batch index</a>
-            <a class="chip" href="../index.html">Main site</a>
-            <a class="btn" href="tel:${lead.phone.replace(/[^0-9]/g, "")}">Call ${lead.phone}</a>
-          </div>
+        <div class="toplinks">
+          <a class="chip" href="index.html">Batch index</a>
+          <a class="chip" href="../index.html">Toolkit</a>
+          <a class="btn" href="tel:${lead.phone.replace(/[^0-9]/g, "")}">Call ${lead.phone}</a>
+        </div>
         </div>
 
         <section class="hero">
