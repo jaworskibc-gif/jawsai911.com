@@ -532,14 +532,16 @@ async function saveLead() {
   if (!currentClientId) { alert('Add a client first.'); return; }
   const name = document.getElementById('leadName').value.trim();
   if (!name) return;
+  const stageId = addingToStage || 'new';
   const phone = document.getElementById('leadPhone').value.trim();
   const email = document.getElementById('leadEmail').value.trim();
   const city = document.getElementById('leadCity').value.trim();
   const assignedTo = document.getElementById('leadOwner').value.trim();
   const source = document.getElementById('leadSource').value;
   const notes = document.getElementById('leadNotes').value.trim();
+  statusMsg('Saving lead into ' + (currentClient || 'client') + '...');
   try {
-    const data = await window.JAWSCRM.upsertCrmLead(supabaseClient, currentClientId, {
+    await window.JAWSCRM.upsertCrmLead(supabaseClient, currentClientId, {
       full_name: name,
       company: name,
       phone: phone || null,
@@ -547,12 +549,12 @@ async function saveLead() {
       city: city || null,
       assigned_to: assignedTo || null,
       notes: notes || null,
-      status: addingToStage,
+      status: stageId,
       source: source || 'pipeline'
     });
-    pipelineData[addingToStage].push(normalizeLead(data));
     closeModal();
-    renderBoard();
+    await loadPipeline(currentClient);
+    statusMsg('Lead saved into ' + (currentClient || 'client') + '.');
   } catch (e) {
     statusMsg('Save failed: ' + e.message);
     return;
@@ -578,16 +580,11 @@ async function saveImportedLeads() {
 
   try {
     for (const lead of leads) {
-      const data = await window.JAWSCRM.upsertCrmLead(supabaseClient, currentClientId, lead);
-      const stageId = data.status || stage;
-      if (!pipelineData[stageId]) pipelineData[stageId] = [];
-      if (!pipelineData[stageId].some(item => item.id === data.id)) {
-        pipelineData[stageId].push(normalizeLead(data));
-      }
+      await window.JAWSCRM.upsertCrmLead(supabaseClient, currentClientId, lead);
       importedCount += 1;
     }
     closeImportModal();
-    renderBoard();
+    await loadPipeline(currentClient);
     statusMsg('Imported ' + importedCount + ' leads into ' + (currentClient || 'client') + '.');
   } catch (e) {
     statusMsg('Import failed after ' + importedCount + ' leads: ' + e.message);
