@@ -47,6 +47,8 @@
   .lead-card h3{font-size:22px;line-height:1.1;margin-bottom:6px}
   .lead-meta{font-size:13px;color:var(--ink-soft);margin-bottom:18px}
   .action-row,.outcome-row{display:flex;gap:8px;flex-wrap:wrap}
+  .smartsite-box{margin-top:14px;padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--foam)}
+  .smartsite-box strong{display:block;font-size:12px;margin-bottom:4px}
   .btn,.outcome-btn{
     padding:10px 14px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--ink);font-size:12px;font-weight:800;cursor:pointer
   }
@@ -177,6 +179,49 @@
   function todayIso() { return new Date().toISOString(); }
   function telHref(phone) { return 'tel:' + String(phone || '').replace(/[^0-9+]/g, ''); }
   function smsHref(phone) { return 'sms:' + String(phone || '').replace(/[^0-9+]/g, ''); }
+  function smartSiteData(lead) {
+    const data = lead && lead.custom_fields ? lead.custom_fields.smart_site_demo : null;
+    return data && typeof data === 'object' ? data : {};
+  }
+  function composeSmartSiteText(lead) {
+    const demo = smartSiteData(lead);
+    const name = lead.full_name || lead.company || 'your business';
+    const bits = [
+      'Hey, this is ' + (operatorName || 'Bryan') + ' with JAWSAI.',
+      'I put together a quick Smart Site demo for ' + name + ' so you can see how this could look live.'
+    ];
+    if (demo.url) bits.push('Here is the link: ' + demo.url);
+    return bits.join(' ');
+  }
+  function composeSmartSiteEmail(lead) {
+    const name = lead.full_name || lead.company || 'your business';
+    const demo = smartSiteData(lead);
+    const subject = 'Smart Site Demo for ' + name;
+    const body = [
+      'Hey, this is ' + (operatorName || 'Bryan') + ' with JAWSAI.',
+      '',
+      'I put together a quick Smart Site demo for ' + name + ' so you can see how this could look live.',
+      demo.url ? '' : null,
+      demo.url ? 'Demo link: ' + demo.url : null
+    ].filter(Boolean).join('\n');
+    return { subject, body };
+  }
+  async function copyToClipboard(text, successMessage) {
+    try {
+      await navigator.clipboard.writeText(text);
+      statusMsg(successMessage);
+    } catch (error) {
+      statusMsg('Clipboard copy failed.');
+    }
+  }
+  function openSmartSiteTextDraft(lead) {
+    const body = encodeURIComponent(composeSmartSiteText(lead));
+    window.location.href = smsHref(lead.phone) + (lead.phone ? '?body=' + body : body);
+  }
+  function openSmartSiteEmailDraft(lead) {
+    const payload = composeSmartSiteEmail(lead);
+    window.location.href = 'mailto:' + encodeURIComponent(lead.email || '') + '?subject=' + encodeURIComponent(payload.subject) + '&body=' + encodeURIComponent(payload.body);
+  }
   function storageKey() { return 'jawscrm_operator_name'; }
   function currentOwnerFilter() { return document.getElementById('ownerFilter').value || ''; }
   function readOperatorName() { return String(document.getElementById('operatorName').value || '').trim(); }
@@ -314,6 +359,10 @@
     }
     document.getElementById('nextMeta').textContent = 'Current lead: ' + (lead.full_name || lead.company || 'Unnamed Lead');
     container.className = 'lead-card';
+    const demo = smartSiteData(lead);
+    const smartSiteBlock = demo.url
+      ? '<div class="smartsite-box"><strong>Smart Site Demo</strong><div class="pipe-meta">' + escapeHtml(demo.name || 'Demo') + ' · ' + escapeHtml(demo.status || 'draft') + '<br>' + escapeHtml(demo.url) + '</div><div class="action-row" style="margin-top:10px"><a class="btn" href="' + escapeHtml(demo.url) + '" target="_blank" rel="noopener">Open Demo</a><button class="btn" type="button" onclick="copyCurrentLeadDemoLink()">Copy Demo Link</button><button class="btn" type="button" onclick="textCurrentLeadDemo()">Text Draft</button><button class="btn" type="button" onclick="emailCurrentLeadDemo()">Email Draft</button></div></div>'
+      : '<div class="smartsite-box"><strong>Smart Site Demo</strong><div class="pipe-meta">No demo linked yet. Open Lead Detail to add one.</div></div>';
     container.innerHTML = '<h3>' + escapeHtml(lead.full_name || lead.company || 'Unnamed Lead') + '</h3>' +
       '<div class="lead-meta">' + escapeHtml(lead.phone || 'No phone') + ' · ' + escapeHtml(lead.city || 'No city') + ', ' + escapeHtml(lead.state || 'FL') + '</div>' +
       '<div class="action-row">' +
@@ -322,7 +371,8 @@
       '<a class="btn" href="Lead_Detail.html?client_id=' + escapeHtml(encodeURIComponent(currentClientId || '')) + '&lead_id=' + escapeHtml(encodeURIComponent(lead.id)) + '">Lead Detail</a>' +
       '</div>' +
       '<div class="pipe-meta" style="margin-top:14px">Status: ' + escapeHtml(lead.status) + ' · Last outcome: ' + escapeHtml(lead.last_call_outcome || 'none') + ' · Attempts: ' + escapeHtml(String(lead.call_attempts || 0)) + '</div>' +
-      '<div class="pipe-meta" style="margin-top:8px">' + escapeHtml(lead.notes || 'No notes yet.') + '</div>';
+      '<div class="pipe-meta" style="margin-top:8px">' + escapeHtml(lead.notes || 'No notes yet.') + '</div>' +
+      smartSiteBlock;
   }
 
   function renderTasks() {
@@ -338,6 +388,8 @@
       row.innerHTML = '<div class="pipe-title">' + escapeHtml(task.title) + '</div>' +
         '<div class="task-meta">' + escapeHtml(task.crm_leads?.full_name || '') + ' · ' + escapeHtml(task.task_type || 'task') + ' · due ' + escapeHtml(task.due_at ? new Date(task.due_at).toLocaleString() : 'unscheduled') + '</div>' +
         '<div class="task-actions">' +
+        '<a class="btn" href="' + escapeHtml(telHref(task.crm_leads?.phone || '')) + '">Call</a>' +
+        '<a class="btn" href="' + escapeHtml(smsHref(task.crm_leads?.phone || '')) + '">Text</a>' +
         '<a class="btn" href="Lead_Detail.html?client_id=' + escapeHtml(encodeURIComponent(currentClientId || '')) + '&lead_id=' + escapeHtml(encodeURIComponent(task.lead_id || '')) + '">Open Lead</a>' +
         '<button class="btn primary" type="button" onclick="markTaskDone(\'' + escapeHtml(task.id) + '\')">Mark Done</button>' +
         '</div>';
@@ -393,6 +445,42 @@
     renderPipeline();
     renderNextLead();
     statusMsg('Call saved to crm_calls, lead updated in crm_leads, and next follow-up created where needed.');
+  }
+
+  function selectedLead() {
+    return leads.find(item => item.id === selectedLeadId) || null;
+  }
+
+  async function copyCurrentLeadDemoLink() {
+    const lead = selectedLead();
+    const demo = smartSiteData(lead);
+    if (!demo.url) {
+      statusMsg('No Smart Site demo is linked to this lead yet.');
+      return;
+    }
+    await copyToClipboard(demo.url, 'Demo link copied.');
+  }
+
+  function textCurrentLeadDemo() {
+    const lead = selectedLead();
+    if (!lead) return;
+    const demo = smartSiteData(lead);
+    if (!demo.url) {
+      statusMsg('No Smart Site demo is linked to this lead yet.');
+      return;
+    }
+    openSmartSiteTextDraft(lead);
+  }
+
+  function emailCurrentLeadDemo() {
+    const lead = selectedLead();
+    if (!lead) return;
+    const demo = smartSiteData(lead);
+    if (!demo.url) {
+      statusMsg('No Smart Site demo is linked to this lead yet.');
+      return;
+    }
+    openSmartSiteEmailDraft(lead);
   }
 
   document.getElementById('clientSelect').addEventListener('change', async function (event) {

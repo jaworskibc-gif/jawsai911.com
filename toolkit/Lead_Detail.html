@@ -214,6 +214,9 @@
         <div class="smartsite-actions">
           <button class="btn primary" type="button" onclick="saveSmartSite()">Save Smart Site</button>
           <a class="btn navy" id="openSmartSiteBtn" href="#" target="_blank" rel="noopener">Open Demo</a>
+          <button class="btn" type="button" onclick="copySmartSiteLink()">Copy Demo Link</button>
+          <button class="btn" type="button" onclick="openSmartSiteTextDraft()">Text Draft</button>
+          <button class="btn" type="button" onclick="openSmartSiteEmailDraft()">Email Draft</button>
           <button class="btn" type="button" onclick="markSmartSiteSent()">Mark Demo Sent</button>
         </div>
       </div>
@@ -255,6 +258,31 @@ function leadDocuments() {
 function smartSiteData() {
   const data = lead && lead.custom_fields ? lead.custom_fields.smart_site_demo : null;
   return data && typeof data === 'object' ? data : {};
+}
+
+function composeSmartSiteText() {
+  const data = smartSiteData();
+  const name = lead.full_name || lead.company || 'your business';
+  return [
+    'Hey, this is ' + (lead.assigned_to || 'Bryan') + ' with JAWSAI.',
+    'I put together a quick Smart Site demo for ' + name + ' so you can see how this could look live.',
+    data.url ? 'Here is the link: ' + data.url : null
+  ].filter(Boolean).join(' ');
+}
+
+function composeSmartSiteEmail() {
+  const data = smartSiteData();
+  const name = lead.full_name || lead.company || 'your business';
+  return {
+    subject: 'Smart Site Demo for ' + name,
+    body: [
+      'Hey, this is ' + (lead.assigned_to || 'Bryan') + ' with JAWSAI.',
+      '',
+      'I put together a quick Smart Site demo for ' + name + ' so you can see how this could look live.',
+      data.url ? '' : null,
+      data.url ? 'Demo link: ' + data.url : null
+    ].filter(Boolean).join('\n')
+  };
 }
 
 async function loadClientList() {
@@ -555,6 +583,40 @@ async function markSmartSiteSent() {
   renderSmartSite();
   renderPortalEvents();
   statusMsg('Smart Site send event saved.');
+}
+
+async function copySmartSiteLink() {
+  const data = smartSiteData();
+  if (!data.url) {
+    statusMsg('Save a Smart Site URL first.');
+    return;
+  }
+  try {
+    await navigator.clipboard.writeText(data.url);
+    statusMsg('Smart Site link copied.');
+  } catch (error) {
+    statusMsg('Clipboard copy failed.');
+  }
+}
+
+function openSmartSiteTextDraft() {
+  const data = smartSiteData();
+  if (!data.url) {
+    statusMsg('Save a Smart Site URL first.');
+    return;
+  }
+  const body = encodeURIComponent(composeSmartSiteText());
+  window.location.href = smsHref(lead.phone) + (lead.phone ? '?body=' + body : body);
+}
+
+function openSmartSiteEmailDraft() {
+  const data = smartSiteData();
+  if (!data.url) {
+    statusMsg('Save a Smart Site URL first.');
+    return;
+  }
+  const payload = composeSmartSiteEmail();
+  window.location.href = 'mailto:' + encodeURIComponent(lead.email || '') + '?subject=' + encodeURIComponent(payload.subject) + '&body=' + encodeURIComponent(payload.body);
 }
 
 async function persistDocuments(nextDocs) {

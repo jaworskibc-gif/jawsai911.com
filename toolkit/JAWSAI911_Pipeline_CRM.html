@@ -36,6 +36,11 @@
     padding: 7px 12px; border-radius: 5px; font-size: 12px; cursor: pointer;
   }
   .client-picker button:hover { opacity: 0.9; }
+  .btn-secondary {
+    background: var(--navy-2) !important;
+    color: white !important;
+    border: 1px solid rgba(255,255,255,0.15) !important;
+  }
 
   .board-wrap { padding: 20px; overflow-x: auto; }
   .board {
@@ -88,9 +93,17 @@
   .modal {
     background: white; border-radius: 10px; padding: 24px; width: 340px;
   }
+  .modal-wide {
+    width: min(760px, calc(100vw - 32px));
+  }
+  .modal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
   .modal h3 { font-size: 15px; margin-bottom: 14px; color: var(--ink); }
   .modal label { font-size: 11px; font-weight: 700; color: var(--ink-soft); display:block; margin: 10px 0 4px 0; }
-  .modal input, .modal textarea {
+  .modal input, .modal textarea, .modal select {
     width: 100%; padding: 8px 10px; border: 1px solid var(--line); border-radius: 5px; font-size: 13px;
   }
   .modal-actions { display: flex; gap: 8px; margin-top: 18px; }
@@ -99,6 +112,23 @@
   }
   .btn-save { background: var(--teal); color: var(--navy); }
   .btn-cancel { background: var(--foam); color: var(--ink-soft); border: 1px solid var(--line) !important; }
+  .helper-copy {
+    margin-top: 10px;
+    padding: 10px 12px;
+    background: var(--foam);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+  .helper-copy code {
+    display: block;
+    margin-top: 8px;
+    white-space: pre-wrap;
+    font-size: 11px;
+    color: var(--ink);
+  }
 
   .empty-state {
     text-align: center; padding: 40px 20px; color: var(--ink-soft); font-size: 13px;
@@ -116,6 +146,7 @@
       <select id="clientSelect"></select>
       <input id="newClientName" placeholder="New client name...">
       <button onclick="createClient()">+ Add Client</button>
+      <button class="btn-secondary" onclick="openImportModal()">Paste Lead List</button>
     </div>
   </div>
   <div class="status-msg" id="statusMsg">Loading lead board...</div>
@@ -129,13 +160,66 @@
       <h3>Add Lead</h3>
       <label>Lead / Business Name</label>
       <input id="leadName" placeholder="e.g. Coastal Blue Pool Care">
-      <label>Phone</label>
-      <input id="leadPhone" placeholder="(561) 555-0134">
+      <div class="modal-grid">
+        <div>
+          <label>Phone</label>
+          <input id="leadPhone" placeholder="(561) 555-0134">
+        </div>
+        <div>
+          <label>Email</label>
+          <input id="leadEmail" placeholder="owner@company.com">
+        </div>
+      </div>
+      <div class="modal-grid">
+        <div>
+          <label>City</label>
+          <input id="leadCity" placeholder="West Palm Beach">
+        </div>
+        <div>
+          <label>Assigned To</label>
+          <input id="leadOwner" placeholder="Rep name">
+        </div>
+      </div>
+      <label>Source</label>
+      <select id="leadSource">
+        <option value="pipeline">Pipeline</option>
+        <option value="website">Website</option>
+        <option value="manual">Manual</option>
+        <option value="dialer">Dialer</option>
+        <option value="import">Import</option>
+      </select>
       <label>Notes</label>
       <textarea id="leadNotes" rows="3" placeholder="Context, notes, source, or last conversation..."></textarea>
       <div class="modal-actions">
         <button class="btn-cancel" onclick="closeModal()">Cancel</button>
         <button class="btn-save" onclick="saveLead()">Save Lead</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="importModalOverlay">
+    <div class="modal modal-wide">
+      <h3>Paste Lead List</h3>
+      <div class="modal-grid">
+        <div>
+          <label>Import Into Stage</label>
+          <select id="importStage"></select>
+        </div>
+        <div>
+          <label>Default Owner</label>
+          <input id="importOwner" placeholder="Rep name">
+        </div>
+      </div>
+      <label>Lead Rows</label>
+      <textarea id="importRows" rows="12" placeholder="Paste one lead per line"></textarea>
+      <div class="helper-copy">
+        Paste one lead per line using comma, tab, or pipe.
+        <code>Name, Phone, Email, City, Owner, Source, Notes
+Blue Water Pools, (561) 555-0134, owner@bluewater.com, West Palm Beach, Bryan, import, Hot lead from Google reviews</code>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeImportModal()">Cancel</button>
+        <button class="btn-save" onclick="saveImportedLeads()">Import Leads</button>
       </div>
     </div>
   </div>
@@ -162,6 +246,23 @@ let currentClient = null;
 let currentClientId = null;
 let pipelineData = {};
 let addingToStage = null;
+const IMPORT_HEADERS = {
+  name: 'full_name',
+  fullname: 'full_name',
+  business: 'full_name',
+  businessname: 'full_name',
+  company: 'full_name',
+  phone: 'phone',
+  mobile: 'phone',
+  email: 'email',
+  city: 'city',
+  owner: 'assigned_to',
+  assignedto: 'assigned_to',
+  assigned: 'assigned_to',
+  rep: 'assigned_to',
+  source: 'source',
+  notes: 'notes'
+};
 
 function statusMsg(text) {
   document.getElementById('statusMsg').textContent = text;
@@ -337,6 +438,10 @@ function openModal(stageId) {
   addingToStage = stageId;
   document.getElementById('leadName').value = '';
   document.getElementById('leadPhone').value = '';
+  document.getElementById('leadEmail').value = '';
+  document.getElementById('leadCity').value = '';
+  document.getElementById('leadOwner').value = '';
+  document.getElementById('leadSource').value = 'pipeline';
   document.getElementById('leadNotes').value = '';
   document.getElementById('modalOverlay').classList.add('open');
 }
@@ -345,20 +450,105 @@ function closeModal() {
   document.getElementById('modalOverlay').classList.remove('open');
 }
 
+function openImportModal() {
+  if (!currentClientId) {
+    alert('Add or select a client first.');
+    return;
+  }
+  const stageSelect = document.getElementById('importStage');
+  stageSelect.innerHTML = STAGES.map(stage => '<option value="' + stage.id + '">' + stage.name + '</option>').join('');
+  stageSelect.value = 'new';
+  document.getElementById('importOwner').value = '';
+  document.getElementById('importRows').value = '';
+  document.getElementById('importModalOverlay').classList.add('open');
+}
+
+function closeImportModal() {
+  document.getElementById('importModalOverlay').classList.remove('open');
+}
+
+function splitLeadRow(row) {
+  if (row.includes('\t')) return row.split('\t');
+  if (row.includes('|')) return row.split('|');
+  return row.split(',');
+}
+
+function normalizeImportKey(value) {
+  return String(value || '').toLowerCase().replace(/[^a-z]/g, '');
+}
+
+function parseImportedRows(rawText, defaultStage, defaultOwner) {
+  const rows = String(rawText || '')
+    .split(/\r?\n/)
+    .map(row => row.trim())
+    .filter(Boolean);
+  if (!rows.length) return [];
+
+  const firstParts = splitLeadRow(rows[0]).map(part => part.trim());
+  const mappedHeaders = firstParts.map(part => IMPORT_HEADERS[normalizeImportKey(part)] || null);
+  const hasHeader = mappedHeaders.some(Boolean);
+  const startIndex = hasHeader ? 1 : 0;
+  const imported = [];
+
+  for (let idx = startIndex; idx < rows.length; idx++) {
+    const parts = splitLeadRow(rows[idx]).map(part => part.trim());
+    if (!parts[0]) continue;
+    const lead = {
+      full_name: '',
+      company: '',
+      phone: '',
+      email: '',
+      city: '',
+      assigned_to: defaultOwner || '',
+      source: 'import',
+      notes: '',
+      status: defaultStage
+    };
+
+    if (hasHeader) {
+      mappedHeaders.forEach((field, fieldIdx) => {
+        if (!field) return;
+        lead[field] = parts[fieldIdx] || lead[field] || '';
+      });
+    } else {
+      lead.full_name = parts[0] || '';
+      lead.phone = parts[1] || '';
+      lead.email = parts[2] || '';
+      lead.city = parts[3] || '';
+      lead.assigned_to = parts[4] || defaultOwner || '';
+      lead.source = parts[5] || 'import';
+      lead.notes = parts.slice(6).join(', ') || '';
+    }
+
+    lead.company = lead.full_name;
+    if (!lead.full_name) continue;
+    imported.push(lead);
+  }
+
+  return imported;
+}
+
 async function saveLead() {
   if (!currentClientId) { alert('Add a client first.'); return; }
   const name = document.getElementById('leadName').value.trim();
   if (!name) return;
   const phone = document.getElementById('leadPhone').value.trim();
+  const email = document.getElementById('leadEmail').value.trim();
+  const city = document.getElementById('leadCity').value.trim();
+  const assignedTo = document.getElementById('leadOwner').value.trim();
+  const source = document.getElementById('leadSource').value;
   const notes = document.getElementById('leadNotes').value.trim();
   try {
     const data = await window.JAWSCRM.upsertCrmLead(supabaseClient, currentClientId, {
       full_name: name,
       company: name,
       phone: phone || null,
+      email: email || null,
+      city: city || null,
+      assigned_to: assignedTo || null,
       notes: notes || null,
       status: addingToStage,
-      source: 'pipeline'
+      source: source || 'pipeline'
     });
     pipelineData[addingToStage].push(normalizeLead(data));
     closeModal();
@@ -366,6 +556,41 @@ async function saveLead() {
   } catch (e) {
     statusMsg('Save failed: ' + e.message);
     return;
+  }
+}
+
+async function saveImportedLeads() {
+  if (!currentClientId) {
+    alert('Add or select a client first.');
+    return;
+  }
+  const stage = document.getElementById('importStage').value || 'new';
+  const defaultOwner = document.getElementById('importOwner').value.trim();
+  const rawText = document.getElementById('importRows').value;
+  const leads = parseImportedRows(rawText, stage, defaultOwner);
+  if (!leads.length) {
+    statusMsg('No usable lead rows found to import.');
+    return;
+  }
+
+  statusMsg('Importing ' + leads.length + ' leads into ' + (currentClient || 'client') + '...');
+  let importedCount = 0;
+
+  try {
+    for (const lead of leads) {
+      const data = await window.JAWSCRM.upsertCrmLead(supabaseClient, currentClientId, lead);
+      const stageId = data.status || stage;
+      if (!pipelineData[stageId]) pipelineData[stageId] = [];
+      if (!pipelineData[stageId].some(item => item.id === data.id)) {
+        pipelineData[stageId].push(normalizeLead(data));
+      }
+      importedCount += 1;
+    }
+    closeImportModal();
+    renderBoard();
+    statusMsg('Imported ' + importedCount + ' leads into ' + (currentClient || 'client') + '.');
+  } catch (e) {
+    statusMsg('Import failed after ' + importedCount + ' leads: ' + e.message);
   }
 }
 
