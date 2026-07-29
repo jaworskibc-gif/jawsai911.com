@@ -308,6 +308,7 @@ section { padding: 80px 0; }
   margin-bottom: 48px;
 }
 .ccm-tier {
+  position: relative;
   border-radius: 14px;
   padding: 28px 22px;
   display: flex;
@@ -316,6 +317,18 @@ section { padding: 80px 0; }
 .ccm-tier.featured {
   border-color: var(--accent);
   box-shadow: 0 0 0 1px rgba(0, 180, 255, 0.45), 0 16px 40px rgba(0, 180, 255, 0.16);
+}
+.tier-badge {
+  position: absolute;
+  top: -10px;
+  right: 16px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 4px 10px;
+  border-radius: 100px;
 }
 .tier-num {
   font-size: 0.75rem;
@@ -339,13 +352,13 @@ section { padding: 80px 0; }
 .ccm-tier ul {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 4px 0 0;
   flex: 1;
 }
 .ccm-tier li {
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   color: #cbd5e1;
-  padding: 6px 0 6px 1.25em;
+  padding: 5px 0 5px 1.25em;
   position: relative;
   line-height: 1.45;
 }
@@ -594,7 +607,7 @@ section { padding: 80px 0; }
   border-radius: 12px;
   overflow: hidden;
   position: relative;
-  min-height: 220px;
+  min-height: 260px;
   transition: background 0.4s, border-color 0.4s;
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
 }
@@ -602,6 +615,12 @@ section { padding: 80px 0; }
 .compliance-screen.locked {
   background: #450a0a;
   border-color: #ef4444;
+  box-shadow: 0 0 0 1px #ef4444, 0 0 40px rgba(239, 68, 68, 0.35);
+}
+
+.compliance-screen.unlocked {
+  border-color: #22c55e;
+  box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.5);
 }
 
 .screen-header {
@@ -639,7 +658,7 @@ section { padding: 80px 0; }
   display: none;
   position: absolute;
   inset: 0;
-  background: rgba(127, 29, 29, 0.95);
+  background: rgba(127, 29, 29, 0.97);
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -653,16 +672,51 @@ section { padding: 80px 0; }
 
 .lock-icon { font-size: 2.2rem; margin-bottom: 8px; }
 .lock-title {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 800;
   color: #fecaca;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
   margin-bottom: 8px;
 }
 .lock-text {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: #fca5a5;
-  max-width: 280px;
+  max-width: 300px;
+  margin-bottom: 16px;
+}
+.lock-required {
+  margin-top: 8px;
+  padding: 12px 14px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(254, 202, 202, 0.35);
+  border-radius: 8px;
+  max-width: 320px;
+  text-align: left;
+}
+.lock-required-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #fca5a5;
+  margin-bottom: 6px;
+}
+.lock-required-text {
+  font-size: 0.8rem;
+  color: #fecaca;
+  line-height: 1.45;
+  font-style: italic;
+}
+.screen-unlocked-banner {
+  display: none;
+  padding: 12px 16px;
+  background: rgba(34, 197, 94, 0.15);
+  color: #86efac;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+}
+.compliance-screen.unlocked .screen-unlocked-banner {
+  display: block;
 }
 
 .compliance-points {

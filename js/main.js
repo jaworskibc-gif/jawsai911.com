@@ -75,27 +75,49 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   if (form) form.addEventListener("submit", handlePortalSubmit);
 
+  /* Compliance Lock staged demo */
   const demoBtn = document.getElementById("demo-trigger");
   const complianceScreen = document.getElementById("compliance-screen");
   const warningLine = document.getElementById("warning-line");
+  const unlockHint = document.getElementById("unlock-hint");
+  let demoRunning = false;
 
   if (demoBtn && complianceScreen) {
     demoBtn.addEventListener("click", function () {
-      complianceScreen.classList.remove("locked");
+      if (demoRunning) return;
+      demoRunning = true;
+      demoBtn.disabled = true;
+      demoBtn.textContent = "Running…";
+
+      complianceScreen.classList.remove("locked", "unlocked");
       if (warningLine) warningLine.style.display = "none";
+      if (unlockHint) unlockHint.style.display = "none";
 
-      setTimeout(() => {
+      setTimeout(function () {
         if (warningLine) warningLine.style.display = "block";
-      }, 600);
+      }, 500);
 
-      setTimeout(() => {
+      setTimeout(function () {
         complianceScreen.classList.add("locked");
       }, 1400);
 
-      setTimeout(() => {
+      setTimeout(function () {
+        if (unlockHint) unlockHint.style.display = "block";
+      }, 2800);
+
+      setTimeout(function () {
         complianceScreen.classList.remove("locked");
+        complianceScreen.classList.add("unlocked");
         if (warningLine) warningLine.style.display = "none";
-      }, 5000);
+        if (unlockHint) unlockHint.style.display = "none";
+      }, 5200);
+
+      setTimeout(function () {
+        complianceScreen.classList.remove("unlocked");
+        demoBtn.disabled = false;
+        demoBtn.textContent = "▶ Run Compliance Demo";
+        demoRunning = false;
+      }, 7000);
     });
   }
 });

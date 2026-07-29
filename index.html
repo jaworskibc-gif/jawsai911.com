@@ -309,52 +309,43 @@
           <article class="ccm-tier">
             <div class="tier-num">01</div>
             <h3>CCM Core</h3>
-            <p class="tier-desc">The full enrollment platform. One screen. Full stack.</p>
+            <p class="tier-desc">One screen. Full enrollment stack.</p>
             <ul>
-              <li>One unified screen - no more tab switching</li>
-              <li>Doctor Finder - real-time in-network lookup</li>
-              <li>Medication Finder - live formulary by plan</li>
-              <li>Compliance Checklist - mandatory, enforced</li>
-              <li>Scope of Coverage - built into every call</li>
-              <li>Beneficiary e-sign enrollment link</li>
-              <li>Chrome Autofill - Sunfire, TrueTrack, all carriers</li>
-              <li>Manager Approval Queue with Slack alerts</li>
-              <li>Auto-generated enrollment confirmation PDF</li>
-              <li>Eliminates high-risk compliance calls</li>
-              <li>Sunfire, TrueTrack, EnrollHere, MARx integrated</li>
+              <li>Unified enrollment workspace</li>
+              <li>Doctor + medication finders</li>
+              <li>Compliance Lock™ enforced live</li>
+              <li>Beneficiary e-sign link</li>
+              <li>Chrome autofill → Sunfire / carriers</li>
+              <li>Manager approval queue</li>
             </ul>
           </article>
 
           <article class="ccm-tier">
             <div class="tier-num">02</div>
             <h3>Core + AI Review</h3>
-            <p class="tier-desc">Post-call AI coaching. Improve every agent over time.</p>
+            <p class="tier-desc">Post-call coaching on every recording.</p>
             <ul>
-              <li>Everything in Core +</li>
-              <li>AI reviews every completed call recording</li>
-              <li>Post-call coaching notes for every agent</li>
-              <li>Performance scoring after each enrollment</li>
-              <li>Compliance analysis - flags missed disclosures</li>
-              <li>Agent improvement reports over time</li>
-              <li>Manager dashboard - full team analytics</li>
-              <li>No live inference cost - uses existing recordings</li>
+              <li>Everything in Core</li>
+              <li>AI reviews every call</li>
+              <li>Coaching notes per agent</li>
+              <li>Compliance gap flags</li>
+              <li>Team performance dashboard</li>
+              <li>No live inference cost</li>
             </ul>
           </article>
 
           <article class="ccm-tier featured">
+            <div class="tier-badge">MOST TEAMS</div>
             <div class="tier-num">03</div>
             <h3>Core + VCAP Live</h3>
-            <p class="tier-desc">Full platform. Live AI coaching. Close more deals now.</p>
+            <p class="tier-desc">Live AI coaching while the agent is on the call.</p>
             <ul>
-              <li>Everything in Core + AI Review +</li>
-              <li>VCAP live on every call in real time</li>
-              <li>Named personal VCA coach per agent</li>
-              <li>In-ear guidance while agent is on the phone</li>
-              <li>Live objection handling suggestions</li>
-              <li>Real-time compliance alerts mid-call</li>
-              <li>Live close rate coaching - helps agents close now</li>
-              <li>VCA learns each agent's style over time</li>
-              <li>Onboarding scales with team size - 300-500 agents live every 30 days</li>
+              <li>Everything in Core + AI Review</li>
+              <li>VCAP in-ear guidance live</li>
+              <li>Objection handling in real time</li>
+              <li>Compliance alerts mid-call</li>
+              <li>Close-rate coaching on the call</li>
+              <li>Scales 300–500 agents / 30 days</li>
             </ul>
           </article>
         </div>
@@ -380,16 +371,21 @@
             <div class="screen-header">Enrollment Core · Live Call</div>
             <div class="screen-body">
               <div class="screen-line">Prospect: "Can you help me with a plan?"</div>
-              <div class="screen-line muted">Agent begins enrollment flow...</div>
+              <div class="screen-line muted">Agent begins enrollment flow…</div>
               <div class="screen-line warning" id="warning-line" style="display:none;">
                 ⚠ Required disclosure missing · Scope of Appointment not confirmed
               </div>
             </div>
             <div class="screen-lock" id="screen-lock">
               <div class="lock-icon">🔒</div>
-              <div class="lock-title">TM COMPLIANCE LOCK</div>
-              <div class="lock-text">Call cannot proceed until required disclosures and recording prompts are complete.</div>
+              <div class="lock-title">COMPLIANCE LOCK™</div>
+              <div class="lock-text">Enrollment cannot move forward until required language is said.</div>
+              <div class="lock-required" id="unlock-hint" style="display:none;">
+                <div class="lock-required-label">SAY THIS:</div>
+                <div class="lock-required-text">"Before I look at what you are eligible for through Medicare, I'm required to read a quick disclaimer…"</div>
+              </div>
             </div>
+            <div class="screen-unlocked-banner">✓ Required language confirmed · Flow unlocked</div>
           </div>
           <button class="btn btn-outline compliance-btn" id="demo-trigger">▶ Run Compliance Demo</button>
         </div>
