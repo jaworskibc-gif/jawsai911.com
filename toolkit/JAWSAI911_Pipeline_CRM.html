@@ -246,6 +246,7 @@ let currentClient = null;
 let currentClientId = null;
 let pipelineData = {};
 let addingToStage = null;
+const CLIENT_STORAGE_KEY = 'jawscrm_selected_client_id';
 const IMPORT_HEADERS = {
   name: 'full_name',
   fullname: 'full_name',
@@ -266,6 +267,13 @@ const IMPORT_HEADERS = {
 
 function statusMsg(text) {
   document.getElementById('statusMsg').textContent = text;
+}
+function readSavedClientId() {
+  return String(window.localStorage.getItem(CLIENT_STORAGE_KEY) || '').trim();
+}
+function saveSelectedClientId(value) {
+  if (!value) return;
+  window.localStorage.setItem(CLIENT_STORAGE_KEY, value);
 }
 function normalizeLead(row) {
   return {
@@ -300,10 +308,17 @@ async function loadClientList() {
       opt.textContent = client.name;
       select.appendChild(opt);
     });
-    const selected = data.find(client => client.id === currentClientId) || data[0];
+    const requestedClientId = new URLSearchParams(window.location.search).get('client_id');
+    const savedClientId = readSavedClientId();
+    const selected = data.find(client => client.id === currentClientId)
+      || data.find(client => client.id === requestedClientId)
+      || data.find(client => client.id === savedClientId)
+      || data.find(client => client.name === 'South FL Salon SuperSite Outreach')
+      || data[0];
     currentClientId = selected.id;
     currentClient = selected.name;
     select.value = currentClientId;
+    saveSelectedClientId(currentClientId);
     await loadPipeline(currentClient);
   } catch (e) {
     statusMsg('No clients yet — add one to get started.');
@@ -331,6 +346,7 @@ document.getElementById('clientSelect').addEventListener('change', async (e) => 
   const option = e.target.selectedOptions[0];
   currentClientId = e.target.value || null;
   currentClient = option ? option.textContent : null;
+  saveSelectedClientId(currentClientId);
   await loadPipeline(currentClient);
 });
 

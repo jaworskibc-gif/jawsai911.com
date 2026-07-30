@@ -66,10 +66,10 @@ DEMO_MAP = {
         "demo_type": "Softline",
     },
     "hair": {
-        "label": "Hair SuperSite Demo",
-        "public_url": "https://jawsai911.com/demos/hair-studio/index.html",
-        "command_url": "https://jawsai911.com/demos/hair-studio/command.html",
-        "demo_type": "Hair",
+        "label": "Lumina Desk Demo",
+        "public_url": "https://jawsai911.com/lumina-desk/",
+        "command_url": "https://jawsai911.com/lumina-desk/command.html",
+        "demo_type": "Lumina",
     },
 }
 

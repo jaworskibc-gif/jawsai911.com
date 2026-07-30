@@ -59,8 +59,20 @@
   }
   .smartsite-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; }
   .smartsite-actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+  .proof-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; }
+  .proof-actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+  .review-grid { display:grid; grid-template-columns:.9fr 1.1fr; gap:16px; }
+  .review-card { border:1px solid var(--line); background:var(--foam); border-radius:8px; padding:12px; }
+  .review-card h3 { font-size:13px; font-weight:800; margin-bottom:8px; }
+  .review-list { display:grid; gap:8px; }
+  .review-line { font-size:12px; color:var(--ink-soft); line-height:1.5; }
+  .review-line strong { color:var(--ink); }
+  .review-quote { border-left:3px solid var(--cyan); background:#fff; border-radius:6px; padding:10px 12px; font-size:12px; color:var(--ink); line-height:1.5; }
+  .preview-shell { border:1px solid var(--line); border-radius:10px; overflow:hidden; background:#dbe4ec; min-height:520px; }
+  .preview-frame { width:100%; height:520px; border:0; background:#fff; }
+  .workflow-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px; }
   .empty { padding:20px; text-align:center; color:var(--ink-soft); font-size:12px; }
-  @media (max-width:1000px) { .hero,.grid,.doc-form,.smartsite-grid { grid-template-columns:1fr; } }
+  @media (max-width:1000px) { .hero,.grid,.doc-form,.smartsite-grid,.proof-grid,.review-grid,.workflow-grid { grid-template-columns:1fr; } }
 </style>
 </head>
 <body>
@@ -222,6 +234,129 @@
       </div>
       <div class="panel">
         <div class="section-head">
+          <h2>Google Proof & Assets</h2>
+          <span class="mini">Add reviews, rating, logo, and photo slots before outreach send</span>
+        </div>
+        <div id="googleProofSummary" class="list"></div>
+        <div class="proof-grid">
+          <div class="field">
+            <label>Google Rating</label>
+            <input id="googleRating" placeholder="4.9">
+          </div>
+          <div class="field">
+            <label>Review Count</label>
+            <input id="googleReviewCount" placeholder="588 reviews">
+          </div>
+        </div>
+        <div class="proof-grid">
+          <div class="field">
+            <label>Google Reviews URL</label>
+            <input id="googleReviewUrl" placeholder="https://google.com/maps/...">
+          </div>
+          <div class="field">
+            <label>Review Summary Notes</label>
+            <input id="googleReviewNotes" placeholder="Paste quick proof summary or lookup status">
+          </div>
+        </div>
+        <div class="proof-grid">
+          <div class="field">
+            <label>Logo URL</label>
+            <input id="logoUrl" placeholder="https://logo-or-brand-asset">
+          </div>
+          <div class="field">
+            <label>Photo Folder / URL</label>
+            <input id="photoFolderUrl" placeholder="https://drive-folder-or-asset-link">
+          </div>
+        </div>
+        <div class="edit-grid full">
+          <div class="field">
+            <label>Photo / Logo Placement Notes</label>
+            <textarea id="photoPlacementNotes" placeholder="Where logos, truck shots, storefront photos, pool work, before/after, etc. should be placed on the demo."></textarea>
+          </div>
+        </div>
+        <div class="edit-grid full">
+          <div class="field">
+            <label>Review Quote 1</label>
+            <textarea id="reviewQuote1" placeholder="Paste exact review quote or leave as placeholder for live pull."></textarea>
+          </div>
+        </div>
+        <div class="edit-grid full">
+          <div class="field">
+            <label>Review Quote 2</label>
+            <textarea id="reviewQuote2" placeholder="Paste exact review quote or leave as placeholder for live pull."></textarea>
+          </div>
+        </div>
+        <div class="edit-grid full">
+          <div class="field">
+            <label>Review Quote 3</label>
+            <textarea id="reviewQuote3" placeholder="Paste exact review quote or leave as placeholder for live pull."></textarea>
+          </div>
+        </div>
+        <div class="proof-actions">
+          <button class="btn primary" type="button" onclick="saveGoogleProof()">Save Google Proof</button>
+          <a class="btn navy" id="googleReviewOpenBtn" href="#" target="_blank" rel="noopener">Open Reviews</a>
+          <button class="btn" type="button" onclick="copyGoogleReviewUrl()">Copy Review URL</button>
+        </div>
+      </div>
+      <div class="panel" style="grid-column:1 / -1">
+        <div class="section-head">
+          <h2>Review Before Send</h2>
+          <span class="mini">Verify the lead details and the assigned SuperSite before outreach</span>
+        </div>
+        <div class="review-grid">
+          <div class="review-card">
+            <h3>Lead Check</h3>
+            <div id="reviewChecklist" class="review-list"></div>
+            <div class="smartsite-actions">
+              <a class="btn navy" id="reviewOpenDemoBtn" href="#" target="_blank" rel="noopener">Open Demo</a>
+              <button class="btn" type="button" onclick="copySmartSiteLink()">Copy Demo Link</button>
+              <button class="btn" type="button" onclick="openSmartSiteTextDraft()">Text Draft</button>
+              <button class="btn" type="button" onclick="openSmartSiteEmailDraft()">Email Draft</button>
+              <button class="btn primary" type="button" onclick="markSmartSiteSent()">Mark Demo Sent</button>
+            </div>
+            <div class="workflow-grid">
+              <a class="btn" id="reviewProposalBtn" href="#">Generate Proposal</a>
+              <a class="btn" id="reviewInvoiceBtn" href="#">Create Invoice</a>
+              <a class="btn" id="reviewEstimateBtn" href="#">Create Estimate</a>
+              <a class="btn" id="reviewDocsBtn" href="#">Attach Receipt / Doc</a>
+            </div>
+            <div class="edit-grid" style="margin-top:14px">
+              <div class="field">
+                <label>Follow-Up Title</label>
+                <input id="followUpTitle" placeholder="Send second text tomorrow">
+              </div>
+              <div class="field">
+                <label>Due At</label>
+                <input id="followUpDueAt" type="datetime-local">
+              </div>
+            </div>
+            <div class="edit-grid">
+              <div class="field">
+                <label>Follow-Up Type</label>
+                <select id="followUpType">
+                  <option value="call">Call</option>
+                  <option value="text">Text</option>
+                  <option value="email">Email</option>
+                  <option value="task">Task</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Follow-Up Notes</label>
+                <input id="followUpNotes" placeholder="Specific next step or hook">
+              </div>
+            </div>
+            <div class="smartsite-actions">
+              <button class="btn primary" type="button" onclick="createManualFollowUp()">Create Follow-Up</button>
+            </div>
+          </div>
+          <div class="preview-shell" id="previewShell">
+            <div id="previewEmpty" class="empty" style="display:none">No Smart Site demo saved yet.</div>
+            <iframe id="smartSitePreview" class="preview-frame" title="Smart Site preview" loading="lazy"></iframe>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="section-head">
           <h2>Portal Activity</h2>
           <span class="mini">Customer approval and response trail</span>
         </div>
@@ -260,12 +395,27 @@ function smartSiteData() {
   return data && typeof data === 'object' ? data : {};
 }
 
+function googleProofData() {
+  const data = leadField('google_proof');
+  return data && typeof data === 'object' ? data : {};
+}
+
+function leadField(name) {
+  const fields = lead && lead.custom_fields ? lead.custom_fields : {};
+  return fields && typeof fields === 'object' ? fields[name] : null;
+}
+
 function composeSmartSiteText() {
   const data = smartSiteData();
+  const proof = googleProofData();
   const name = lead.full_name || lead.company || 'your business';
+  const reviewLine = [proof.rating, proof.review_count].filter(Boolean).join(' · ');
+  const customText = leadField('outreach_workspace') && leadField('outreach_workspace').sms_copy;
+  if (customText) return customText;
   return [
     'Hey, this is ' + (lead.assigned_to || 'Bryan') + ' with JAWSAI.',
     'I put together a quick Smart Site demo for ' + name + ' so you can see how this could look live.',
+    reviewLine ? 'I also pulled your Google proof: ' + reviewLine + '.' : null,
     data.url ? 'Here is the link: ' + data.url : null
   ].filter(Boolean).join(' ');
 }
@@ -329,12 +479,15 @@ async function loadLeadDetail() {
   renderInvoices();
   renderDocuments();
   renderSmartSite();
+  renderGoogleProof();
   renderPortalEvents();
   statusMsg('Lead detail ready.');
 }
 
 function renderLead() {
   const hero = document.getElementById('leadHero');
+  const category = leadField('category');
+  const pitchAngle = leadField('pitch_angle');
   hero.innerHTML = '<h1>' + escapeHtml(lead.full_name || lead.company || 'Unnamed Lead') + '</h1>' +
     '<div class="meta">' + escapeHtml(lead.phone || 'No phone') + '<br>' +
     escapeHtml((lead.city || 'No city') + ', ' + (lead.state || 'FL')) + '<br>' +
@@ -342,10 +495,12 @@ function renderLead() {
     '<div class="badges">' +
     '<span class="badge stage">' + escapeHtml(lead.status || 'new') + '</span>' +
     '<span class="badge owner">' + escapeHtml(lead.assigned_to || 'Unassigned') + '</span>' +
+    (category ? '<span class="badge">' + escapeHtml(category) + '</span>' : '') +
     '<span class="badge">' + escapeHtml((lead.call_attempts || 0) + ' call attempts') + '</span>' +
     '</div>' +
     '<div class="meta">Last outcome: ' + escapeHtml(lead.last_call_outcome || 'none') + '<br>' +
     'Next follow-up: ' + escapeHtml(lead.next_follow_up_at ? new Date(lead.next_follow_up_at).toLocaleString() : 'none scheduled') + '<br>' +
+    (pitchAngle ? 'Pitch angle: ' + escapeHtml(pitchAngle) + '<br>' : '') +
     'Notes: ' + escapeHtml(lead.notes || 'No notes yet.') + '</div>';
 
   document.getElementById('callBtn').href = telHref(lead.phone);
@@ -355,6 +510,10 @@ function renderLead() {
   document.getElementById('docsBtn').href = 'Sales_Documents.html?client_id=' + encodeURIComponent(currentClientId) + '&lead_id=' + encodeURIComponent(currentLeadId);
   document.getElementById('newInvoiceBtn').href = 'JAWSAI911_Invoicing.html?client_id=' + encodeURIComponent(currentClientId) + '&lead_id=' + encodeURIComponent(currentLeadId) + '&type=invoice';
   document.getElementById('newProposalBtn').href = 'Proposal_Generator.html?client_id=' + encodeURIComponent(currentClientId) + '&lead_id=' + encodeURIComponent(currentLeadId);
+  document.getElementById('reviewProposalBtn').href = 'Proposal_Generator.html?client_id=' + encodeURIComponent(currentClientId) + '&lead_id=' + encodeURIComponent(currentLeadId);
+  document.getElementById('reviewInvoiceBtn').href = 'JAWSAI911_Invoicing.html?client_id=' + encodeURIComponent(currentClientId) + '&lead_id=' + encodeURIComponent(currentLeadId) + '&type=invoice';
+  document.getElementById('reviewEstimateBtn').href = 'JAWSAI911_Invoicing.html?client_id=' + encodeURIComponent(currentClientId) + '&lead_id=' + encodeURIComponent(currentLeadId) + '&type=estimate';
+  document.getElementById('reviewDocsBtn').href = '#documentsList';
   document.getElementById('leadStatus').value = lead.status || 'new';
   document.getElementById('leadOwner').value = lead.assigned_to || '';
   document.getElementById('leadEmail').value = lead.email || '';
@@ -377,7 +536,7 @@ function renderTasks() {
     container.innerHTML = '<div class="empty">No open tasks for this lead.</div>';
     return;
   }
-  container.innerHTML = tasks.map(task => '<div class="item"><div class="item-title">' + escapeHtml(task.title) + '</div><div class="item-meta">' + escapeHtml(task.task_type || 'task') + ' · due ' + escapeHtml(task.due_at ? new Date(task.due_at).toLocaleString() : 'unscheduled') + '</div></div>').join('');
+  container.innerHTML = tasks.map(task => '<div class="item"><div class="item-title">' + escapeHtml(task.title) + '</div><div class="item-meta">' + escapeHtml(task.task_type || 'task') + ' · due ' + escapeHtml(task.due_at ? new Date(task.due_at).toLocaleString() : 'unscheduled') + '</div><div class="item-actions"><button class="btn" type="button" onclick="completeTaskFromLead(\'' + escapeHtml(task.id) + '\')">Mark Done</button></div></div>').join('');
 }
 
 function renderInvoices() {
@@ -410,9 +569,22 @@ function renderSmartSite() {
   document.getElementById('smartSiteStatus').value = data.status || 'not_started';
   document.getElementById('smartSiteNotes').value = data.notes || '';
   document.getElementById('openSmartSiteBtn').href = data.url || '#';
+  document.getElementById('reviewOpenDemoBtn').href = data.url || '#';
+  const preview = document.getElementById('smartSitePreview');
+  const previewEmpty = document.getElementById('previewEmpty');
+  if (data.url) {
+    preview.src = data.url;
+    preview.style.display = 'block';
+    previewEmpty.style.display = 'none';
+  } else {
+    preview.removeAttribute('src');
+    preview.style.display = 'none';
+    previewEmpty.style.display = 'block';
+  }
   const summary = document.getElementById('smartSiteSummary');
   if (!data.url && !data.name) {
     summary.innerHTML = '<div class="empty">No Smart Site demo saved yet.</div>';
+    renderReviewChecklist();
     return;
   }
   const meta = [
@@ -421,6 +593,71 @@ function renderSmartSite() {
     data.last_updated_at ? 'updated ' + new Date(data.last_updated_at).toLocaleString() : ''
   ].filter(Boolean).join(' · ');
   summary.innerHTML = '<div class="item"><div class="item-title">' + escapeHtml(data.name || 'Smart Site Demo') + '</div><div class="item-meta">' + escapeHtml(meta) + (data.url ? '<br>' + escapeHtml(data.url) : '') + (data.notes ? '<br>' + escapeHtml(data.notes) : '') + '</div></div>';
+  renderReviewChecklist();
+}
+
+function renderGoogleProof() {
+  const proof = googleProofData();
+  document.getElementById('googleRating').value = proof.rating || '';
+  document.getElementById('googleReviewCount').value = proof.review_count || '';
+  document.getElementById('googleReviewUrl').value = proof.review_url || '';
+  document.getElementById('googleReviewNotes').value = proof.review_notes || '';
+  document.getElementById('logoUrl').value = proof.logo_url || '';
+  document.getElementById('photoFolderUrl').value = proof.photo_folder_url || '';
+  document.getElementById('photoPlacementNotes').value = proof.photo_notes || '';
+  document.getElementById('reviewQuote1').value = proof.review_quote_1 || '';
+  document.getElementById('reviewQuote2').value = proof.review_quote_2 || '';
+  document.getElementById('reviewQuote3').value = proof.review_quote_3 || '';
+  document.getElementById('googleReviewOpenBtn').href = proof.review_url || '#';
+
+  const summary = document.getElementById('googleProofSummary');
+  const quotes = [proof.review_quote_1, proof.review_quote_2, proof.review_quote_3].filter(Boolean);
+  if (!proof.rating && !proof.review_count && !proof.review_url && !proof.review_notes && !proof.logo_url && !proof.photo_folder_url && !quotes.length) {
+    summary.innerHTML = '<div class="empty">No Google proof or asset notes saved yet.</div>';
+    renderReviewChecklist();
+    return;
+  }
+  const meta = [proof.rating, proof.review_count].filter(Boolean).join(' · ');
+  summary.innerHTML =
+    '<div class="item"><div class="item-title">' + escapeHtml(meta || 'Google proof saved') + '</div><div class="item-meta">' +
+    (proof.review_url ? escapeHtml(proof.review_url) + '<br>' : '') +
+    (proof.review_notes ? escapeHtml(proof.review_notes) + '<br>' : '') +
+    (proof.logo_url ? 'Logo: ' + escapeHtml(proof.logo_url) + '<br>' : '') +
+    (proof.photo_folder_url ? 'Photos: ' + escapeHtml(proof.photo_folder_url) + '<br>' : '') +
+    (proof.photo_notes ? 'Placement: ' + escapeHtml(proof.photo_notes) : '') +
+    '</div></div>' +
+    (quotes.length ? quotes.map(function (quote) {
+      return '<div class="review-quote">' + escapeHtml(quote) + '</div>';
+    }).join('') : '');
+  renderReviewChecklist();
+}
+
+function renderReviewChecklist() {
+  const container = document.getElementById('reviewChecklist');
+  const demo = smartSiteData();
+  const proof = googleProofData();
+  const reviewProofSummary = [proof.rating, proof.review_count].filter(Boolean).join(' · ') || proof.review_notes || 'Pending lookup';
+  const proofAssetsSummary = [
+    proof.logo_url ? 'logo ready' : null,
+    proof.photo_folder_url ? 'photos ready' : null,
+    proof.photo_notes ? 'placement noted' : null
+  ].filter(Boolean).join(' · ') || 'Asset slots open';
+  const lines = [
+    { label: 'Business', value: lead ? (lead.full_name || lead.company || 'Missing') : 'Missing' },
+    { label: 'Category', value: leadField('category') || 'Missing' },
+    { label: 'City', value: lead ? (lead.city || 'Missing') : 'Missing' },
+    { label: 'Phone', value: lead ? (lead.phone || 'Missing') : 'Missing' },
+    { label: 'Website status', value: leadField('website_status') || 'Not set' },
+    { label: 'Pitch angle', value: leadField('pitch_angle') || 'Not set' },
+    { label: 'Review proof', value: reviewProofSummary },
+    { label: 'Asset proof', value: proofAssetsSummary },
+    { label: 'Demo assigned', value: demo.name || 'Missing' },
+    { label: 'Demo status', value: demo.status || 'not_started' },
+    { label: 'Demo URL', value: demo.url || 'Missing' }
+  ];
+  container.innerHTML = lines.map(function (line) {
+    return '<div class="review-line"><strong>' + escapeHtml(line.label) + ':</strong> ' + escapeHtml(line.value) + '</div>';
+  }).join('');
 }
 
 function renderPortalEvents() {
@@ -527,6 +764,51 @@ async function saveSmartSite() {
     renderPortalEvents();
   }
   statusMsg('Smart Site details saved.');
+}
+
+async function saveGoogleProof() {
+  const existing = googleProofData();
+  const nextProof = Object.assign({}, existing, {
+    rating: document.getElementById('googleRating').value.trim() || null,
+    review_count: document.getElementById('googleReviewCount').value.trim() || null,
+    review_url: document.getElementById('googleReviewUrl').value.trim() || null,
+    review_notes: document.getElementById('googleReviewNotes').value.trim() || null,
+    logo_url: document.getElementById('logoUrl').value.trim() || null,
+    photo_folder_url: document.getElementById('photoFolderUrl').value.trim() || null,
+    photo_notes: document.getElementById('photoPlacementNotes').value.trim() || null,
+    review_quote_1: document.getElementById('reviewQuote1').value.trim() || null,
+    review_quote_2: document.getElementById('reviewQuote2').value.trim() || null,
+    review_quote_3: document.getElementById('reviewQuote3').value.trim() || null,
+    last_updated_at: new Date().toISOString()
+  });
+  const nextCustomFields = Object.assign({}, lead.custom_fields || {}, { google_proof: nextProof });
+  const { data, error } = await supabaseClient
+    .from('crm_leads')
+    .update({ custom_fields: nextCustomFields })
+    .eq('id', currentLeadId)
+    .select('*')
+    .single();
+  if (error) {
+    statusMsg(error.message);
+    return;
+  }
+  lead = data;
+  renderGoogleProof();
+  statusMsg('Google proof and asset notes saved.');
+}
+
+async function copyGoogleReviewUrl() {
+  const proof = googleProofData();
+  if (!proof.review_url) {
+    statusMsg('Save a Google review URL first.');
+    return;
+  }
+  try {
+    await navigator.clipboard.writeText(proof.review_url);
+    statusMsg('Google review URL copied.');
+  } catch (error) {
+    statusMsg('Clipboard copy failed.');
+  }
 }
 
 async function markSmartSiteSent() {
@@ -686,7 +968,52 @@ async function saveLeadEdits() {
   lead = data;
   renderLead();
   renderSmartSite();
+  renderGoogleProof();
   statusMsg('Lead updates saved.');
+}
+
+async function completeTaskFromLead(taskId) {
+  if (!taskId) return;
+  try {
+    await window.JAWSCRM.completeCrmTask(supabaseClient, taskId, 'done');
+    tasks = tasks.filter(function (task) { return task.id !== taskId; });
+    renderTasks();
+    statusMsg('Follow-up marked done.');
+  } catch (error) {
+    statusMsg(error.message || 'Unable to complete follow-up.');
+  }
+}
+
+async function createManualFollowUp() {
+  const title = document.getElementById('followUpTitle').value.trim();
+  const dueAt = document.getElementById('followUpDueAt').value;
+  const taskType = document.getElementById('followUpType').value || 'task';
+  const notes = document.getElementById('followUpNotes').value.trim();
+  if (!title) {
+    statusMsg('Follow-up title is required.');
+    return;
+  }
+  const payload = {
+    lead_id: currentLeadId,
+    title: title,
+    due_at: dueAt ? new Date(dueAt).toISOString() : null,
+    status: 'open',
+    task_type: taskType,
+    notes: notes || null,
+    created_at: new Date().toISOString()
+  };
+  const { data, error } = await supabaseClient.from('crm_tasks').insert(payload).select('*').single();
+  if (error) {
+    statusMsg(error.message || 'Unable to create follow-up.');
+    return;
+  }
+  tasks = tasks.concat([data]);
+  renderTasks();
+  document.getElementById('followUpTitle').value = '';
+  document.getElementById('followUpDueAt').value = '';
+  document.getElementById('followUpType').value = 'call';
+  document.getElementById('followUpNotes').value = '';
+  statusMsg('Follow-up created on this lead.');
 }
 
 currentLeadId = queryValue('lead_id');

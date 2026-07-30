@@ -173,6 +173,7 @@
   let selectedOutcome = 'no_answer';
   let callsLogged = 0;
   let operatorName = '';
+  const CLIENT_STORAGE_KEY = 'jawscrm_selected_client_id';
 
   function statusMsg(text) { document.getElementById('statusMsg').textContent = text; }
   function escapeHtml(value) { const div = document.createElement('div'); div.textContent = value || ''; return div.innerHTML; }
@@ -223,8 +224,14 @@
     window.location.href = 'mailto:' + encodeURIComponent(lead.email || '') + '?subject=' + encodeURIComponent(payload.subject) + '&body=' + encodeURIComponent(payload.body);
   }
   function storageKey() { return 'jawscrm_operator_name'; }
+  function clientStorageKey() { return CLIENT_STORAGE_KEY; }
   function currentOwnerFilter() { return document.getElementById('ownerFilter').value || ''; }
   function readOperatorName() { return String(document.getElementById('operatorName').value || '').trim(); }
+  function readSavedClientId() { return String(window.localStorage.getItem(clientStorageKey()) || '').trim(); }
+  function saveSelectedClientId(value) {
+    if (!value) return;
+    window.localStorage.setItem(clientStorageKey(), value);
+  }
 
   function loadOperatorName() {
     operatorName = String(window.localStorage.getItem(storageKey()) || '').trim();
@@ -252,9 +259,17 @@
       opt.textContent = client.name;
       select.appendChild(opt);
     });
-    currentClientId = data[0].id;
-    currentClientName = data[0].name;
+    const requestedClientId = new URLSearchParams(window.location.search).get('client_id');
+    const savedClientId = readSavedClientId();
+    const preferredClient = data.find(client => client.id === currentClientId)
+      || data.find(client => client.id === requestedClientId)
+      || data.find(client => client.id === savedClientId)
+      || data.find(client => client.name === 'South FL Salon SuperSite Outreach')
+      || data[0];
+    currentClientId = preferredClient.id;
+    currentClientName = preferredClient.name;
     select.value = currentClientId;
+    saveSelectedClientId(currentClientId);
     await loadConsole();
   }
 
@@ -360,15 +375,16 @@
     document.getElementById('nextMeta').textContent = 'Current lead: ' + (lead.full_name || lead.company || 'Unnamed Lead');
     container.className = 'lead-card';
     const demo = smartSiteData(lead);
+    const detailUrl = 'Lead_Detail.html?client_id=' + encodeURIComponent(currentClientId || '') + '&lead_id=' + encodeURIComponent(lead.id) + '#review';
     const smartSiteBlock = demo.url
-      ? '<div class="smartsite-box"><strong>Smart Site Demo</strong><div class="pipe-meta">' + escapeHtml(demo.name || 'Demo') + ' · ' + escapeHtml(demo.status || 'draft') + '<br>' + escapeHtml(demo.url) + '</div><div class="action-row" style="margin-top:10px"><a class="btn" href="' + escapeHtml(demo.url) + '" target="_blank" rel="noopener">Open Demo</a><button class="btn" type="button" onclick="copyCurrentLeadDemoLink()">Copy Demo Link</button><button class="btn" type="button" onclick="textCurrentLeadDemo()">Text Draft</button><button class="btn" type="button" onclick="emailCurrentLeadDemo()">Email Draft</button></div></div>'
+      ? '<div class="smartsite-box"><strong>Smart Site Demo</strong><div class="pipe-meta">' + escapeHtml(demo.name || 'Demo') + ' · ' + escapeHtml(demo.status || 'draft') + '<br>' + escapeHtml(demo.url) + '</div><div class="action-row" style="margin-top:10px"><a class="btn" href="' + escapeHtml(demo.url) + '" target="_blank" rel="noopener">Open Demo</a><button class="btn" type="button" onclick="copyCurrentLeadDemoLink()">Copy Demo Link</button><a class="btn primary" href="' + escapeHtml(detailUrl) + '">Review &amp; Send</a></div></div>'
       : '<div class="smartsite-box"><strong>Smart Site Demo</strong><div class="pipe-meta">No demo linked yet. Open Lead Detail to add one.</div></div>';
     container.innerHTML = '<h3>' + escapeHtml(lead.full_name || lead.company || 'Unnamed Lead') + '</h3>' +
       '<div class="lead-meta">' + escapeHtml(lead.phone || 'No phone') + ' · ' + escapeHtml(lead.city || 'No city') + ', ' + escapeHtml(lead.state || 'FL') + '</div>' +
       '<div class="action-row">' +
       '<a class="btn primary" href="' + escapeHtml(telHref(lead.phone)) + '">Call</a>' +
       '<a class="btn" href="' + escapeHtml(smsHref(lead.phone)) + '">Text</a>' +
-      '<a class="btn" href="Lead_Detail.html?client_id=' + escapeHtml(encodeURIComponent(currentClientId || '')) + '&lead_id=' + escapeHtml(encodeURIComponent(lead.id)) + '">Lead Detail</a>' +
+      '<a class="btn" href="' + escapeHtml(detailUrl) + '">Lead Detail</a>' +
       '</div>' +
       '<div class="pipe-meta" style="margin-top:14px">Status: ' + escapeHtml(lead.status) + ' · Last outcome: ' + escapeHtml(lead.last_call_outcome || 'none') + ' · Attempts: ' + escapeHtml(String(lead.call_attempts || 0)) + '</div>' +
       '<div class="pipe-meta" style="margin-top:8px">' + escapeHtml(lead.notes || 'No notes yet.') + '</div>' +
@@ -390,7 +406,7 @@
         '<div class="task-actions">' +
         '<a class="btn" href="' + escapeHtml(telHref(task.crm_leads?.phone || '')) + '">Call</a>' +
         '<a class="btn" href="' + escapeHtml(smsHref(task.crm_leads?.phone || '')) + '">Text</a>' +
-        '<a class="btn" href="Lead_Detail.html?client_id=' + escapeHtml(encodeURIComponent(currentClientId || '')) + '&lead_id=' + escapeHtml(encodeURIComponent(task.lead_id || '')) + '">Open Lead</a>' +
+        '<a class="btn" href="Lead_Detail.html?client_id=' + escapeHtml(encodeURIComponent(currentClientId || '')) + '&lead_id=' + escapeHtml(encodeURIComponent(task.lead_id || '')) + '#review">Review Lead</a>' +
         '<button class="btn primary" type="button" onclick="markTaskDone(\'' + escapeHtml(task.id) + '\')">Mark Done</button>' +
         '</div>';
       container.appendChild(row);
@@ -487,6 +503,7 @@
     const option = event.target.selectedOptions[0];
     currentClientId = event.target.value || null;
     currentClientName = option ? option.textContent : null;
+    saveSelectedClientId(currentClientId);
     selectedLeadId = null;
     await loadConsole();
   });

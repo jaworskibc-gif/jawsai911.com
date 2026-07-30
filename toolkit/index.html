@@ -23,7 +23,11 @@
   }
   .back-link:hover { color: white; }
 
-  .wrap { max-width: 980px; margin: 0 auto; padding: 30px; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 30px; }
+  .section { margin-bottom: 28px; }
+  .section-head { margin-bottom: 14px; }
+  .section-title { font-size: 15px; font-weight: 900; color: var(--ink); }
+  .section-copy { font-size: 12px; color: var(--ink-soft); margin-top: 4px; line-height: 1.5; }
   .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
   .card {
     background: white; border: 1px solid var(--line); border-radius: 10px; padding: 20px;
@@ -38,36 +42,61 @@
     padding: 12px 16px; font-size: 11.5px; color: #0A5A80;
   }
   @media (max-width: 760px) { .grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
 
   <div class="topbar">
     <div class="brand">JAWS<span>AI</span>911 Toolkit</div>
-    <div class="subtitle">CRM-native sales stack · one lead record · one caller workflow</div>
+    <div class="subtitle">CRM-first workflow · review lead · preview SuperSite · send · follow up</div>
     <a class="back-link" href="../dashboard.html">← Back to Command Center</a>
   </div>
 
   <div class="wrap">
-    <div class="grid">
-      <a class="card" href="JAWSAI911_Dashboard.html"><div class="card-icon"></div><div class="card-name">Dashboard</div><div class="card-desc">Unified CRM snapshot for pipeline, calls, tasks, and invoice visibility.</div></a>
-      <a class="card" href="Sales_Console.html"><div class="card-icon"></div><div class="card-name">Sales Console</div><div class="card-desc">Single-screen caller workspace for pipeline, next lead, tasks, and quick logging on the new CRM model.</div></a>
-      <a class="card" href="Lead_Detail.html"><div class="card-icon"></div><div class="card-name">Lead Detail</div><div class="card-desc">Single lead record for calls, tasks, notes, invoices, docs, and proposal actions.</div></a>
-      <a class="card" href="JAWSAI911_Pipeline_CRM.html"><div class="card-icon"></div><div class="card-name">Pipeline / CRM</div><div class="card-desc">CRM pipeline board powered by the same lead records sales is actively working.</div></a>
-      <a class="card" href="JAWSAI911_Form_Builder.html"><div class="card-icon"></div><div class="card-name">Form Builder</div><div class="card-desc">Lead capture forms with saved submissions.</div></a>
-      <a class="card" href="JAWSAI911_Invoicing.html"><div class="card-icon"></div><div class="card-name">Invoicing &amp; Estimating</div><div class="card-desc">Line items, totals, printable branded invoices.</div></a>
-      <a class="card" href="JAWSAI911_Call_Tracker.html"><div class="card-icon"></div><div class="card-name">Call Tracker</div><div class="card-desc">Log call activity into the same CRM record and activate follow-up tasks.</div></a>
-      <a class="card" href="JAWSAI911_Power_Dialer.html"><div class="card-icon"></div><div class="card-name">Power Dialer</div><div class="card-desc">Work a fast call queue while syncing outcomes into the CRM automatically.</div></a>
-      <a class="card" href="Sales_Documents.html"><div class="card-icon"></div><div class="card-name">Sales Documents</div><div class="card-desc">Find receipts, invoice records, estimates, and linked sales docs in one place.</div></a>
-      <a class="card" href="Proposal_Generator.html"><div class="card-icon"></div><div class="card-name">Proposal Generator</div><div class="card-desc">Create JAWSAI911-branded proposals and save them into the estimate system.</div></a>
-      <a class="card" href="JAWSAI911_Site_Builder.html"><div class="card-icon"></div><div class="card-name">Site Builder</div><div class="card-desc">Editable sections, 4 themes, live preview.</div></a>
-      <a class="card" href="JAWSAI911_Workflow_Builder.html"><div class="card-icon"></div><div class="card-name">Workflow Builder</div><div class="card-desc">Build outreach playbooks and turn them into dated CRM tasks for real leads.</div></a>
-      <a class="card" href="JAWSAI911_Reputation_Manager.html"><div class="card-icon"></div><div class="card-name">Reputation Manager</div><div class="card-desc">Review request tracking + ask templates.</div></a>
-      <a class="card" href="JAWSAI911_Content_Planner.html"><div class="card-icon"></div><div class="card-name">Content Planner</div><div class="card-desc">Social post calendar by date, platform, status.</div></a>
-    </div>
+    <section class="section">
+      <div class="section-head">
+        <div class="section-title">CRM Core</div>
+        <div class="section-copy">Daily sales workflow only. Reps should start here, review the lead, preview the SuperSite, send outreach, and set the next action.</div>
+      </div>
+      <div class="grid">
+        <a class="card" href="Sales_Console.html"><div class="card-icon"></div><div class="card-name">Sales Console</div><div class="card-desc">Main rep screen for queue, current lead, send path, and call logging.</div></a>
+        <a class="card" href="Lead_Detail.html"><div class="card-icon"></div><div class="card-name">Lead Detail</div><div class="card-desc">Review the lead, preview the SuperSite, send outreach, create proposal/invoice, and set follow-up.</div></a>
+        <a class="card" href="JAWSAI911_Pipeline_CRM.html"><div class="card-icon"></div><div class="card-name">Pipeline</div><div class="card-desc">See all leads by stage and import or clean up records when needed.</div></a>
+        <a class="card" href="JAWSAI911_Dashboard.html"><div class="card-icon"></div><div class="card-name">Dashboard</div><div class="card-desc">High-level CRM counts, due follow-ups, recent calls, and lead volume.</div></a>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="section-title">Client Packages</div>
+        <div class="section-copy">Open these only when building, attaching, or updating deliverables for a client package.</div>
+      </div>
+      <div class="grid">
+        <a class="card" href="Proposal_Generator.html"><div class="card-icon"></div><div class="card-name">Proposal Generator</div><div class="card-desc">Create package proposals and save them into the estimate flow.</div></a>
+        <a class="card" href="JAWSAI911_Invoicing.html"><div class="card-icon"></div><div class="card-name">Invoicing &amp; Estimating</div><div class="card-desc">Create invoices, estimates, and billing records tied to the lead.</div></a>
+        <a class="card" href="Sales_Documents.html"><div class="card-icon"></div><div class="card-name">Sales Documents</div><div class="card-desc">Store receipts, docs, proofs, and package attachments.</div></a>
+        <a class="card" href="JAWSAI911_Site_Builder.html"><div class="card-icon"></div><div class="card-name">Site Builder</div><div class="card-desc">Only for building or editing a client deliverable.</div></a>
+        <a class="card" href="JAWSAI911_Form_Builder.html"><div class="card-icon"></div><div class="card-name">Form Builder</div><div class="card-desc">Only for adding client package forms or intake assets.</div></a>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="section-title">Ops Tools</div>
+        <div class="section-copy">Back-office tools. Keep these out of the rep workflow unless you are changing process or building delivery support.</div>
+      </div>
+      <div class="grid">
+        <a class="card" href="JAWSAI911_Call_Tracker.html"><div class="card-icon"></div><div class="card-name">Call Tracker</div><div class="card-desc">Back-office call logging and record cleanup.</div></a>
+        <a class="card" href="JAWSAI911_Power_Dialer.html"><div class="card-icon"></div><div class="card-name">Power Dialer</div><div class="card-desc">Optional fast-call workflow, not the default CRM path.</div></a>
+        <a class="card" href="JAWSAI911_Workflow_Builder.html"><div class="card-icon"></div><div class="card-name">Workflow Builder</div><div class="card-desc">Build follow-up systems and task templates.</div></a>
+        <a class="card" href="JAWSAI911_Reputation_Manager.html"><div class="card-icon"></div><div class="card-name">Reputation Manager</div><div class="card-desc">Review requests and reputation support.</div></a>
+        <a class="card" href="JAWSAI911_Content_Planner.html"><div class="card-icon"></div><div class="card-name">Content Planner</div><div class="card-desc">Content operations, not the main CRM screen.</div></a>
+      </div>
+    </section>
 
     <div class="connected-note">
-      ℹ Pipeline, Sales Console, Call Tracker, Power Dialer, Workflow Builder, and Dashboard now run on the same CRM flow. Lead stage, call history, ownership, and follow-up tasks stay tied to one lead record instead of separate islands.
+      ℹ Default rep path: `Sales Console -> Lead Detail -> Review SuperSite -> Send -> Proposal / Invoice / Follow-Up`. Everything else is secondary.
     </div>
   </div>
 
