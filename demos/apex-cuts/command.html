@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Apex Cuts · Command Agent | JAWSAI911 SuperSite</title>
+  <meta name="description" content="Command Agent demo: lead pipeline, Photo → 5 Lanes, Google Review Engine, and local SEO dashboard for Apex Cuts." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #010711;
+      --navy2: #0b1f33;
+      --cyan: #00b4ff;
+      --teal: #00c4b4;
+      --amber: #f2c879;
+      --pink: #e8175d;
+      --ink: #1a2230;
+      --soft: #5a6472;
+      --foam: #f4f7f9;
+      --line: #e2e6ea;
+      --white: #fff;
+      --green: #1fa37a;
+      --red: #d64545;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Inter, system-ui, sans-serif;
+      background: var(--foam);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+    a { color: var(--cyan); text-decoration: none; }
+
+    .topbar {
+      background: var(--navy);
+      color: #fff;
+      padding: 12px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .brand { font-weight: 900; font-size: 0.95rem; }
+    .brand span { color: var(--cyan); }
+    .brand small {
+      display: block;
+      font-weight: 500;
+      font-size: 0.72rem;
+      color: #8ba0b5;
+      margin-top: 2px;
+    }
+    .top-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .top-actions a, .top-actions button {
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+    }
+    .top-actions .ghost {
+      background: rgba(255,255,255,.08);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    .top-actions .teal {
+      background: var(--teal);
+      color: var(--navy);
+    }
+
+    .demo-strip {
+      background: #e8f6ff;
+      border-bottom: 1px solid #bde3f7;
+      padding: 8px 20px;
+      font-size: 0.8rem;
+      color: #1a5a7a;
+      text-align: center;
+    }
+    .demo-strip strong { color: #0b1f33; }
+
+    .shell {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      min-height: calc(100vh - 96px);
+    }
+    .sidebar {
+      background: var(--white);
+      border-right: 1px solid var(--line);
+      padding: 16px 12px;
+    }
+    .nav-item {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 11px 12px;
+      border: none;
+      background: transparent;
+      border-radius: 10px;
+      font: inherit;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--soft);
+      cursor: pointer;
+      margin-bottom: 4px;
+    }
+    .nav-item:hover { background: var(--foam); color: var(--ink); }
+    .nav-item.active {
+      background: rgba(0,180,255,.1);
+      color: #0277a8;
+    }
+    .nav-item .tag {
+      float: right;
+      font-size: 0.68rem;
+      background: var(--pink);
+      color: #fff;
+      padding: 2px 7px;
+      border-radius: 100px;
+    }
+
+    .main { padding: 22px 24px 40px; }
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    .page-head {
+      display: flex; flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .page-head h1 {
+      font-size: 1.45rem;
+      font-weight: 800;
+    }
+    .page-head p {
+      color: var(--soft);
+      font-size: 0.9rem;
+      margin-top: 4px;
+    }
+
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .kpi {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 16px;
+    }
+    .kpi .num {
+      font-size: 1.7rem;
+      font-weight: 900;
+      color: var(--navy);
+      line-height: 1;
+    }
+    .kpi .num.cyan { color: #0277a8; }
+    .kpi .num.green { color: var(--green); }
+    .kpi .num.amber { color: #b8791a; }
+    .kpi .label {
+      font-size: 0.75rem;
+      color: var(--soft);
+      margin-top: 6px;
+      font-weight: 600;
+    }
+    .kpi .delta {
+      font-size: 0.72rem;
+      color: var(--green);
+      margin-top: 4px;
+    }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 14px;
+    }
+    .card h2 {
+      font-size: 0.95rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .card-head h2 { margin: 0; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .btn-teal { background: var(--teal); color: var(--navy); }
+    .btn-cyan { background: var(--cyan); color: #fff; }
+    .btn-outline {
+      background: var(--white);
+      border: 1px solid var(--line);
+      color: var(--soft);
+    }
+    .btn-amber { background: var(--amber); color: var(--navy); }
+    .btn-sm { padding: 5px 9px; font-size: 0.72rem; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    th {
+      text-align: left;
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--navy2);
+      padding: 10px 12px;
+    }
+    td {
+      padding: 11px 12px;
+      border-top: 1px solid var(--line);
+      vertical-align: middle;
+    }
+    tr:hover td { background: #fafcfd; }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 9px;
+      border-radius: 100px;
+      font-size: 0.7rem;
+      font-weight: 800;
+    }
+    .badge-new { background: #e8f6ff; color: #0277a8; }
+    .badge-contacted { background: #fff4e0; color: #b8791a; }
+    .badge-booked { background: #e6f9f1; color: var(--green); }
+    .badge-pending { background: #edeff2; color: var(--soft); }
+    .badge-sent { background: #fff4e0; color: #b8791a; }
+    .badge-done { background: #e6f9f1; color: var(--green); }
+    .badge-remind { background: #fde8ef; color: var(--pink); }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 14px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .lane-flow {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .lane {
+      background: var(--foam);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px 8px;
+      text-align: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--soft);
+    }
+    .lane strong {
+      display: block;
+      font-size: 1.1rem;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+    .lane.done {
+      background: #e6f9f1;
+      border-color: #b7e8d4;
+      color: var(--green);
+    }
+
+    .photo-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 0;
+      border-top: 1px solid var(--line);
+    }
+    .photo-thumb {
+      width: 56px; height: 56px;
+      border-radius: 10px;
+      background-size: cover;
+      background-position: center;
+      flex-shrink: 0;
+      border: 1px solid var(--line);
+    }
+    .photo-meta { flex: 1; min-width: 0; }
+    .photo-meta strong { display: block; font-size: 0.88rem; }
+    .photo-meta span { font-size: 0.75rem; color: var(--soft); }
+
+    .check-list { list-style: none; }
+    .check-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 0;
+      border-top: 1px solid var(--line);
+      font-size: 0.88rem;
+    }
+    .check-list li:first-child { border-top: none; }
+    .check {
+      width: 20px; height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--line);
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      font-size: 0.7rem;
+      font-weight: 900;
+      cursor: pointer;
+      margin-top: 1px;
+    }
+    .check.on {
+      background: var(--teal);
+      border-color: var(--teal);
+      color: var(--navy);
+    }
+    .check-list .meta {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--soft);
+      margin-top: 2px;
+    }
+
+    .template-box {
+      background: var(--foam);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 0.85rem;
+      line-height: 1.55;
+      color: var(--ink);
+      white-space: pre-wrap;
+      margin-bottom: 10px;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .field label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--soft);
+      margin-bottom: 4px;
+    }
+    .field input, .field select, .field textarea {
+      width: 100%;
+      padding: 9px 11px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      font: inherit;
+      font-size: 0.88rem;
+    }
+    .toast {
+      position: fixed;
+      bottom: 24px; right: 24px;
+      background: var(--navy);
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      box-shadow: 0 12px 40px rgba(0,0,0,.25);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s;
+      z-index: 100;
+    }
+    .toast.show { opacity: 1; }
+
+    .brief-list {
+      list-style: none;
+    }
+    .brief-list li {
+      padding: 12px 0;
+      border-top: 1px solid var(--line);
+      font-size: 0.9rem;
+      display: flex;
+      gap: 12px;
+    }
+    .brief-list li:first-child { border-top: none; }
+    .brief-list .icon {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      background: rgba(0,180,255,.1);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 960px) {
+      .shell { grid-template-columns: 1fr; }
+      .sidebar {
+        display: flex;
+        overflow-x: auto;
+        gap: 4px;
+        padding: 10px;
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+      }
+      .nav-item { white-space: nowrap; margin: 0; }
+      .kpi-row { grid-template-columns: 1fr 1fr; }
+      .grid-2, .grid-3, .lane-flow, .field-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      JAWS<span>AI</span>911 · Command Agent
+      <small>Apex Cuts Barbershop · Layer 2 demo</small>
+    </div>
+    <div class="top-actions">
+      <a class="ghost" href="index.html">← Public SuperSite</a>
+      <a class="ghost" href="../../salon-supersite.html">Salon Offer</a>
+      <button class="teal" type="button" onclick="toast('Daily brief refreshed (demo)')">↻ Refresh Brief</button>
+    </div>
+  </header>
+
+  <div class="demo-strip">
+    <strong>DEMO</strong> — Interactive Command Agent. Leads from the public SuperSite form appear in Pipeline. Review actions update live in this browser.
+  </div>
+
+  <div class="shell">
+    <aside class="sidebar" id="sidebar">
+      <button class="nav-item active" data-panel="brief">✓ Daily Brief</button>
+      <button class="nav-item" data-panel="pipeline">📋 Pipeline <span class="tag" id="lead-count">0</span></button>
+      <button class="nav-item" data-panel="reviews">★ Review Engine</button>
+      <button class="nav-item" data-panel="lanes">📸 Photo → 5 Lanes</button>
+      <button class="nav-item" data-panel="seo">📍 Local SEO / GBP</button>
+      <button class="nav-item" data-panel="agents">🤖 AI Agents</button>
+    </aside>
+
+    <main class="main">
+      <!-- DAILY BRIEF -->
+      <section class="panel active" id="panel-brief">
+        <div class="page-head">
+          <div>
+            <h1>Daily Brief · Apex Cuts</h1>
+            <p>Start here every morning — post, proof, and pipeline priorities.</p>
+          </div>
+          <span class="badge badge-new" id="brief-date"></span>
+        </div>
+        <div class="kpi-row">
+          <div class="kpi">
+            <div class="num cyan" id="kpi-leads">3</div>
+            <div class="label">New leads (7 days)</div>
+            <div class="delta">↑ includes SuperSite form</div>
+          </div>
+          <div class="kpi">
+            <div class="num green" id="kpi-reviews">14</div>
+            <div class="label">Reviews this month</div>
+            <div class="delta">Target: 10–20</div>
+          </div>
+          <div class="kpi">
+            <div class="num amber" id="kpi-pending">5</div>
+            <div class="label">Review requests pending</div>
+            <div class="delta">2 due for reminder</div>
+          </div>
+          <div class="kpi">
+            <div class="num">4.9</div>
+            <div class="label">Google rating · 186 total</div>
+            <div class="delta">+0.0 this week</div>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <h2>Today’s priorities</h2>
+            <ul class="brief-list">
+              <li>
+                <div class="icon">📸</div>
+                <div><strong>Post Marcus fade to IG + GBP</strong><br /><span style="color:var(--soft);font-size:0.85rem">Photo already queued in 5 Lanes · caption ready</span></div>
+              </li>
+              <li>
+                <div class="icon">★</div>
+                <div><strong>Send 2 review reminders</strong><br /><span style="color:var(--soft);font-size:0.85rem">Clients from yesterday who skipped the chair stand</span></div>
+              </li>
+              <li>
+                <div class="icon">📋</div>
+                <div><strong>Follow up 3 pipeline leads</strong><br /><span style="color:var(--soft);font-size:0.85rem">Same-day requests from SuperSite form + chat</span></div>
+              </li>
+              <li>
+                <div class="icon">📍</div>
+                <div><strong>GBP weekly post</strong><br /><span style="color:var(--soft);font-size:0.85rem">“Weekend openings · book Marcus or Diego”</span></div>
+              </li>
+            </ul>
+          </div>
+          <div class="card">
+            <h2>Suggested IG caption</h2>
+            <div class="template-box" id="caption-box">Mid drop that hits different 🔥
+
+Marcus · Chair 2 · Apex Cuts Miami
+
+Book your chair — link in bio or call (305) 555-0186
+
+#MiamiBarber #SkinFade #ApexCuts #BarbershopMiami</div>
+            <button class="btn btn-teal" type="button" onclick="copyCaption()">Copy caption</button>
+            <button class="btn btn-outline" type="button" onclick="toast('Marked posted · tracker updated (demo)')">Mark posted</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- PIPELINE -->
+      <section class="panel" id="panel-pipeline">
+        <div class="page-head">
+          <div>
+            <h1>Lead Pipeline</h1>
+            <p>Every SuperSite form, chat handoff, and missed-call recovery lands here. No re-typing.</p>
+          </div>
+          <button class="btn btn-cyan" type="button" onclick="addSampleLead()">+ Sample lead</button>
+        </div>
+        <div class="card" style="padding:0;overflow:auto">
+          <table>
+            <thead>
+              <tr>
+                <th>Lead</th>
+                <th>Service</th>
+                <th>Stylist</th>
+                <th>When</th>
+                <th>Source</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="leads-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- REVIEW ENGINE -->
+      <section class="panel" id="panel-reviews">
+        <div class="page-head">
+          <div>
+            <h1>Google Review Engine</h1>
+            <p>2× chances per client: chair stand + automatic same-day text. Track every request.</p>
+          </div>
+          <button class="btn btn-amber" type="button" onclick="addReviewRequest()">+ Log completed cut</button>
+        </div>
+        <div class="kpi-row">
+          <div class="kpi">
+            <div class="num green" id="rev-completed">14</div>
+            <div class="label">Reviews collected (mo)</div>
+          </div>
+          <div class="kpi">
+            <div class="num amber" id="rev-pending">5</div>
+            <div class="label">Awaiting review</div>
+          </div>
+          <div class="kpi">
+            <div class="num cyan" id="rev-stands">62%</div>
+            <div class="label">Chair stand scan rate</div>
+          </div>
+          <div class="kpi">
+            <div class="num">38%</div>
+            <div class="label">SMS convert rate</div>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="card" style="padding:0;overflow:auto">
+            <div class="card-head" style="padding:16px 16px 0">
+              <h2>Request queue</h2>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Client</th>
+                  <th>Stylist</th>
+                  <th>Path</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="review-body"></tbody>
+            </table>
+          </div>
+          <div>
+            <div class="card">
+              <h2>SMS template · Review Agent</h2>
+              <div class="template-box">Hey {{name}} — thanks for coming through Apex Cuts today ✂️
+
+If we earned it, a 30-second Google review helps the whole shop (and your barber):
+
+{{review_link}}
+
+— Apex Cuts · (305) 555-0186</div>
+              <button class="btn btn-outline btn-sm" type="button" onclick="toast('Template saved (demo)')">Save template</button>
+            </div>
+            <div class="card">
+              <h2>Chair stands</h2>
+              <ul class="check-list">
+                <li>
+                  <div class="check on">✓</div>
+                  <div>Chair 1 · Diego — QR live<small class="meta">12 scans this week</small></div>
+                </li>
+                <li>
+                  <div class="check on">✓</div>
+                  <div>Chair 2 · Marcus — QR live<small class="meta">19 scans this week</small></div>
+                </li>
+                <li>
+                  <div class="check on">✓</div>
+                  <div>Chair 3 · Jordan — QR live<small class="meta">8 scans this week</small></div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PHOTO 5 LANES -->
+      <section class="panel" id="panel-lanes">
+        <div class="page-head">
+          <div>
+            <h1>Photo → 5 Lanes</h1>
+            <p>One chair photo becomes five assets. Queue, push, done.</p>
+          </div>
+          <button class="btn btn-teal" type="button" onclick="toast('Upload dialog would open in live system')">↑ Upload photo</button>
+        </div>
+        <div class="card">
+          <h2>Lane map</h2>
+          <div class="lane-flow">
+            <div class="lane"><strong>1</strong>Social post</div>
+            <div class="lane"><strong>2</strong>Google photos</div>
+            <div class="lane"><strong>3</strong>Website gallery</div>
+            <div class="lane"><strong>4</strong>Shorts / Reels</div>
+            <div class="lane"><strong>5</strong>Review request</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <h2>This week’s queue</h2>
+            <span style="font-size:0.8rem;color:var(--soft)">8–10 photos → 40–50 pieces / month</span>
+          </div>
+          <div class="photo-row">
+            <div class="photo-thumb" style="background-image:url('https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=200&q=70')"></div>
+            <div class="photo-meta">
+              <strong>Mid drop fade · Marcus</strong>
+              <span>Uploaded today · tagged Chair 2</span>
+              <div class="lane-flow" style="margin-top:8px">
+                <div class="lane done">✓ Social</div>
+                <div class="lane done">✓ Google</div>
+                <div class="lane done">✓ Site</div>
+                <div class="lane">Shorts</div>
+                <div class="lane done">✓ Review</div>
+              </div>
+            </div>
+            <button class="btn btn-cyan btn-sm" type="button" onclick="toast('Shorts package generated (demo)')">Run Shorts Agent</button>
+          </div>
+          <div class="photo-row">
+            <div class="photo-thumb" style="background-image:url('https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=200&q=70')"></div>
+            <div class="photo-meta">
+              <strong>Beard shape-up · Diego</strong>
+              <span>Yesterday · tagged Chair 1</span>
+              <div class="lane-flow" style="margin-top:8px">
+                <div class="lane done">✓ Social</div>
+                <div class="lane done">✓ Google</div>
+                <div class="lane">Site</div>
+                <div class="lane">Shorts</div>
+                <div class="lane done">✓ Review</div>
+              </div>
+            </div>
+            <button class="btn btn-outline btn-sm" type="button" onclick="toast('Pushed to website gallery (demo)')">Push site</button>
+          </div>
+          <div class="photo-row">
+            <div class="photo-thumb" style="background-image:url('https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&w=200&q=70')"></div>
+            <div class="photo-meta">
+              <strong>Classic cut · Jordan</strong>
+              <span>2 days ago · tagged Chair 3</span>
+              <div class="lane-flow" style="margin-top:8px">
+                <div class="lane done">✓ Social</div>
+                <div class="lane done">✓ Google</div>
+                <div class="lane done">✓ Site</div>
+                <div class="lane done">✓ Shorts</div>
+                <div class="lane done">✓ Review</div>
+              </div>
+            </div>
+            <span class="badge badge-done">Complete</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- LOCAL SEO -->
+      <section class="panel" id="panel-seo">
+        <div class="page-head">
+          <div>
+            <h1>Local SEO · Google Business Profile</h1>
+            <p>2026 ranking pressure: review velocity, photos, posts, and complete profile data.</p>
+          </div>
+        </div>
+        <div class="kpi-row">
+          <div class="kpi">
+            <div class="num green">92</div>
+            <div class="label">GBP completeness score</div>
+          </div>
+          <div class="kpi">
+            <div class="num cyan">24</div>
+            <div class="label">Photos this month</div>
+          </div>
+          <div class="kpi">
+            <div class="num amber">1</div>
+            <div class="label">GBP posts due this week</div>
+          </div>
+          <div class="kpi">
+            <div class="num">Map</div>
+            <div class="label">In 3-pack for “barber Miami”</div>
+            <div class="delta">Demo claim</div>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <h2>Weekly GBP checklist</h2>
+            <ul class="check-list" id="gbp-checks">
+              <li data-check="1"><div class="check on" onclick="toggleCheck(this)">✓</div><div>Primary category: Barbershop<small class="meta">Secondary: Hair salon</small></div></li>
+              <li data-check="2"><div class="check on" onclick="toggleCheck(this)">✓</div><div>NAP matches SuperSite footer<small class="meta">1842 NW 2nd Ave · (305) 555-0186</small></div></li>
+              <li data-check="3"><div class="check on" onclick="toggleCheck(this)">✓</div><div>15+ photos on profile<small class="meta">24 this month via Photo → 5 Lanes</small></div></li>
+              <li data-check="4"><div class="check" onclick="toggleCheck(this)"></div><div>Publish weekly offer post<small class="meta">Due: Friday · draft ready in Brief</small></div></li>
+              <li data-check="5"><div class="check on" onclick="toggleCheck(this)">✓</div><div>Respond to all reviews &lt; 48h<small class="meta">Reply Agent drafts ready</small></div></li>
+              <li data-check="6"><div class="check" onclick="toggleCheck(this)"></div><div>Q&amp;A: “Do you take walk-ins?”<small class="meta">Answer: Yes when chairs free · book preferred</small></div></li>
+            </ul>
+          </div>
+          <div class="card">
+            <h2>Schema &amp; on-site SEO</h2>
+            <ul class="check-list">
+              <li><div class="check on">✓</div><div>HairSalon JSON-LD on SuperSite</div></li>
+              <li><div class="check on">✓</div><div>AggregateRating 4.9 / 186 reviews</div></li>
+              <li><div class="check on">✓</div><div>Opening hours + geo coordinates</div></li>
+              <li><div class="check on">✓</div><div>Click-to-call + sticky mobile CTA</div></li>
+              <li><div class="check on">✓</div><div>Service pages / clear pricing</div></li>
+              <li><div class="check on">✓</div><div>After-hours AI chat capture</div></li>
+            </ul>
+            <button class="btn btn-cyan" style="margin-top:12px" type="button" onclick="toast('GBP post scheduled for Friday 10am (demo)')">Schedule GBP post</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- AGENTS -->
+      <section class="panel" id="panel-agents">
+        <div class="page-head">
+          <div>
+            <h1>Included AI Agents</h1>
+            <p>Shorts · Review · Reply · Google Visibility — all in the $497/mo special.</p>
+          </div>
+        </div>
+        <div class="grid-3">
+          <div class="card">
+            <h2>▶ Shorts Agent</h2>
+            <p style="font-size:0.88rem;color:var(--soft);line-height:1.55;margin-bottom:12px">Turns chair clips into hooks + captions for Reels, TikTok, Shorts.</p>
+            <button class="btn btn-teal btn-sm" type="button" onclick="toast('Shorts Agent: 3 hooks ready (demo)')">Generate hooks</button>
+          </div>
+          <div class="card">
+            <h2>★ Review Agent</h2>
+            <p style="font-size:0.88rem;color:var(--soft);line-height:1.55;margin-bottom:12px">Fires SMS after service. Tracks open / review / remind. Drafts Google replies.</p>
+            <button class="btn btn-amber btn-sm" type="button" onclick="document.querySelector('[data-panel=reviews]').click()">Open engine</button>
+          </div>
+          <div class="card">
+            <h2>💬 Reply Agent</h2>
+            <p style="font-size:0.88rem;color:var(--soft);line-height:1.55;margin-bottom:12px">On-brand comment and DM replies. Keyword triggers for pricing &amp; hours.</p>
+            <button class="btn btn-outline btn-sm" type="button" onclick="toast('Reply draft copied (demo)')">Draft reply</button>
+          </div>
+        </div>
+        <div class="card">
+          <h2>📍 Google Visibility Agent</h2>
+          <div class="field-row">
+            <div class="field">
+              <label>This week’s GBP post angle</label>
+              <select id="gbp-angle">
+                <option>Weekend openings · book by name</option>
+                <option>Before/after fade feature</option>
+                <option>New client special (if any)</option>
+                <option>Team spotlight · Marcus</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>CTA</label>
+              <select>
+                <option>Call (305) 555-0186</option>
+                <option>Book on SuperSite</option>
+                <option>Message us</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn btn-cyan" type="button" onclick="toast('Visibility Agent drafted post + 5 hashtags (demo)')">Draft GBP + social post</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    (function () {
+      // Navigation
+      const items = document.querySelectorAll(".nav-item");
+      items.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          items.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          document.querySelectorAll(".panel").forEach((p) => p.classList.remove("active"));
+          document.getElementById("panel-" + btn.dataset.panel).classList.add("active");
+        });
+      });
+
+      document.getElementById("brief-date").textContent =
+        new Date().toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric" });
+
+      // Seed + render leads
+      const seedLeads = [
+        { id: "L1", name: "Chris P.", phone: "(305) 555-0142", service: "Skin Fade — $45", stylist: "Marcus", when: "Today · ASAP", source: "SuperSite form", status: "New" },
+        { id: "L2", name: "Tony M.", phone: "(786) 555-0199", service: "Cut + Beard — $60", stylist: "Diego", when: "Tomorrow morning", source: "AI chat", status: "Contacted" },
+        { id: "L3", name: "Jaylen S.", phone: "(305) 555-0177", service: "Classic Cut — $35", stylist: "Any available", when: "This weekend", source: "Missed-call textback", status: "Booked" }
+      ];
+
+      function loadLeads() {
+        let stored = [];
+        try { stored = JSON.parse(localStorage.getItem("apex_leads") || "[]"); } catch (_) {}
+        const mapped = stored.map((l) => ({
+          id: l.id,
+          name: l.name || "Lead",
+          phone: l.phone || "—",
+          service: l.service || "—",
+          stylist: l.stylist || "Any",
+          when: l.when || "—",
+          source: l.source || "SuperSite form",
+          status: l.status || "New"
+        }));
+        return [...mapped, ...seedLeads];
+      }
+
+      function statusBadge(s) {
+        const map = { New: "badge-new", Contacted: "badge-contacted", Booked: "badge-booked" };
+        return `<span class="badge ${map[s] || "badge-pending"}">${s}</span>`;
+      }
+
+      function renderLeads() {
+        const leads = loadLeads();
+        document.getElementById("lead-count").textContent = leads.filter((l) => l.status === "New").length;
+        document.getElementById("kpi-leads").textContent = leads.length;
+        const body = document.getElementById("leads-body");
+        body.innerHTML = leads.map((l) => `
+          <tr>
+            <td><strong>${esc(l.name)}</strong><br><span style="color:var(--soft);font-size:0.78rem">${esc(l.phone)}</span></td>
+            <td>${esc(l.service)}</td>
+            <td>${esc(l.stylist)}</td>
+            <td>${esc(l.when)}</td>
+            <td>${esc(l.source)}</td>
+            <td>${statusBadge(l.status)}</td>
+            <td><button class="btn btn-outline btn-sm" type="button" onclick="toast('Opened lead ${esc(l.id)} (demo)')">Open</button></td>
+          </tr>
+        `).join("");
+      }
+
+      function esc(s) {
+        return String(s).replace(/[&<>"']/g, (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;" }[c]));
+      }
+
+      window.addSampleLead = function () {
+        const leads = JSON.parse(localStorage.getItem("apex_leads") || "[]");
+        leads.unshift({
+          id: "L" + Date.now(),
+          name: "Demo Client",
+          phone: "(305) 555-0100",
+          service: "Skin Fade — $45",
+          stylist: "Marcus",
+          when: "Today · After 4pm",
+          source: "SuperSite form",
+          status: "New",
+          created: new Date().toISOString()
+        });
+        localStorage.setItem("apex_leads", JSON.stringify(leads));
+        renderLeads();
+        toast("Sample lead added to pipeline");
+      };
+
+      // Reviews
+      let reviews = [
+        { id: 1, client: "Andre K.", stylist: "Marcus", path: "Chair stand", status: "Completed" },
+        { id: 2, client: "Luis R.", stylist: "Diego", path: "SMS agent", status: "Completed" },
+        { id: 3, client: "Mike D.", stylist: "Marcus", path: "SMS agent", status: "Sent" },
+        { id: 4, client: "Chris P.", stylist: "Jordan", path: "Chair stand", status: "Pending" },
+        { id: 5, client: "Omar F.", stylist: "Diego", path: "SMS agent", status: "Remind" }
+      ];
+
+      function revBadge(s) {
+        const map = { Completed: "badge-done", Sent: "badge-sent", Pending: "badge-pending", Remind: "badge-remind" };
+        return `<span class="badge ${map[s] || "badge-pending"}">${s}</span>`;
+      }
+
+      function renderReviews() {
+        const body = document.getElementById("review-body");
+        body.innerHTML = reviews.map((r) => {
+          let action = "";
+          if (r.status === "Pending" || r.status === "Remind") {
+            action = `<button class="btn btn-amber btn-sm" type="button" data-send="${r.id}">Send SMS</button>`;
+          } else if (r.status === "Sent") {
+            action = `<button class="btn btn-outline btn-sm" type="button" data-remind="${r.id}">Remind</button>`;
+          } else {
+            action = `<span style="color:var(--green);font-size:0.78rem;font-weight:700">★ Live</span>`;
+          }
+          return `<tr>
+            <td><strong>${esc(r.client)}</strong></td>
+            <td>${esc(r.stylist)}</td>
+            <td>${esc(r.path)}</td>
+            <td>${revBadge(r.status)}</td>
+            <td>${action}</td>
+          </tr>`;
+        }).join("");
+
+        body.querySelectorAll("[data-send]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const id = +btn.getAttribute("data-send");
+            const r = reviews.find((x) => x.id === id);
+            if (r) { r.status = "Sent"; r.path = "SMS agent"; }
+            renderReviews();
+            toast("Review SMS sent to " + (r && r.client));
+          });
+        });
+        body.querySelectorAll("[data-remind]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const id = +btn.getAttribute("data-remind");
+            const r = reviews.find((x) => x.id === id);
+            if (r) r.status = "Remind";
+            renderReviews();
+            toast("Reminder queued");
+          });
+        });
+
+        const pending = reviews.filter((r) => r.status !== "Completed").length;
+        document.getElementById("rev-pending").textContent = pending;
+        document.getElementById("kpi-pending").textContent = pending;
+      }
+
+      window.addReviewRequest = function () {
+        const names = ["Alex B.", "Sam R.", "Devon W.", "Kai N."];
+        const stylists = ["Marcus", "Diego", "Jordan"];
+        reviews.unshift({
+          id: Date.now(),
+          client: names[Math.floor(Math.random() * names.length)],
+          stylist: stylists[Math.floor(Math.random() * stylists.length)],
+          path: "Chair stand",
+          status: "Pending"
+        });
+        renderReviews();
+        toast("Cut logged · dual review path armed");
+      };
+
+      window.toggleCheck = function (el) {
+        el.classList.toggle("on");
+        el.textContent = el.classList.contains("on") ? "✓" : "";
+      };
+
+      window.copyCaption = function () {
+        const t = document.getElementById("caption-box").textContent;
+        if (navigator.clipboard) navigator.clipboard.writeText(t);
+        toast("Caption copied");
+      };
+
+      window.toast = function (msg) {
+        const el = document.getElementById("toast");
+        el.textContent = msg;
+        el.classList.add("show");
+        setTimeout(() => el.classList.remove("show"), 2200);
+      };
+
+      renderLeads();
+      renderReviews();
+    })();
+  </script>
+</body>
+</html>

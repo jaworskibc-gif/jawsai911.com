@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shark SuperSite for Barbershops &amp; Nail Salons | JAWSAI911</title>
+  <meta name="description" content="Turn every chair into a content and review machine. Photo → 5 Lanes, 2× Google review chances, local SEO, and AI agents. $1,000 setup · $497/mo. Built by JAWSAI911." />
+  <meta name="keywords" content="barbershop website, nail salon marketing, Google reviews, local SEO, SuperSite, JAWSAI911" />
+  <link rel="canonical" href="https://jawsai911.com/salon-supersite.html" />
+  <meta property="og:title" content="Shark SuperSite for Barbershops &amp; Nail Salons | JAWSAI911" />
+  <meta property="og:description" content="Turn every chair into a content &amp; review machine. Photo → 5 Lanes · Review Engine · Local SEO." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://jawsai911.com/salon-supersite.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "JAWSAI911 Shark SuperSite — Barbershop & Nail Salon",
+    "description": "Double-stacked SuperSite that turns every chair into a content and Google review machine. Photo → 5 Lanes, Review Agent, Shorts Agent, local SEO.",
+    "brand": { "@type": "Brand", "name": "JAWSAI911" },
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "USD",
+      "price": "497",
+      "priceValidUntil": "2026-12-31",
+      "availability": "https://schema.org/InStock",
+      "url": "https://jawsai911.com/salon-supersite.html",
+      "description": "$1,000 setup + $497/month. No long-term contract."
+    },
+    "provider": {
+      "@type": "Organization",
+      "name": "JAWSAI911",
+      "url": "https://jawsai911.com",
+      "telephone": "+17867612950",
+      "email": "hello@jawsai911.com"
+    }
+  }
+  </script>
+  <style>
+    /* Salon SuperSite page — extends base theme */
+    .ss-serif { font-family: "Instrument Serif", Georgia, serif; font-weight: 400; }
+    .ss-hero {
+      padding: 72px 0 48px;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+    }
+    .ss-hero::before {
+      content: "";
+      position: absolute;
+      top: -15%; right: -10%;
+      width: 560px; height: 560px;
+      background: radial-gradient(circle, rgba(0,180,255,.18) 0%, transparent 68%);
+      pointer-events: none;
+    }
+    .ss-hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 40px;
+      align-items: center;
+    }
+    .ss-kicker {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 14px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .ss-kicker .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 0 3px rgba(34,197,94,.25);
+      animation: pulse 1.8s ease infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 3px rgba(34,197,94,.25); }
+      50% { box-shadow: 0 0 0 6px rgba(34,197,94,.08); }
+    }
+    .ss-hero h1 {
+      font-size: clamp(2.4rem, 5.2vw, 3.8rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 18px;
+      font-weight: 800;
+    }
+    .ss-hero h1 em {
+      font-family: "Instrument Serif", Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--accent);
+    }
+    .ss-hero-sub {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      line-height: 1.75;
+      max-width: 540px;
+      margin-bottom: 28px;
+    }
+    .ss-price-pill {
+      display: inline-flex; flex-wrap: wrap; align-items: center; gap: 12px 18px;
+      padding: 14px 20px;
+      background: linear-gradient(135deg, rgba(0,180,255,.12), rgba(0,119,204,.06));
+      border: 1px solid rgba(0,180,255,.28);
+      border-radius: 14px;
+      margin-bottom: 26px;
+    }
+    .ss-price-pill strong {
+      font-size: 1.35rem;
+      color: #fff;
+    }
+    .ss-price-pill span { color: var(--text-muted); font-size: 0.92rem; }
+    .ss-price-pill .divider {
+      width: 1px; height: 28px; background: var(--border);
+    }
+    .ss-ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 28px; }
+    .ss-proof-row {
+      display: flex; flex-wrap: wrap; gap: 20px 28px;
+      color: var(--text-muted); font-size: 0.88rem;
+    }
+    .ss-proof-row strong { color: var(--text); display: block; font-size: 1.15rem; }
+
+    /* Live preview card */
+    .ss-preview {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,.4), 0 0 0 1px rgba(0,180,255,.08);
+    }
+    .ss-preview-bar {
+      display: flex; align-items: center; gap: 8px;
+      padding: 12px 16px;
+      background: #0d121c;
+      border-bottom: 1px solid var(--border);
+    }
+    .ss-preview-bar i {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: #334155;
+    }
+    .ss-preview-bar i:nth-child(1) { background: #ef4444; }
+    .ss-preview-bar i:nth-child(2) { background: #eab308; }
+    .ss-preview-bar i:nth-child(3) { background: #22c55e; }
+    .ss-preview-bar span {
+      margin-left: 8px;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+    }
+    .ss-preview-body { padding: 20px; }
+    .ss-mini-hero {
+      border-radius: 12px;
+      padding: 22px 18px;
+      background:
+        linear-gradient(135deg, rgba(10,14,23,.92), rgba(10,14,23,.75)),
+        linear-gradient(160deg, #1a2332 0%, #0a0e17 100%);
+      border: 1px solid var(--border);
+      margin-bottom: 14px;
+    }
+    .ss-mini-hero small {
+      display: block;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .ss-mini-hero h3 {
+      font-size: 1.35rem;
+      line-height: 1.15;
+      margin-bottom: 10px;
+    }
+    .ss-mini-stats {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;
+    }
+    .ss-mini-stats span {
+      font-size: 0.72rem;
+      padding: 5px 10px;
+      border-radius: 100px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+    .ss-mini-stats span b { color: #fbbf24; }
+    .ss-mini-btn {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .ss-lane-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+    }
+    .ss-lane {
+      text-align: center;
+      padding: 10px 4px;
+      border-radius: 10px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      font-size: 0.62rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      line-height: 1.3;
+    }
+    .ss-lane b {
+      display: block;
+      font-size: 1.1rem;
+      margin-bottom: 4px;
+    }
+
+    /* Feature sections */
+    .ss-section { padding: 72px 0; }
+    .ss-section-band {
+      padding: 72px 0;
+      background: linear-gradient(180deg, rgba(17,24,39,.9), rgba(10,14,23,1));
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .ss-label {
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .ss-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 14px;
+    }
+    .ss-sub {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 640px;
+      line-height: 1.7;
+      margin-bottom: 40px;
+    }
+
+    .lanes-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+    }
+    .lane-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px 16px;
+      text-align: center;
+      transition: transform .2s, border-color .2s, box-shadow .2s;
+      position: relative;
+    }
+    .lane-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(0,180,255,.4);
+      box-shadow: 0 12px 40px rgba(0,180,255,.12);
+    }
+    .lane-num {
+      position: absolute;
+      top: 12px; left: 14px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: var(--accent);
+      opacity: .7;
+    }
+    .lane-icon { font-size: 1.8rem; margin-bottom: 12px; }
+    .lane-card h3 {
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+    }
+    .lane-card p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .review-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .review-path {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .review-path::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+    }
+    .review-path.gold::before {
+      background: linear-gradient(90deg, #fbbf24, transparent);
+    }
+    .review-path .path-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 100px;
+      background: rgba(0,180,255,.12);
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+    .review-path.gold .path-badge {
+      background: rgba(251,191,36,.12);
+      color: #fbbf24;
+    }
+    .review-path h3 {
+      font-size: 1.35rem;
+      margin-bottom: 10px;
+    }
+    .review-path p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.65;
+      margin-bottom: 18px;
+    }
+    .review-path ol {
+      list-style: none;
+      counter-reset: step;
+    }
+    .review-path ol li {
+      counter-increment: step;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 10px 0;
+      border-top: 1px solid var(--border);
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .review-path ol li::before {
+      content: counter(step);
+      flex-shrink: 0;
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      display: grid;
+      place-items: center;
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .seo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .seo-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+    }
+    .seo-card .icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: rgba(0,180,255,.1);
+      border: 1px solid rgba(0,180,255,.2);
+      font-size: 1.2rem;
+      margin-bottom: 14px;
+    }
+    .seo-card h3 { font-size: 1.05rem; margin-bottom: 8px; }
+    .seo-card p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
+
+    .agents-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+    .agent-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px 18px;
+      text-align: center;
+    }
+    .agent-card .ai-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .agent-card h3 { font-size: 1rem; margin-bottom: 8px; }
+    .agent-card p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; }
+
+    .trend-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .trend-chip {
+      background: rgba(0,180,255,.06);
+      border: 1px solid rgba(0,180,255,.15);
+      border-radius: 12px;
+      padding: 16px;
+    }
+    .trend-chip strong {
+      display: block;
+      font-size: 0.85rem;
+      margin-bottom: 4px;
+    }
+    .trend-chip span {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .offer-box {
+      background:
+        linear-gradient(135deg, rgba(0,180,255,.14), rgba(0,119,204,.05)),
+        var(--bg-card);
+      border: 1px solid rgba(0,180,255,.35);
+      border-radius: 24px;
+      padding: 40px 36px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 32px;
+      align-items: center;
+      box-shadow: 0 20px 60px rgba(0,180,255,.1);
+    }
+    .offer-box h2 {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      margin-bottom: 12px;
+      line-height: 1.15;
+    }
+    .offer-box .includes {
+      list-style: none;
+      margin: 18px 0 0;
+    }
+    .offer-box .includes li {
+      padding: 7px 0;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .offer-box .includes li::before {
+      content: "✓";
+      color: #22c55e;
+      font-weight: 800;
+    }
+    .offer-price-card {
+      background: rgba(10,14,23,.7);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px 24px;
+      text-align: center;
+    }
+    .offer-price-card .limited {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #fbbf24;
+      margin-bottom: 12px;
+    }
+    .offer-price-card .big {
+      font-size: 2.6rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+    .offer-price-card .big small {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .offer-price-card .setup {
+      color: var(--text-muted);
+      margin: 8px 0 20px;
+      font-size: 0.95rem;
+    }
+    .offer-price-card .btn { width: 100%; margin-bottom: 10px; }
+    .offer-price-card .fine {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--bg-card);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .compare-table th,
+    .compare-table td {
+      padding: 14px 18px;
+      text-align: left;
+      font-size: 0.92rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .compare-table th {
+      background: var(--bg-elevated);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .compare-table .bad { color: #f87171; }
+    .compare-table .good { color: #4ade80; font-weight: 600; }
+
+    .demo-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .demo-link {
+      display: block;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      transition: border-color .2s, transform .2s;
+      text-decoration: none;
+      color: inherit;
+    }
+    .demo-link:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      color: inherit;
+    }
+    .demo-link .layer {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .demo-link h3 { font-size: 1.25rem; margin-bottom: 8px; }
+    .demo-link p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.55; }
+    .demo-link .go {
+      display: inline-block;
+      margin-top: 14px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    /* Sticky mobile CTA */
+    .ss-sticky-cta {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 90;
+      padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+      background: rgba(10,14,23,.94);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid var(--border);
+      gap: 10px;
+    }
+    .ss-sticky-cta a {
+      flex: 1;
+      text-align: center;
+      padding: 14px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-decoration: none;
+    }
+    .ss-sticky-cta .call {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #fff;
+    }
+    .ss-sticky-cta .book {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    /* AI chat widget */
+    .ss-chat-fab {
+      position: fixed;
+      bottom: 24px; right: 24px;
+      z-index: 95;
+      width: 58px; height: 58px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #fff;
+      font-size: 1.4rem;
+      box-shadow: 0 8px 28px rgba(0,180,255,.4);
+      transition: transform .2s;
+    }
+    .ss-chat-fab:hover { transform: scale(1.06); }
+    .ss-chat-panel {
+      display: none;
+      position: fixed;
+      bottom: 96px; right: 24px;
+      z-index: 96;
+      width: min(360px, calc(100vw - 32px));
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: 0 24px 60px rgba(0,0,0,.5);
+      overflow: hidden;
+      flex-direction: column;
+      max-height: 480px;
+    }
+    .ss-chat-panel.open { display: flex; }
+    .ss-chat-head {
+      padding: 14px 16px;
+      background: var(--bg-elevated);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .ss-chat-head strong { font-size: 0.92rem; }
+    .ss-chat-head small { display: block; color: #4ade80; font-size: 0.72rem; }
+    .ss-chat-head button {
+      background: none; border: none; color: var(--text-muted);
+      font-size: 1.2rem; cursor: pointer;
+    }
+    .ss-chat-body {
+      padding: 16px;
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-height: 220px;
+    }
+    .ss-msg {
+      max-width: 88%;
+      padding: 10px 13px;
+      border-radius: 14px;
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+    .ss-msg.bot {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+    }
+    .ss-msg.user {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #fff;
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+    }
+    .ss-chat-quick {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      padding: 0 16px 10px;
+    }
+    .ss-chat-quick button {
+      padding: 7px 11px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: var(--bg-elevated);
+      color: var(--text);
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .ss-chat-quick button:hover { border-color: var(--accent); color: var(--accent); }
+    .ss-chat-form {
+      display: flex;
+      gap: 8px;
+      padding: 12px 14px;
+      border-top: 1px solid var(--border);
+    }
+    .ss-chat-form input {
+      flex: 1;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg-dark);
+      color: var(--text);
+      font-size: 0.88rem;
+    }
+    .ss-chat-form button {
+      padding: 10px 14px;
+      border: none;
+      border-radius: 10px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    @media (max-width: 960px) {
+      .ss-hero-grid, .review-split, .offer-box, .demo-links { grid-template-columns: 1fr !important; }
+      .lanes-grid { grid-template-columns: repeat(2, 1fr); }
+      .lanes-grid .lane-card:last-child { grid-column: span 2; }
+      .seo-grid { grid-template-columns: 1fr; }
+      .agents-row { grid-template-columns: 1fr 1fr; }
+      .trend-strip { grid-template-columns: 1fr 1fr; }
+      .ss-lane-row { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .ss-hero { padding: 48px 0 32px; text-align: center; }
+      .ss-hero-sub { margin-left: auto; margin-right: auto; }
+      .ss-ctas { justify-content: center; }
+      .ss-proof-row { justify-content: center; }
+      .ss-price-pill { justify-content: center; }
+      .ss-price-pill .divider { display: none; }
+      .agents-row { grid-template-columns: 1fr; }
+      .ss-sticky-cta { display: flex; }
+      .ss-chat-fab { bottom: 80px; }
+      .ss-chat-panel { bottom: 148px; }
+      body { padding-bottom: 76px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">JAWS<span>AI</span>911</a>
+      <button class="nav-toggle" aria-label="Menu">☰</button>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="supersite.html">Shark SuperSite</a>
+        <a href="salon-supersite.html" class="active">Salon SuperSite</a>
+        <a href="offers.html">Offers</a>
+        <a href="demos/luxe-nails/index.html">Nail Demo</a>
+        <a href="#book" class="btn btn-primary">Book a Walkthrough</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="ss-hero">
+      <div class="container ss-hero-grid">
+        <div>
+          <div class="ss-kicker"><span class="dot"></span> Limited-time · Barbershops &amp; Nail Salons</div>
+          <h1>Turn every chair into a <em>content &amp; review machine</em></h1>
+          <p class="ss-hero-sub">
+            A Shark SuperSite is not a pretty brochure. It is a double-stacked system:
+            a converting public site plus a Command Agent that runs Photo → 5 Lanes,
+            a Google Review Engine, and local SEO that keeps your chairs full.
+          </p>
+          <div class="ss-price-pill">
+            <div>
+              <strong>$1,000</strong>
+              <span>setup</span>
+            </div>
+            <div class="divider"></div>
+            <div>
+              <strong>$497</strong>
+              <span>/ month · everything included</span>
+            </div>
+            <div class="divider"></div>
+            <span>No long-term contract</span>
+          </div>
+          <div class="ss-ctas">
+            <a href="#book" class="btn btn-primary btn-lg">Claim This Special</a>
+            <a href="demos/luxe-nails/index.html" class="btn btn-outline btn-lg">Nail Salon Demo →</a>
+          </div>
+          <div class="ss-proof-row">
+            <div><strong>2×</strong> Review chances per client</div>
+            <div><strong>5</strong> Content lanes per photo</div>
+            <div><strong>40–50</strong> Pieces of content / month</div>
+          </div>
+        </div>
+
+        <aside class="ss-preview" aria-label="SuperSite preview">
+          <div class="ss-preview-bar">
+            <i></i><i></i><i></i>
+            <span>apexcuts.jawsai911.com · SuperSite live</span>
+          </div>
+          <div class="ss-preview-body">
+            <div class="ss-mini-hero">
+              <small>Miami · Barbershop SuperSite</small>
+              <h3>Fresh cuts. Fresh reviews. Booked chairs.</h3>
+              <div class="ss-mini-stats">
+                <span><b>★ 4.9</b> Google</span>
+                <span><b>186</b> reviews</span>
+                <span><b>+14</b> this month</span>
+              </div>
+              <span class="ss-mini-btn">Book / Call Now</span>
+            </div>
+            <div class="ss-lane-row" title="Photo → 5 Lanes">
+              <div class="ss-lane"><b>1</b>Social</div>
+              <div class="ss-lane"><b>2</b>Google</div>
+              <div class="ss-lane"><b>3</b>Website</div>
+              <div class="ss-lane"><b>4</b>Shorts</div>
+              <div class="ss-lane"><b>5</b>Review</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- VIRAL TRENDS BAR -->
+    <section class="ss-section-band" style="padding:40px 0">
+      <div class="container">
+        <div class="ss-label">What is actually converting in 2026</div>
+        <div class="trend-strip">
+          <div class="trend-chip">
+            <strong>Sticky click-to-call</strong>
+            <span>Mobile users convert on call, not long forms. SuperSite keeps the phone one tap away.</span>
+          </div>
+          <div class="trend-chip">
+            <strong>Review velocity</strong>
+            <span>Local pack rankings reward fresh Google reviews. We build 2 chances per visit.</span>
+          </div>
+          <div class="trend-chip">
+            <strong>GBP + photos</strong>
+            <span>Profiles with 15+ photos win more actions. Photo → 5 Lanes feeds Google automatically.</span>
+          </div>
+          <div class="trend-chip">
+            <strong>After-hours AI</strong>
+            <span>Chat captures nights &amp; weekends when most beauty searches happen.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PHOTO → 5 LANES -->
+    <section class="ss-section" id="five-lanes">
+      <div class="container">
+        <div class="ss-label">Core system · Photo → 5 Lanes</div>
+        <h2 class="ss-title">Your team already takes photos.<br />We make every photo work harder.</h2>
+        <p class="ss-sub">One chair-side photo becomes five assets. 8–10 photos a week = 40–50 pieces of content every month — without hiring a social manager.</p>
+        <div class="lanes-grid">
+          <article class="lane-card">
+            <span class="lane-num">01</span>
+            <div class="lane-icon">📱</div>
+            <h3>Social Post</h3>
+            <p>Auto-captioned Instagram &amp; Facebook posts ready to publish.</p>
+          </article>
+          <article class="lane-card">
+            <span class="lane-num">02</span>
+            <div class="lane-icon">📍</div>
+            <h3>Google Photos</h3>
+            <p>Added to your Google Business Profile for local pack strength.</p>
+          </article>
+          <article class="lane-card">
+            <span class="lane-num">03</span>
+            <div class="lane-icon">🖼</div>
+            <h3>Website Gallery</h3>
+            <p>Live on your SuperSite homepage — always fresh, always converting.</p>
+          </article>
+          <article class="lane-card">
+            <span class="lane-num">04</span>
+            <div class="lane-icon">▶</div>
+            <h3>Shorts / Reels</h3>
+            <p>Short-form video with text overlay for TikTok, Reels &amp; Shorts.</p>
+          </article>
+          <article class="lane-card">
+            <span class="lane-num">05</span>
+            <div class="lane-icon">★</div>
+            <h3>Review Request</h3>
+            <p>Bundled into the automatic same-day follow-up text.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOCIAL MEDIA TRENDS -->
+    <section class="ss-section-band" id="social-trends">
+      <div class="container">
+        <div class="ss-label">Social media · what books in 2026</div>
+        <h2 class="ss-title">Copy the formats that actually convert.</h2>
+        <p class="ss-sub">
+          Reels and TikTok reach past your followers. Video gets ~3× engagement vs static.
+          SuperSite + Shorts Agent package every chair photo into the hooks salons are using right now.
+        </p>
+        <div class="seo-grid">
+          <article class="seo-card">
+            <div class="icon">▶</div>
+            <h3>3-second transformation</h3>
+            <p>Before → after in the first frame. Highest booking intent when the CTA is “Book this look” + artist tag.</p>
+          </article>
+          <article class="seo-card">
+            <div class="icon">👁</div>
+            <h3>POV + text hook</h3>
+            <p>“POV: clean salon” / “Soft gel or acrylic?” — question overlays in the first 3 seconds win the watch.</p>
+          </article>
+          <article class="seo-card">
+            <div class="icon">🔇</div>
+            <h3>ASMR / process cuts</h3>
+            <p>File, buff, paint close-ups. High completion on TikTok. Caption + link-in-bio does the selling.</p>
+          </article>
+          <article class="seo-card">
+            <div class="icon">✨</div>
+            <h3>Quiet luxury &amp; clean girl</h3>
+            <p>Milky neutrals, soft blush, micro-chrome — what clients save. Tag the stylist so content fills their chair.</p>
+          </article>
+          <article class="seo-card">
+            <div class="icon">★</div>
+            <h3>Review → Reel</h3>
+            <p>5★ Google screenshot + set clip. Social proof and review velocity in one asset.</p>
+          </article>
+          <article class="seo-card">
+            <div class="icon">📅</div>
+            <h3>7-day content map</h3>
+            <p>Mon transform · Tue artist · Wed POV · Thu question · Fri openings · Sat UGC · Sun review Reel. Built into Command Agent.</p>
+          </article>
+        </div>
+        <div class="trend-strip" style="margin-top:28px">
+          <div class="trend-chip">
+            <strong>Book the look CTAs</strong>
+            <span>Every Reel ends on SuperSite booking for that artist — not a dead “link in bio” black hole.</span>
+          </div>
+          <div class="trend-chip">
+            <strong>Caption stack</strong>
+            <span>One photo → IG Reel, TikTok, Story, GBP post captions via Shorts Agent.</span>
+          </div>
+          <div class="trend-chip">
+            <strong>Hashtag packs</strong>
+            <span>Local + trend tags (#NailTok, #MiamiNails) tuned per post type.</span>
+          </div>
+          <div class="trend-chip">
+            <strong>See it live</strong>
+            <span><a href="demos/luxe-nails/index.html#social" style="color:var(--accent)">Luxe Nails social section →</a></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REVIEW ENGINE -->
+    <section class="ss-section-band" id="review-engine">
+      <div class="container">
+        <div class="ss-label">Google Review Engine</div>
+        <h2 class="ss-title">Every chair gets one. 2× review chances per client.</h2>
+        <p class="ss-sub">More reviews → higher Google ranking → more map pack visibility → more booked chairs. The SuperSite closes the loop after every visit.</p>
+        <div class="review-split">
+          <div class="review-path">
+            <span class="path-badge">Chance 1 · In-shop</span>
+            <h3>Physical stand at every chair</h3>
+            <p>Client taps or scans right after the cut while the good feeling is still fresh.</p>
+            <ol>
+              <li>QR / NFC stand at the chair or station</li>
+              <li>Opens your Google review link in one tap</li>
+              <li>Tagged to the stylist for chair-level reputation</li>
+            </ol>
+          </div>
+          <div class="review-path gold">
+            <span class="path-badge">Chance 2 · SuperSite Agent</span>
+            <h3>Automatic text / email same day</h3>
+            <p>Catches people who walked out without scanning. Personalized, timed, and tracked.</p>
+            <ol>
+              <li>Job marked complete in Command Agent</li>
+              <li>Review Agent fires SMS + optional email</li>
+              <li>Reminders only if they have not reviewed yet</li>
+            </ol>
+          </div>
+        </div>
+        <p style="margin-top:24px;color:var(--text-muted);font-size:0.95rem;text-align:center">
+          <strong style="color:var(--text)">One client visit = two review opportunities.</strong>
+          We also set up Google review stands for every chair as part of the special.
+        </p>
+      </div>
+    </section>
+
+    <!-- LOCAL SEO -->
+    <section class="ss-section" id="local-seo">
+      <div class="container">
+        <div class="ss-label">Local SEO stack</div>
+        <h2 class="ss-title">Show up where clients actually search.</h2>
+        <p class="ss-sub">2026 local search is GBP-first: reviews, photos, posts, and a site that converts the click. SuperSite is built around that reality.</p>
+        <div class="seo-grid">
+          <article class="seo-card">
+            <div class="icon">🗺</div>
+            <h3>Google Business Profile</h3>
+            <p>Category hygiene, service areas, products/services, weekly posts, photo cadence, and Q&amp;A — managed from Command Agent so the profile never goes quiet.</p>
+          </article>
+          <article class="seo-card">
+            <div class="icon">⭐</div>
+            <h3>Review velocity engine</h3>
+            <p>Target 10–20 new Google reviews per month without begging. Dual-path requests + reply templates so every review gets a human, on-brand response.</p>
+          </article>
+          <article class="seo-card">
+            <div class="icon">📱</div>
+            <h3>Mobile conversion layer</h3>
+            <p>Sticky call bar, click-to-call header, short forms, and after-hours AI chat. Built for “near me” traffic that books in under 60 seconds.</p>
+          </article>
+          <article class="seo-card">
+            <div class="icon">🏷</div>
+            <h3>NAP + schema</h3>
+            <p>Consistent name, address, phone across the SuperSite. LocalBusiness / HairSalon schema so Google understands who you are and where you serve.</p>
+          </article>
+          <article class="seo-card">
+            <div class="icon">💇</div>
+            <h3>Stylist-level content</h3>
+            <p>Photos and videos tagged to the stylist. When content hits, clients ask for that chair by name — more direct bookings, less random walk-ins.</p>
+          </article>
+          <article class="seo-card">
+            <div class="icon">📈</div>
+            <h3>Proof that compounds</h3>
+            <p>New reviews and fresh photos strengthen the same public site that brought the lead in. Front and back feed each other every week.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI AGENTS -->
+    <section class="ss-section-band" id="agents">
+      <div class="container">
+        <div class="ss-label">Included AI agents</div>
+        <h2 class="ss-title">Four agents. Zero extra headcount.</h2>
+        <p class="ss-sub">Included in the $497/mo special — not upsold later.</p>
+        <div class="agents-row">
+          <article class="agent-card">
+            <div class="ai-badge">AGENT</div>
+            <h3>▶ Shorts Agent</h3>
+            <p>Turns chair photos and clips into short-form hooks, captions, and platform-ready packages.</p>
+          </article>
+          <article class="agent-card">
+            <div class="ai-badge">AGENT</div>
+            <h3>★ Review Agent</h3>
+            <p>Sends review requests, tracks status, and drafts reply suggestions for every new Google review.</p>
+          </article>
+          <article class="agent-card">
+            <div class="ai-badge">AGENT</div>
+            <h3>💬 Reply Agent</h3>
+            <p>On-brand replies for comments, DMs, and common booking questions — keyword triggers included.</p>
+          </article>
+          <article class="agent-card">
+            <div class="ai-badge">AGENT</div>
+            <h3>📍 Google Visibility</h3>
+            <p>Keeps GBP posts, photos, and local signals moving so you stay competitive in the map pack.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPARE -->
+    <section class="ss-section">
+      <div class="container">
+        <div class="ss-label">Why it matters</div>
+        <h2 class="ss-title">Typical shop site vs Shark SuperSite</h2>
+        <p class="ss-sub">Most salon sites look fine and sit there. SuperSite is the public face plus the operating system.</p>
+        <div style="overflow-x:auto">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>Capability</th>
+                <th>Typical website</th>
+                <th>JAWSAI911 SuperSite</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>After-hours leads</td>
+                <td class="bad">Voicemail / lost</td>
+                <td class="good">AI chat + SMS capture</td>
+              </tr>
+              <tr>
+                <td>Reviews</td>
+                <td class="bad">If someone remembers</td>
+                <td class="good">Chair stand + auto agent (2×)</td>
+              </tr>
+              <tr>
+                <td>Content</td>
+                <td class="bad">Depends on whoever posts</td>
+                <td class="good">Photo → 5 Lanes every week</td>
+              </tr>
+              <tr>
+                <td>Google Business Profile</td>
+                <td class="bad">Set and forgotten</td>
+                <td class="good">Posts, photos, Q&amp;A on cadence</td>
+              </tr>
+              <tr>
+                <td>Team visibility</td>
+                <td class="bad">Inbox chaos</td>
+                <td class="good">Shared pipeline + Command Agent</td>
+              </tr>
+              <tr>
+                <td>Stylist bookings</td>
+                <td class="bad">Shop-level only</td>
+                <td class="good">Content tagged to the chair</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIVE DEMOS -->
+    <section class="ss-section-band" id="demo">
+      <div class="container">
+        <div class="ss-label">Double stack · Live demos</div>
+        <h2 class="ss-title">See both layers. Front and back.</h2>
+        <p class="ss-sub">Click through real SuperSite builds for a barbershop and a nail salon — then open the Command Agent your team would use every day.</p>
+        <div class="demo-links" style="grid-template-columns:repeat(3,1fr)">
+          <a class="demo-link" href="demos/luxe-nails/index.html">
+            <div class="layer">Layer 1 · Nail salon</div>
+            <h3>Luxe Nails SuperSite</h3>
+            <p>Clean luxury front: soft gel menu, studio video, artist booking, sticky call, AI chat, and review trust.</p>
+            <span class="go">Open nail demo →</span>
+          </a>
+          <a class="demo-link" href="demos/apex-cuts/index.html">
+            <div class="layer">Layer 1 · Barbershop</div>
+            <h3>Apex Cuts SuperSite</h3>
+            <p>Mobile-first barbershop front: trust, reviews, booking CTAs, sticky call, AI chat, and gallery feed.</p>
+            <span class="go">Open barber demo →</span>
+          </a>
+          <a class="demo-link" href="demos/apex-cuts/command.html">
+            <div class="layer">Layer 2 · Command Agent</div>
+            <h3>Review Engine + Growth OS</h3>
+            <p>Lead pipeline, Photo → 5 Lanes, review tracker, GBP checklist, and daily brief.</p>
+            <span class="go">Open command hub →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- OFFER -->
+    <section class="ss-section" id="book">
+      <div class="container">
+        <div class="offer-box">
+          <div>
+            <div class="ss-label">Special offer · Limited time</div>
+            <h2>Get your chairs working harder</h2>
+            <p style="color:var(--text-muted);line-height:1.7;margin-top:8px">
+              Built for barbershops and nail salons. Everything included. No long-term contract.
+              Walk the double-stack against your current booking flow, content, and Google profile in 20 minutes.
+            </p>
+            <ul class="includes">
+              <li>SuperSite (mobile converting front)</li>
+              <li>★ Review Agent + chair stands support</li>
+              <li>▶ Shorts Agent + Photo → 5 Lanes</li>
+              <li>💬 Reply Agent + Google Visibility</li>
+              <li>Hosting, SSL, and Command Agent access</li>
+            </ul>
+          </div>
+          <div class="offer-price-card">
+            <div class="limited">Limited-time special</div>
+            <div class="big">$497 <small>/ mo</small></div>
+            <div class="setup">+ $1,000 one-time setup</div>
+            <a href="mailto:hello@jawsai911.com?subject=Salon%20SuperSite%20Special%20%241000%20%2F%20%24497&body=Hi%20JAWSAI911%2C%0A%0AI%20want%20the%20Barbershop%20%2F%20Nail%20Salon%20SuperSite%20special.%0A%0AShop%20name%3A%0ACity%3A%0AChairs%20%2F%20stations%3A%0APhone%3A%0A" class="btn btn-primary btn-lg">Email to Claim</a>
+            <a href="tel:7867612950" class="btn btn-outline btn-lg" style="width:100%">Call 786-761-2950</a>
+            <p class="fine">Or text the shop name to the same number. We map your SuperSite in 20 minutes.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" style="padding:40px 0;border-top:1px solid var(--border);margin-top:20px">
+    <div class="container" style="display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center">
+      <div>
+        <a href="index.html" class="logo">JAWS<span>AI</span>911</a>
+        <p style="color:var(--text-muted);font-size:0.85rem;margin-top:8px">AI systems that actually work. · jawsai911.com</p>
+      </div>
+      <div style="display:flex;gap:18px;flex-wrap:wrap;font-size:0.9rem">
+        <a href="supersite.html">SuperSite</a>
+        <a href="salon-supersite.html">Salon Offer</a>
+        <a href="demos/luxe-nails/index.html">Nail Demo</a>
+        <a href="demos/apex-cuts/index.html">Barber Demo</a>
+        <a href="offers.html">Pricing</a>
+        <a href="mailto:hello@jawsai911.com">hello@jawsai911.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Sticky mobile CTA -->
+  <div class="ss-sticky-cta" aria-label="Quick contact">
+    <a class="call" href="tel:7867612950">Call Now</a>
+    <a class="book" href="#book">Claim Special</a>
+  </div>
+
+  <!-- AI Chat widget -->
+  <button class="ss-chat-fab" id="ss-chat-fab" aria-label="Open chat">💬</button>
+  <div class="ss-chat-panel" id="ss-chat-panel" role="dialog" aria-label="SuperSite assistant">
+    <div class="ss-chat-head">
+      <div>
+        <strong>JAWSAI911 Assistant</strong>
+        <small>● Online · replies instantly</small>
+      </div>
+      <button type="button" id="ss-chat-close" aria-label="Close">×</button>
+    </div>
+    <div class="ss-chat-body" id="ss-chat-body">
+      <div class="ss-msg bot">Hey — looking at the Salon SuperSite special? I can cover pricing, what is included, or get you a 20-minute walkthrough.</div>
+    </div>
+    <div class="ss-chat-quick" id="ss-chat-quick">
+      <button type="button" data-q="What is included for $497?">What is included?</button>
+      <button type="button" data-q="How does the review engine work?">Review engine</button>
+      <button type="button" data-q="I want a walkthrough">Book walkthrough</button>
+    </div>
+    <form class="ss-chat-form" id="ss-chat-form">
+      <input type="text" id="ss-chat-input" placeholder="Ask anything…" autocomplete="off" />
+      <button type="submit">Send</button>
+    </form>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+    (function () {
+      const fab = document.getElementById("ss-chat-fab");
+      const panel = document.getElementById("ss-chat-panel");
+      const closeBtn = document.getElementById("ss-chat-close");
+      const body = document.getElementById("ss-chat-body");
+      const form = document.getElementById("ss-chat-form");
+      const input = document.getElementById("ss-chat-input");
+      const quick = document.getElementById("ss-chat-quick");
+
+      function openChat() { panel.classList.add("open"); input && input.focus(); }
+      function closeChat() { panel.classList.remove("open"); }
+
+      fab.addEventListener("click", () => {
+        panel.classList.contains("open") ? closeChat() : openChat();
+      });
+      closeBtn.addEventListener("click", closeChat);
+
+      function botReply(text) {
+        const el = document.createElement("div");
+        el.className = "ss-msg bot";
+        el.textContent = text;
+        body.appendChild(el);
+        body.scrollTop = body.scrollHeight;
+      }
+      function userMsg(text) {
+        const el = document.createElement("div");
+        el.className = "ss-msg user";
+        el.textContent = text;
+        body.appendChild(el);
+        body.scrollTop = body.scrollHeight;
+      }
+
+      function answer(q) {
+        const s = q.toLowerCase();
+        if (s.includes("include") || s.includes("497") || s.includes("price") || s.includes("cost")) {
+          return "Special is $1,000 setup + $497/month. Includes SuperSite, Review Agent, Shorts Agent, Photo → 5 Lanes, Reply Agent, Google Visibility, and chair-stand setup support. No long-term contract.";
+        }
+        if (s.includes("review")) {
+          return "Two chances per client: (1) physical QR/NFC stand at every chair right after service, (2) Review Agent auto-texts the same day if they did not scan. Target 10–20 new Google reviews per month.";
+        }
+        if (s.includes("walk") || s.includes("book") || s.includes("demo") || s.includes("call")) {
+          return "Perfect. Email hello@jawsai911.com or call/text 786-761-2950 with your shop name and city. We map the SuperSite to your flow in about 20 minutes.";
+        }
+        if (s.includes("lane") || s.includes("photo") || s.includes("content")) {
+          return "Photo → 5 Lanes: one photo becomes a social post, Google Business photo, website gallery image, Shorts/Reels package, and a review-request hook. 8–10 photos/week ≈ 40–50 assets/month.";
+        }
+        if (s.includes("seo") || s.includes("google") || s.includes("map")) {
+          return "Local SEO stack: GBP optimization, review velocity, photo cadence, NAP consistency, LocalBusiness schema, sticky mobile CTAs, and after-hours capture. Built for map pack + near-me searches.";
+        }
+        return "Got it. Best next step: claim the special at $1,000 setup / $497 mo, or book a 20-min walkthrough — call 786-761-2950 or email hello@jawsai911.com. Want pricing, reviews, or content details?";
+      }
+
+      function handle(q) {
+        if (!q.trim()) return;
+        userMsg(q);
+        setTimeout(() => botReply(answer(q)), 420);
+      }
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const q = input.value;
+        input.value = "";
+        handle(q);
+      });
+      quick.querySelectorAll("button").forEach((btn) => {
+        btn.addEventListener("click", () => handle(btn.getAttribute("data-q")));
+      });
+    })();
+  </script>
+</body>
+</html>
