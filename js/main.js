@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const HUB_HASH = "f0d1f82a60d8332ecb4e3eaf7b779e94a251ddf2becbbddd240118d853895b35";
+  const HUB_HASH = "a5ccb1c538e34663a658b1be28b16455ee5285efb10e6f1d4caba1f69ec9782b";
 
   const toggle = document.querySelector(".nav-toggle");
   const nav = document.querySelector(".nav");
