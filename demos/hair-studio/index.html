@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="../../hub-auth.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hair SuperSite Demo — Salon growth system for hair studios</title>
+  <meta name="robots" content="noindex,nofollow,noarchive" />
+  <meta name="description" content="Hair SuperSite demo: bookings, lead recovery, review growth, and salon operations for hair studios." />
+  <link rel="canonical" href="https://jawsai911.com/demos/hair-studio/index.html" />
+  <meta property="og:title" content="Hair SuperSite Demo — Beautifully booked. Fully operated." />
+  <meta property="og:description" content="One platform for appointments, clients, payments — and a Command Hub that runs reviews, social, and lead recovery." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Hair SuperSite Demo",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "description": "Start free demo" },
+    "description": "Hair studio SuperSite platform: bookings, CRM, review growth, and salon operations for beauty professionals.",
+    "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "ratingCount": "2000" }
+  }
+  </script>
+  <style>
+    /* Original GlowUP brand tokens (dark luxury + gold) */
+    :root {
+      --bg: #0a0a0a;
+      --bg2: #111111;
+      --card: #161616;
+      --paper: #1c1c1c;
+      --ink: #f5f0e6;
+      --soft: #ccbfae;
+      --muted: #8c827f;
+      --line: #363837;
+      --line2: rgba(224, 187, 135, 0.22);
+      --gold: #e0bb87;
+      --gold-light: #f0d9b0;
+      --gold-dark: #be9c7f;
+      --blush: #463b3b;
+      --rose: #e0bb87;
+      --green: #6bc49a;
+      --green-soft: rgba(107, 196, 154, 0.12);
+      --shadow: 0 28px 60px rgba(0, 0, 0, 0.55);
+      --r: 22px;
+      --serif: "Playfair Display", Georgia, serif;
+      --sans: "DM Sans", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.55;
+      padding-bottom: 88px;
+      font-weight: 400;
+    }
+    a { color: inherit; text-decoration: none; }
+    img, video { max-width: 100%; display: block; }
+    .wrap { width: min(1160px, calc(100% - 40px)); margin: 0 auto; }
+
+    .demo-bar {
+      background: #000; color: var(--muted); text-align: center;
+      padding: 10px 14px; font-size: .78rem; border-bottom: 1px solid var(--line);
+    }
+    .demo-bar strong { color: var(--gold-light); }
+    .demo-bar a { color: var(--gold); font-weight: 600; margin-left: 10px; text-decoration: underline; text-underline-offset: 2px; }
+
+    header {
+      position: sticky; top: 0; z-index: 60;
+      background: rgba(10, 10, 10, 0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 70px; gap: 16px;
+    }
+    .logo {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--serif); font-weight: 500; font-size: 1.2rem; letter-spacing: -.01em;
+      color: var(--gold-light);
+    }
+    .logo em { font-style: italic; font-weight: 400; color: var(--gold); }
+    .logo-mark {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: linear-gradient(145deg, var(--gold-light), var(--gold-dark));
+      display: grid; place-items: center; color: #0a0a0a; font-size: .95rem;
+    }
+    .nav-links { display: flex; gap: 22px; font-size: .88rem; font-weight: 500; color: var(--muted); }
+    .nav-links a:hover { color: var(--gold-light); }
+    .nav-cta { display: flex; gap: 10px; align-items: center; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 12px 20px; border-radius: 999px; font-weight: 600; font-size: .84rem;
+      border: none; cursor: pointer; font-family: inherit; transition: transform .15s, box-shadow .15s;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-dark {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
+      color: #0a0a0a; box-shadow: 0 8px 24px rgba(224, 187, 135, 0.22);
+    }
+    .btn-rose {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      color: #0a0a0a; box-shadow: 0 8px 24px rgba(224, 187, 135, 0.28);
+    }
+    .btn-ghost {
+      background: transparent; border: 1px solid var(--line2); color: var(--ink);
+    }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold-light); }
+    .btn-lg { padding: 15px 26px; font-size: .92rem; }
+
+    .hero {
+      padding: 48px 0 56px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: ""; position: absolute; top: -80px; right: -60px;
+      width: 420px; height: 420px;
+      background: radial-gradient(circle, rgba(224, 187, 135, 0.12), transparent 68%);
+      pointer-events: none;
+    }
+    .hero-grid {
+      display: grid; grid-template-columns: 1.05fr .95fr; gap: 40px; align-items: center;
+      position: relative;
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: .7rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 16px;
+    }
+    .eyebrow .dot {
+      width: 7px; height: 7px; border-radius: 50%; background: var(--green);
+      box-shadow: 0 0 0 3px rgba(107, 196, 154, 0.2);
+    }
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 5.5vw, 4.4rem);
+      font-weight: 500; line-height: 1.02; letter-spacing: -.02em; margin-bottom: 16px;
+      color: var(--ink);
+    }
+    h1 em { font-style: italic; color: var(--gold-light); font-weight: 400; }
+    .hero-sub {
+      color: var(--soft); font-size: 1.08rem; line-height: 1.7; max-width: 480px;
+      font-weight: 400; margin-bottom: 22px;
+    }
+    .trust-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 26px; }
+    .chip {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 14px; background: var(--card); border: 1px solid var(--line);
+      border-radius: 14px; font-size: .78rem; color: var(--soft);
+    }
+    .chip b { color: var(--gold-light); font-size: 1rem; font-family: var(--serif); font-weight: 500; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .hero-visual { position: relative; }
+    .hero-img {
+      border-radius: 28px; overflow: hidden; aspect-ratio: 4/5; max-height: 520px;
+      border: 1px solid var(--line); box-shadow: var(--shadow);
+    }
+    .hero-img img { width: 100%; height: 100%; object-fit: cover; }
+    .float {
+      position: absolute; bottom: 20px; left: -16px; right: 20px;
+      max-width: 260px; background: rgba(22, 22, 22, 0.94); border: 1px solid var(--line2);
+      border-radius: 16px; padding: 14px 16px; box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+    .float .stars { color: var(--gold); letter-spacing: .1em; font-size: .75rem; margin-bottom: 6px; }
+    .float p { font-family: var(--serif); font-size: 1.05rem; font-style: italic; line-height: 1.35; color: var(--ink); }
+    .float small { display: block; margin-top: 6px; font-size: .72rem; color: var(--muted); font-family: var(--sans); }
+
+    section { padding: 72px 0; }
+    .label {
+      font-size: .7rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 12px;
+    }
+    .title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 3.8vw, 2.9rem);
+      font-weight: 500; line-height: 1.1; margin-bottom: 12px; color: var(--ink);
+    }
+    .title em { font-style: italic; color: var(--gold-light); }
+    .sub { color: var(--muted); max-width: 540px; font-weight: 400; font-size: 1.02rem; line-height: 1.65; margin-bottom: 36px; }
+
+    .marquee {
+      border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+      background: var(--paper); padding: 14px 0; overflow: hidden;
+    }
+    .marquee-track {
+      display: flex; gap: 40px; white-space: nowrap;
+      animation: scroll 28s linear infinite; font-size: .82rem; font-weight: 600;
+      letter-spacing: .08em; text-transform: uppercase; color: var(--gold-dark);
+    }
+    .marquee-track span { opacity: .75; }
+    @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    .stack {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+    .stack-card {
+      background: var(--card); border: 1px solid var(--line); border-radius: var(--r);
+      padding: 28px; position: relative; overflow: hidden;
+    }
+    .stack-card.front { border-color: var(--line2); }
+    .stack-card.back {
+      background: linear-gradient(165deg, #141210, #1c1814);
+      color: var(--ink); border-color: rgba(224, 187, 135, 0.18);
+    }
+    .stack-card.back .muted { color: var(--soft); }
+    .stack-card .layer {
+      font-size: .68rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 10px;
+    }
+    .stack-card.back .layer { color: var(--gold-light); }
+    .stack-card h3 {
+      font-family: var(--serif); font-size: 1.7rem; font-weight: 500; margin-bottom: 10px;
+    }
+    .stack-card ul { list-style: none; margin-top: 16px; }
+    .stack-card li {
+      padding: 8px 0; border-top: 1px solid var(--line); font-size: .9rem; color: var(--soft);
+      display: flex; gap: 10px; align-items: flex-start;
+    }
+    .stack-card.back li { border-color: rgba(255,255,255,.08); color: var(--soft); }
+    .stack-card li::before { content: "✓"; color: var(--green); font-weight: 800; flex-shrink: 0; }
+    .stack-card.back li::before { color: var(--gold); }
+
+    .problems {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+    }
+    .prob {
+      background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px;
+    }
+    .prob .x { color: #e07a7a; font-weight: 800; font-size: .75rem; margin-bottom: 8px; letter-spacing: .06em; }
+    .prob h3 { font-size: .98rem; margin-bottom: 6px; color: var(--ink); }
+    .prob p { font-size: .82rem; color: var(--muted); font-weight: 400; line-height: 1.5; }
+    .prob .fix {
+      margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line);
+      font-size: .78rem; color: var(--gold); font-weight: 600;
+    }
+
+    .feat-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+    }
+    .feat {
+      background: var(--card); border: 1px solid var(--line); border-radius: 18px;
+      padding: 24px; transition: transform .2s, box-shadow .2s, border-color .2s;
+    }
+    .feat:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--line2); }
+    .feat .ico {
+      width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center;
+      background: rgba(224, 187, 135, 0.1); border: 1px solid var(--line2); font-size: 1.2rem; margin-bottom: 14px;
+    }
+    .feat h3 { font-size: 1.05rem; margin-bottom: 8px; color: var(--ink); }
+    .feat p { font-size: .88rem; color: var(--muted); font-weight: 400; line-height: 1.55; }
+
+    .social-band { background: var(--paper); color: var(--ink); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .social-band .label { color: var(--gold); }
+    .social-band .sub { color: var(--muted); }
+    .social-band .title { color: var(--ink); }
+    .social-band .title em { color: var(--gold-light); }
+    .trend-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .trend {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: 16px; padding: 20px;
+    }
+    .trend .tag {
+      display: inline-block; font-size: .65rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 10px;
+    }
+    .trend h3 { font-family: var(--serif); font-size: 1.25rem; font-weight: 500; margin-bottom: 8px; color: var(--ink); }
+    .trend p { font-size: .85rem; color: var(--muted); font-weight: 400; line-height: 1.5; }
+    .trend .hook {
+      margin-top: 12px; padding: 10px 12px; border-left: 3px solid var(--gold);
+      background: rgba(224, 187, 135, 0.06); font-family: var(--serif);
+      font-style: italic; font-size: 1rem; color: var(--gold-light);
+    }
+
+    .video-grid {
+      display: grid; grid-template-columns: 1.15fr .85fr; gap: 32px; align-items: center;
+    }
+    .video-frame {
+      position: relative; border-radius: 24px; overflow: hidden; aspect-ratio: 16/10;
+      border: 1px solid var(--line); box-shadow: var(--shadow); background: #000;
+    }
+    .video-frame video, .video-frame img { width: 100%; height: 100%; object-fit: cover; }
+    .video-badge {
+      position: absolute; top: 14px; left: 14px; padding: 6px 12px; border-radius: 999px;
+      background: rgba(10, 10, 10, 0.88); border: 1px solid var(--line2); color: var(--gold-light);
+      font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    }
+
+    .compare {
+      width: 100%; border-collapse: collapse; background: var(--card);
+      border-radius: 16px; overflow: hidden; border: 1px solid var(--line);
+    }
+    .compare th, .compare td {
+      padding: 14px 16px; text-align: left; font-size: .9rem; border-bottom: 1px solid var(--line);
+      color: var(--soft);
+    }
+    .compare th {
+      background: var(--paper); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
+    }
+    .compare tr:last-child td { border-bottom: none; }
+    .compare .bad { color: #e07a7a; }
+    .compare .good { color: var(--green); font-weight: 600; }
+
+    .price-box {
+      display: grid; grid-template-columns: 1.2fr .8fr; gap: 28px; align-items: center;
+      background: linear-gradient(135deg, rgba(224, 187, 135, 0.1), rgba(22, 22, 22, 0.95));
+      border: 1px solid var(--line2); border-radius: 28px; padding: 36px;
+      box-shadow: var(--shadow);
+    }
+    .price-box h2 {
+      font-family: var(--serif); font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-weight: 500; margin-bottom: 10px; color: var(--ink);
+    }
+    .price-box .includes { list-style: none; margin-top: 16px; }
+    .price-box .includes li {
+      padding: 7px 0; font-size: .92rem; color: var(--soft);
+      display: flex; gap: 8px; align-items: center;
+    }
+    .price-box .includes li::before { content: "✓"; color: var(--gold); font-weight: 800; }
+    .price-card {
+      background: #0a0a0a; color: var(--ink); border-radius: 20px; padding: 28px; text-align: center;
+      border: 1px solid var(--line2);
+    }
+    .price-card .lim {
+      font-size: .7rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 12px;
+    }
+    .price-card .big {
+      font-family: var(--serif); font-size: 2.8rem; font-weight: 500; line-height: 1; color: var(--gold-light);
+    }
+    .price-card .big small { font-size: 1rem; color: var(--muted); font-family: var(--sans); }
+    .price-card .setup { color: var(--muted); margin: 8px 0 18px; font-size: .9rem; font-weight: 400; }
+    .price-card .btn { width: 100%; margin-bottom: 8px; }
+    .price-card .fine { font-size: .75rem; color: var(--muted); margin-top: 10px; font-weight: 400; }
+    .price-card .btn-ghost { border-color: var(--line2); color: var(--ink); }
+
+    .faq { display: grid; gap: 10px; max-width: 720px; }
+    details {
+      background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px;
+    }
+    summary { font-weight: 600; cursor: pointer; list-style: none; color: var(--ink); }
+    summary::-webkit-details-marker { display: none; }
+    details p { margin-top: 10px; color: var(--muted); font-size: .9rem; font-weight: 400; line-height: 1.6; }
+
+    footer {
+      border-top: 1px solid var(--line); padding: 32px 0 100px; color: var(--muted); font-size: .85rem;
+    }
+    .foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; align-items: center; }
+    .foot a { color: var(--gold); font-weight: 500; }
+    .foot strong { color: var(--gold-light); }
+
+    .sticky {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 80;
+      display: flex; gap: 8px;
+      padding: 12px 14px calc(12px + env(safe-area-inset-bottom));
+      background: rgba(10, 10, 10, 0.96); border-top: 1px solid var(--line); backdrop-filter: blur(12px);
+    }
+    .sticky a {
+      flex: 1; text-align: center; padding: 14px 8px; border-radius: 14px;
+      font-weight: 700; font-size: .82rem;
+    }
+    .sticky .primary {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-dark)); color: #0a0a0a;
+    }
+    .sticky .secondary {
+      background: transparent; border: 1px solid var(--line2); color: var(--gold-light);
+    }
+    .sticky .hub { background: var(--card); border: 1px solid var(--line); color: var(--soft); }
+
+    .chat-fab {
+      position: fixed; bottom: 92px; right: 18px; z-index: 85;
+      width: 54px; height: 54px; border-radius: 50%; border: none;
+      background: linear-gradient(145deg, var(--gold-light), var(--gold-dark));
+      color: #0a0a0a; font-size: 1.25rem; cursor: pointer;
+      box-shadow: 0 10px 28px rgba(224, 187, 135, 0.3);
+    }
+    .chat-panel {
+      display: none; position: fixed; bottom: 158px; right: 18px; z-index: 86;
+      width: min(340px, calc(100vw - 28px)); background: var(--card);
+      border: 1px solid var(--line2); border-radius: 18px; box-shadow: var(--shadow);
+      overflow: hidden; flex-direction: column; max-height: 420px;
+    }
+    .chat-panel.open { display: flex; }
+    .chat-head {
+      padding: 14px 16px; background: var(--paper); border-bottom: 1px solid var(--line);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .chat-head strong { font-size: .9rem; color: var(--gold-light); }
+    .chat-head small { display: block; color: var(--green); font-size: .7rem; font-weight: 500; }
+    .chat-head button { background: none; border: none; color: var(--muted); font-size: 1.2rem; cursor: pointer; }
+    .chat-body {
+      padding: 14px; min-height: 160px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;
+    }
+    .msg {
+      max-width: 88%; padding: 10px 12px; border-radius: 14px; font-size: .85rem; line-height: 1.45;
+    }
+    .msg.bot { background: var(--paper); border: 1px solid var(--line); align-self: flex-start; color: var(--soft); }
+    .msg.user {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
+      color: #0a0a0a; align-self: flex-end; font-weight: 600;
+    }
+    .chat-quick { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 12px 10px; }
+    .chat-quick button {
+      padding: 6px 10px; border-radius: 999px; border: 1px solid var(--line2);
+      background: var(--paper); color: var(--ink); font-size: .72rem; font-weight: 600;
+      cursor: pointer; font-family: inherit;
+    }
+    .chat-form { display: flex; gap: 6px; padding: 12px; border-top: 1px solid var(--line); }
+    .chat-form input {
+      flex: 1; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line);
+      background: var(--bg); color: var(--ink); font: inherit; font-size: .85rem;
+    }
+    .chat-form button {
+      padding: 10px 14px; border: none; border-radius: 12px;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
+      color: #0a0a0a; font-weight: 700; cursor: pointer; font-family: inherit;
+    }
+
+    /* Visual art */
+    .hero-visual-stack {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 12px;
+      align-items: stretch;
+    }
+    .hero-visual-stack .hero-img { max-height: none; aspect-ratio: 3/4; }
+    .hero-side {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      gap: 12px;
+    }
+    .hero-side figure {
+      margin: 0;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      position: relative;
+      min-height: 160px;
+    }
+    .hero-side img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-side figcaption {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      padding: 12px 14px;
+      background: linear-gradient(transparent, rgba(0,0,0,.85));
+      font-size: .72rem; font-weight: 600; color: var(--gold-light);
+      letter-spacing: .04em;
+    }
+
+    .portrait-band {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 28px;
+      align-items: center;
+    }
+    .portrait-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .portrait-pair figure {
+      margin: 0;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      aspect-ratio: 3/4;
+      position: relative;
+    }
+    .portrait-pair figure:first-child { margin-top: 28px; }
+    .portrait-pair img { width: 100%; height: 100%; object-fit: cover; }
+
+    .art-mosaic {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      grid-template-rows: 200px 200px;
+      gap: 12px;
+    }
+    .art-mosaic figure {
+      margin: 0;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      position: relative;
+      background: var(--card);
+    }
+    .art-mosaic figure:first-child {
+      grid-row: span 2;
+      min-height: 412px;
+    }
+    .art-mosaic img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .45s ease;
+    }
+    .art-mosaic figure:hover img { transform: scale(1.04); }
+    .art-mosaic figcaption {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      padding: 14px 16px;
+      background: linear-gradient(transparent, rgba(0,0,0,.88));
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--gold-light);
+    }
+    .art-mosaic figcaption span {
+      display: block;
+      font-family: var(--sans);
+      font-style: normal;
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .feat-visual {
+      overflow: hidden;
+      padding: 0;
+    }
+    .feat-visual .feat-photo {
+      height: 140px;
+      background-size: cover;
+      background-position: center;
+      border-bottom: 1px solid var(--line);
+    }
+    .feat-visual .feat-body { padding: 20px 22px 24px; }
+    .feat-visual .ico { margin-bottom: 10px; }
+
+    .bento {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: 160px;
+      gap: 12px;
+    }
+    .bento figure {
+      margin: 0;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      position: relative;
+    }
+    .bento figure.wide { grid-column: span 2; }
+    .bento figure.tall { grid-row: span 2; }
+    .bento img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+    .bento figure:hover img { transform: scale(1.05); }
+    .bento .overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,.75));
+      display: flex; align-items: flex-end;
+      padding: 16px;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--gold-light);
+    }
+
+    .lookbook-strip {
+      display: flex;
+      gap: 14px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+    .lookbook-strip::-webkit-scrollbar { height: 6px; }
+    .lookbook-strip::-webkit-scrollbar-thumb { background: var(--line2); border-radius: 99px; }
+    .look-card {
+      flex: 0 0 min(240px, 72vw);
+      scroll-snap-align: start;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: var(--card);
+    }
+    .look-card img { width: 100%; aspect-ratio: 3/4; object-fit: cover; }
+    .look-card .meta {
+      padding: 12px 14px;
+      font-size: .78rem;
+      color: var(--muted);
+    }
+    .look-card .meta strong {
+      display: block;
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--gold-light);
+      margin-bottom: 2px;
+    }
+
+    @media (max-width: 960px) {
+      .hero-grid, .stack, .video-grid, .price-box, .portrait-band { grid-template-columns: 1fr; }
+      .problems, .feat-grid, .trend-grid { grid-template-columns: 1fr; }
+      .hero-visual-stack { grid-template-columns: 1fr; }
+      .hero-side { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .art-mosaic {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 180px 160px 160px;
+      }
+      .art-mosaic figure:first-child {
+        grid-column: span 2;
+        grid-row: span 1;
+        min-height: 220px;
+      }
+      .bento { grid-template-columns: 1fr 1fr; grid-auto-rows: 140px; }
+      .bento figure.wide { grid-column: span 2; }
+      .bento figure.tall { grid-row: span 1; }
+      .nav-links { display: none; }
+      .float { left: 12px; right: 12px; max-width: none; }
+      .hero-img { max-height: 400px; aspect-ratio: 5/4; }
+    }
+    @media (max-width: 520px) {
+      .sticky .hub { display: none; }
+      .portrait-pair figure:first-child { margin-top: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-bar">
+    <strong>GlowUP SuperSite</strong> — rebuilt for 2026 local growth · double-stacked
+    <a href="command.html">Command Hub →</a>
+    <a href="https://glowupbeautysolutions.netlify.app/" target="_blank" rel="noopener">Original site</a>
+  </div>
+
+  <header>
+    <div class="wrap nav">
+      <a href="#" class="logo">
+        <span class="logo-mark">💅</span>
+        Glow<em>UP</em>.
+      </a>
+      <nav class="nav-links">
+        <a href="#problems">Why SuperSite</a>
+        <a href="#stack">Double stack</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#features">Platform</a>
+        <a href="#social">Social</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="nav-cta">
+        <a class="btn btn-ghost" href="command.html">Command Hub</a>
+        <a class="btn btn-dark" href="#start">Start your glow</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> SuperSite for beauty · ✂️ 💅 ✨</div>
+        <h1>Your artistry.<br /><em>Beautifully booked</em> — and fully operated.</h1>
+        <p class="hero-sub">
+          GlowUP is no longer just a pretty booking product. It’s a SuperSite:
+          a converting public face plus a Command Hub that runs leads, Google reviews,
+          Gen-Viral content, and rebooking — so chairs stay full without living on Instagram.
+        </p>
+        <div class="trust-row">
+          <div class="chip"><b>★ 4.9</b> Loved by 2,000+ studios</div>
+          <div class="chip"><b>2×</b> Review chances / visit</div>
+          <div class="chip"><b>24/7</b> After-hours capture</div>
+        </div>
+        <div class="hero-actions">
+          <a class="btn btn-rose btn-lg" href="#start">Start your glow</a>
+          <a class="btn btn-ghost btn-lg" href="command.html">Open Command Hub →</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-visual-stack">
+          <div class="hero-img">
+            <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=900&q=80" alt="Beauty portrait with soft light" width="900" height="1200" />
+          </div>
+          <div class="hero-side">
+            <figure>
+              <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600&q=80" alt="Manicure detail art" loading="lazy" />
+              <figcaption>Detail · hands &amp; finish</figcaption>
+            </figure>
+            <figure>
+              <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&q=80" alt="Salon chairs ambient" loading="lazy" />
+              <figcaption>Studio · ambient gold</figcaption>
+            </figure>
+          </div>
+        </div>
+        <div class="float">
+          <div class="stars">★★★★★</div>
+          <p>“Evenings back. Studio feels premium before they walk in.”</p>
+          <small>Studio owner · SuperSite stack</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Visual lookbook strip -->
+  <section style="padding:28px 0 8px;border-bottom:1px solid var(--line)">
+    <div class="wrap">
+      <div class="label" style="margin-bottom:14px">Lookbook · art of the craft</div>
+      <div class="lookbook-strip" aria-label="Beauty lookbook">
+        <article class="look-card">
+          <img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=500&q=80" alt="Editorial beauty close-up" loading="lazy" />
+          <div class="meta"><strong>Editorial skin</strong>Quiet luxury · soft focus</div>
+        </article>
+        <article class="look-card">
+          <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=500&q=80" alt="Makeup artistry" loading="lazy" />
+          <div class="meta"><strong>Color story</strong>Artist-led proof for Reels</div>
+        </article>
+        <article class="look-card">
+          <img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=500&q=80" alt="Nail art french tips" loading="lazy" />
+          <div class="meta"><strong>Modern french</strong>Book-the-look ready</div>
+        </article>
+        <article class="look-card">
+          <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=500&q=80" alt="Hair styling art" loading="lazy" />
+          <div class="meta"><strong>Hair sculpture</strong>Transform in 3 seconds</div>
+        </article>
+        <article class="look-card">
+          <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500&q=80" alt="Beauty tools flat lay" loading="lazy" />
+          <div class="meta"><strong>Tools &amp; ritual</strong>ASMR / process content</div>
+        </article>
+        <article class="look-card">
+          <img src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=500&q=80" alt="Spa product styling" loading="lazy" />
+          <div class="meta"><strong>Retail glow</strong>POS + product stories</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Bookings</span><span>CRM</span><span>Payments</span><span>Review Engine</span>
+      <span>Gen-Viral</span><span>Photo → 5 Lanes</span><span>Local SEO</span><span>AI Chat</span>
+      <span>Rebooking</span><span>Command Hub</span>
+      <span>Bookings</span><span>CRM</span><span>Payments</span><span>Review Engine</span>
+      <span>Gen-Viral</span><span>Photo → 5 Lanes</span><span>Local SEO</span><span>AI Chat</span>
+      <span>Rebooking</span><span>Command Hub</span>
+    </div>
+  </div>
+
+  <section id="problems">
+    <div class="wrap">
+      <div class="label">What beauty businesses lose every week</div>
+      <h2 class="title">The real problems. <em>Fixed by design.</em></h2>
+      <p class="sub">Most salons don’t lose because of bad work — they lose after hours, on Maps, and in the gap between “liked the post” and “booked the chair.”</p>
+      <div class="problems">
+        <article class="prob">
+          <div class="x">PROBLEM 01</div>
+          <h3>After-hours leads die</h3>
+          <p>Clients browse at night. Voicemail = they book the next shop on Maps.</p>
+          <div class="fix">→ 24/7 AI chat + sticky call + SMS recovery</div>
+        </article>
+        <article class="prob">
+          <div class="x">PROBLEM 02</div>
+          <h3>Review drought</h3>
+          <p>Happy clients leave. Nobody asks. Map pack stalls.</p>
+          <div class="fix">→ Dual-path Google Review Engine (stand + auto SMS)</div>
+        </article>
+        <article class="prob">
+          <div class="x">PROBLEM 03</div>
+          <h3>Content never ships</h3>
+          <p>Phone full of set photos. Feed goes quiet. GBP goes stale.</p>
+          <div class="fix">→ Photo → 5 Lanes + Gen-Viral approval queue</div>
+        </article>
+        <article class="prob">
+          <div class="x">PROBLEM 04</div>
+          <h3>Tools don’t talk</h3>
+          <p>Booking app ≠ social ≠ reviews ≠ follow-up. Staff memory is the CRM.</p>
+          <div class="fix">→ One Command Hub · CRM · social · reviews</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- About + portraits -->
+  <section id="about" style="border-top:1px solid var(--line)">
+    <div class="wrap portrait-band">
+      <div class="portrait-pair">
+        <figure>
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&q=80" alt="Beauty professional portrait" loading="lazy" />
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&q=80" alt="Editorial face portrait" loading="lazy" />
+        </figure>
+      </div>
+      <div>
+        <div class="label">About · your artistry elevated</div>
+        <h2 class="title">Less admin.<br /><em>More artistry.</em></h2>
+        <p class="sub" style="margin-bottom:18px">
+          GlowUP quietly handles the details behind the scenes so every touchpoint feels considered —
+          from first booking to review request to the Reel that fills next week’s chair.
+        </p>
+        <div class="trust-row">
+          <div class="chip"><b>01</b> Bookings that feel effortless</div>
+          <div class="chip"><b>02</b> Every detail remembered</div>
+          <div class="chip"><b>03</b> Growth you can see</div>
+        </div>
+        <a class="btn btn-rose" href="#start" style="margin-top:8px">Start your glow</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery mosaic -->
+  <section id="gallery" style="background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+    <div class="wrap">
+      <div class="label">Gallery · Beau<em style="font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:0;font-size:1.1em;color:var(--gold-light)">ty</em></div>
+      <h2 class="title">Created for your kind of <em>beautiful</em></h2>
+      <p class="sub">Not stock for stock’s sake — mood, craft, and finish. The same energy SuperSite turns into reviews, Reels, and booked chairs.</p>
+      <div class="art-mosaic">
+        <figure>
+          <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=900&q=80" alt="Beauty editorial hair" loading="lazy" />
+          <figcaption>Hero craft<span>Transform content · Photo → 5 Lanes</span></figcaption>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&q=80" alt="Portrait beauty" loading="lazy" />
+          <figcaption>Portrait light<span>Artist brand frames</span></figcaption>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&q=80" alt="Fashion beauty pose" loading="lazy" />
+          <figcaption>Campaign energy<span>Social-ready crop</span></figcaption>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1524504388940-b1c17226555e?w=600&q=80" alt="Soft beauty portrait" loading="lazy" />
+          <figcaption>Soft focus<span>Quiet luxury feed</span></figcaption>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1607779097040-26e80aa78e66?w=600&q=80" alt="Nail chrome detail" loading="lazy" />
+          <figcaption>Macro detail<span>ASMR / process hooks</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="stack" style="background:var(--bg);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+    <div class="wrap">
+      <div class="label">Shark SuperSite architecture</div>
+      <h2 class="title">Two layers. <em>One system.</em></h2>
+      <p class="sub">Same double-stack used on JAWSAI911 SuperSites — now under the GlowUP beauty brand.</p>
+      <div class="stack">
+        <div class="stack-card front">
+          <div class="layer">Layer 1 · Site Agent</div>
+          <h3>What clients see</h3>
+          <p class="muted" style="color:var(--muted);font-weight:300;font-size:.95rem;line-height:1.6">Mobile-first converting pages that feel as premium as the studio.</p>
+          <ul>
+            <li>Sticky click-to-call + Book CTAs (mobile first)</li>
+            <li>Trust above fold: rating, review count, velocity</li>
+            <li>Artist-tagged gallery &amp; Book the look</li>
+            <li>After-hours AI intake chat</li>
+            <li>LocalBusiness / NailSalon schema + NAP</li>
+            <li>Deposits, waitlists, rebooking paths</li>
+          </ul>
+        </div>
+        <div class="stack-card back">
+          <div class="layer">Layer 2 · Command Hub</div>
+          <h3>What your team runs</h3>
+          <p class="muted" style="font-weight:300;font-size:.95rem;line-height:1.6">The Growth OS: CRM, Gen-Viral, Review Engine, recovery.</p>
+          <ul>
+            <li>Missed-lead recovery · auto text-back</li>
+            <li>CRM roster · open / booked / re-engaged</li>
+            <li>Gen-Viral stack · CapCut-ready queue</li>
+            <li>Social Engine · human approval gate</li>
+            <li>Google Review Lane · dual path</li>
+            <li>Daily brief · follow-up sequences</li>
+          </ul>
+          <a class="btn btn-rose" href="command.html" style="margin-top:18px">Open Command Hub →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="wrap">
+      <div class="label">Platform · SuperSite edition</div>
+      <h2 class="title">Everything you need. <em>Nothing you don’t.</em></h2>
+      <p class="sub">Original GlowUP pillars — bookings, clients, growth — plus the engines that create walk-ins.</p>
+      <div class="feat-grid">
+        <article class="feat feat-visual">
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1633681926022-84c123d5c0e1?w=700&q=80')"></div>
+          <div class="feat-body">
+            <div class="ico">📅</div>
+            <h3>Bookings that feel effortless</h3>
+            <p>Real-time availability, deposits, waitlists, reminders — working while you create.</p>
+          </div>
+        </article>
+        <article class="feat feat-visual">
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=700&q=80')"></div>
+          <div class="feat-body">
+            <div class="ico">👤</div>
+            <h3>Every detail, remembered</h3>
+            <p>Client profiles: formulas, preferences, history, notes for personal service.</p>
+          </div>
+        </article>
+        <article class="feat feat-visual">
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=700&q=80')"></div>
+          <div class="feat-body">
+            <div class="ico">💳</div>
+            <h3>Payments &amp; POS</h3>
+            <p>Retail + services in one flow. Clearer revenue without extra apps.</p>
+          </div>
+        </article>
+        <article class="feat feat-visual">
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1604654894610-df63bc536371?w=700&q=80')"></div>
+          <div class="feat-body">
+            <div class="ico">⭐</div>
+            <h3>Google Review Engine</h3>
+            <p>Station QR + same-day SMS. Two chances per visit. Map-pack fuel.</p>
+          </div>
+        </article>
+        <article class="feat feat-visual">
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=700&q=80')"></div>
+          <div class="feat-body">
+            <div class="ico">▶</div>
+            <h3>Gen-Viral Social Engine</h3>
+            <p>One set photo → IG, TikTok, GBP, gallery, review ask. Approval before post.</p>
+          </div>
+        </article>
+        <article class="feat feat-visual">
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1560066984-138dadb4c035?w=700&q=80')"></div>
+          <div class="feat-body">
+            <div class="ico">📍</div>
+            <h3>Local SEO layer</h3>
+            <p>GBP posts/photos cadence, NAP consistency, schema, sticky mobile convert.</p>
+          </div>
+        </article>
+        <article class="feat feat-visual">
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=700&q=80')"></div>
+          <div class="feat-body">
+            <div class="ico">💬</div>
+            <h3>After-hours AI</h3>
+            <p>Chat captures nights &amp; weekends when beauty searches spike.</p>
+          </div>
+        </article>
+        <article class="feat feat-visual">
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=700&q=80')"></div>
+          <div class="feat-body">
+            <div class="ico">🔄</div>
+            <h3>Rebooking intelligence</h3>
+            <p>Glow opportunity nudges for clients due back — fill the calendar proactively.</p>
+          </div>
+        </article>
+        <article class="feat feat-visual">
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=700&q=80')"></div>
+          <div class="feat-body">
+            <div class="ico">🚀</div>
+            <h3>Growth OS dashboard</h3>
+            <p>Revenue, retention, inventory, commissions — plus social &amp; review KPIs.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bento visual close -->
+  <section style="border-top:1px solid var(--line)">
+    <div class="wrap">
+      <div class="label">Visual system · mood board</div>
+      <h2 class="title">More artistry. <em>On every screen.</em></h2>
+      <p class="sub">A SuperSite should feel as considered as the brand — not a template with a logo sticker.</p>
+      <div class="bento">
+        <figure class="tall">
+          <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=700&q=80" alt="Campaign beauty" loading="lazy" />
+          <div class="overlay">Campaign</div>
+        </figure>
+        <figure class="wide">
+          <img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?w=900&q=80" alt="Hair detail" loading="lazy" />
+          <div class="overlay">Texture &amp; finish</div>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=500&q=80" alt="Nails" loading="lazy" />
+          <div class="overlay">Nails</div>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1524504388940-b1c17226555e?w=500&q=80" alt="Portrait" loading="lazy" />
+          <div class="overlay">Portrait</div>
+        </figure>
+        <figure class="wide">
+          <img src="https://images.unsplash.com/photo-1633681926022-84c123d5c0e1?w=900&q=80" alt="Salon interior" loading="lazy" />
+          <div class="overlay">Space · trust on arrival</div>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="social-band" id="social">
+    <div class="wrap">
+      <div class="label">Social · 2026 formats that book</div>
+      <h2 class="title">Content that stops the scroll — <em>then books the chair</em></h2>
+      <p class="sub">Video gets ~3× engagement vs static. SuperSite packages every service into the formats clients actually save.</p>
+      <div class="trend-grid">
+        <article class="trend">
+          <span class="tag">Format</span>
+          <h3>3-second transformation</h3>
+          <p>Before → after in the first frame. Highest booking intent with “Book this look.”</p>
+          <div class="hook">“Wait for the gloss…”</div>
+        </article>
+        <article class="trend">
+          <span class="tag">Format</span>
+          <h3>POV + question hook</h3>
+          <p>Text overlay in the first 3 seconds: the question they already search.</p>
+          <div class="hook">“Soft gel or acrylic if you type all day?”</div>
+        </article>
+        <article class="trend">
+          <span class="tag">Format</span>
+          <h3>ASMR / process</h3>
+          <p>High completion on TikTok. Caption + SuperSite link does the selling.</p>
+          <div class="hook">“No talking. Just the set.”</div>
+        </article>
+        <article class="trend">
+          <span class="tag">Format</span>
+          <h3>Quiet luxury / clean girl</h3>
+          <p>Milky neutrals &amp; soft glam — what beauty clients screenshot and rebook.</p>
+          <div class="hook">“Quiet luxury, not loud”</div>
+        </article>
+        <article class="trend">
+          <span class="tag">Format</span>
+          <h3>Review → Reel</h3>
+          <p>5★ Google screenshot + service clip. Social proof + review velocity story.</p>
+          <div class="hook">“She said it lasted three weeks…”</div>
+        </article>
+        <article class="trend">
+          <span class="tag">Ops</span>
+          <h3>7-day content map</h3>
+          <p>Mon transform · Tue artist · Wed POV · Thu FAQ · Fri openings · Sat UGC · Sun review Reel.</p>
+          <div class="hook">Command Hub schedules it</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="studio">
+    <div class="wrap video-grid">
+      <div class="video-frame">
+        <span class="video-badge">Studio film</span>
+        <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1633681926022-84c123d5c0e1?w=1200&q=80">
+          <source src="https://cdn.coverr.co/videos/coverr-woman-getting-a-manicure-4176/1080p.mp4" type="video/mp4" />
+          <source src="https://assets.mixkit.co/videos/39880/39880-720.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div>
+        <div class="label">See the SuperSite loop</div>
+        <h2 class="title">From set photo to <em>booked chair</em></h2>
+        <p class="sub" style="margin-bottom:18px">
+          Client leaves happy → review request fires → photo hits 5 lanes → social books the next chair.
+          Front and back feed each other.
+        </p>
+        <div class="feat" style="padding:18px;margin-bottom:10px">
+          <h3 style="font-size:.95rem">1 · Capture</h3>
+          <p>Station photo + optional walkaround clip</p>
+        </div>
+        <div class="feat" style="padding:18px;margin-bottom:10px">
+          <h3 style="font-size:.95rem">2 · Multiply</h3>
+          <p>Social · Google · Website · Shorts · Review ask</p>
+        </div>
+        <div class="feat" style="padding:18px">
+          <h3 style="font-size:.95rem">3 · Convert</h3>
+          <p>Sticky book · chat · CRM follow-up · rebook nudge</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+    <div class="wrap">
+      <div class="label">Why SuperSite vs typical software</div>
+      <h2 class="title">Typical salon stack vs <em>GlowUP SuperSite</em></h2>
+      <div style="overflow-x:auto;margin-top:28px">
+        <table class="compare">
+          <thead>
+            <tr>
+              <th>Capability</th>
+              <th>Typical booking app</th>
+              <th>GlowUP SuperSite</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>After-hours leads</td>
+              <td class="bad">Missed / lost</td>
+              <td class="good">AI chat + SMS recovery</td>
+            </tr>
+            <tr>
+              <td>Google reviews</td>
+              <td class="bad">If staff remembers</td>
+              <td class="good">Dual-path Review Engine</td>
+            </tr>
+            <tr>
+              <td>Social / Reels</td>
+              <td class="bad">Separate hustle</td>
+              <td class="good">Gen-Viral + approval queue</td>
+            </tr>
+            <tr>
+              <td>GBP photos &amp; posts</td>
+              <td class="bad">Set and forget</td>
+              <td class="good">Photo → 5 Lanes cadence</td>
+            </tr>
+            <tr>
+              <td>Team visibility</td>
+              <td class="bad">Inbox chaos</td>
+              <td class="good">Shared CRM + Command Hub</td>
+            </tr>
+            <tr>
+              <td>Walk-in flywheel</td>
+              <td class="bad">Hope + word of mouth</td>
+              <td class="good">Reviews + Maps + convert + rebook</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="start">
+    <div class="wrap">
+      <div class="price-box">
+        <div>
+          <div class="label">Get glowing</div>
+          <h2>Start your SuperSite stack</h2>
+          <p style="color:var(--soft);font-weight:300;line-height:1.7;margin-top:8px">
+            One luminous platform for appointments, clients, payments — and the growth engines that keep local visibility and walk-ins compounding.
+          </p>
+          <ul class="includes">
+            <li>Converting SuperSite front (mobile sticky CTAs)</li>
+            <li>Command Hub · CRM · missed-lead recovery</li>
+            <li>Google Review Engine (dual path)</li>
+            <li>Gen-Viral Social Engine + Photo → 5 Lanes</li>
+            <li>Local SEO / GBP layer</li>
+            <li>Bookings · profiles · POS · rebooking</li>
+          </ul>
+        </div>
+        <div class="price-card">
+          <div class="lim">Beauty SuperSite</div>
+          <div class="big">Demo <small>live</small></div>
+          <div class="setup">Walk the double stack in minutes</div>
+          <a class="btn btn-rose btn-lg" href="command.html">Open Command Hub</a>
+          <a class="btn btn-ghost btn-lg" href="https://glowupbeautysolutions.netlify.app/login?next=%2Fonboarding" style="width:100%" target="_blank" rel="noopener">Original onboarding</a>
+          <p class="fine">Or book a walkthrough · info@jawsai911.com · 786-761-2950</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="label">FAQ</div>
+      <h2 class="title">Questions owners ask</h2>
+      <div class="faq" style="margin-top:28px">
+        <details open>
+          <summary>Is this just another booking tool?</summary>
+          <p>No. Booking is Layer 1 table stakes. SuperSite adds after-hours capture, Review Engine, Gen-Viral content, and a Command Hub so growth doesn’t depend on memory.</p>
+        </details>
+        <details>
+          <summary>How does this help walk-ins and local visibility?</summary>
+          <p>Fresh Google reviews + GBP photos/posts + a site that converts mobile “near me” traffic. Social drives named artist bookings. The loop compounds.</p>
+        </details>
+        <details>
+          <summary>Will my team have to live on social?</summary>
+          <p>They approve. The Social Engine drafts captions, queues formats, and schedules — human gate before anything posts under your brand.</p>
+        </details>
+        <details>
+          <summary>What about nails vs hair vs spa?</summary>
+          <p>Same OS, different vertical icons and content pillars. 💅 nails · ✂️ hair/barber · ✨ spa — brand stays GlowUP.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap foot">
+      <div>
+        <strong style="color:var(--ink)">GlowUP. Beauty Solutions</strong><br />
+        SuperSite edition · bookings + Command Hub growth OS
+      </div>
+      <div>
+        <a href="command.html">Command Hub</a> ·
+        <a href="https://glowupbeautysolutions.netlify.app/" target="_blank" rel="noopener">Original site</a> ·
+        <a href="https://jawsai911.com/salon-supersite.html">JAWSAI911 SuperSite</a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="sticky" aria-label="Quick actions">
+    <a class="hub" href="command.html">Hub</a>
+    <a class="primary" href="#start">Start glow</a>
+    <a class="secondary" href="#stack">See stack</a>
+  </div>
+
+  <button class="chat-fab" id="chat-fab" aria-label="Chat">💬</button>
+  <div class="chat-panel" id="chat-panel">
+    <div class="chat-head">
+      <div>
+        <strong>GlowUP Concierge</strong>
+        <small>● Online · SuperSite demo</small>
+      </div>
+      <button type="button" id="chat-close">×</button>
+    </div>
+    <div class="chat-body" id="chat-body">
+      <div class="msg bot">Hi — looking at GlowUP SuperSite? I can cover bookings, Review Engine, Gen-Viral, or open the Command Hub walkthrough.</div>
+    </div>
+    <div class="chat-quick">
+      <button type="button" data-q="What is SuperSite?">SuperSite?</button>
+      <button type="button" data-q="How do reviews work?">Reviews</button>
+      <button type="button" data-q="Show me Command Hub">Command Hub</button>
+    </div>
+    <form class="chat-form" id="chat-form">
+      <input id="chat-input" placeholder="Ask anything…" autocomplete="off" />
+      <button type="submit">Send</button>
+    </form>
+  </div>
+
+  <script>
+    (function () {
+      var fab = document.getElementById("chat-fab");
+      var panel = document.getElementById("chat-panel");
+      var body = document.getElementById("chat-body");
+      var form = document.getElementById("chat-form");
+      var input = document.getElementById("chat-input");
+      fab.addEventListener("click", function () { panel.classList.toggle("open"); });
+      document.getElementById("chat-close").addEventListener("click", function () { panel.classList.remove("open"); });
+      function add(cls, text) {
+        var el = document.createElement("div");
+        el.className = "msg " + cls;
+        el.textContent = text;
+        body.appendChild(el);
+        body.scrollTop = body.scrollHeight;
+      }
+      function reply(q) {
+        var s = q.toLowerCase();
+        if (s.indexOf("super") !== -1 || s.indexOf("stack") !== -1)
+          return "SuperSite = Layer 1 converting site + Layer 2 Command Hub. Bookings, CRM, Review Engine, Gen-Viral social, after-hours AI — one system so walk-ins and local visibility compound.";
+        if (s.indexOf("review") !== -1)
+          return "Google Review Engine: station/QR ask right after service + automatic same-day SMS if they skip. Target steady new reviews every month for map pack strength.";
+        if (s.indexOf("command") !== -1 || s.indexOf("hub") !== -1)
+          return "Open the Command Hub from the top nav or sticky bar — CRM, missed-lead recovery, Gen-Viral queue, Social approval, Review Lane. Or go to command.html.";
+        if (s.indexOf("price") !== -1 || s.indexOf("cost") !== -1)
+          return "This rebuild is a live SuperSite demo. For pricing on your studio, email info@jawsai911.com or call 786-761-2950 — or use Start your glow / original onboarding.";
+        return "Ask about SuperSite, reviews, Gen-Viral, or Command Hub — or open command.html to see the operator layer.";
+      }
+      function handle(q) {
+        if (!q.trim()) return;
+        add("user", q);
+        setTimeout(function () { add("bot", reply(q)); }, 400);
+      }
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var q = input.value;
+        input.value = "";
+        handle(q);
+      });
+      document.querySelectorAll(".chat-quick button").forEach(function (b) {
+        b.addEventListener("click", function () { handle(b.getAttribute("data-q")); });
+      });
+    })();
+  </script>
+</body>
+</html>

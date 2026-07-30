@@ -1,26 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="../../hub-auth.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Luxe Nails · Command Hub | JAWSAI911 SuperSite</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<title>Hair SuperSite Command Hub · Growth OS</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#060b12;
-  --panel:#121922;
-  --panel-2:#161f2a;
-  --panel-3:#24160f;
+  --bg:#0a0a0a;
+  --panel:#161616;
+  --panel-2:#1c1c1c;
+  --panel-3:#1a1612;
   --line:rgba(255,255,255,0.08);
   --line-strong:rgba(255,255,255,0.12);
-  --text:#eff5fb;
-  --muted:#8ea1b4;
-  --teal:#268ECB;
-  --teal-2:#43b6ff;
-  --orange:#ff7a2f;
-  --orange-soft:rgba(255,122,47,0.12);
-  --green:#39d391;
-  --green-soft:rgba(57,211,145,0.12);
+  --text:#f5f0e6;
+  --muted:#8c827f;
+  --teal:#e0bb87;
+  --teal-2:#f0d9b0;
+  --orange:#be9c7f;
+  --orange-soft:rgba(224,187,135,0.12);
+  --green:#6bc49a;
+  --green-soft:rgba(107,196,154,0.12);
   --amber:#f0bc4a;
   --red:#ef7b7b;
   --shadow:0 28px 60px -34px rgba(0,0,0,0.75);
@@ -28,11 +30,11 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{
   min-height:100vh;
-  font-family:'Inter',Arial,sans-serif;
+  font-family:'DM Sans',system-ui,sans-serif;
   color:var(--text);
   background:
-    radial-gradient(circle at top right, rgba(67,182,255,0.08), transparent 24%),
-    radial-gradient(circle at bottom left, rgba(255,122,47,0.08), transparent 18%),
+    radial-gradient(circle at top right, rgba(224,187,135,0.10), transparent 24%),
+    radial-gradient(circle at bottom left, rgba(190,156,127,0.08), transparent 18%),
     var(--bg);
 }
 .wrap{max-width:1540px;margin:0 auto;padding:22px}
@@ -49,7 +51,7 @@ body{
   font-size:11px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--teal-2);
 }
 .brand-title{
-  font-family:'Fraunces',serif;font-size:34px;line-height:1.02;margin-top:8px;
+  font-family:'Playfair Display',Georgia,serif;font-size:34px;line-height:1.02;margin-top:8px;
 }
 .brand-sub{
   font-size:13px;color:var(--muted);margin-top:8px;max-width:640px;line-height:1.5;
@@ -62,7 +64,7 @@ body{
 .status-pill{
   min-height:38px;padding:0 14px;border:1px solid var(--line);background:rgba(255,255,255,0.035);color:var(--muted);
 }
-.status-pill.live{color:#dffcf0;border-color:rgba(57,211,145,0.34);background:var(--green-soft)}
+.status-pill.live{color:#dffcf0;border-color:rgba(107,196,154,0.34);background:var(--green-soft)}
 .status-pill.orange{color:#ffd5be;border-color:rgba(255,122,47,0.28);background:var(--orange-soft)}
 .logout{color:#d7eeff;text-decoration:none}
 .overview{
@@ -76,7 +78,7 @@ body{
   font-size:11px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:var(--orange);margin-bottom:14px;
 }
 .strategy-title{
-  font-family:'Fraunces',serif;font-size:30px;line-height:1.05;
+  font-family:'Playfair Display',Georgia,serif;font-size:30px;line-height:1.05;
 }
 .strategy-sub{
   font-size:13px;color:#d6b6a3;margin-top:8px;
@@ -92,7 +94,7 @@ body{
   border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,0.03);padding:16px 14px;min-height:110px;
 }
 .window-time{
-  font-family:'Fraunces',serif;font-size:22px;color:#fff;
+  font-family:'Playfair Display',Georgia,serif;font-size:22px;color:#fff;
 }
 .window-title{
   font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--orange);margin-top:6px;
@@ -110,7 +112,7 @@ body{
   font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);
 }
 .metric-value{
-  font-family:'Fraunces',serif;font-size:36px;margin-top:10px;
+  font-family:'Playfair Display',Georgia,serif;font-size:36px;margin-top:10px;
 }
 .metric-note{
   font-size:12px;color:var(--muted);margin-top:7px;line-height:1.45;
@@ -143,9 +145,9 @@ body{
 .item-meta{font-size:11px;color:var(--muted);margin-top:7px;line-height:1.5}
 .tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 .tag{
-  padding:6px 9px;background:rgba(38,142,203,0.12);border:1px solid rgba(38,142,203,0.26);color:#d7eeff;
+  padding:6px 9px;background:rgba(224,187,135,0.12);border:1px solid rgba(224,187,135,0.26);color:#d7eeff;
 }
-.tag.green{background:var(--green-soft);border-color:rgba(57,211,145,0.28);color:#dffcf0}
+.tag.green{background:var(--green-soft);border-color:rgba(107,196,154,0.28);color:#dffcf0}
 .tag.orange{background:var(--orange-soft);border-color:rgba(255,122,47,0.24);color:#ffd5be}
 .tag.amber{background:rgba(240,188,74,0.12);border-color:rgba(240,188,74,0.22);color:#fff2d1}
 .tag.red{background:rgba(239,123,123,0.12);border-color:rgba(239,123,123,0.22);color:#ffdada}
@@ -161,7 +163,7 @@ body{
 .slot-copy{font-size:13px;font-weight:700}
 .slot-meta{font-size:11px;color:var(--muted);margin-top:5px}
 .mini-btn,.capcut-btn{
-  border:none;cursor:pointer;color:#fff;background:linear-gradient(135deg,var(--teal),#1c648f);
+  border:none;cursor:pointer;color:#0a0a0a;background:linear-gradient(135deg,var(--teal-2),var(--teal));
 }
 .mini-btn{padding:9px 11px}
 .capcut-btn{padding:10px 12px}
@@ -181,7 +183,7 @@ body{
   display:inline-flex;align-items:center;justify-content:center;padding:9px 12px;border-radius:999px;
   border:1px solid var(--line);background:rgba(255,255,255,0.03);font-size:10px;font-weight:800;letter-spacing:0.9px;text-transform:uppercase;color:var(--muted)
 }
-.brief-tab.active{background:rgba(38,142,203,0.16);border-color:rgba(38,142,203,0.32);color:#fff}
+.brief-tab.active{background:rgba(224,187,135,0.16);border-color:rgba(224,187,135,0.32);color:#fff}
 .crm-row{
   display:grid;grid-template-columns:1fr auto;gap:14px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.06)
 }
@@ -205,37 +207,37 @@ body{
 <body>
 
 <div style="background:#0a0e17;color:#94a3b8;text-align:center;padding:10px 16px;font-size:12px">
-  <strong style="color:#00b4ff">DEMO · Layer 2 Command Hub</strong> — Luxe Nails SuperSite back end (Aries-style Growth OS)
+  <strong style="color:#00b4ff">DEMO · Layer 2 Command Hub</strong> — GlowUP SuperSite back end (Operator Growth OS)
   &nbsp;·&nbsp; <a href="index.html" style="color:#00b4ff">Public SuperSite</a>
-  &nbsp;·&nbsp; <a href="../../salon-supersite.html" style="color:#00b4ff">Offer page</a>
-  &nbsp;·&nbsp; <a href="../apex-cuts/command.html" style="color:#00b4ff">Barber command</a>
+  &nbsp;·&nbsp; <a href="https://glowupbeautysolutions.netlify.app/" style="color:#00b4ff" target="_blank" rel="noopener">Original GlowUP</a>
+  &nbsp;·&nbsp; <a href="../demos/luxe-services/command.html" style="color:#00b4ff">Nail demo hub</a>
 </div>
 
 <div class="wrap">
   <div class="topbar">
     <div>
       <div class="brand-kicker">Private Staff Operator Layer</div>
-      <div class="brand-title">Luxe Nails Growth OS</div>
-      <div class="brand-sub">Miami SuperSite command center — lead recovery, CRM roster, Gen-Viral social engine, Google Review Engine, Photo → 5 Lanes, and station-level operator intel.</div>
+      <div class="brand-title">GlowUP Growth OS</div>
+      <div class="brand-sub">Beauty SuperSite command center — lead recovery, CRM, Gen-Viral social engine, Google Review Engine, Photo → 5 Lanes, rebooking, and studio operator intel.</div>
     </div>
     <div class="status-row">
       <div class="status-pill live">System Online</div>
       <div class="status-pill">Live Demo</div>
-      <div class="status-pill orange">Miami · Coral Way</div>
-      <a class="status-pill logout" href="login.html" id="logoutLink">Log Out</a>
+      <div class="status-pill orange">Your Studio · Flagship</div>
+      <a class="status-pill logout" href="index.html#start" id="logoutLink">Log Out</a>
     </div>
   </div>
 
   <div class="overview">
     <div class="overview-card strategy">
       <div class="section-kicker">Strategy</div>
-      <div class="strategy-title">Full Salon Growth Strategy · SuperSite Stack</div>
-      <div class="strategy-sub">Chair booking · 30-day content map · review proof · stylist traffic · reactivation · AI intake · Photo → 5 Lanes</div>
+      <div class="strategy-title">Full Beauty Growth Strategy · SuperSite Stack</div>
+      <div class="strategy-sub">Bookings · clients · payments · review proof · Gen-Viral · rebooking · AI intake · Photo → 5 Lanes</div>
       <div class="chip-row">
-        <div class="tool-btn">Soft Gel Menu</div>
-        <div class="tool-btn">Artist Spotlight</div>
+        <div class="tool-btn">Service Menu</div>
+        <div class="tool-btn">Stylist Spotlight</div>
         <div class="tool-btn">Review Proof Stack</div>
-        <div class="tool-btn">Walk-In FAQ</div>
+        <div class="tool-btn">Booking FAQ</div>
         <div class="tool-btn">This Week Brief</div>
         <div class="tool-btn">Gen-Viral Stack</div>
         <div class="tool-btn">2-Page Brief</div>
@@ -252,7 +254,7 @@ body{
         </div>
         <div class="window">
           <div class="window-time">12:15 PM</div>
-          <div class="window-title">Insurance / Walk-In FAQ</div>
+          <div class="window-title">Insurance / Booking FAQ</div>
           <div class="window-meta">Midday post that kills price confusion and pushes “Book the look” to SuperSite.</div>
         </div>
         <div class="window">
@@ -301,10 +303,10 @@ body{
         <div class="panel-body list">
           <div class="item">
             <div class="item-top">
-              <div class="item-title">New client text: soft gel + chrome</div>
+              <div class="item-title">New client text: signature service + chrome</div>
               <div class="tag green">Recovered</div>
             </div>
-            <div class="item-meta">Lead asked soft gel pricing. System replied with menu, Aria availability, and SuperSite book link in under 20 seconds.</div>
+            <div class="item-meta">Lead asked signature service pricing. System replied with menu, Amelia availability, and SuperSite book link in under 20 seconds.</div>
             <div class="tag-row">
               <div class="tag">SMS</div>
               <div class="tag orange">Needs Booking</div>
@@ -312,10 +314,10 @@ body{
           </div>
           <div class="item">
             <div class="item-top">
-              <div class="item-title">Missed call: Gel-X full set</div>
+              <div class="item-title">Missed call: Color service full set</div>
               <div class="tag amber">Pending Callback</div>
             </div>
-            <div class="item-meta">Voicemail transcript captured, callback task created, and text follow-up sent with length options + Maya booking path.</div>
+            <div class="item-meta">Voicemail transcript captured, callback task created, and text follow-up sent with length options + Noor booking path.</div>
             <div class="tag-row">
               <div class="tag">Voice</div>
               <div class="tag red">Owner Review</div>
@@ -326,7 +328,7 @@ body{
               <div class="item-title">Reactivation reply: bridal set inquiry</div>
               <div class="tag green">Warm Lead</div>
             </div>
-            <div class="item-meta">Past client clicked a chrome set Reel and asked about Saturday. Reactivation sequence handed off to Aria’s chair.</div>
+            <div class="item-meta">Past client clicked a chrome set Reel and asked about Saturday. Reactivation sequence handed off to Amelia’s chair.</div>
             <div class="tag-row">
               <div class="tag">Reactivation</div>
               <div class="tag orange">Assign Staff</div>
@@ -347,12 +349,12 @@ body{
           <div class="card">
             <div class="card-icon">📊</div>
             <div class="card-title">Client Intent Brief</div>
-            <div class="card-copy">Most common inbound themes: soft gel vs acrylic, same-day openings, chrome trends, bridal sets, and walk-in policy.</div>
+            <div class="card-copy">Most common inbound themes: signature service vs acrylic, same-day openings, chrome trends, bridal sets, and walk-in policy.</div>
           </div>
           <div class="card">
             <div class="card-icon">🗞️</div>
             <div class="card-title">Daily News Agent</div>
-            <div class="card-copy">Pulls nail trends, quiet luxury, chrome, and Miami lifestyle angles so posts stay current without sounding generic.</div>
+            <div class="card-copy">Pulls service trends, quiet luxury, chrome, and Miami lifestyle angles so posts stay current without sounding generic.</div>
           </div>
           <div class="card">
             <div class="card-icon">📸</div>
@@ -372,7 +374,7 @@ body{
           <div class="card">
             <div class="card-icon">📍</div>
             <div class="card-title">Competitor Watch</div>
-            <div class="card-copy">Tracks nearby salons’ weak generic posts so Luxe keeps leaning into artists, reviews, and clean studio proof.</div>
+            <div class="card-copy">Tracks nearby salons’ weak generic posts so GlowUP keeps leaning into artists, reviews, and clean studio proof.</div>
           </div>
         </div>
       </div>
@@ -391,7 +393,7 @@ body{
           <div class="slot">
             <div class="slot-day">Thu 5:30p</div>
             <div>
-              <div class="slot-copy">Aria answers: "Soft gel or acrylic?"</div>
+              <div class="slot-copy">Amelia answers: "How do deposits work?"</div>
               <div class="slot-meta">Education reel with Book-the-look CTA and SuperSite booking path.</div>
             </div>
             <button class="capcut-btn">CapCut</button>
@@ -399,8 +401,8 @@ body{
           <div class="slot">
             <div class="slot-day">Fri 12:15p</div>
             <div>
-              <div class="slot-copy">Set transform: blush soft gel</div>
-              <div class="slot-meta">Before/after set clip tuned for beach week + lasting soft gel audiences.</div>
+              <div class="slot-copy">Set transform: blush signature service</div>
+              <div class="slot-meta">Before/after set clip tuned for beach week + lasting signature service audiences.</div>
             </div>
             <button class="capcut-btn">CapCut</button>
           </div>
@@ -434,7 +436,7 @@ body{
         </div>
         <div class="panel-body list">
           <div class="item">
-            <div class="item-title">Blush soft gel · Aria · Station 1</div>
+            <div class="item-title">Blush signature service · Amelia · Chair 1</div>
             <div class="item-meta">Lanes: ✓ Social · ✓ Google · ✓ Website · ○ Shorts · ✓ Review request armed</div>
             <div class="tag-row">
               <div class="tag green">4/5 Done</div>
@@ -442,15 +444,15 @@ body{
             </div>
           </div>
           <div class="item">
-            <div class="item-title">Modern French · Maya · Station 2</div>
+            <div class="item-title">Modern French · Noor · Chair 2</div>
             <div class="item-meta">All five lanes complete. Live on SuperSite gallery + GBP photos.</div>
             <div class="tag-row">
               <div class="tag green">Complete</div>
             </div>
           </div>
           <div class="item">
-            <div class="item-title">Chrome micro · Aria</div>
-            <div class="item-meta">Queued for tonight’s Gen-Viral Reel + station review stand QR refresh.</div>
+            <div class="item-title">Chrome micro · Amelia</div>
+            <div class="item-meta">Queued for tonight’s Gen-Viral Reel + chair review stand QR refresh.</div>
             <div class="tag-row">
               <div class="tag">In Queue</div>
               <div class="tag orange">Needs Approve</div>
@@ -473,7 +475,7 @@ body{
               <div class="item-title">IG Reel · "Wait for the chrome…"</div>
               <div class="tag amber">Approve</div>
             </div>
-            <div class="item-meta">Caption + hashtags drafted. Platforms: Instagram Reels, TikTok, Shorts. CTA: Book Aria on SuperSite.</div>
+            <div class="item-meta">Caption + hashtags drafted. Platforms: Instagram Reels, TikTok, Shorts. CTA: Book Amelia on SuperSite.</div>
             <div class="tag-row">
               <div class="tag green">Yes</div>
               <div class="tag red">Hold</div>
@@ -546,16 +548,16 @@ body{
         </div>
         <div class="panel-body list">
           <div class="item">
-            <div class="item-title">Mon: Meet Aria hero set</div>
+            <div class="item-title">Mon: Meet Amelia hero set</div>
             <div class="item-meta">SuperSite sync post tied to artist hero and studio positioning.</div>
           </div>
           <div class="item">
-            <div class="item-title">Wed: soft gel vs acrylic carousel</div>
+            <div class="item-title">Wed: signature service vs acrylic carousel</div>
             <div class="item-meta">Educational post that reduces price friction and pushes booking.</div>
           </div>
           <div class="item">
             <div class="item-title">Fri: client set micro-story</div>
-            <div class="item-meta">Short proof clip focused on lasting wear instead of generic “pretty nails” copy.</div>
+            <div class="item-meta">Short proof clip focused on lasting wear instead of generic “pretty services” copy.</div>
           </div>
         </div>
       </div>
@@ -573,8 +575,8 @@ body{
         <div class="panel-body">
           <div class="crm-row">
             <div>
-              <div class="item-title">Sofia M. - soft gel consult</div>
-              <div class="mini">Last touch: SMS · asked about soft gel pricing + Aria</div>
+              <div class="item-title">Sofia M. - signature service consult</div>
+              <div class="mini">Last touch: SMS · asked about signature service pricing + Amelia</div>
             </div>
             <div class="tag orange">Open</div>
           </div>
@@ -594,8 +596,8 @@ body{
           </div>
           <div class="crm-row">
             <div>
-              <div class="item-title">Mia L. - Gel-X inquiry</div>
-              <div class="mini">Last touch: SuperSite form · wants Maya</div>
+              <div class="item-title">Mia L. - Color service inquiry</div>
+              <div class="mini">Last touch: SuperSite form · wants Noor</div>
             </div>
             <div class="tag amber">Verify</div>
           </div>
@@ -619,11 +621,11 @@ body{
           <div class="list">
             <div class="item">
               <div class="item-title">Brand brief</div>
-              <div class="item-meta">Artist-led sets and quiet-luxury education are outperforming generic salon promos. Keep Aria/Maya/Linh visible in hero, social, and booking CTAs.</div>
+              <div class="item-meta">Artist-led sets and quiet-luxury education are outperforming generic salon promos. Keep Amelia/Noor/Mina visible in hero, social, and booking CTAs.</div>
             </div>
             <div class="item">
               <div class="item-title">Competitor brief</div>
-              <div class="item-meta">Nearby salons lean on generic nail pics. Luxe wins with named artists, review velocity, and clean studio proof.</div>
+              <div class="item-meta">Nearby salons lean on generic service pics. GlowUP wins with named artists, review velocity, and clean studio proof.</div>
             </div>
             <div class="item">
               <div class="item-title">Operator brief</div>
@@ -661,7 +663,7 @@ body{
         <div class="panel-head">
           <div>
             <div class="panel-title">Google Review Lane</div>
-            <div class="panel-sub">Dual-path review workflow: station QR + same-day SMS, with one-touch reminders.</div>
+            <div class="panel-sub">Dual-path review workflow: chair QR + same-day SMS, with one-touch reminders.</div>
           </div>
           <div class="tag green">Review Push On</div>
         </div>
@@ -678,16 +680,16 @@ body{
             </div>
           </div>
           <div class="item">
-            <div class="item-title">Station script</div>
+            <div class="item-title">Chair script</div>
             <div class="item-meta">“If you love the set, scan the stand for a 30-second Google review — it helps your artist and the studio.”</div>
           </div>
           <div class="item">
             <div class="item-title">SMS review ask</div>
-            <div class="item-meta">“Thanks for coming to Luxe Nails today ✨ If we earned it: [Google Review Link] — it helps your artist get booked by name.”</div>
+            <div class="item-meta">“Thanks for coming to GlowUP Studio today ✨ If we earned it: [Google Review Link] — it helps your artist get booked by name.”</div>
           </div>
           <div class="item">
             <div class="item-title">24-hour reminder</div>
-            <div class="item-meta">“Quick follow-up from Luxe Nails: review link from yesterday if you haven’t had a chance — [Google Review Link]”</div>
+            <div class="item-meta">“Quick follow-up from GlowUP Studio: review link from yesterday if you haven’t had a chance — [Google Review Link]”</div>
           </div>
         </div>
       </div>
@@ -695,12 +697,12 @@ body{
   </div>
 </div>
 <script>
-// Demo SuperSite: auto-auth for walkthroughs; login.html still works for staff gate demos
-if (sessionStorage.getItem('luxe_staff_auth') !== '1') {
-  sessionStorage.setItem('luxe_staff_auth', '1');
+// Demo SuperSite: auto-auth for walkthroughs; index.html#start still works for staff gate demos
+if (sessionStorage.getItem('glowup_staff_auth') !== '1') {
+  sessionStorage.setItem('glowup_staff_auth', '1');
 }
 document.getElementById('logoutLink').addEventListener('click', function () {
-  sessionStorage.removeItem('luxe_staff_auth');
+  sessionStorage.removeItem('glowup_staff_auth');
 });
 // Live date
 (function(){
@@ -751,7 +753,7 @@ document.getElementById('logoutLink').addEventListener('click', function () {
 
   // Merge SuperSite form leads into CRM if present
   try {
-    var keys = ['luxe_leads', 'apex_leads'];
+    var keys = ['softline_leads', 'rivet_leads'];
     var found = [];
     keys.forEach(function (k) {
       var arr = JSON.parse(localStorage.getItem(k) || '[]');

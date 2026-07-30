@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Luxe Nails Staff Login</title>
+<title>Softline Studio Staff Login</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -75,7 +75,7 @@ document.getElementById('loginForm').addEventListener('submit', function (event)
   event.preventDefault();
   var password = document.getElementById('staffPassword').value.trim();
   if (password === 'jaws911' || password === 'luxe911') {
-    sessionStorage.setItem('luxe_staff_auth', '1');
+    sessionStorage.setItem('softline_staff_auth', '1');
     window.location.href = 'command.html';
     return;
   }
