@@ -224,7 +224,7 @@ body{
       <div class="status-pill live">System Online</div>
       <div class="status-pill">Live Demo</div>
       <div class="status-pill orange">Your Studio · Flagship</div>
-      <a class="status-pill logout" href="index.html#start" id="logoutLink">Log Out</a>
+      <a class="status-pill logout" href="login.html" id="logoutLink">Log Out</a>
     </div>
   </div>
 
@@ -697,12 +697,11 @@ body{
   </div>
 </div>
 <script>
-// Demo SuperSite: auto-auth for walkthroughs; index.html#start still works for staff gate demos
-if (sessionStorage.getItem('glowup_staff_auth') !== '1') {
-  sessionStorage.setItem('glowup_staff_auth', '1');
+if (sessionStorage.getItem('hair_staff_auth') !== '1') {
+  window.location.href = 'login.html';
 }
 document.getElementById('logoutLink').addEventListener('click', function () {
-  sessionStorage.removeItem('glowup_staff_auth');
+  sessionStorage.removeItem('hair_staff_auth');
 });
 // Live date
 (function(){

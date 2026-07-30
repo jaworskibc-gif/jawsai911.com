@@ -224,7 +224,7 @@ body{
       <div class="status-pill live">System Online</div>
       <div class="status-pill">Live Demo</div>
       <div class="status-pill orange">Miami · NW 2nd Ave</div>
-      <a class="status-pill logout" href="index.html#book" id="logoutLink">Log Out</a>
+      <a class="status-pill logout" href="login.html" id="logoutLink">Log Out</a>
     </div>
   </div>
 
@@ -697,9 +697,8 @@ body{
   </div>
 </div>
 <script>
-// Demo SuperSite: auto-auth for walkthroughs; index.html#book still works for staff gate demos
 if (sessionStorage.getItem('rivet_staff_auth') !== '1') {
-  sessionStorage.setItem('rivet_staff_auth', '1');
+  window.location.href = 'login.html';
 }
 document.getElementById('logoutLink').addEventListener('click', function () {
   sessionStorage.removeItem('rivet_staff_auth');

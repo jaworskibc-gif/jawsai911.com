@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Softline Studio · 🦈</title>
+<title>GlowUP · 🦈</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0a0a0a;--card:#161616;--ink:#f5f0e6;--muted:#8c827f;--gold:#d4a5a5;--gold2:#b88484;--line:#363837}
+:root{--bg:#0a0a0a;--card:#161616;--ink:#f5f0e6;--muted:#8c827f;--gold:#e0bb87;--gold2:#be9c7f;--line:#363837}
 *{box-sizing:border-box;margin:0;padding:0}
 body{min-height:100vh;font-family:"DM Sans",system-ui,sans-serif;color:var(--ink);background:var(--bg);display:grid;place-items:center;padding:24px}
 .card{width:min(100%,400px);background:var(--card);border:1px solid var(--line);border-radius:22px;padding:36px 28px;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.5)}
@@ -26,7 +26,7 @@ button:hover{opacity:.92}
 <body>
   <div class="card">
     <div class="emoji">🦈</div>
-    <div class="eyebrow">Softline Studio</div>
+    <div class="eyebrow">GlowUP</div>
     <h1>Operator access</h1>
     <p>Enter the access code to open the back-end stack.</p>
     <form id="loginForm">
@@ -41,7 +41,7 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
   e.preventDefault();
   var v = document.getElementById('code').value.trim();
   if (v === '911') {
-    sessionStorage.setItem('softline_staff_auth', '1');
+    sessionStorage.setItem('glowup_staff_auth', '1');
     sessionStorage.setItem('jaw_auth', 'ok');
     location.href = 'command.html';
     return;

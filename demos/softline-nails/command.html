@@ -697,9 +697,8 @@ body{
   </div>
 </div>
 <script>
-// Demo SuperSite: auto-auth for walkthroughs; login.html still works for staff gate demos
 if (sessionStorage.getItem('softline_staff_auth') !== '1') {
-  sessionStorage.setItem('softline_staff_auth', '1');
+  window.location.href = 'login.html';
 }
 document.getElementById('logoutLink').addEventListener('click', function () {
   sessionStorage.removeItem('softline_staff_auth');
