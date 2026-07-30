@@ -1,0 +1,68 @@
+{
+  "bucket_id": 25,
+  "business_focus": "Custom pools",
+  "city_area": "Southwest FL",
+  "text_angle": "Multi-name / shared phone",
+  "script_core": "One SuperSite covering the group",
+  "business_name": "Company Group Name Here",
+  "city": "Fort Myers",
+  "state": "FL",
+  "phone_display": "(239) 555-5555",
+  "rating": "5.0",
+  "review_count": "120",
+  "website_url": "https://example.com/",
+  "source_urls": [
+    "https://example.com/",
+    "https://maps.google.com/"
+  ],
+  "source_labels": [
+    "Business Website",
+    "Google Business Profile"
+  ],
+  "headline_line_1": "One SuperSite for the work",
+  "headline_line_2": "the whole group is known for.",
+  "pitch_headline": "A SuperSite built to unify multiple names under one stronger presentation.",
+  "pitch_body": "This version of the SuperSite is tuned for custom pool groups with shared phones, overlapping brands, or related operations. One clean front end can carry the trust across the entire group.",
+  "section_title": "A SuperSite that makes the group feel intentional.",
+  "section_copy": "When multiple names feed the same operation, the site should remove confusion, strengthen trust, and present the work at a higher level.",
+  "video_section_title": "The finished result is what ties the group together.",
+  "video_section_body": "A transformation clip helps the site focus on the work itself rather than fragmented brand names or scattered listings.",
+  "why_cards": [
+    {
+      "title": "One front door",
+      "body": "A single SuperSite can carry the shared phone, review proof, and service reach without making the business feel fragmented."
+    },
+    {
+      "title": "Less brand confusion",
+      "body": "Homeowners should feel clarity when multiple names or entities feed the same operation."
+    },
+    {
+      "title": "Group-level trust",
+      "body": "The strongest shared site makes the entire operation feel larger, more credible, and better organized."
+    }
+  ],
+  "gallery_images": [
+    "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80"
+  ],
+  "video_url": "assets/pool-before-after.mp4",
+  "video_poster_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80",
+  "review_quotes": [
+    {
+      "quote": "Paste a real customer review here.",
+      "author": "Reviewer One",
+      "source": "Google review"
+    },
+    {
+      "quote": "Paste a second real customer review here.",
+      "author": "Reviewer Two",
+      "source": "Google review"
+    },
+    {
+      "quote": "Paste a third real customer review here.",
+      "author": "Reviewer Three",
+      "source": "Google review"
+    }
+  ]
+}

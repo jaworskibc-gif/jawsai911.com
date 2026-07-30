@@ -1,0 +1,68 @@
+{
+  "bucket_id": 26,
+  "business_focus": "Pool equipment / repair",
+  "city_area": "Broward",
+  "text_angle": "Niche + reviews",
+  "script_core": "Niche-focused SuperSite demo",
+  "business_name": "Company Name Here",
+  "city": "Broward",
+  "state": "FL",
+  "phone_display": "(954) 555-5555",
+  "rating": "4.9",
+  "review_count": "94",
+  "website_url": "https://example.com/",
+  "source_urls": [
+    "https://example.com/",
+    "https://maps.google.com/"
+  ],
+  "source_labels": [
+    "Business Website",
+    "Google Business Profile"
+  ],
+  "headline_line_1": "Clear help for pool equipment",
+  "headline_line_2": "and repair needs.",
+  "pitch_headline": "A niche SuperSite built to make specialized work easier to trust.",
+  "pitch_body": "This version of the SuperSite is tuned for equipment and repair work: strong review proof, clean niche positioning, and a site that feels more focused than a general service listing.",
+  "section_title": "A SuperSite that makes specialized work easier to understand.",
+  "section_copy": "Niche repair and equipment companies win when the site feels clear, capable, and specific. The right structure should reduce uncertainty and support faster contact.",
+  "video_section_title": "Visible improvement in a specialized category.",
+  "video_section_body": "A short transformation clip helps even niche service work feel more concrete and easier to understand.",
+  "why_cards": [
+    {
+      "title": "Niche clarity",
+      "body": "Specialized services need a site that says exactly what the business handles and why it can be trusted."
+    },
+    {
+      "title": "Review-backed expertise",
+      "body": "Reviews carry more weight in technical categories where homeowners want proof before they call."
+    },
+    {
+      "title": "Focused positioning",
+      "body": "A niche SuperSite can feel sharper and more credible than a broad, generic local-business page."
+    }
+  ],
+  "gallery_images": [
+    "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80"
+  ],
+  "video_url": "assets/pool-before-after.mp4",
+  "video_poster_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80",
+  "review_quotes": [
+    {
+      "quote": "Paste a real customer review here.",
+      "author": "Reviewer One",
+      "source": "Google review"
+    },
+    {
+      "quote": "Paste a second real customer review here.",
+      "author": "Reviewer Two",
+      "source": "Google review"
+    },
+    {
+      "quote": "Paste a third real customer review here.",
+      "author": "Reviewer Three",
+      "source": "Google review"
+    }
+  ]
+}

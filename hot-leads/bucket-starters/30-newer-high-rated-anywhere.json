@@ -1,0 +1,68 @@
+{
+  "bucket_id": 30,
+  "business_focus": "Newer high-rated company",
+  "city_area": "Any remaining high 4.9-5.0",
+  "text_angle": "Fresh 5-star reputation",
+  "script_core": "Turn new reputation into a real pipeline",
+  "business_name": "Company Name Here",
+  "city": "City",
+  "state": "FL",
+  "phone_display": "(555) 555-5555",
+  "rating": "5.0",
+  "review_count": "22",
+  "website_url": "https://example.com/",
+  "source_urls": [
+    "https://example.com/",
+    "https://maps.google.com/"
+  ],
+  "source_labels": [
+    "Business Website",
+    "Google Business Profile"
+  ],
+  "headline_line_1": "Early reputation deserves",
+  "headline_line_2": "a stronger front door.",
+  "pitch_headline": "A SuperSite built to turn fresh trust into steady opportunity.",
+  "pitch_body": "This version of the SuperSite is tuned for newer companies with unusually strong early reviews. The goal is to make that early reputation feel more established and more useful.",
+  "section_title": "A SuperSite that helps a newer company look ready now.",
+  "section_copy": "When the review profile is strong but still new, the site should bridge the gap between early trust and a more mature first impression.",
+  "video_section_title": "The finished result still needs to feel real.",
+  "video_section_body": "A short transformation clip helps a newer brand feel more grounded by showing the kind of outcome homeowners already care about.",
+  "why_cards": [
+    {
+      "title": "Fresh trust, better presented",
+      "body": "A younger company can feel more established when the review proof is framed properly."
+    },
+    {
+      "title": "Stronger first impression",
+      "body": "The SuperSite helps early momentum feel intentional instead of accidental."
+    },
+    {
+      "title": "Pipeline support",
+      "body": "The point is not just to look better. It is to give that early trust a clearer path into real inquiries."
+    }
+  ],
+  "gallery_images": [
+    "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80"
+  ],
+  "video_url": "assets/pool-before-after.mp4",
+  "video_poster_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80",
+  "review_quotes": [
+    {
+      "quote": "Paste a real customer review here.",
+      "author": "Reviewer One",
+      "source": "Google review"
+    },
+    {
+      "quote": "Paste a second real customer review here.",
+      "author": "Reviewer Two",
+      "source": "Google review"
+    },
+    {
+      "quote": "Paste a third real customer review here.",
+      "author": "Reviewer Three",
+      "source": "Google review"
+    }
+  ]
+}

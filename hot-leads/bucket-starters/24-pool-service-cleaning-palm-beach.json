@@ -1,0 +1,68 @@
+{
+  "bucket_id": 24,
+  "business_focus": "Pool service / cleaning",
+  "city_area": "Palm Beach",
+  "text_angle": "High rating, weak or no site",
+  "script_core": "Missed-call recovery + review engine",
+  "business_name": "Company Name Here",
+  "city": "Palm Beach",
+  "state": "FL",
+  "phone_display": "(561) 555-5555",
+  "rating": "4.9",
+  "review_count": "140",
+  "website_url": "https://example.com/",
+  "source_urls": [
+    "https://example.com/",
+    "https://maps.google.com/"
+  ],
+  "source_labels": [
+    "Business Website",
+    "Google Business Profile"
+  ],
+  "headline_line_1": "Keep the pool looking right",
+  "headline_line_2": "week after week.",
+  "pitch_headline": "A SuperSite built around strong reviews and steadier service demand.",
+  "pitch_body": "This version of the SuperSite is tuned for service and cleaning: reliable presentation, immediate trust, and a better path for calls that would otherwise be missed or delayed.",
+  "section_title": "A SuperSite that supports repeat-service trust.",
+  "section_copy": "For service companies, the site should feel dependable and easy to act on. The strongest version makes the business feel established, responsive, and simple to contact.",
+  "video_section_title": "Routine care, visible results.",
+  "video_section_body": "A short transformation clip reinforces maintenance value and keeps the service outcome easy to understand at a glance.",
+  "why_cards": [
+    {
+      "title": "High-rating leverage",
+      "body": "Strong ratings should not sit buried in Google alone. The SuperSite should bring them forward."
+    },
+    {
+      "title": "Missed-call support",
+      "body": "Service businesses lose work when calls hit voicemail. The site should help recover those leads."
+    },
+    {
+      "title": "Review engine fit",
+      "body": "Ongoing service work is ideal for a site that keeps trust proof growing over time."
+    }
+  ],
+  "gallery_images": [
+    "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80"
+  ],
+  "video_url": "assets/pool-before-after.mp4",
+  "video_poster_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80",
+  "review_quotes": [
+    {
+      "quote": "Paste a real customer review here.",
+      "author": "Reviewer One",
+      "source": "Google review"
+    },
+    {
+      "quote": "Paste a second real customer review here.",
+      "author": "Reviewer Two",
+      "source": "Google review"
+    },
+    {
+      "quote": "Paste a third real customer review here.",
+      "author": "Reviewer Three",
+      "source": "Google review"
+    }
+  ]
+}

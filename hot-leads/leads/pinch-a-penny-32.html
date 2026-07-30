@@ -1,436 +1,602 @@
 <!DOCTYPE html>
+<!--
+MASTER TEMPLATE: Premium Shark SuperSite Demo
+
+Clone workflow:
+1. Copy this file to a lead-specific filename.
+2. Replace every token placeholder with real business data.
+3. Keep the luxury-pool layout and generic imagery unless you have better business-specific photos.
+4. Use 3 short review excerpts that are easy to narrate in a 30-60 second Loom.
+5. Do not downgrade the visual treatment into a generic contractor site.
+
+Minimum replacements before sending:
+- Pinch A Penny #32
+- (813) 792-1441 / 8137921441
+- Odessa / FL
+- 4.6 / 158
+- 158 reviews and no strong website converting them. Quick 30-sec SuperSite demo for Pinch A Penny #32. / Hey, this is Bryan with JAWSAI. Pinch A Penny #32 is sitting at 158 reviews. That&#x27;s solid volume. The gap is turning those people into more store visits and service jobs after hours. I put together a quick SuperSite demo - reviews front and center, after-hours capture, automatic follow-up. Takes about 30 seconds.
+- Pull top review snippet from Google for Pinch A Penny #32 in Odessa before publishing. / Pull second Google review snippet for Pinch A Penny #32 in Odessa before publishing. / Pull third Google review snippet for Pinch A Penny #32 in Odessa before publishing.
+- https://pinchapenny.com/stores/odessa-fl-183 / https://verifiedpoolpros.com/listing/pinch-a-penny-32-odessa-fl/
+-->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pinch A Penny #32 | Pool Company Concept Site</title>
-<meta name="description" content="Concept homepage for Pinch A Penny #32 in Odessa, FL. Includes review proof, service area, and call-first conversion layout.">
+<title>Pinch A Penny #32 SuperSite | Odessa, FL</title>
+<meta name="description" content="Pinch A Penny #32 SuperSite for Odessa, FL. Explore project inspiration, customer reviews, and contact information.">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
 *{box-sizing:border-box}
-:root {
-  --ink:#0c1824;
-  --deep:#112536;
-  --mist:#edf5fb;
-  --panel:#ffffff;
-  --line:#d8e6f0;
-  --sky:#1196db;
-  --teal:#11b8a6;
-  --sun:#ffcb55;
-  --text:#153046;
-  --muted:#5f7890;
-  --shadow:0 18px 50px rgba(17,37,54,.12);
+:root{
+  --bg:#0a1220;
+  --ink:#e7edf5;
+  --muted:#a7b7ca;
+  --line:rgba(255,255,255,.14);
+  --gold:#dcc18a;
+  --gold-soft:#f3e6c4;
+  --pool:#8fd7ef;
+  --shadow:0 24px 80px rgba(0,0,0,.34);
 }
-body {
+body{
   margin:0;
-  font-family:'Plus Jakarta Sans',sans-serif;
+  font-family:'Manrope',sans-serif;
+  color:var(--ink);
   background:
-    radial-gradient(circle at top left, rgba(17,184,166,.12), transparent 26%),
-    linear-gradient(180deg, #f5fbff 0%, #edf5fb 100%);
-  color:var(--text);
+    radial-gradient(circle at top, rgba(125,193,214,.20), transparent 26%),
+    linear-gradient(180deg, #08101b 0%, #0b1523 44%, #07111d 100%);
 }
-.page {
-  max-width:1260px;
-  margin:0 auto;
-  padding:24px;
+a{color:inherit}
+.page{max-width:1440px;margin:0 auto;padding:22px}
+.shell{
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:30px;
+  overflow:hidden;
+  background:rgba(6,12,21,.55);
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(10px);
 }
-.topbar {
+.hero{
+  position:relative;
+  min-height:96vh;
+  background:
+    linear-gradient(90deg, rgba(5,10,17,.88) 0%, rgba(5,10,17,.72) 34%, rgba(5,10,17,.34) 62%, rgba(5,10,17,.52) 100%),
+    url("https://papcomshared.blob.core.windows.net/app/StoreFronts/183.jpg") center/cover no-repeat;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:auto 0 0 0;
+  height:180px;
+  background:linear-gradient(180deg, rgba(7,12,20,0), rgba(7,12,20,.92));
+}
+.topbar{
+  position:relative;
+  z-index:2;
   display:flex;
+  align-items:center;
   justify-content:space-between;
+  gap:18px;
+  padding:26px 30px 12px;
+}
+.mark{display:flex;align-items:center;gap:14px}
+.crest{
+  width:56px;
+  height:56px;
+  border-radius:18px;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(255,255,255,.18);
+  background:linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.04));
+  color:var(--gold-soft);
+  font:700 24px/1 'Cormorant Garamond',serif;
+  letter-spacing:.04em;
+}
+.mark-copy small,
+.phone-rail small,
+.eyebrow,
+.section-label,
+.stat-label,
+.review-kicker{
+  display:block;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:var(--pool);
+}
+.mark-copy strong{
+  display:block;
+  margin-top:4px;
+  font:700 22px/1.05 'Cormorant Garamond',serif;
+  color:#fff;
+}
+.phone-rail{
+  display:flex;
   align-items:center;
   gap:16px;
-  margin-bottom:18px;
-}
-.brand {
-  font:800 24px/1 'Barlow Condensed',sans-serif;
-  letter-spacing:1.6px;
-  color:var(--deep);
-  text-transform:uppercase;
-}
-.brand span { color:var(--sky); }
-.meta-badges {
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-}
-.meta-badges span {
-  background:#fff;
-  border:1px solid var(--line);
+  padding:12px 18px;
+  border:1px solid rgba(255,255,255,.14);
   border-radius:999px;
-  padding:10px 14px;
-  font-size:12px;
-  font-weight:700;
-  color:var(--muted);
+  background:rgba(7,12,20,.44);
+  backdrop-filter:blur(12px);
 }
-.hero {
-  display:grid;
-  grid-template-columns:1.25fr .75fr;
-  gap:18px;
-  align-items:stretch;
-}
-.hero-main, .hero-side, .section, .prep {
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:24px;
-  box-shadow:var(--shadow);
-}
-.hero-main {
-  padding:34px;
-  background:
-    linear-gradient(135deg, rgba(17,37,54,.98) 0%, rgba(18,54,78,.95) 60%, rgba(17,150,219,.93) 100%);
-  color:#fff;
+.phone-rail a{text-decoration:none;font-weight:800;font-size:16px}
+.hero-grid{
   position:relative;
-  overflow:hidden;
+  z-index:2;
+  display:grid;
+  grid-template-columns:minmax(0,1.1fr) 420px;
+  gap:28px;
+  align-items:end;
+  padding:44px 30px 34px;
 }
-.eyebrow {
-  display:inline-block;
-  margin-bottom:14px;
-  padding:8px 12px;
-  border-radius:999px;
-  background:rgba(255,255,255,.12);
-  font-size:11px;
-  font-weight:800;
-  letter-spacing:1.5px;
-  text-transform:uppercase;
-}
-h1 {
-  margin:0 0 12px;
-  font:800 clamp(48px, 6vw, 88px)/.9 'Barlow Condensed',sans-serif;
-  letter-spacing:.4px;
-  text-transform:uppercase;
-}
-.hero-sub {
-  max-width:700px;
-  font-size:18px;
-  line-height:1.75;
-  color:rgba(255,255,255,.9);
-}
-.hero-proof {
-  display:flex;
-  flex-wrap:wrap;
-  gap:12px;
-  margin:24px 0 18px;
-}
-.proof-pill {
-  background:rgba(255,255,255,.12);
-  border:1px solid rgba(255,255,255,.16);
-  border-radius:16px;
-  padding:14px 16px;
-  min-width:155px;
-}
-.proof-k {
-  font:800 34px/1 'Barlow Condensed',sans-serif;
+.hero-copy{max-width:760px;padding:34px 0 16px}
+.eyebrow{margin-bottom:18px}
+h1{
+  margin:0;
+  font:600 clamp(3.2rem, 6.6vw, 6.4rem)/.92 'Cormorant Garamond',serif;
+  letter-spacing:-.03em;
   color:#fff;
 }
-.proof-l {
-  margin-top:4px;
-  font-size:12px;
-  text-transform:uppercase;
-  letter-spacing:1.4px;
-  color:rgba(255,255,255,.7);
+.hero-copy h1 span{color:var(--gold-soft)}
+.hero-sub{
+  margin:22px 0 0;
+  max-width:650px;
+  color:#d8e2ee;
+  font-size:1.06rem;
+  line-height:1.9;
 }
-.chip-row {
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-top:18px;
-}
-.chip {
-  border-radius:999px;
-  padding:10px 14px;
-  background:rgba(255,255,255,.14);
-  border:1px solid rgba(255,255,255,.16);
-  font-size:12px;
-  font-weight:700;
-}
-.hero-side {
-  padding:24px;
-  display:grid;
-  gap:14px;
-  align-content:start;
-}
-.side-card {
-  border:1px solid var(--line);
+.stat-row{display:flex;flex-wrap:wrap;gap:14px;margin:26px 0 0}
+.stat-chip{
+  min-width:150px;
+  padding:16px 18px;
+  border:1px solid rgba(255,255,255,.12);
   border-radius:18px;
-  padding:18px;
-  background:linear-gradient(180deg, #ffffff 0%, #f7fbfe 100%);
+  background:rgba(255,255,255,.07);
+  backdrop-filter:blur(10px);
 }
-.side-label {
-  font-size:11px;
-  font-weight:800;
-  letter-spacing:1.5px;
-  text-transform:uppercase;
-  color:var(--muted);
-  margin-bottom:8px;
+.stat-chip strong{
+  display:block;
+  font:600 34px/.95 'Cormorant Garamond',serif;
+  color:#fff;
 }
-.phone {
-  display:inline-block;
-  text-decoration:none;
-  color:var(--deep);
-  font:800 40px/1 'Barlow Condensed',sans-serif;
-}
-.rating-line {
-  font-size:15px;
-  color:var(--text);
-  font-weight:700;
-}
-.rating-line .stars { color:#f5b301; }
-.split {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:18px;
-  margin-top:18px;
-}
-.section {
-  padding:26px;
-}
-.section-title {
-  margin:0 0 10px;
-  font:800 34px/1 'Barlow Condensed',sans-serif;
-  color:var(--deep);
-  text-transform:uppercase;
-}
-.section-copy {
-  margin:0;
-  color:var(--muted);
-  line-height:1.8;
-  font-size:15px;
-}
-.service-grid, .review-grid {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:14px;
-  margin-top:18px;
-}
-.service-card, .review-card {
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:18px;
-  background:#fff;
-}
-.service-card h3 {
-  margin:0 0 8px;
-  font-size:17px;
-  color:var(--deep);
-}
-.service-card p {
-  margin:0;
-  color:var(--muted);
-  font-size:14px;
-  line-height:1.75;
-}
-.review-top {
-  display:flex;
-  justify-content:space-between;
+.stat-label{margin-top:8px;letter-spacing:.14em;color:#d8e2ee}
+.hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:28px}
+.hero-actions a{
+  display:inline-flex;
   align-items:center;
-  gap:10px;
-  margin-bottom:10px;
-}
-.review-stars {
-  color:#f5b301;
-  letter-spacing:2px;
-}
-.review-label {
-  font-size:11px;
+  justify-content:center;
+  padding:15px 22px;
+  border-radius:999px;
+  font-size:12px;
   font-weight:800;
-  color:var(--muted);
+  letter-spacing:.18em;
   text-transform:uppercase;
+  text-decoration:none;
 }
-.review-quote {
-  margin:0 0 14px;
-  color:var(--text);
-  line-height:1.8;
-  min-height:114px;
-  outline:none;
-}
-.review-author {
-  font-size:13px;
-  font-weight:800;
-  color:var(--deep);
-  outline:none;
-}
-.prep {
-  margin-top:18px;
+.hero-actions .primary{background:linear-gradient(135deg, #e7d8ad, #caa86b);color:#0d1420}
+.hero-actions .secondary{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06)}
+.pitch-card{
+  align-self:center;
   padding:22px;
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:28px;
+  background:rgba(6,12,21,.64);
+  backdrop-filter:blur(12px);
 }
-.prep-grid {
+.pitch-card h2{margin:8px 0 10px;font:600 34px/1 'Cormorant Garamond',serif}
+.pitch-card p{margin:0;color:#cad7e5;font-size:14px;line-height:1.8}
+.info-stack{display:grid;gap:12px;margin-top:18px}
+.info-box{
+  padding:16px;
+  border-radius:20px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+}
+.info-box strong{display:block;color:#fff;margin-bottom:6px}
+.info-box span{color:var(--muted);font-size:13px;line-height:1.6}
+.content{
+  padding:30px;
+  background:linear-gradient(180deg, rgba(7,12,20,.98), rgba(9,16,28,.98));
+}
+.section-label{margin-bottom:10px}
+.section-title{
+  margin:0;
+  font:600 clamp(2rem, 4vw, 3.6rem)/1 'Cormorant Garamond',serif;
+  color:#fff;
+}
+.section-copy{margin:14px 0 0;max-width:760px;color:var(--muted);line-height:1.9}
+.gallery{
   display:grid;
   grid-template-columns:1.1fr .9fr;
   gap:18px;
+  margin-top:26px;
 }
-.prep-card {
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:18px;
-  background:#fff;
+.gallery-main,.gallery-tile{
+  overflow:hidden;
+  border-radius:24px;
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:var(--shadow);
 }
-.prep-card h3 {
-  margin:0 0 12px;
-  font-size:14px;
-  letter-spacing:1.4px;
-  text-transform:uppercase;
-  color:var(--muted);
+.gallery-main{
+  min-height:560px;
+  background:
+    linear-gradient(180deg, rgba(7,12,20,.08), rgba(7,12,20,.45)),
+    url("https://papcomshared.blob.core.windows.net/app/StoreFronts/183.jpg") center/cover no-repeat;
+  position:relative;
 }
-.prep-card p, .prep-card li {
+.gallery-main .caption{
+  position:absolute;
+  left:24px;
+  right:24px;
+  bottom:22px;
+  padding:18px 20px;
+  border-radius:20px;
+  background:rgba(8,14,24,.56);
+  backdrop-filter:blur(10px);
+}
+.gallery-main .caption strong{
+  display:block;
+  font:600 26px/1 'Cormorant Garamond',serif;
+  margin-bottom:8px;
+}
+.gallery-main .caption span{color:#d6e0ea;font-size:14px;line-height:1.7}
+.gallery-side{display:grid;gap:18px}
+.gallery-tile{min-height:271px}
+.gallery-tile.tile-a{background:url("https://papcomshared.blob.core.windows.net/app/Tabs/2021-Store-Tabs/pool-cleaning-tab.jpg") center/cover no-repeat}
+.gallery-tile.tile-b{background:url("https://papcomshared.blob.core.windows.net/app/Tabs/2021-Store-Tabs/repair-tab.jpg") center/cover no-repeat}
+.feature-band{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 420px;
+  gap:18px;
+  margin-top:28px;
+  align-items:stretch;
+}
+.feature-video,
+.feature-copy{
+  border-radius:24px;
+  border:1px solid rgba(255,255,255,.10);
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
+.feature-video{
+  position:relative;
+  min-height:360px;
+  background:linear-gradient(180deg, rgba(7,12,20,.12), rgba(7,12,20,.45));
+}
+.feature-video video{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  background:#050b12;
+}
+.feature-copy{
+  padding:28px;
+  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+}
+.feature-copy h3{
+  margin:8px 0 12px;
+  font:600 clamp(1.9rem, 3vw, 2.8rem)/1 'Cormorant Garamond',serif;
+  color:#fff;
+}
+.feature-copy p{
   margin:0;
-  color:var(--text);
-  line-height:1.75;
-  font-size:14px;
+  color:var(--muted);
+  line-height:1.9;
 }
-.prep-card ul {
+.why-grid,.process,.review-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+.why-grid{margin-top:28px}
+.why-card,.review-card,.process-card{
+  padding:22px;
+  border-radius:22px;
+  border:1px solid rgba(255,255,255,.10);
+  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+}
+.why-card strong,.process-card strong{
+  display:block;
+  margin-bottom:10px;
+  font:600 24px/1.1 'Cormorant Garamond',serif;
+  color:#fff;
+}
+.why-card p,.process-card p{margin:0;color:var(--muted);font-size:14px;line-height:1.8}
+.process{margin-top:54px}
+.step{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:42px;
+  height:42px;
+  margin-bottom:16px;
+  border-radius:50%;
+  background:rgba(223,196,138,.18);
+  border:1px solid rgba(223,196,138,.26);
+  color:var(--gold-soft);
+  font-weight:800;
+}
+.reviews{margin-top:54px}
+.review-grid{margin-top:24px}
+.review-card{position:relative;overflow:hidden}
+.review-card::before{
+  content:"";
+  position:absolute;
+  top:-60px;
+  right:-40px;
+  width:140px;
+  height:140px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(143,215,239,.18), transparent 70%);
+}
+.stars{letter-spacing:.28em;color:#f2cf75;font-size:13px}
+.review-card blockquote{
+  margin:18px 0 16px;
+  font:600 24px/1.45 'Cormorant Garamond',serif;
+  color:#fff;
+}
+.review-card cite{display:block;color:#cfd9e5;font-style:normal;font-size:13px;font-weight:700}
+.review-card small{display:block;margin-top:6px;color:var(--muted);font-size:12px;line-height:1.6}
+.cta{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:22px;
+  align-items:center;
+  margin-top:56px;
+  padding:28px;
+  border-radius:28px;
+  background:
+    linear-gradient(135deg, rgba(222,195,137,.16), rgba(115,210,223,.10)),
+    rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.12);
+}
+.cta h3{margin:0 0 10px;font:600 clamp(1.8rem, 3vw, 2.8rem)/1 'Cormorant Garamond',serif}
+.cta p{margin:0;color:var(--muted);line-height:1.8}
+.cta a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:220px;
+  padding:16px 22px;
+  border-radius:999px;
+  background:linear-gradient(135deg, #ecd7a2, #c89d5f);
+  color:#0b1320;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  text-decoration:none;
+}
+.operator-notes{
+  margin-top:24px;
+  padding:22px;
+  border-radius:22px;
+  border:1px dashed rgba(255,255,255,.18);
+  background:rgba(255,255,255,.03);
+}
+.operator-notes h4{
+  margin:0 0 12px;
+  font:600 24px/1 'Cormorant Garamond',serif;
+  color:#fff;
+}
+.operator-notes ul{
   margin:0;
   padding-left:18px;
 }
-.footer {
-  margin-top:16px;
-  text-align:center;
+.operator-notes li{
+  margin:0 0 8px;
   color:var(--muted);
-  font-size:12px;
+  font-size:13px;
+  line-height:1.7;
 }
-[contenteditable="true"] {
-  transition:background-color .2s ease, box-shadow .2s ease;
+.footer-note{margin-top:18px;text-align:center;color:#7f90a5;font-size:12px;line-height:1.7}
+@media (max-width:1100px){
+  .hero-grid,.gallery,.feature-band,.cta{grid-template-columns:1fr}
+  .why-grid,.process,.review-grid{grid-template-columns:1fr}
 }
-[contenteditable="true"]:focus {
-  background:#fff9e5;
-  box-shadow:0 0 0 2px rgba(255,203,85,.5);
-  border-radius:8px;
-}
-@media (max-width: 980px) {
-  .hero, .split, .prep-grid, .service-grid, .review-grid {
-    grid-template-columns:1fr;
-  }
-  .page { padding:14px; }
-  .hero-main, .hero-side, .section, .prep { border-radius:18px; }
+@media (max-width:760px){
+  .page{padding:12px}
+  .topbar{padding:18px 18px 8px;flex-direction:column;align-items:flex-start}
+  .hero-grid{padding:26px 18px 24px}
+  .content{padding:24px 18px}
+  .hero{min-height:auto}
+  .phone-rail{width:100%;justify-content:space-between}
 }
 </style>
 </head>
 <body>
   <div class="page">
-    <div class="topbar">
-      <div class="brand">Pool Lead <span>Mockup</span></div>
-      <div class="meta-badges">
-        <span>Rank #10</span>
-        <span>Tier A</span>
-        <span>Odessa, FL</span>
-      </div>
-    </div>
-
-    <section class="hero">
-      <div class="hero-main">
-        <div class="eyebrow">Pool Company concept page</div>
-        <h1>Pinch A Penny #32</h1>
-        <p class="hero-sub">Trusted local pool help for homeowners who need service, upgrades, repairs, or project guidance. If the business is already winning on reviews, the website should make that visible immediately.</p>
-        <div class="hero-proof">
-          <div class="proof-pill">
-            <div class="proof-k">4.6</div>
-            <div class="proof-l">Google Rating</div>
+    <div class="shell">
+      <section class="hero">
+        <div class="topbar">
+          <div class="mark">
+            <div class="crest">PA</div>
+            <div class="mark-copy">
+              <small>Odessa, FL</small>
+              <strong>Pinch A Penny #32</strong>
+            </div>
           </div>
-          <div class="proof-pill">
-            <div class="proof-k">158</div>
-            <div class="proof-l">Google Reviews</div>
-          </div>
-          <div class="proof-pill">
-            <div class="proof-k">Odessa</div>
-            <div class="proof-l">Primary City</div>
+          <div class="phone-rail">
+            <div>
+              <small>Call The Business</small>
+              <a href="tel:8137921441">(813) 792-1441</a>
+            </div>
+            <div>
+              <small>Odessa, FL</small>
+            </div>
           </div>
         </div>
-        <div class="chip-row"><span class="chip">Fast homeowner contact</span><span class="chip">Pool service support</span><span class="chip">Clear next-step quotes</span></div>
-      </div>
 
-      <aside class="hero-side">
-        <div class="side-card">
-          <div class="side-label">Call now</div>
-          <a class="phone" href="tel:(813) 792-1441">(813) 792-1441</a>
-          <div class="rating-line"><span class="stars">★★★★★</span> 4.6 stars • 158 Google reviews</div>
-        </div>
-        <div class="side-card">
-          <div class="side-label">Service area</div>
-          <div>Odessa, FL and nearby homeowners looking for pool help without the usual runaround.</div>
-        </div>
-        <div class="side-card">
-          <div class="side-label">Fast quote path</div>
-          <div>Clear phone CTA, visible review proof, homeowner-first copy, and a cleaner first impression than a directory listing alone.</div>
-        </div>
-      </aside>
-    </section>
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <div class="eyebrow">Private Outdoor Living</div>
+            <h1>Pool care and supply support <span>with stronger local visibility.</span></h1>
+            <p class="hero-sub">A SuperSite presentation built to show the work clearly, surface trust immediately, and make the next step feel simple for homeowners planning a meaningful outdoor project.</p>
+            <div class="stat-row">
+              <div class="stat-chip">
+                <strong>4.6</strong>
+                <div class="stat-label">Google Rating</div>
+              </div>
+              <div class="stat-chip">
+                <strong>158</strong>
+                <div class="stat-label">Google Reviews</div>
+              </div>
+              <div class="stat-chip">
+                <strong>5.0</strong>
+                <div class="stat-label">Local Reputation</div>
+              </div>
+            </div>
+            <div class="hero-actions">
+              <a class="primary" href="tel:8137921441">Call Now</a>
+              <a class="secondary" href="https://pinchapenny.com/stores/odessa-fl-183">See Live Business</a>
+            </div>
+          </div>
 
-    <div class="split">
-      <section class="section">
-        <h2 class="section-title">Why homeowners call Pinch</h2>
-        <p class="section-copy">This concept page gives the business a stronger trust layer before the prospect ever taps the number. Instead of a thin listing, homeowners see review proof, service clarity, and a direct conversion path immediately.</p>
-        <div class="service-grid">
-          <article class="service-card">
-            <h3>Trust up front</h3>
-            <p>Real rating and review count shown in the hero so visitors know they are calling a proven local company.</p>
-          </article>
-          <article class="service-card">
-            <h3>Cleaner mobile conversion</h3>
-            <p>One obvious phone CTA, short service explanation, and no friction between interest and contact.</p>
-          </article>
-          <article class="service-card">
-            <h3>Better first impression</h3>
-            <p>A real website gives the business more authority than a listing profile by itself, especially in a local service category.</p>
-          </article>
+          <aside class="pitch-card">
+            <div class="review-kicker">Why Homeowners Call</div>
+            <h2>A SuperSite backed by 158 reviews and built to turn store trust into more action.</h2>
+            <p>This version of the SuperSite for Pinch A Penny #32 combines strong review volume, clearer local trust, and a better path for after-hours shoppers to turn into store visits and service jobs.</p>
+            <div class="info-stack">
+              <div class="info-box">
+                <strong>Service Area</strong>
+                <span>Proudly serving homeowners in Odessa, FL and surrounding areas.</span>
+              </div>
+              <div class="info-box">
+                <strong>Find Us Online</strong>
+                <span><a href="https://pinchapenny.com/stores/odessa-fl-183">Official store page</a> and <a href="https://verifiedpoolpros.com/listing/pinch-a-penny-32-odessa-fl/">Verified Pool Pros</a></span>
+              </div>
+            </div>
+          </aside>
         </div>
       </section>
 
-      <section class="section">
-        <h2 class="section-title">What customers already say</h2>
-        <p class="section-copy">These blocks are editable. Paste in actual Google review snippets before the Loom or during call prep so the page reflects the business more specifically.</p>
-        <div class="review-grid">
-          
-            <article class="review-card">
-              <div class="review-top">
-                <span class="review-stars">★★★★★</span>
-                <span class="review-label">Editable review #1</span>
-              </div>
-              <p class="review-quote" contenteditable="true">Paste a real 5-star review snippet for Pinch A Penny #32 here before the call.</p>
-              <div class="review-author" contenteditable="true">Customer name or initials</div>
-            </article>
-            
-            <article class="review-card">
-              <div class="review-top">
-                <span class="review-stars">★★★★★</span>
-                <span class="review-label">Editable review #2</span>
-              </div>
-              <p class="review-quote" contenteditable="true">Paste a real 5-star review snippet for Pinch A Penny #32 here before the call.</p>
-              <div class="review-author" contenteditable="true">Customer name or initials</div>
-            </article>
-            
-            <article class="review-card">
-              <div class="review-top">
-                <span class="review-stars">★★★★★</span>
-                <span class="review-label">Editable review #3</span>
-              </div>
-              <p class="review-quote" contenteditable="true">Paste a real 5-star review snippet for Pinch A Penny #32 here before the call.</p>
-              <div class="review-author" contenteditable="true">Customer name or initials</div>
-            </article>
-            
+      <section class="content">
+        <div class="section-label">Project Inspiration</div>
+        <h2 class="section-title">A SuperSite that gives strong local reputation a stronger front door.</h2>
+        <p class="section-copy">For a retail-plus-service pool business, the site should make the next step obvious, visible, and easy to take after hours.</p>
+
+        <div class="gallery">
+          <div class="gallery-main">
+            <div class="caption">
+              <strong>Built to reflect the finished result.</strong>
+              <span>Project imagery should help homeowners understand the level of care, finish, and attention they can expect.</span>
+            </div>
+          </div>
+          <div class="gallery-side">
+            <div class="gallery-tile tile-a"></div>
+            <div class="gallery-tile tile-b"></div>
+          </div>
         </div>
+
+        <div class="feature-band" data-video-section>
+          <div class="feature-video">
+            <video
+              playsinline
+              muted
+              loop
+              autoplay
+              preload="metadata"
+              poster="https://papcomshared.blob.core.windows.net/app/StoreFronts/183.jpg"
+              data-video-src="assets/pool-before-after.mp4"
+            ></video>
+          </div>
+          <aside class="feature-copy">
+            <div class="section-label">Transformation</div>
+            <h3>See the kind of change homeowners are looking for.</h3>
+            <p>A short before-and-after clip helps the SuperSite show the result in motion and makes the transformation feel immediate, tangible, and real.</p>
+          </aside>
+        </div>
+
+        <div class="why-grid">
+          <article class="why-card">
+            <strong>Store trust, carried online</strong>
+            <p>Strong local review volume should be visible immediately instead of staying buried inside search listings.</p>
+          </article>
+          <article class="why-card">
+            <strong>After-hours capture</strong>
+            <p>Store visits and service jobs are often decided at night when homeowners are browsing without calling.</p>
+          </article>
+          <article class="why-card">
+            <strong>Clearer local action</strong>
+            <p>A stronger SuperSite helps turn reputation into visits, calls, and new service conversations.</p>
+          </article>
+        </div>
+
+        <div class="reviews">
+          <div class="section-label">Google Reviews</div>
+          <h2 class="section-title">What customers are saying.</h2>
+          <p class="section-copy">Real feedback from homeowners who have already worked with Pinch A Penny #32.</p>
+          <div class="review-grid">
+            <article class="review-card">
+              <div class="stars">★★★★★</div>
+              <blockquote>Pull top review snippet from Google for Pinch A Penny #32 in Odessa before publishing.</blockquote>
+              <cite>Google reviewer</cite>
+              <small>Google review</small>
+            </article>
+            <article class="review-card">
+              <div class="stars">★★★★★</div>
+              <blockquote>Pull second Google review snippet for Pinch A Penny #32 in Odessa before publishing.</blockquote>
+              <cite>Google reviewer</cite>
+              <small>Google review</small>
+            </article>
+            <article class="review-card">
+              <div class="stars">★★★★★</div>
+              <blockquote>Pull third Google review snippet for Pinch A Penny #32 in Odessa before publishing.</blockquote>
+              <cite>Google reviewer</cite>
+              <small>Google review</small>
+            </article>
+          </div>
+        </div>
+
+        <div class="process">
+          <article class="process-card">
+            <div class="step">01</div>
+            <strong>Start the Conversation</strong>
+            <p>Reach out to discuss your goals, timeline, and the kind of finished space you want to create.</p>
+          </article>
+          <article class="process-card">
+            <div class="step">02</div>
+            <strong>Plan the Project</strong>
+            <p>Review options, materials, and project details with a team that can guide the scope and design clearly.</p>
+          </article>
+          <article class="process-card">
+            <div class="step">03</div>
+            <strong>Enjoy the Result</strong>
+            <p>Move into a finished result that feels well planned, well built, and ready to enjoy.</p>
+          </article>
+        </div>
+
+        <div class="cta">
+          <div>
+            <h3>See how your SuperSite would work live.</h3>
+            <p>Call Pinch A Penny #32 to discuss your project, ask questions, and see how this SuperSite approach can support the next step.</p>
+          </div>
+          <a href="tel:8137921441">Call (813) 792-1441</a>
+        </div>
+
+        <div class="footer-note">Project imagery and review excerpts are shown for presentation purposes and may be updated with business-specific materials.</div>
       </section>
     </div>
-
-    <section class="prep">
-      <div class="prep-grid">
-        <div class="prep-card">
-          <h3>Loom / Call Notes</h3>
-          <ul>
-            <li>Lead angle: 158 Google reviews, 4.6 rating, no website listed; strong &#x27;you&#x27;re already trusted, the site should reflect that&#x27; pitch</li>
-            <li>Call opening: Bryan here — I texted over a 60-second video earlier about Pinch A Penny #32. Did you get a chance to see it?</li>
-            <li>Text line: Hey Pinch A Penny #32 — Bryan here. Made you a quick 60-second video on how your Google reviews could be turned into a simple site: [Loom link]</li>
-            <li>Prep note: Use 45-90 second Loom with review count, service area, phone CTA, and one specific local observation.</li>
-          </ul>
-        </div>
-        <div class="prep-card">
-          <h3>Directory Source</h3>
-          <p>Source profile: <a href="https://verifiedpoolpros.com/listing/pinch-a-penny-32-odessa-fl">https://verifiedpoolpros.com/listing/pinch-a-penny-32-odessa-fl</a></p>
-          <p style="margin-top:12px;">Local file: <code>/home/shark/jawsai911-site-fixed/pool-hot-leads/leads/pinch-a-penny-32.html</code></p>
-          <p style="margin-top:12px;">Use this as a concept page for Loom. Paste 2-3 real reviews, mention the review count by name, and show how the business could look with a proper site.</p>
-        </div>
-      </div>
-    </section>
-
-    <div class="footer">Concept site prepared July 27, 2026 by JAWSAI911 for outreach use.</div>
   </div>
+  <script>
+    (function () {
+      var section = document.querySelector('[data-video-section]');
+      if (!section) return;
+      var video = section.querySelector('video');
+      if (!video) return;
+      var src = video.getAttribute('data-video-src') || '';
+      if (!src || src === '#') {
+        section.remove();
+        return;
+      }
+      var source = document.createElement('source');
+      source.src = src;
+      source.type = 'video/mp4';
+      video.appendChild(source);
+      video.load();
+    }());
+  </script>
 </body>
 </html>

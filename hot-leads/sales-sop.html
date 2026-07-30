@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pool SuperSite Sales SOP | JAWSAI911</title>
+<script src="../hub-auth.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#020711;
+  --panel:#091120;
+  --panel-2:#0d1728;
+  --line:rgba(59,130,246,.22);
+  --line-strong:rgba(56,189,248,.44);
+  --sky:#38bdf8;
+  --green:#34d399;
+  --amber:#fbbf24;
+  --text:#eef2ff;
+  --muted:#8fa4c7;
+}
+body{min-height:100vh;background:radial-gradient(circle at top,rgba(56,189,248,.12),transparent 28%),linear-gradient(180deg,#020711,#040b16 45%,#020711);color:var(--text);font-family:"Segoe UI",-apple-system,sans-serif}
+a{color:inherit}
+.wrap{max-width:1280px;margin:0 auto;padding:28px 22px 48px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+.back-link,.action-link{display:inline-flex;align-items:center;justify-content:center;padding:11px 16px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03);text-decoration:none;font-size:12px;font-weight:800;letter-spacing:.8px;text-transform:uppercase}
+.action-link.primary{background:linear-gradient(180deg,#0877ff,#0052dc);border-color:transparent}
+.hero,.panel,.lead-card{background:linear-gradient(180deg,rgba(9,17,32,.96),rgba(5,11,22,.98));border:1px solid var(--line);border-radius:18px;box-shadow:0 24px 80px rgba(0,0,0,.22)}
+.hero{padding:28px;margin-bottom:22px}
+.eyebrow{font-size:11px;font-weight:800;letter-spacing:2.8px;color:var(--sky);text-transform:uppercase;margin-bottom:10px}
+.hero h1{font-size:clamp(30px,4vw,48px);line-height:1.05;margin-bottom:12px}
+.hero p{max-width:860px;color:var(--muted);font-size:15px;line-height:1.7}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+.hero-actions a{display:inline-flex;align-items:center;justify-content:center;padding:13px 18px;border-radius:10px;text-decoration:none;font-size:13px;font-weight:800;letter-spacing:.5px;text-transform:uppercase}
+.hero-actions .primary{background:linear-gradient(180deg,#0877ff,#0052dc);color:#fff}
+.hero-actions .secondary{border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--text)}
+.grid{display:grid;grid-template-columns:1.05fr .95fr;gap:18px;margin-bottom:24px}
+.panel{padding:22px}
+.panel h2{font-size:20px;font-weight:900;margin-bottom:10px}
+.panel p,.panel li{color:var(--muted);font-size:14px;line-height:1.7}
+.panel ol,.panel ul{padding-left:18px}
+.panel li+li{margin-top:6px}
+.lead-section{margin-top:28px}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:14px}
+.section-head h2{font-size:24px;font-weight:900}
+.section-head p{max-width:780px;color:var(--muted);font-size:14px;line-height:1.6}
+.lead-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.lead-card{padding:22px;display:flex;flex-direction:column;gap:12px}
+.status{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:900;letter-spacing:1.6px;text-transform:uppercase}
+.status.ready{color:var(--green)}
+.status.review{color:var(--amber)}
+.lead-card h3{font-size:22px;line-height:1.15}
+.meta{color:#d9e6fb;font-size:13px;line-height:1.6}
+.lead-card p{color:var(--muted);font-size:14px;line-height:1.7}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto;padding-top:8px}
+.actions a{display:inline-flex;align-items:center;justify-content:center;padding:12px 14px;border-radius:10px;text-decoration:none;font-size:12px;font-weight:800;letter-spacing:.8px;text-transform:uppercase}
+.actions a.primary{background:linear-gradient(180deg,#0877ff,#0052dc);color:#fff}
+.actions a.secondary{border:1px solid var(--line);background:rgba(255,255,255,.03)}
+.mini{font-size:12px;color:var(--muted)}
+@media(max-width:980px){.grid,.lead-grid{grid-template-columns:1fr}}
+@media(max-width:640px){.wrap{padding:18px 14px 34px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="topbar">
+    <a class="back-link" href="../dashboard.html">&larr; Back To Command Hub</a>
+    <a class="action-link primary" href="index.html">Open Lead Launcher</a>
+  </div>
+
+  <section class="hero">
+    <div class="eyebrow">Sales SOP</div>
+    <h1>Pool SuperSite Demo Workflow</h1>
+    <p>This page is the working SOP for the sales team. Open a lead, record the quick demo, send the text, then work the call. All ten leads below already have SuperSite pages built and linked from the hub.</p>
+    <div class="hero-actions">
+      <a class="primary" href="index.html">Open Full Lead Launcher</a>
+      <a class="secondary" href="pool-hot-leads-queue.csv">Open Queue CSV</a>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="panel">
+      <h2>Fast SOP</h2>
+      <ol>
+        <li>Open the lead page below.</li>
+        <li>Record a 30-60 second Loom walking the hero, reviews, transformation clip, and call path.</li>
+        <li>Text the link with the lead-specific text line from the queue.</li>
+        <li>Call back 1-2 hours later or the next day using the saved script angle.</li>
+      </ol>
+    </div>
+    <div class="panel">
+      <h2>Guardrail</h2>
+      <ul>
+        <li>`Send-ready` means the page already has the strongest available public review and photo material.</li>
+        <li>`Needs review cleanup` means the page exists and is usable, but review snippets should be swapped before sending if time allows.</li>
+        <li>The shared pool transformation clip is already wired into every demo.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="lead-section">
+    <div class="section-head">
+      <h2>Send-Ready First</h2>
+      <p>Start here. These pages have the strongest combination of public review proof, usable visuals, and overall presentation quality.</p>
+    </div>
+    <div class="lead-grid">
+      <article class="lead-card">
+        <div class="status ready">Send-Ready</div>
+        <h3>Pools By G.E. Corp</h3>
+        <div class="meta">Miami, FL · (786) 355-3382 · 5.0 · 20 reviews</div>
+        <p>Fresh five-star reputation with real review snippets already loaded into the SuperSite page.</p>
+        <div class="actions">
+          <a class="primary" href="leads/pools-by-g-e-corp.html">Open Demo</a>
+          <a class="secondary" href="real-leads-21-30/25-pools-by-g-e-corp.json">Open Source JSON</a>
+        </div>
+      </article>
+      <article class="lead-card">
+        <div class="status ready">Send-Ready</div>
+        <h3>Patio Pools Inc</h3>
+        <div class="meta">Odessa, FL · (352) 346-8418 · 4.2 · 92 reviews</div>
+        <p>Official-site imagery and public testimonial copy are already loaded for a cleaner demo pass.</p>
+        <div class="actions">
+          <a class="primary" href="leads/patio-pools-inc.html">Open Demo</a>
+          <a class="secondary" href="real-leads-21-30/23-patio-pools-inc.json">Open Source JSON</a>
+        </div>
+      </article>
+      <article class="lead-card">
+        <div class="status ready">Send-Ready</div>
+        <h3>Atlantic Pool Build LLC</h3>
+        <div class="meta">Pompano Beach, FL · (954) 932-6351 · 4.9 · 12 reviews</div>
+        <p>Official project images are already swapped in and the site reads cleanly for a newer builder.</p>
+        <div class="actions">
+          <a class="primary" href="leads/atlantic-pool-build-llc.html">Open Demo</a>
+          <a class="secondary" href="real-leads-21-30/29-atlantic-pool-build-llc.json">Open Source JSON</a>
+        </div>
+      </article>
+      <article class="lead-card">
+        <div class="status ready">Send-Ready</div>
+        <h3>Pinch A Penny #32</h3>
+        <div class="meta">Odessa, FL · (813) 792-1441 · 4.6 · 158 reviews</div>
+        <p>Official store imagery is wired in. Good option for store-and-service style outreach.</p>
+        <div class="actions">
+          <a class="primary" href="leads/pinch-a-penny-32.html">Open Demo</a>
+          <a class="secondary" href="real-leads-21-30/21-pinch-a-penny-32.json">Open Source JSON</a>
+        </div>
+      </article>
+      <article class="lead-card">
+        <div class="status ready">Send-Ready</div>
+        <h3>Seaquest Pool Systems</h3>
+        <div class="meta">Orlando, FL · (407) 707-6662 · 5.0 · 12 reviews</div>
+        <p>Public review snippets are already loaded from a third-party review page.</p>
+        <div class="actions">
+          <a class="primary" href="leads/seaquest-pool-systems.html">Open Demo</a>
+          <a class="secondary" href="real-leads-21-30/28-seaquest-pool-systems.json">Open Source JSON</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="lead-section">
+    <div class="section-head">
+      <h2>Needs Review Cleanup</h2>
+      <p>These pages are built and linked, but the review blocks should be tightened before the team sends them if there is time.</p>
+    </div>
+    <div class="lead-grid">
+      <article class="lead-card">
+        <div class="status review">Needs Review Cleanup</div>
+        <h3>Grand Patio Pool</h3>
+        <div class="meta">Odessa, FL · (813) 962-0374 · 4.1 · 156 reviews</div>
+        <p>High review volume and a usable SuperSite page, but still wants cleaner customer review snippets before outreach.</p>
+        <div class="actions">
+          <a class="primary" href="leads/grand-patio-pool.html">Open Demo</a>
+          <a class="secondary" href="real-leads-21-30/22-grand-patio-pool.json">Open Source JSON</a>
+        </div>
+      </article>
+      <article class="lead-card">
+        <div class="status review">Needs Review Cleanup</div>
+        <h3>A&amp;R Pool Service LLC</h3>
+        <div class="meta">Tampa, FL · (813) 753-6263 · 5.0 · 42 reviews</div>
+        <p>Good service-company angle already baked in, but the review cards still need final public snippets.</p>
+        <div class="actions">
+          <a class="primary" href="leads/a-r-pool-service-llc.html">Open Demo</a>
+          <a class="secondary" href="real-leads-21-30/24-a-r-pool-service-llc.json">Open Source JSON</a>
+        </div>
+      </article>
+      <article class="lead-card">
+        <div class="status review">Needs Review Cleanup</div>
+        <h3>Zen Pools Of SW FL LLC</h3>
+        <div class="meta">Sarasota, FL · (941) 961-5812 · 5.0 · 17 reviews</div>
+        <p>Strong newer-builder angle and clean setup, but still needs final review swap-in.</p>
+        <div class="actions">
+          <a class="primary" href="leads/zen-pools-of-sw-fl-llc.html">Open Demo</a>
+          <a class="secondary" href="real-leads-21-30/26-zen-pools-of-sw-fl-llc.json">Open Source JSON</a>
+        </div>
+      </article>
+      <article class="lead-card">
+        <div class="status review">Needs Review Cleanup</div>
+        <h3>Parrish, Stephen Lee</h3>
+        <div class="meta">Jacksonville, FL · (904) 648-9411 · 5.0 · 15 reviews</div>
+        <p>Smaller-operator page is built, but the page still needs cleaner business-specific proof before sending.</p>
+        <div class="actions">
+          <a class="primary" href="leads/parrish-stephen-lee.html">Open Demo</a>
+          <a class="secondary" href="real-leads-21-30/27-parrish-stephen-lee.json">Open Source JSON</a>
+        </div>
+      </article>
+      <article class="lead-card">
+        <div class="status review">Needs Review Cleanup</div>
+        <h3>A Plus Pools Corp.</h3>
+        <div class="meta">Pompano Beach, FL · (954) 314-7591 · 5.0 · 10 reviews</div>
+        <p>Page exists and the angle is right, but public review snippets still need to be filled in before it becomes send-ready.</p>
+        <div class="actions">
+          <a class="primary" href="leads/a-plus-pools-corp.html">Open Demo</a>
+          <a class="secondary" href="real-leads-21-30/30-a-plus-pools-corp.json">Open Source JSON</a>
+        </div>
+      </article>
+    </div>
+  </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,68 @@
+{
+  "bucket_id": 27,
+  "business_focus": "Pool + spa service",
+  "city_area": "Tampa Bay",
+  "text_angle": "Solid reviews, no system",
+  "script_core": "After-hours + follow-up demo",
+  "business_name": "Company Name Here",
+  "city": "Tampa",
+  "state": "FL",
+  "phone_display": "(813) 555-5555",
+  "rating": "5.0",
+  "review_count": "76",
+  "website_url": "https://example.com/",
+  "source_urls": [
+    "https://example.com/",
+    "https://maps.google.com/"
+  ],
+  "source_labels": [
+    "Business Website",
+    "Google Business Profile"
+  ],
+  "headline_line_1": "Pool and spa care that feels",
+  "headline_line_2": "easy to trust.",
+  "pitch_headline": "A SuperSite built for strong service reputation and steadier follow-up.",
+  "pitch_body": "This version of the SuperSite is tuned for pool and spa service in Tampa Bay: solid reviews, cleaner homeowner trust, and a stronger path for after-hours demand.",
+  "section_title": "A SuperSite that keeps service businesses from feeling scattered.",
+  "section_copy": "For ongoing service work, the site should make the company feel responsive, established, and easy to reach even when the first visit happens after business hours.",
+  "video_section_title": "Service work still benefits from visible transformation.",
+  "video_section_body": "A short clip helps the site feel more alive while still keeping the focus on dependable service and repeat trust.",
+  "why_cards": [
+    {
+      "title": "Stronger service trust",
+      "body": "Review proof and calm presentation help the business feel reliable before the first conversation."
+    },
+    {
+      "title": "After-hours demand",
+      "body": "A strong SuperSite matters when homeowners browse at night and want an easy path to call or inquire."
+    },
+    {
+      "title": "Better follow-up fit",
+      "body": "The site should support a cleaner workflow after the lead comes in, not just look better on first load."
+    }
+  ],
+  "gallery_images": [
+    "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80"
+  ],
+  "video_url": "assets/pool-before-after.mp4",
+  "video_poster_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80",
+  "review_quotes": [
+    {
+      "quote": "Paste a real customer review here.",
+      "author": "Reviewer One",
+      "source": "Google review"
+    },
+    {
+      "quote": "Paste a second real customer review here.",
+      "author": "Reviewer Two",
+      "source": "Google review"
+    },
+    {
+      "quote": "Paste a third real customer review here.",
+      "author": "Reviewer Three",
+      "source": "Google review"
+    }
+  ]
+}

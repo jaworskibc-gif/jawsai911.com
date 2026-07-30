@@ -1,0 +1,50 @@
+{
+  "business_name": "Atlantic Pool Build LLC",
+  "city": "Pompano Beach",
+  "state": "FL",
+  "phone_display": "(954) 932-6351",
+  "rating": "4.9",
+  "review_count": "12",
+  "website_url": "https://www.atlanticpoolbuild.com/",
+  "source_urls": [
+    "https://www.atlanticpoolbuild.com/",
+    "https://www.buildzoom.com/contractor/atlantic-pool-build-llc"
+  ],
+  "source_labels": [
+    "Official website",
+    "BuildZoom"
+  ],
+  "headline_line_1": "A strong early build reputation needs",
+  "headline_line_2": "a site that can carry it.",
+  "pitch_headline": "A SuperSite backed by 12 reviews and a solid early foundation.",
+  "pitch_body": "This version of the SuperSite for Atlantic Pool Build is tuned for a newer builder with a strong start that still needs a better system for catching the next job after hours.",
+  "text_line": "12 reviews at 4.9 and no website. Quick SuperSite demo for Atlantic Pool Build.",
+  "call_script": "Hey, this is Bryan with JAWSAI. Atlantic Pool Build is at 4.9 with 12 reviews. Good foundation - no system catching the next job after hours. I put together a quick SuperSite demo. Takes about 30 seconds.",
+  "section_title": "A SuperSite that helps fresh momentum feel more mature.",
+  "section_copy": "When a newer builder already shows strong signs, the site should reduce hesitation and give that momentum a cleaner path into real inquiries.",
+  "hero_image_url": "https://static.wixstatic.com/media/cbe1d0_6fb538f29d0a44fabdd33c0436d4f4b5~mv2.png/v1/fill/w_494,h_278,q_90,enc_avif,quality_auto/cbe1d0_6fb538f29d0a44fabdd33c0436d4f4b5~mv2.png",
+  "gallery_images": [
+    "https://static.wixstatic.com/media/cbe1d0_6fb538f29d0a44fabdd33c0436d4f4b5~mv2.png/v1/fill/w_494,h_278,q_90,enc_avif,quality_auto/cbe1d0_6fb538f29d0a44fabdd33c0436d4f4b5~mv2.png",
+    "https://static.wixstatic.com/media/cbe1d0_e33449cf7e1d459cbb0daeaaf06677e1~mv2.png/v1/fill/w_378,h_278,q_90,enc_avif,quality_auto/cbe1d0_e33449cf7e1d459cbb0daeaaf06677e1~mv2.png",
+    "https://static.wixstatic.com/media/cbe1d0_6c3656d5adee4a56b6a7a7a35a692315~mv2.jpg/v1/fill/w_435,h_326,q_90,enc_avif,quality_auto/cbe1d0_6c3656d5adee4a56b6a7a7a35a692315~mv2.jpg"
+  ],
+  "video_url": "assets/pool-before-after.mp4",
+  "video_poster_url": "https://static.wixstatic.com/media/cbe1d0_6fb538f29d0a44fabdd33c0436d4f4b5~mv2.png/v1/fill/w_494,h_278,q_90,enc_avif,quality_auto/cbe1d0_6fb538f29d0a44fabdd33c0436d4f4b5~mv2.png",
+  "review_quotes": [
+    {
+      "quote": "Pull top review snippet from Google for Atlantic Pool Build in Pompano Beach before publishing.",
+      "author": "Google reviewer",
+      "source": "Google review"
+    },
+    {
+      "quote": "Pull second Google review snippet from Google for Atlantic Pool Build in Pompano Beach before publishing.",
+      "author": "Google reviewer",
+      "source": "Google review"
+    },
+    {
+      "quote": "Pull third Google review snippet from Google for Atlantic Pool Build in Pompano Beach before publishing.",
+      "author": "Google reviewer",
+      "source": "Google review"
+    }
+  ]
+}

@@ -5,17 +5,17 @@
   "phone_display": "(561) 377-7734",
   "rating": "4.9",
   "review_count": "74",
-  "eyebrow": "Luxury Backyard Demo",
+  "eyebrow": "Private Outdoor Living",
   "headline_line_1": "Design the backyard they already",
   "headline_line_2": "deserve.",
-  "hero_subtext": "This is the text-message demo version: premium look, visible trust, and a clean path to quote. Instead of a thin listing, homeowners land on a site that feels established, expensive, and ready to book.",
+  "hero_subtext": "A SuperSite presentation built to show the work clearly, surface trust immediately, and make the next step feel simple for homeowners planning a meaningful outdoor project.",
   "trust_stat": "10+",
   "trust_label": "Years In Trade",
   "website_url": "https://bluemirrorpools.com/",
-  "pitch_headline": "74 reviews. 4.9 stars. No luxury front door.",
-  "pitch_body": "Lead with the proof they already earned, then show how the same reputation could be packaged into something that feels like a real design-build brand instead of another contractor listing.",
-  "text_line": "74 reviews at 4.9 and no website. 30-sec SuperSite demo for Blue Mirror / Brighton.",
-  "call_script": "Hey, this is Bryan with JAWSAI. Blue Mirror and Brighton are sitting at 4.9 with 74 reviews. Good reputation, nothing converting it online. I built a quick demo - reviews up front, after-hours lead capture, follow-up so quotes don't go cold. 30 seconds.",
+  "pitch_headline": "A SuperSite backed by 74 reviews and a 4.9-star reputation.",
+  "pitch_body": "This version of the SuperSite for Blue Mirror Pools and Brighton Pools by Costa combines local trust, polished presentation, and a clearer path for homeowners to move from interest to inquiry.",
+  "text_line": "Blue Mirror Pools / Brighton Pools by Costa in Port St Lucie, with 74 reviews and a 4.9-star rating.",
+  "call_script": "Thank you for considering Blue Mirror Pools / Brighton Pools by Costa. Explore recent work, read customer feedback, and contact the team to discuss your project.",
   "source_urls": [
     "https://verifiedpoolpros.com/listing/blue-mirror-pools-inc-port-st-lucie-fl",
     "https://bluemirrorpools.com/"
@@ -24,28 +24,33 @@
     "Verified Pool Pros",
     "Blue Mirror Pools"
   ],
-  "section_title": "Show them a site that feels premium before they ever pick up.",
-  "section_copy": "Liquid Luxe works because it sells aspiration, not just service. This demo follows that same idea: strong hero image, elegant type, review proof, and a quote path that feels more like a luxury brand than a local directory page.",
-  "gallery_caption_title": "Luxury pool positioning, not commodity contractor energy.",
-  "gallery_caption_body": "Use the Loom to frame this as a concept: better first impression, stronger trust, and a cleaner way to convert quote traffic that currently dies after hours.",
+  "section_title": "A SuperSite that presents the work at the right level.",
+  "section_copy": "The strongest version of the site feels composed and confident: strong imagery, clear contact details, and customer feedback presented with restraint.",
+  "gallery_caption_title": "Built to reflect the finished result.",
+  "gallery_caption_body": "Project imagery should help homeowners understand the level of care, finish, and attention they can expect.",
+  "video_section_label": "Transformation",
+  "video_section_title": "See the kind of change homeowners are looking for.",
+  "video_section_body": "A short before-and-after clip helps the SuperSite show the result in motion and makes the transformation feel immediate, tangible, and real.",
   "hero_image_url": "https://static.wixstatic.com/media/5783dd_d08ab5779bb94aa8a1ef267797fbb98d~mv2.jpg/v1/fill/w_980,h_653,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/5783dd_d08ab5779bb94aa8a1ef267797fbb98d~mv2.jpg",
   "gallery_images": [
     "https://static.wixstatic.com/media/5783dd_6833d145d1a9490f89e8489f6a9d510cf000.jpg/v1/fill/w_300,h_534,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/5783dd_6833d145d1a9490f89e8489f6a9d510cf000.jpg",
     "https://static.wixstatic.com/media/5783dd_3789615726494420879f9d2fc15d2adff000.jpg/v1/fill/w_300,h_534,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/5783dd_3789615726494420879f9d2fc15d2adff000.jpg",
     "https://static.wixstatic.com/media/939ab2_52a156cf9bbe47f293f906b291a602dff000.jpg/v1/fill/w_300,h_534,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/939ab2_52a156cf9bbe47f293f906b291a602dff000.jpg"
   ],
+  "video_url": "assets/pool-before-after.mp4",
+  "video_poster_url": "https://static.wixstatic.com/media/5783dd_d08ab5779bb94aa8a1ef267797fbb98d~mv2.jpg/v1/fill/w_980,h_653,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/5783dd_d08ab5779bb94aa8a1ef267797fbb98d~mv2.jpg",
   "why_cards": [
     {
-      "title": "Reviews up front",
-      "body": "The rating and review count are in the hero immediately so a homeowner sees trust before they start comparing quotes."
+      "title": "Clear first impression",
+      "body": "A composed SuperSite signals quality before a homeowner ever picks up the phone."
     },
     {
-      "title": "After-hours capture",
-      "body": "The pitch is not just aesthetics. It is a digital front door that catches nighttime demand and moves it into follow-up instead of losing it."
+      "title": "Visible trust",
+      "body": "Reviews, ratings, and familiar project imagery help the SuperSite feel established, credible, and dependable from the first screen."
     },
     {
-      "title": "Luxury brand framing",
-      "body": "The whole page positions the company as a design-driven backyard builder, which is a better pricing conversation than looking like a generic service listing."
+      "title": "Easy next step",
+      "body": "A clear path to call or inquire keeps the SuperSite useful once a homeowner is ready to talk."
     }
   ],
   "review_quotes": [
@@ -66,13 +71,13 @@
     }
   ],
   "process_bodies": [
-    "Send this page link with the short line. Let the page do the heavy lifting before the call even starts.",
-    "Walk the hero, the review proof, and the quote path in under a minute. Focus on what this changes for after-hours leads and trust.",
-    "The pitch is simple: the business already earned the reputation. The site should finally look like it."
+    "Reach out to discuss your goals, timeline, and the kind of finished space you want to create.",
+    "Review options, materials, and project details with a team that can guide the scope and design clearly.",
+    "Move into a finished result that feels well planned, well built, and ready to enjoy."
   ],
-  "cta_title": "This is the template to clone.",
-  "cta_body": "Keep the layout, keep the premium pool photography, and just swap business name, phone, city, and review proof. That is stronger than sending twenty thin pages that all feel disposable.",
-  "footer_note": "Reference direction: Liquid Luxe hero and luxury-pool positioning. Review excerpts sourced from Angi and the Blue Mirror Pools website on July 28, 2026.",
-  "photo_source_note": "Use generic premium pool imagery by default. Swap to business-specific Google profile photos only when they are strong enough to help.",
-  "loom_angle": "Lead with premium positioning, review proof, and after-hours conversion instead of talking about a generic website redesign."
+  "cta_title": "See how your SuperSite would work live.",
+  "cta_body": "Call Blue Mirror Pools / Brighton Pools by Costa to discuss your project, ask questions, and see how this SuperSite approach can support the next step.",
+  "footer_note": "Project imagery and review excerpts are shown for presentation purposes and may be updated with business-specific materials.",
+  "photo_source_note": "Use business-specific imagery when available and strong enough to support the presentation.",
+  "loom_angle": "Lead with clarity, trust, and the quality of the finished result."
 }

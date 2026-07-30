@@ -22,6 +22,7 @@ TEMPLATE_PATH = ROOT / "leads" / "_premium-shark-supersite-template.html"
 OUTPUT_DIR = ROOT / "leads"
 QUEUE_PATH = ROOT / "pool-hot-leads-queue.csv"
 INDEX_PATH = ROOT / "index.html"
+DEFAULT_POOL_VIDEO_PATH = "assets/pool-before-after.mp4"
 
 CSV_HEADERS = [
     "priority_rank",
@@ -243,6 +244,11 @@ def normalize_record(record: dict) -> dict:
         "SECTION_COPY": record["section_copy"],
         "GALLERY_CAPTION_TITLE": record["gallery_caption_title"],
         "GALLERY_CAPTION_BODY": record["gallery_caption_body"],
+        "VIDEO_SECTION_LABEL": record.get("video_section_label", ""),
+        "VIDEO_SECTION_TITLE": record.get("video_section_title", ""),
+        "VIDEO_SECTION_BODY": record.get("video_section_body", ""),
+        "VIDEO_URL": record.get("video_url", DEFAULT_POOL_VIDEO_PATH),
+        "VIDEO_POSTER_URL": record.get("video_poster_url", hero_image_url),
         "WHY_TITLE_1": record["why_cards"][0]["title"],
         "WHY_BODY_1": record["why_cards"][0]["body"],
         "WHY_TITLE_2": record["why_cards"][1]["title"],
@@ -389,17 +395,11 @@ def upsert_row(rows: list[dict], record: dict, output_path: Path) -> list[dict]:
     return rows
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("input", help="Path to the lead JSON file")
-    parser.add_argument("--output", help="Explicit output path for the generated HTML")
-    args = parser.parse_args()
-
+def publish_record(record: dict, output: str | Path | None = None) -> tuple[Path, Path, Path]:
     template = TEMPLATE_PATH.read_text(encoding="utf-8")
-    record = json.loads(Path(args.input).read_text(encoding="utf-8"))
     replacements = normalize_record(record)
 
-    output_path = Path(args.output) if args.output else OUTPUT_DIR / f"{slugify(record['business_name'])}.html"
+    output_path = Path(output) if output else OUTPUT_DIR / f"{slugify(record['business_name'])}.html"
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     output_html = render_template(template, replacements)
@@ -409,10 +409,21 @@ def main() -> int:
     rows = upsert_row(rows, record, output_path)
     write_rows(rows)
     regenerate_index(rows)
+    return output_path, QUEUE_PATH, INDEX_PATH
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("input", help="Path to the lead JSON file")
+    parser.add_argument("--output", help="Explicit output path for the generated HTML")
+    args = parser.parse_args()
+
+    record = json.loads(Path(args.input).read_text(encoding="utf-8"))
+    output_path, queue_path, index_path = publish_record(record, args.output)
 
     print(output_path)
-    print(QUEUE_PATH)
-    print(INDEX_PATH)
+    print(queue_path)
+    print(index_path)
     return 0
 
 

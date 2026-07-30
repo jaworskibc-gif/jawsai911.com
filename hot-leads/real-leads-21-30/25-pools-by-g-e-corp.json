@@ -1,0 +1,49 @@
+{
+  "business_name": "Pools By G.E. Corp",
+  "city": "Miami",
+  "state": "FL",
+  "phone_display": "(786) 355-3382",
+  "rating": "5.0",
+  "review_count": "20",
+  "website_url": "https://birdeye.com/pools-by-ge-corp-175165950445020",
+  "source_urls": [
+    "https://birdeye.com/pools-by-ge-corp-175165950445020",
+    "https://www.bizprofile.net/fl/miami/pools-by-g-e"
+  ],
+  "source_labels": [
+    "Birdeye / Google reviews",
+    "Florida filing info"
+  ],
+  "headline_line_1": "Custom pool work deserves",
+  "headline_line_2": "a stronger online first impression.",
+  "pitch_headline": "A SuperSite backed by a fresh five-star reputation.",
+  "pitch_body": "This version of the SuperSite for Pools By G.E. brings early five-star trust forward and gives that reputation a more credible, inquiry-ready front end.",
+  "text_line": "20 five-star reviews and no website. Quick SuperSite demo for Pools By G.E.",
+  "call_script": "Hey, this is Bryan with JAWSAI. Pools By G.E. is at 5.0 with 20 reviews and no website collecting the next jobs. I put together a quick SuperSite demo - reviews front and center, after-hours capture, automatic follow-up. Takes about 30 seconds.",
+  "section_title": "A SuperSite that helps newer trust feel established faster.",
+  "section_copy": "When the reviews are already strong, the site should make the business feel more mature, more credible, and easier to contact.",
+  "review_quotes": [
+    {
+      "quote": "We had an excellent experience with GE Pools from start to finish. Willy and his team were professional, responsive, and truly knowledgeable throughout the entire process.",
+      "author": "Rene Garcia",
+      "source": "Google review surfaced on Birdeye"
+    },
+    {
+      "quote": "The work was done with care and attention to detail, and the results look amazing. Willy was extremely responsible and trustworthy throughout the entire process.",
+      "author": "Mirelys Esquivel",
+      "source": "Google review surfaced on Birdeye"
+    },
+    {
+      "quote": "My renovated pool and deck look amazing. These guys dont cut any corners and do things right.",
+      "author": "Kevin San Martin",
+      "source": "Google review surfaced on Birdeye"
+    }
+  ],
+  "gallery_images": [
+    "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80"
+  ],
+  "video_url": "assets/pool-before-after.mp4",
+  "video_poster_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80"
+}

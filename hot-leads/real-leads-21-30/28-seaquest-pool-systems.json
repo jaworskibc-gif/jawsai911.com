@@ -1,0 +1,49 @@
+{
+  "business_name": "Seaquest Pool Systems",
+  "city": "Orlando",
+  "state": "FL",
+  "phone_display": "(407) 707-6662",
+  "rating": "5.0",
+  "review_count": "12",
+  "website_url": "https://www.google.com/search?q=Seaquest+Pool+Systems+Orlando+FL",
+  "source_urls": [
+    "https://trustburn.com/reviews/seaquest-pool-systems",
+    "https://www.myfloridalicense.com/LicenseDetail.asp?SID=&id=A1EFCA271D1A59EE0C23C0F64147C5EE"
+  ],
+  "source_labels": [
+    "Trustburn reviews",
+    "DBPR license detail"
+  ],
+  "headline_line_1": "A clean pool-builder reputation deserves",
+  "headline_line_2": "a site that looks ready.",
+  "pitch_headline": "A SuperSite backed by 12 five-star reviews and a clear niche position.",
+  "pitch_body": "This version of the SuperSite for Seaquest Pool Systems brings the early review trust forward and gives it a more polished, builder-ready presentation.",
+  "text_line": "12 five-star reviews and no website. 30-sec SuperSite demo for Seaquest.",
+  "call_script": "Hey, this is Bryan with JAWSAI. Seaquest Pool Systems is at 5.0 with 12 reviews and no website. I built a quick demo - reviews up front, after-hours capture, follow-up so nothing goes cold. 30 seconds.",
+  "section_title": "A SuperSite that helps a newer builder feel more established.",
+  "section_copy": "With a smaller but strong review base, the site should help homeowners feel that the business is credible, active, and ready for the next project.",
+  "gallery_images": [
+    "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80"
+  ],
+  "video_url": "assets/pool-before-after.mp4",
+  "video_poster_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80",
+  "review_quotes": [
+    {
+      "quote": "Seaquest Pool Systems provides a reliable and efficient pool service. The team is friendly and professional, and they always go the extra mile.",
+      "author": "Gary Geiger",
+      "source": "Trustburn review"
+    },
+    {
+      "quote": "They were professional and efficient, and my pool has never looked better.",
+      "author": "Anthony Tavaglione",
+      "source": "Trustburn review"
+    },
+    {
+      "quote": "The technicians are knowledgeable and thorough, and they always ensure my pool is in excellent condition.",
+      "author": "Joseph Vuong",
+      "source": "Trustburn review"
+    }
+  ]
+}

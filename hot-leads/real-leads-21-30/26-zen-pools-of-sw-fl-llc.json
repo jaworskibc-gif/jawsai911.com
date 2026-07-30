@@ -1,0 +1,49 @@
+{
+  "business_name": "Zen Pools Of SW FL LLC",
+  "city": "Sarasota",
+  "state": "FL",
+  "phone_display": "(941) 961-5812",
+  "rating": "5.0",
+  "review_count": "17",
+  "website_url": "https://www.google.com/search?q=Zen+Pools+Sarasota+FL",
+  "source_urls": [
+    "https://www.bbb.org/us/fl/sarasota/profile/pool-contractors/zen-pools-of-sw-fl-llc-0653-90399166",
+    "https://www.google.com/search?q=Zen+Pools+Sarasota+FL"
+  ],
+  "source_labels": [
+    "BBB business profile",
+    "Google search"
+  ],
+  "headline_line_1": "A strong early reputation needs",
+  "headline_line_2": "a clearer online presence.",
+  "pitch_headline": "A SuperSite backed by a clean 5-star start.",
+  "pitch_body": "This version of the SuperSite for Zen Pools of SW FL is tuned for a newer, high-rated builder that needs a more credible digital front door to match the early reputation.",
+  "text_line": "17 five-star reviews and no website. 30-sec SuperSite demo for Zen Pools.",
+  "call_script": "Hey, this is Bryan with JAWSAI. Zen Pools of SW FL is at 5.0 with 17 reviews. Solid start - nothing converting it online yet. I built a quick SuperSite demo - reviews up front, after-hours lead capture, follow-up. 30 seconds.",
+  "section_title": "A SuperSite that helps a newer builder look ready now.",
+  "section_copy": "When a newer company already has strong reviews, the site should remove hesitation and make the business feel more established immediately.",
+  "gallery_images": [
+    "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80"
+  ],
+  "video_url": "assets/pool-before-after.mp4",
+  "video_poster_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80",
+  "review_quotes": [
+    {
+      "quote": "Pull top review snippet from Google for Zen Pools in Sarasota before publishing.",
+      "author": "Google reviewer",
+      "source": "Google review"
+    },
+    {
+      "quote": "Pull second Google review snippet for Zen Pools in Sarasota before publishing.",
+      "author": "Google reviewer",
+      "source": "Google review"
+    },
+    {
+      "quote": "Pull third Google review snippet for Zen Pools in Sarasota before publishing.",
+      "author": "Google reviewer",
+      "source": "Google review"
+    }
+  ]
+}

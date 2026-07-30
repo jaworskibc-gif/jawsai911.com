@@ -1,0 +1,68 @@
+{
+  "bucket_id": 29,
+  "business_focus": "Multi-service pool company",
+  "city_area": "East Coast",
+  "text_angle": "Reviews across services",
+  "script_core": "One site that captures all service lines",
+  "business_name": "Company Name Here",
+  "city": "Port St Lucie",
+  "state": "FL",
+  "phone_display": "(772) 555-5555",
+  "rating": "4.9",
+  "review_count": "112",
+  "website_url": "https://example.com/",
+  "source_urls": [
+    "https://example.com/",
+    "https://maps.google.com/"
+  ],
+  "source_labels": [
+    "Business Website",
+    "Google Business Profile"
+  ],
+  "headline_line_1": "One SuperSite for every service",
+  "headline_line_2": "the business already delivers.",
+  "pitch_headline": "A SuperSite built to organize multiple service lines without feeling busy.",
+  "pitch_body": "This version of the SuperSite is tuned for companies that handle more than one pool-related service. The goal is one clear front end that still feels clean, credible, and easy to act on.",
+  "section_title": "A SuperSite that captures the full service picture.",
+  "section_copy": "Multi-service companies need a site that clarifies the offer instead of scattering it. Reviews, structure, and contact flow should all work together.",
+  "video_section_title": "One visual result can support multiple services.",
+  "video_section_body": "A single transformation clip helps unify the site around outcome rather than a fragmented list of service categories.",
+  "why_cards": [
+    {
+      "title": "All services, one entry point",
+      "body": "The SuperSite should make it easy for homeowners to understand everything the company handles."
+    },
+    {
+      "title": "Review proof across categories",
+      "body": "Strong feedback becomes more useful when the site pulls it into one clear experience."
+    },
+    {
+      "title": "Cleaner service structure",
+      "body": "A better front end helps the company feel organized even when the actual service menu is broad."
+    }
+  ],
+  "gallery_images": [
+    "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80"
+  ],
+  "video_url": "assets/pool-before-after.mp4",
+  "video_poster_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80",
+  "review_quotes": [
+    {
+      "quote": "Paste a real customer review here.",
+      "author": "Reviewer One",
+      "source": "Google review"
+    },
+    {
+      "quote": "Paste a second real customer review here.",
+      "author": "Reviewer Two",
+      "source": "Google review"
+    },
+    {
+      "quote": "Paste a third real customer review here.",
+      "author": "Reviewer Three",
+      "source": "Google review"
+    }
+  ]
+}

@@ -179,86 +179,85 @@ def build_default_copy(seed: dict) -> dict:
     rating = seed["rating"]
     review_count = seed["review_count"]
     return {
-        "eyebrow": seed.get("eyebrow", "Luxury Backyard Demo"),
+        "eyebrow": seed.get("eyebrow", "Private Outdoor Living"),
         "headline_line_1": seed.get("headline_line_1", "Design the backyard they already"),
         "headline_line_2": seed.get("headline_line_2", "deserve."),
         "hero_subtext": seed.get(
             "hero_subtext",
-            "This is the text-message demo version: premium look, visible trust, and a clean path to quote. "
-            "Instead of a thin listing, homeowners land on a site that feels established, expensive, and ready to book.",
+            "A SuperSite presentation built to show the work clearly, surface trust immediately, and make the next step feel simple for homeowners planning a meaningful outdoor project.",
         ),
         "trust_stat": seed.get("trust_stat", "5.0"),
         "trust_label": seed.get("trust_label", "Local Reputation"),
-        "pitch_headline": seed.get("pitch_headline", f"{review_count} reviews. {rating} stars. No premium front door."),
+        "pitch_headline": seed.get("pitch_headline", f"A SuperSite backed by {review_count} reviews and a {rating}-star reputation."),
         "pitch_body": seed.get(
             "pitch_body",
-            "Lead with the proof they already earned, then show how the same reputation could be packaged into something "
-            "that feels like a real design-build brand instead of another contractor listing.",
+            f"This version of the SuperSite for {business_name} combines local trust, polished presentation, and a clearer path for homeowners to move from interest to inquiry.",
         ),
         "text_line": seed.get(
             "text_line",
-            f"{review_count} reviews at {rating} and no website. 30-sec SuperSite demo for {business_name}.",
+            f"{business_name} in {city}, with {review_count} reviews and a {rating}-star rating.",
         ),
         "call_script": seed.get(
             "call_script",
-            f"Hey, this is Bryan with JAWSAI. {business_name} is sitting at {rating} with {review_count} reviews. "
-            "Strong reputation, nothing converting it online. I built a quick demo - reviews up front, after-hours lead capture, "
-            "follow-up so quotes don't go cold. 30 seconds.",
+            f"Thank you for considering {business_name}. Explore recent work, read customer feedback, and contact the team to discuss your project.",
         ),
-        "section_title": seed.get("section_title", "Show them a site that feels premium before they ever pick up."),
+        "section_title": seed.get("section_title", "A SuperSite that presents the work at the right level."),
         "section_copy": seed.get(
             "section_copy",
-            "This demo follows the same luxury-pool idea: strong hero image, elegant type, review proof, and a quote path "
-            "that feels more like a premium brand than a local directory page.",
+            "The strongest version of the site feels composed and confident: strong imagery, clear contact details, and customer feedback presented with restraint.",
         ),
-        "gallery_caption_title": seed.get("gallery_caption_title", "Luxury pool positioning, not commodity contractor energy."),
+        "gallery_caption_title": seed.get("gallery_caption_title", "Built to reflect the finished result."),
         "gallery_caption_body": seed.get(
             "gallery_caption_body",
-            "Use the Loom to frame this as a concept: better first impression, stronger trust, and a cleaner way "
-            "to convert quote traffic that currently dies after hours.",
+            "Project imagery should help homeowners understand the level of care, finish, and attention they can expect.",
+        ),
+        "video_section_label": seed.get("video_section_label", "Transformation"),
+        "video_section_title": seed.get("video_section_title", "See the kind of change homeowners are looking for."),
+        "video_section_body": seed.get(
+            "video_section_body",
+            "A short before-and-after clip helps the SuperSite show the result in motion and makes the transformation feel immediate, tangible, and real.",
         ),
         "why_cards": seed.get(
             "why_cards",
             [
                 {
-                    "title": "Reviews up front",
-                    "body": "The rating and review count are in the hero immediately so a homeowner sees trust before they start comparing quotes.",
+                    "title": "Clear first impression",
+                    "body": "A composed SuperSite signals quality before a homeowner ever picks up the phone.",
                 },
                 {
-                    "title": "After-hours capture",
-                    "body": "The pitch is not just aesthetics. It is a digital front door that catches nighttime demand and moves it into follow-up instead of losing it.",
+                    "title": "Visible trust",
+                    "body": "Reviews, ratings, and familiar project imagery help the SuperSite feel established, credible, and dependable from the first screen.",
                 },
                 {
-                    "title": "Luxury brand framing",
-                    "body": "The whole page positions the company as a design-driven backyard builder, which is a better pricing conversation than looking like a generic service listing.",
+                    "title": "Easy next step",
+                    "body": "A clear path to call or inquire keeps the SuperSite useful once a homeowner is ready to talk.",
                 },
             ],
         ),
         "process_bodies": seed.get(
             "process_bodies",
             [
-                "Send this page link with the short line. Let the page do the heavy lifting before the call even starts.",
-                "Walk the hero, the review proof, and the quote path in under a minute. Focus on what this changes for after-hours leads and trust.",
-                "The pitch is simple: the business already earned the reputation. The site should finally look like it.",
+                "Reach out to discuss your goals, timeline, and the kind of finished space you want to create.",
+                "Review options, materials, and project details with a team that can guide the scope and design clearly.",
+                "Move into a finished result that feels well planned, well built, and ready to enjoy.",
             ],
         ),
-        "cta_title": seed.get("cta_title", "This is the template to clone."),
+        "cta_title": seed.get("cta_title", "See how your SuperSite would work live."),
         "cta_body": seed.get(
             "cta_body",
-            "Keep the layout, keep the premium pool photography, and just swap business name, phone, city, and review proof. "
-            "That is stronger than sending thin pages that feel disposable.",
+            f"Call {business_name} to discuss your project, ask questions, and see how this SuperSite approach can support the next step.",
         ),
         "footer_note": seed.get(
             "footer_note",
-            "Reference direction: Liquid Luxe hero and luxury-pool positioning. Images may be generic premium pool photos unless better business-specific assets are available.",
+            "Project imagery and review excerpts are shown for presentation purposes and may be updated with business-specific materials.",
         ),
         "photo_source_note": seed.get(
             "photo_source_note",
-            "Use generic premium pool imagery by default. Swap to business-specific Google profile photos only when they are strong enough to help.",
+            "Use business-specific imagery when available and strong enough to support the presentation.",
         ),
         "loom_angle": seed.get(
             "loom_angle",
-            "Lead with premium positioning, review proof, and after-hours conversion instead of talking about a generic website redesign.",
+            "Lead with clarity, trust, and the quality of the finished result.",
         ),
     }
 

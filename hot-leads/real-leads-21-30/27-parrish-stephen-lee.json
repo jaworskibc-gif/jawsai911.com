@@ -1,0 +1,49 @@
+{
+  "business_name": "Parrish, Stephen Lee",
+  "city": "Jacksonville",
+  "state": "FL",
+  "phone_display": "(904) 648-9411",
+  "rating": "5.0",
+  "review_count": "15",
+  "website_url": "https://www.google.com/search?q=Parrish+Stephen+Lee+Jacksonville+FL",
+  "source_urls": [
+    "https://www.google.com/search?q=Parrish+Stephen+Lee+Jacksonville+FL",
+    "https://verifiedpoolpros.com/contractors/florida/jacksonville/"
+  ],
+  "source_labels": [
+    "Google search",
+    "Verified Pool Pros Jacksonville list"
+  ],
+  "headline_line_1": "A strong 5-star reputation deserves",
+  "headline_line_2": "a real digital front door.",
+  "pitch_headline": "A SuperSite built to turn clean early trust into stronger inquiries.",
+  "pitch_body": "This version of the SuperSite is tuned for a smaller, high-rated operator that needs a more credible first impression and a simpler path to new leads.",
+  "text_line": "15 five-star reviews and no website. Quick SuperSite demo.",
+  "call_script": "Hey, this is Bryan with JAWSAI. You're at 5.0 with 15 reviews and no digital front door. I put together a quick SuperSite demo - reviews front and center, after-hours capture, automatic follow-up. Takes about 30 seconds.",
+  "section_title": "A SuperSite that helps clean early trust look more established.",
+  "section_copy": "A newer or smaller operator can still feel credible quickly when the site makes the reviews, work, and next step feel clear.",
+  "gallery_images": [
+    "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80"
+  ],
+  "video_url": "assets/pool-before-after.mp4",
+  "video_poster_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80",
+  "review_quotes": [
+    {
+      "quote": "Pull top review snippet from Google for Parrish, Stephen Lee in Jacksonville before publishing.",
+      "author": "Google reviewer",
+      "source": "Google review"
+    },
+    {
+      "quote": "Pull second Google review snippet from Google for Parrish, Stephen Lee in Jacksonville before publishing.",
+      "author": "Google reviewer",
+      "source": "Google review"
+    },
+    {
+      "quote": "Pull third Google review snippet from Google for Parrish, Stephen Lee in Jacksonville before publishing.",
+      "author": "Google reviewer",
+      "source": "Google review"
+    }
+  ]
+}

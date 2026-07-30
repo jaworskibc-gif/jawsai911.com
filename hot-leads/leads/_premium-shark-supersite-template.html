@@ -22,8 +22,8 @@ Minimum replacements before sending:
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{{BUSINESS_NAME}} | Shark SuperSite Demo</title>
-<meta name="description" content="Premium Shark SuperSite demo for {{BUSINESS_NAME}} in {{CITY}}, {{STATE}}. Swap in business details, reviews, and images for outreach videos.">
+<title>{{BUSINESS_NAME}} SuperSite | {{CITY}}, {{STATE}}</title>
+<meta name="description" content="{{BUSINESS_NAME}} SuperSite for {{CITY}}, {{STATE}}. Explore project inspiration, customer reviews, and contact information.">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
 *{box-sizing:border-box}
@@ -245,6 +245,46 @@ h1{
 .gallery-tile{min-height:271px}
 .gallery-tile.tile-a{background:url("{{GALLERY_IMAGE_2}}") center/cover no-repeat}
 .gallery-tile.tile-b{background:url("{{GALLERY_IMAGE_3}}") center/cover no-repeat}
+.feature-band{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 420px;
+  gap:18px;
+  margin-top:28px;
+  align-items:stretch;
+}
+.feature-video,
+.feature-copy{
+  border-radius:24px;
+  border:1px solid rgba(255,255,255,.10);
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
+.feature-video{
+  position:relative;
+  min-height:360px;
+  background:linear-gradient(180deg, rgba(7,12,20,.12), rgba(7,12,20,.45));
+}
+.feature-video video{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  background:#050b12;
+}
+.feature-copy{
+  padding:28px;
+  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+}
+.feature-copy h3{
+  margin:8px 0 12px;
+  font:600 clamp(1.9rem, 3vw, 2.8rem)/1 'Cormorant Garamond',serif;
+  color:#fff;
+}
+.feature-copy p{
+  margin:0;
+  color:var(--muted);
+  line-height:1.9;
+}
 .why-grid,.process,.review-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -353,7 +393,7 @@ h1{
 }
 .footer-note{margin-top:18px;text-align:center;color:#7f90a5;font-size:12px;line-height:1.7}
 @media (max-width:1100px){
-  .hero-grid,.gallery,.cta{grid-template-columns:1fr}
+  .hero-grid,.gallery,.feature-band,.cta{grid-template-columns:1fr}
   .why-grid,.process,.review-grid{grid-template-columns:1fr}
 }
 @media (max-width:760px){
@@ -374,7 +414,7 @@ h1{
           <div class="mark">
             <div class="crest">{{INITIALS}}</div>
             <div class="mark-copy">
-              <small>Shark SuperSite Demo</small>
+              <small>{{CITY}}, {{STATE}}</small>
               <strong>{{BUSINESS_NAME}}</strong>
             </div>
           </div>
@@ -415,20 +455,16 @@ h1{
           </div>
 
           <aside class="pitch-card">
-            <div class="review-kicker">Video Talking Points</div>
+            <div class="review-kicker">Why Homeowners Call</div>
             <h2>{{PITCH_HEADLINE}}</h2>
             <p>{{PITCH_BODY}}</p>
             <div class="info-stack">
               <div class="info-box">
-                <strong>Text Line</strong>
-                <span>{{TEXT_LINE}}</span>
+                <strong>Service Area</strong>
+                <span>Proudly serving homeowners in {{CITY}}, {{STATE}} and surrounding areas.</span>
               </div>
               <div class="info-box">
-                <strong>Call Script</strong>
-                <span>{{CALL_SCRIPT}}</span>
-              </div>
-              <div class="info-box">
-                <strong>Source</strong>
+                <strong>Find Us Online</strong>
                 <span><a href="{{SOURCE_URL_1}}">{{SOURCE_LABEL_1}}</a> and <a href="{{SOURCE_URL_2}}">{{SOURCE_LABEL_2}}</a></span>
               </div>
             </div>
@@ -437,7 +473,7 @@ h1{
       </section>
 
       <section class="content">
-        <div class="section-label">Portfolio Feel</div>
+        <div class="section-label">Project Inspiration</div>
         <h2 class="section-title">{{SECTION_TITLE}}</h2>
         <p class="section-copy">{{SECTION_COPY}}</p>
 
@@ -452,6 +488,25 @@ h1{
             <div class="gallery-tile tile-a"></div>
             <div class="gallery-tile tile-b"></div>
           </div>
+        </div>
+
+        <div class="feature-band" data-video-section>
+          <div class="feature-video">
+            <video
+              playsinline
+              muted
+              loop
+              autoplay
+              preload="metadata"
+              poster="{{VIDEO_POSTER_URL}}"
+              data-video-src="{{VIDEO_URL}}"
+            ></video>
+          </div>
+          <aside class="feature-copy">
+            <div class="section-label">{{VIDEO_SECTION_LABEL}}</div>
+            <h3>{{VIDEO_SECTION_TITLE}}</h3>
+            <p>{{VIDEO_SECTION_BODY}}</p>
+          </aside>
         </div>
 
         <div class="why-grid">
@@ -471,8 +526,8 @@ h1{
 
         <div class="reviews">
           <div class="section-label">Google Reviews</div>
-          <h2 class="section-title">What customers already say.</h2>
-          <p class="section-copy">Use three short review excerpts. Keep them clean, believable, and easy to narrate in the Loom.</p>
+          <h2 class="section-title">What customers are saying.</h2>
+          <p class="section-copy">Real feedback from homeowners who have already worked with {{BUSINESS_NAME}}.</p>
           <div class="review-grid">
             <article class="review-card">
               <div class="stars">★★★★★</div>
@@ -498,17 +553,17 @@ h1{
         <div class="process">
           <article class="process-card">
             <div class="step">01</div>
-            <strong>Text the demo</strong>
+            <strong>Start the Conversation</strong>
             <p>{{PROCESS_BODY_1}}</p>
           </article>
           <article class="process-card">
             <div class="step">02</div>
-            <strong>Record the Loom</strong>
+            <strong>Plan the Project</strong>
             <p>{{PROCESS_BODY_2}}</p>
           </article>
           <article class="process-card">
             <div class="step">03</div>
-            <strong>Close on positioning</strong>
+            <strong>Enjoy the Result</strong>
             <p>{{PROCESS_BODY_3}}</p>
           </article>
         </div>
@@ -521,20 +576,27 @@ h1{
           <a href="tel:{{PHONE_DIGITS}}">Call {{PHONE_DISPLAY}}</a>
         </div>
 
-        <div class="operator-notes">
-          <h4>Operator Notes</h4>
-          <ul>
-            <li>Primary source page: <a href="{{SOURCE_URL_1}}">{{SOURCE_URL_1}}</a></li>
-            <li>Secondary source page: <a href="{{SOURCE_URL_2}}">{{SOURCE_URL_2}}</a></li>
-            <li>Logo/photo source: {{PHOTO_SOURCE_NOTE}}</li>
-            <li>Best Loom angle: {{LOOM_ANGLE}}</li>
-            <li>Optional live website link: {{WEBSITE_URL}}</li>
-          </ul>
-        </div>
-
         <div class="footer-note">{{FOOTER_NOTE}}</div>
       </section>
     </div>
   </div>
+  <script>
+    (function () {
+      var section = document.querySelector('[data-video-section]');
+      if (!section) return;
+      var video = section.querySelector('video');
+      if (!video) return;
+      var src = video.getAttribute('data-video-src') || '';
+      if (!src || src === '#') {
+        section.remove();
+        return;
+      }
+      var source = document.createElement('source');
+      source.src = src;
+      source.type = 'video/mp4';
+      video.appendChild(source);
+      video.load();
+    }());
+  </script>
 </body>
 </html>

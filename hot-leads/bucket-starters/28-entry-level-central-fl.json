@@ -1,0 +1,68 @@
+{
+  "bucket_id": 28,
+  "business_focus": "Entry-level / smaller operator",
+  "city_area": "Central FL",
+  "text_angle": "Lower volume but clean reviews",
+  "script_core": "Simple SuperSite that still looks premium",
+  "business_name": "Company Name Here",
+  "city": "Orlando",
+  "state": "FL",
+  "phone_display": "(407) 555-5555",
+  "rating": "5.0",
+  "review_count": "28",
+  "website_url": "https://example.com/",
+  "source_urls": [
+    "https://example.com/",
+    "https://maps.google.com/"
+  ],
+  "source_labels": [
+    "Business Website",
+    "Google Business Profile"
+  ],
+  "headline_line_1": "A simple SuperSite that still feels",
+  "headline_line_2": "well above average.",
+  "pitch_headline": "A SuperSite built for smaller operators with clean early trust signals.",
+  "pitch_body": "This version of the SuperSite is tuned for smaller pool operators: enough polish to feel premium, enough simplicity to feel believable, and enough structure to turn clean reviews into real opportunity.",
+  "section_title": "A SuperSite that upgrades the first impression fast.",
+  "section_copy": "Even with lower review volume, the site can still feel established if it presents the work clearly and keeps the homeowner experience simple.",
+  "video_section_title": "Simple, visual proof still matters.",
+  "video_section_body": "A short transformation clip helps a smaller operator feel more credible without overcomplicating the page.",
+  "why_cards": [
+    {
+      "title": "Clean first impression",
+      "body": "A smaller operator can still feel premium when the site is calm, clear, and visually strong."
+    },
+    {
+      "title": "Review quality over volume",
+      "body": "Lower review count is workable when the reviews are strong and the presentation is confident."
+    },
+    {
+      "title": "Simple but elevated",
+      "body": "The goal is not complexity. It is a cleaner front door that feels more serious than the usual local option."
+    }
+  ],
+  "gallery_images": [
+    "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80"
+  ],
+  "video_url": "assets/pool-before-after.mp4",
+  "video_poster_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80",
+  "review_quotes": [
+    {
+      "quote": "Paste a real customer review here.",
+      "author": "Reviewer One",
+      "source": "Google review"
+    },
+    {
+      "quote": "Paste a second real customer review here.",
+      "author": "Reviewer Two",
+      "source": "Google review"
+    },
+    {
+      "quote": "Paste a third real customer review here.",
+      "author": "Reviewer Three",
+      "source": "Google review"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "business_name": "Patio Pools Inc",
+  "city": "Odessa",
+  "state": "FL",
+  "phone_display": "(352) 346-8418",
+  "rating": "4.2",
+  "review_count": "92",
+  "website_url": "https://patiopools.com/",
+  "source_urls": [
+    "https://patiopools.com/",
+    "https://www.bbb.org/us/fl/tampa/profile/pool-contractors/patio-pools-inc-0653-11982"
+  ],
+  "source_labels": [
+    "Official website",
+    "BBB business profile"
+  ],
+  "headline_line_1": "Established pool work needs",
+  "headline_line_2": "a stronger digital front door.",
+  "pitch_headline": "A SuperSite backed by 92 reviews and tuned to catch the next inquiry.",
+  "pitch_body": "This version of the SuperSite for Patio Pools brings the reputation forward, keeps the presentation cleaner, and gives the business a clearer path for new homeowner inquiries.",
+  "text_line": "92 reviews and no digital front door. Quick SuperSite demo for Patio Pools.",
+  "call_script": "Hey, this is Bryan with JAWSAI. Patio Pools has 92 reviews. Good reputation sitting there with nothing collecting the next leads. I put together a quick SuperSite demo - reviews front and center, after-hours capture, automatic follow-up. Takes half a minute.",
+  "section_title": "A SuperSite that makes the next inquiry easier to earn.",
+  "section_copy": "When the reputation is already there, the site should help homeowners feel confident quickly and give them a clean next step before interest fades.",
+  "hero_image_url": "https://patiopools.com/wp-content/uploads/2025/02/Intro-for-Home-website.png",
+  "gallery_images": [
+    "https://patiopools.com/wp-content/uploads/2025/02/Intro-for-Home-website.png",
+    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80"
+  ],
+  "video_url": "assets/pool-before-after.mp4",
+  "video_poster_url": "https://patiopools.com/wp-content/uploads/2025/02/Intro-for-Home-website.png",
+  "review_quotes": [
+    {
+      "quote": "Patio pools delivered on their promise, and kept quality communication, efficient crew scheduling, and a smooth process the whole time.",
+      "author": "Customer testimonial",
+      "source": "Patio Pools website testimonial"
+    },
+    {
+      "quote": "Their contractors were professional, friendly, and considerate to our extensive landscaping.",
+      "author": "Customer testimonial",
+      "source": "Patio Pools website testimonial"
+    },
+    {
+      "quote": "Reliable, professional, great product. They finished our pool in just a few weeks and made the process very simple.",
+      "author": "Customer testimonial",
+      "source": "Patio Pools website testimonial"
+    }
+  ]
+}

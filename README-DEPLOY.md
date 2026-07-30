@@ -7,8 +7,8 @@ This folder is a fixed deploy-ready copy of the current live GitHub Pages site.
 - Repositioned the homepage toward practical AI workflow automation for local businesses.
 - Added a real homepage `h1` for SEO/accessibility.
 - Changed the primary CTA from a hard demo pitch to a lower-friction workflow review.
-- Replaced the broken `/api/demo-request` form call with a `mailto:` request flow to `hello@jawsai911.com`.
-- Replaced the public Gmail address with `hello@jawsai911.com`.
+- Replaced the broken `/api/demo-request` form call with a `mailto:` request flow to `info@jawsai911.com`.
+- Replaced the public Gmail address with `info@jawsai911.com`.
 - Added `CNAME` for `jawsai911.com`.
 
 ## Critical GitHub Pages HTTPS Fix

@@ -1,0 +1,70 @@
+{
+  "bucket_id": 23,
+  "business_focus": "Pool construction / remodel",
+  "city_area": "Miami-Dade",
+  "text_angle": "Reviews + no website",
+  "script_core": "SuperSite demo - reviews front, after-hours capture",
+  "business_name": "Company Name Here",
+  "city": "Miami",
+  "state": "FL",
+  "phone_display": "(305) 555-5555",
+  "rating": "5.0",
+  "review_count": "85",
+  "website_url": "https://example.com/",
+  "source_urls": [
+    "https://example.com/",
+    "https://maps.google.com/"
+  ],
+  "source_labels": [
+    "Business Website",
+    "Google Business Profile"
+  ],
+  "eyebrow": "Private Outdoor Living",
+  "headline_line_1": "Bring the backyard vision",
+  "headline_line_2": "to life.",
+  "pitch_headline": "A SuperSite backed by real reviews and built for higher-intent homeowners.",
+  "pitch_body": "This version of the SuperSite is tuned for pool construction and remodel work in Miami-Dade: visible trust up front, a polished presentation, and a cleaner path from interest to inquiry.",
+  "section_title": "A SuperSite that makes established work feel established online.",
+  "section_copy": "For construction and remodel projects, the site needs to feel calm, credible, and design-aware. Reviews, visuals, and contact flow should all support that first impression.",
+  "video_section_label": "Transformation",
+  "video_section_title": "From existing yard to finished outdoor space.",
+  "video_section_body": "A short before-and-after pool clip supports the kind of transformation homeowners are already searching for.",
+  "why_cards": [
+    {
+      "title": "Reviews up front",
+      "body": "Strong review proof should be visible immediately so trust lands before pricing questions do."
+    },
+    {
+      "title": "Better after-hours capture",
+      "body": "Construction leads often come in at night when homeowners finally have time to browse and compare."
+    },
+    {
+      "title": "Higher-end presentation",
+      "body": "The SuperSite should feel aligned with a meaningful remodel decision, not a thin local listing."
+    }
+  ],
+  "gallery_images": [
+    "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80"
+  ],
+  "video_url": "assets/pool-before-after.mp4",
+  "video_poster_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80",
+  "review_quotes": [
+    {
+      "quote": "Paste a real customer review here.",
+      "author": "Reviewer One",
+      "source": "Google review"
+    },
+    {
+      "quote": "Paste a second real customer review here.",
+      "author": "Reviewer Two",
+      "source": "Google review"
+    },
+    {
+      "quote": "Paste a third real customer review here.",
+      "author": "Reviewer Three",
+      "source": "Google review"
+    }
+  ]
+}

@@ -22,6 +22,42 @@ The publish step will:
 - upsert the queue CSV
 - rebuild the hot-leads launcher page
 
+## Quick Swap Flow
+
+If you just want to swap one company out for another and keep the same demo system:
+
+1. Copy [quick-swap-template.json](/home/shark/jawsai911-site-fixed/hot-leads/quick-swap-template.json)
+2. Fill in only:
+   - `business_name`
+   - `city`
+   - `phone_display`
+   - `rating`
+   - `review_count`
+   - `website_url`
+   - `gallery_images`
+   - `review_quotes`
+3. Publish it:
+
+```bash
+python3 /home/shark/jawsai911-site-fixed/hot-leads/quick_swap_demo.py /path/to/company.json
+```
+
+By default, pool demos will look for one shared transformation clip at:
+
+```text
+/home/shark/jawsai911-site-fixed/hot-leads/assets/pool-before-after.mp4
+```
+
+If you keep the same clip there, every new pool demo will reuse it automatically.
+
+Optional:
+
+```bash
+python3 /home/shark/jawsai911-site-fixed/hot-leads/quick_swap_demo.py /path/to/company.json --write-full-record
+```
+
+That writes the fully expanded JSON next to your input, then publishes the page.
+
 ## Full Input
 
 Fill out a JSON record shaped like [sample-lead-input.json](/home/shark/jawsai911-site-fixed/hot-leads/sample-lead-input.json).

@@ -1,0 +1,86 @@
+{
+  "business_name": "Business Name Here",
+  "city": "City",
+  "state": "FL",
+  "phone_display": "(555) 555-5555",
+  "rating": "4.9",
+  "review_count": "125",
+  "priority_rank": 1,
+  "priority_tier": "A",
+  "priority_score": 10,
+  "eyebrow": "Private Outdoor Living",
+  "headline_line_1": "A better digital front door",
+  "headline_line_2": "for this business.",
+  "hero_subtext": "A SuperSite presentation built to show the work clearly, surface trust immediately, and make the next step feel simple for homeowners planning a meaningful outdoor project.",
+  "trust_stat": "10+",
+  "trust_label": "Years In Business",
+  "website_url": "https://example.com/",
+  "pitch_headline": "A SuperSite backed by 125 reviews and a 4.9-star reputation.",
+  "pitch_body": "This version of the SuperSite for Business Name Here combines local trust, polished presentation, and a clearer path for homeowners to move from interest to inquiry.",
+  "text_line": "Business Name Here in City, with 125 reviews and a 4.9-star rating.",
+  "call_script": "Thank you for considering Business Name Here. Explore recent work, read customer feedback, and contact the team to discuss your project.",
+  "source_urls": [
+    "https://example.com/",
+    "https://maps.google.com/"
+  ],
+  "source_labels": [
+    "Business Website",
+    "Google Business Profile"
+  ],
+  "section_title": "A SuperSite that presents the work at the right level.",
+  "section_copy": "The strongest version of the site feels composed and confident: strong imagery, clear contact details, and customer feedback presented with restraint.",
+  "gallery_caption_title": "Built to reflect the finished result.",
+  "gallery_caption_body": "Project imagery should help homeowners understand the level of care, finish, and attention they can expect.",
+  "video_section_label": "Transformation",
+  "video_section_title": "See the kind of change homeowners are looking for.",
+  "video_section_body": "A short before-and-after clip helps the SuperSite show the result in motion and makes the transformation feel immediate, tangible, and real.",
+  "hero_image_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80",
+  "gallery_images": [
+    "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80"
+  ],
+  "video_url": "assets/pool-before-after.mp4",
+  "video_poster_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80",
+  "why_cards": [
+    {
+      "title": "Clear first impression",
+      "body": "A composed SuperSite signals quality before a homeowner ever picks up the phone."
+    },
+    {
+      "title": "Visible trust",
+      "body": "Reviews, ratings, and familiar project imagery help the SuperSite feel established, credible, and dependable from the first screen."
+    },
+    {
+      "title": "Easy next step",
+      "body": "A clear path to call or inquire keeps the SuperSite useful once a homeowner is ready to talk."
+    }
+  ],
+  "review_quotes": [
+    {
+      "quote": "Paste a real customer review here.",
+      "author": "Reviewer One",
+      "source": "Google review"
+    },
+    {
+      "quote": "Paste a second real customer review here.",
+      "author": "Reviewer Two",
+      "source": "Google review"
+    },
+    {
+      "quote": "Paste a third real customer review here.",
+      "author": "Reviewer Three",
+      "source": "Google review"
+    }
+  ],
+  "process_bodies": [
+    "Reach out to discuss your goals, timeline, and the kind of finished space you want to create.",
+    "Review options, materials, and project details with a team that can guide the scope and design clearly.",
+    "Move into a finished result that feels well planned, well built, and ready to enjoy."
+  ],
+  "cta_title": "See how your SuperSite would work live.",
+  "cta_body": "Call Business Name Here to discuss your project, ask questions, and see how this SuperSite approach can support the next step.",
+  "footer_note": "Project imagery and review excerpts are shown for presentation purposes and may be updated with business-specific materials.",
+  "photo_source_note": "Use business-specific photos when they help. Use elevated category imagery when they do not.",
+  "loom_angle": "Lead with clarity, trust, and the quality of the finished result."
+}
