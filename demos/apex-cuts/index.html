@@ -3,25 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Apex Cuts Barbershop | Miami FL | Book Online</title>
-  <meta name="description" content="Apex Cuts — premium barbershop in Miami. 4.9★ from 186 Google reviews. Fades, beard work, and appointments that start on time. Call or book now." />
+  <title>Apex Cuts SuperSite | Miami Barbershop | Book Online</title>
+  <meta name="description" content="Apex Cuts — premium Miami barbershop SuperSite. Fades, beard work, 4.9★ Google reviews. Sticky book/call, Review Engine, Gen-Viral, Command Hub." />
   <link rel="canonical" href="https://jawsai911.com/demos/apex-cuts/" />
-  <meta name="geo.region" content="US-FL" />
-  <meta name="geo.placename" content="Miami" />
-  <meta property="og:title" content="Apex Cuts Barbershop | Miami" />
-  <meta property="og:description" content="4.9★ barbershop. Book your chair. Fresh cuts, real reviews." />
+  <meta property="og:title" content="Apex Cuts SuperSite | Miami Barbershop" />
+  <meta property="og:description" content="4.9★ barbershop SuperSite — book your chair. Reviews, content, Command Hub." />
   <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=Bebas+Neue&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "HairSalon",
     "name": "Apex Cuts Barbershop",
-    "image": "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=1200&q=80",
     "url": "https://jawsai911.com/demos/apex-cuts/",
     "telephone": "+13055550186",
+    "image": "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=900&q=80",
     "priceRange": "$$",
     "address": {
       "@type": "PostalAddress",
@@ -31,773 +29,635 @@
       "postalCode": "33136",
       "addressCountry": "US"
     },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": 25.7907,
-      "longitude": -80.1995
-    },
-    "openingHoursSpecification": [
-      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "09:00", "closes": "19:00" },
-      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "08:00", "closes": "18:00" },
-      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "10:00", "closes": "16:00" }
-    ],
     "aggregateRating": {
       "@type": "AggregateRating",
       "ratingValue": "4.9",
       "reviewCount": "186",
       "bestRating": "5"
-    },
-    "sameAs": [
-      "https://www.instagram.com/",
-      "https://www.google.com/maps"
-    ]
+    }
   }
   </script>
   <style>
+    /* Original Apex Cuts brand tokens (dark luxury + gold) */
     :root {
-      --bg: #0c0a09;
-      --bg2: #141210;
-      --card: #1a1714;
-      --ink: #faf7f2;
-      --muted: #a89f94;
-      --line: rgba(255,255,255,.1);
-      --gold: #e8c97a;
-      --gold2: #c9a24a;
-      --fire: #ff6b35;
-      --green: #34d399;
-      --shadow: 0 24px 60px rgba(0,0,0,.45);
+      --bg: #0a0a0a;
+      --bg2: #111111;
+      --card: #161616;
+      --paper: #1c1c1c;
+      --ink: #f5f0e6;
+      --soft: #ccbfae;
+      --muted: #8c827f;
+      --line: #363837;
+      --line2: rgba(224, 187, 135, 0.22);
+      --gold: #e0bb87;
+      --gold-light: #f0d9b0;
+      --gold-dark: #be9c7f;
+      --blush: #463b3b;
+      --rose: #e0bb87;
+      --green: #6bc49a;
+      --green-soft: rgba(107, 196, 154, 0.12);
+      --shadow: 0 28px 60px rgba(0, 0, 0, 0.55);
+      --r: 22px;
+      --serif: "Playfair Display", Georgia, serif;
+      --sans: "DM Sans", system-ui, sans-serif;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
-      font-family: "DM Sans", system-ui, sans-serif;
+      font-family: var(--sans);
       background: var(--bg);
       color: var(--ink);
       line-height: 1.55;
-      padding-bottom: 78px;
+      padding-bottom: 88px;
+      font-weight: 400;
     }
     a { color: inherit; text-decoration: none; }
-    img { max-width: 100%; display: block; }
-    .wrap { width: min(1180px, calc(100% - 32px)); margin: 0 auto; }
+    img, video { max-width: 100%; display: block; }
+    .wrap { width: min(1160px, calc(100% - 40px)); margin: 0 auto; }
 
-    /* Demo banner */
-    .demo-banner {
-      background: linear-gradient(90deg, #0a1628, #0e2a3d);
-      border-bottom: 1px solid rgba(0,180,255,.25);
-      padding: 10px 16px;
-      text-align: center;
-      font-size: 0.8rem;
-      color: #94a3b8;
+    .demo-bar {
+      background: #000; color: var(--muted); text-align: center;
+      padding: 10px 14px; font-size: .78rem; border-bottom: 1px solid var(--line);
     }
-    .demo-banner strong { color: #00b4ff; }
-    .demo-banner a {
-      color: #00b4ff;
-      font-weight: 700;
-      margin-left: 8px;
-      text-decoration: underline;
-    }
+    .demo-bar strong { color: var(--gold-light); }
+    .demo-bar a { color: var(--gold); font-weight: 600; margin-left: 10px; text-decoration: underline; text-underline-offset: 2px; }
 
-    /* Header */
     header {
-      position: sticky; top: 0; z-index: 50;
-      background: rgba(12,10,9,.92);
-      backdrop-filter: blur(14px);
+      position: sticky; top: 0; z-index: 60;
+      background: rgba(10, 10, 10, 0.92);
+      backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--line);
     }
     .nav {
       display: flex; align-items: center; justify-content: space-between;
-      height: 68px; gap: 16px;
+      height: 70px; gap: 16px;
     }
-    .brand {
-      display: flex; align-items: center; gap: 12px;
-    }
-    .brand-mark {
-      width: 42px; height: 42px;
-      border-radius: 12px;
-      background: linear-gradient(145deg, var(--gold), var(--gold2));
-      color: #1a1208;
-      font-family: "Bebas Neue", sans-serif;
-      font-size: 1.35rem;
-      display: grid; place-items: center;
-      letter-spacing: 0.04em;
-    }
-    .brand-text small {
-      display: block;
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--gold);
-    }
-    .brand-text strong {
-      font-family: "Bebas Neue", sans-serif;
-      font-size: 1.45rem;
-      letter-spacing: 0.06em;
-      font-weight: 400;
-    }
-    .nav-links {
-      display: flex; align-items: center; gap: 22px;
-      font-size: 0.9rem; font-weight: 600; color: var(--muted);
-    }
-    .nav-links a:hover { color: var(--ink); }
-    .nav-phone {
+    .logo {
       display: flex; align-items: center; gap: 10px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.04);
+      font-family: var(--serif); font-weight: 500; font-size: 1.2rem; letter-spacing: -.01em;
+      color: var(--gold-light);
     }
-    .nav-phone small {
-      display: block;
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--gold);
+    .logo em { font-style: italic; font-weight: 400; color: var(--gold); }
+    .logo-mark {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: linear-gradient(145deg, var(--gold-light), var(--gold-dark));
+      display: grid; place-items: center; color: #0a0a0a; font-size: .95rem;
     }
-    .nav-phone a {
-      font-weight: 800;
-      font-size: 0.95rem;
-    }
+    .nav-links { display: flex; gap: 22px; font-size: .88rem; font-weight: 500; color: var(--muted); }
+    .nav-links a:hover { color: var(--gold-light); }
+    .nav-cta { display: flex; gap: 10px; align-items: center; }
     .btn {
       display: inline-flex; align-items: center; justify-content: center;
-      padding: 13px 22px;
-      border-radius: 999px;
-      font-weight: 800;
-      font-size: 0.85rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      border: none;
-      cursor: pointer;
-      transition: transform .15s, box-shadow .15s;
+      padding: 12px 20px; border-radius: 999px; font-weight: 600; font-size: .84rem;
+      border: none; cursor: pointer; font-family: inherit; transition: transform .15s, box-shadow .15s;
     }
     .btn:hover { transform: translateY(-1px); }
-    .btn-gold {
-      background: linear-gradient(135deg, var(--gold), var(--gold2));
-      color: #1a1208;
-      box-shadow: 0 8px 24px rgba(232,201,122,.25);
+    .btn-dark {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
+      color: #0a0a0a; box-shadow: 0 8px 24px rgba(224, 187, 135, 0.22);
     }
-    .btn-outline {
-      background: transparent;
-      border: 1px solid var(--line);
-      color: var(--ink);
+    .btn-rose {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      color: #0a0a0a; box-shadow: 0 8px 24px rgba(224, 187, 135, 0.28);
     }
-    .btn-fire {
-      background: linear-gradient(135deg, var(--fire), #e85d04);
-      color: #fff;
+    .btn-ghost {
+      background: transparent; border: 1px solid var(--line2); color: var(--ink);
     }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold-light); }
+    .btn-lg { padding: 15px 26px; font-size: .92rem; }
 
-    /* Hero */
     .hero {
+      padding: 48px 0 56px;
       position: relative;
-      min-height: min(88vh, 720px);
-      display: grid;
-      align-items: end;
-      padding: 48px 0 40px;
-      background:
-        linear-gradient(105deg, rgba(12,10,9,.94) 0%, rgba(12,10,9,.72) 42%, rgba(12,10,9,.45) 100%),
-        url("https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=1800&q=80") center/cover no-repeat;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: ""; position: absolute; top: -80px; right: -60px;
+      width: 420px; height: 420px;
+      background: radial-gradient(circle, rgba(224, 187, 135, 0.12), transparent 68%);
+      pointer-events: none;
     }
     .hero-grid {
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 28px;
-      align-items: end;
+      display: grid; grid-template-columns: 1.05fr .95fr; gap: 40px; align-items: center;
+      position: relative;
     }
     .eyebrow {
       display: inline-flex; align-items: center; gap: 8px;
-      font-size: 0.72rem;
-      font-weight: 800;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 16px;
+      font-size: .7rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 16px;
     }
-    .eyebrow .live {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: var(--green);
-      box-shadow: 0 0 0 3px rgba(52,211,153,.25);
+    .eyebrow .dot {
+      width: 7px; height: 7px; border-radius: 50%; background: var(--green);
+      box-shadow: 0 0 0 3px rgba(107, 196, 154, 0.2);
     }
     h1 {
-      font-family: "Bebas Neue", sans-serif;
-      font-size: clamp(3.2rem, 8vw, 5.6rem);
-      line-height: .92;
-      letter-spacing: 0.02em;
-      margin-bottom: 16px;
-      font-weight: 400;
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 5.5vw, 4.4rem);
+      font-weight: 500; line-height: 1.02; letter-spacing: -.02em; margin-bottom: 16px;
+      color: var(--ink);
     }
-    h1 span { color: var(--gold); }
+    h1 em { font-style: italic; color: var(--gold-light); font-weight: 400; }
     .hero-sub {
-      max-width: 520px;
-      color: #ddd5c8;
-      font-size: 1.05rem;
-      line-height: 1.7;
-      margin-bottom: 22px;
+      color: var(--soft); font-size: 1.08rem; line-height: 1.7; max-width: 480px;
+      font-weight: 400; margin-bottom: 22px;
     }
-    .trust-row {
-      display: flex; flex-wrap: wrap; gap: 10px;
-      margin-bottom: 24px;
-    }
-    .trust-chip {
+    .trust-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 26px; }
+    .chip {
       display: flex; align-items: center; gap: 8px;
-      padding: 10px 14px;
-      border-radius: 12px;
-      background: rgba(0,0,0,.45);
-      border: 1px solid var(--line);
-      backdrop-filter: blur(8px);
+      padding: 10px 14px; background: var(--card); border: 1px solid var(--line);
+      border-radius: 14px; font-size: .78rem; color: var(--soft);
     }
-    .trust-chip strong {
-      font-size: 1.15rem;
-      color: var(--gold);
-    }
-    .trust-chip span {
-      font-size: 0.72rem;
-      color: var(--muted);
-      line-height: 1.2;
-    }
+    .chip b { color: var(--gold-light); font-size: 1rem; font-family: var(--serif); font-weight: 500; }
     .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .hero-visual { position: relative; }
+    .hero-img {
+      border-radius: 28px; overflow: hidden; aspect-ratio: 4/5; max-height: 520px;
+      border: 1px solid var(--line); box-shadow: var(--shadow);
+    }
+    .hero-img img { width: 100%; height: 100%; object-fit: cover; }
+    .float {
+      position: absolute; bottom: 20px; left: -16px; right: 20px;
+      max-width: 260px; background: rgba(22, 22, 22, 0.94); border: 1px solid var(--line2);
+      border-radius: 16px; padding: 14px 16px; box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+    .float .stars { color: var(--gold); letter-spacing: .1em; font-size: .75rem; margin-bottom: 6px; }
+    .float p { font-family: var(--serif); font-size: 1.05rem; font-style: italic; line-height: 1.35; color: var(--ink); }
+    .float small { display: block; margin-top: 6px; font-size: .72rem; color: var(--muted); font-family: var(--sans); }
 
-    .book-card {
-      background: rgba(26,23,20,.88);
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      padding: 22px;
-      backdrop-filter: blur(12px);
+    section { padding: 72px 0; }
+    .label {
+      font-size: .7rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 12px;
+    }
+    .title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 3.8vw, 2.9rem);
+      font-weight: 500; line-height: 1.1; margin-bottom: 12px; color: var(--ink);
+    }
+    .title em { font-style: italic; color: var(--gold-light); }
+    .sub { color: var(--muted); max-width: 540px; font-weight: 400; font-size: 1.02rem; line-height: 1.65; margin-bottom: 36px; }
+
+    .marquee {
+      border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+      background: var(--paper); padding: 14px 0; overflow: hidden;
+    }
+    .marquee-track {
+      display: flex; gap: 40px; white-space: nowrap;
+      animation: scroll 28s linear infinite; font-size: .82rem; font-weight: 600;
+      letter-spacing: .08em; text-transform: uppercase; color: var(--gold-dark);
+    }
+    .marquee-track span { opacity: .75; }
+    @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    .stack {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+    .stack-card {
+      background: var(--card); border: 1px solid var(--line); border-radius: var(--r);
+      padding: 28px; position: relative; overflow: hidden;
+    }
+    .stack-card.front { border-color: var(--line2); }
+    .stack-card.back {
+      background: linear-gradient(165deg, #141210, #1c1814);
+      color: var(--ink); border-color: rgba(224, 187, 135, 0.18);
+    }
+    .stack-card.back .muted { color: var(--soft); }
+    .stack-card .layer {
+      font-size: .68rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 10px;
+    }
+    .stack-card.back .layer { color: var(--gold-light); }
+    .stack-card h3 {
+      font-family: var(--serif); font-size: 1.7rem; font-weight: 500; margin-bottom: 10px;
+    }
+    .stack-card ul { list-style: none; margin-top: 16px; }
+    .stack-card li {
+      padding: 8px 0; border-top: 1px solid var(--line); font-size: .9rem; color: var(--soft);
+      display: flex; gap: 10px; align-items: flex-start;
+    }
+    .stack-card.back li { border-color: rgba(255,255,255,.08); color: var(--soft); }
+    .stack-card li::before { content: "✓"; color: var(--green); font-weight: 800; flex-shrink: 0; }
+    .stack-card.back li::before { color: var(--gold); }
+
+    .problems {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+    }
+    .prob {
+      background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px;
+    }
+    .prob .x { color: #e07a7a; font-weight: 800; font-size: .75rem; margin-bottom: 8px; letter-spacing: .06em; }
+    .prob h3 { font-size: .98rem; margin-bottom: 6px; color: var(--ink); }
+    .prob p { font-size: .82rem; color: var(--muted); font-weight: 400; line-height: 1.5; }
+    .prob .fix {
+      margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line);
+      font-size: .78rem; color: var(--gold); font-weight: 600;
+    }
+
+    .feat-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+    }
+    .feat {
+      background: var(--card); border: 1px solid var(--line); border-radius: 18px;
+      padding: 24px; transition: transform .2s, box-shadow .2s, border-color .2s;
+    }
+    .feat:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--line2); }
+    .feat .ico {
+      width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center;
+      background: rgba(224, 187, 135, 0.1); border: 1px solid var(--line2); font-size: 1.2rem; margin-bottom: 14px;
+    }
+    .feat h3 { font-size: 1.05rem; margin-bottom: 8px; color: var(--ink); }
+    .feat p { font-size: .88rem; color: var(--muted); font-weight: 400; line-height: 1.55; }
+
+    .social-band { background: var(--paper); color: var(--ink); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .social-band .label { color: var(--gold); }
+    .social-band .sub { color: var(--muted); }
+    .social-band .title { color: var(--ink); }
+    .social-band .title em { color: var(--gold-light); }
+    .trend-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .trend {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: 16px; padding: 20px;
+    }
+    .trend .tag {
+      display: inline-block; font-size: .65rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 10px;
+    }
+    .trend h3 { font-family: var(--serif); font-size: 1.25rem; font-weight: 500; margin-bottom: 8px; color: var(--ink); }
+    .trend p { font-size: .85rem; color: var(--muted); font-weight: 400; line-height: 1.5; }
+    .trend .hook {
+      margin-top: 12px; padding: 10px 12px; border-left: 3px solid var(--gold);
+      background: rgba(224, 187, 135, 0.06); font-family: var(--serif);
+      font-style: italic; font-size: 1rem; color: var(--gold-light);
+    }
+
+    .video-grid {
+      display: grid; grid-template-columns: 1.15fr .85fr; gap: 32px; align-items: center;
+    }
+    .video-frame {
+      position: relative; border-radius: 24px; overflow: hidden; aspect-ratio: 16/10;
+      border: 1px solid var(--line); box-shadow: var(--shadow); background: #000;
+    }
+    .video-frame video, .video-frame img { width: 100%; height: 100%; object-fit: cover; }
+    .video-badge {
+      position: absolute; top: 14px; left: 14px; padding: 6px 12px; border-radius: 999px;
+      background: rgba(10, 10, 10, 0.88); border: 1px solid var(--line2); color: var(--gold-light);
+      font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    }
+
+    .compare {
+      width: 100%; border-collapse: collapse; background: var(--card);
+      border-radius: 16px; overflow: hidden; border: 1px solid var(--line);
+    }
+    .compare th, .compare td {
+      padding: 14px 16px; text-align: left; font-size: .9rem; border-bottom: 1px solid var(--line);
+      color: var(--soft);
+    }
+    .compare th {
+      background: var(--paper); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
+    }
+    .compare tr:last-child td { border-bottom: none; }
+    .compare .bad { color: #e07a7a; }
+    .compare .good { color: var(--green); font-weight: 600; }
+
+    .price-box {
+      display: grid; grid-template-columns: 1.2fr .8fr; gap: 28px; align-items: center;
+      background: linear-gradient(135deg, rgba(224, 187, 135, 0.1), rgba(22, 22, 22, 0.95));
+      border: 1px solid var(--line2); border-radius: 28px; padding: 36px;
       box-shadow: var(--shadow);
     }
-    .book-card h2 {
-      font-family: "Bebas Neue", sans-serif;
-      font-size: 1.7rem;
-      letter-spacing: 0.04em;
-      margin-bottom: 6px;
-      font-weight: 400;
+    .price-box h2 {
+      font-family: var(--serif); font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-weight: 500; margin-bottom: 10px; color: var(--ink);
     }
-    .book-card > p {
-      color: var(--muted);
-      font-size: 0.88rem;
-      margin-bottom: 16px;
+    .price-box .includes { list-style: none; margin-top: 16px; }
+    .price-box .includes li {
+      padding: 7px 0; font-size: .92rem; color: var(--soft);
+      display: flex; gap: 8px; align-items: center;
     }
-    .field { margin-bottom: 12px; }
-    .field label {
-      display: block;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 5px;
+    .price-box .includes li::before { content: "✓"; color: var(--gold); font-weight: 800; }
+    .price-card {
+      background: #0a0a0a; color: var(--ink); border-radius: 20px; padding: 28px; text-align: center;
+      border: 1px solid var(--line2);
     }
-    .field input, .field select, .field textarea {
-      width: 100%;
-      padding: 11px 12px;
-      border-radius: 10px;
-      border: 1px solid var(--line);
-      background: rgba(0,0,0,.35);
-      color: var(--ink);
-      font: inherit;
-      font-size: 0.92rem;
+    .price-card .lim {
+      font-size: .7rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 12px;
     }
-    .field input:focus, .field select:focus, .field textarea:focus {
-      outline: none;
-      border-color: var(--gold);
+    .price-card .big {
+      font-family: var(--serif); font-size: 2.8rem; font-weight: 500; line-height: 1; color: var(--gold-light);
     }
-    .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .book-card .btn { width: 100%; margin-top: 4px; }
-    .form-note {
-      margin-top: 10px;
-      font-size: 0.75rem;
-      color: var(--muted);
-      text-align: center;
+    .price-card .big small { font-size: 1rem; color: var(--muted); font-family: var(--sans); }
+    .price-card .setup { color: var(--muted); margin: 8px 0 18px; font-size: .9rem; font-weight: 400; }
+    .price-card .btn { width: 100%; margin-bottom: 8px; }
+    .price-card .fine { font-size: .75rem; color: var(--muted); margin-top: 10px; font-weight: 400; }
+    .price-card .btn-ghost { border-color: var(--line2); color: var(--ink); }
+
+    .faq { display: grid; gap: 10px; max-width: 720px; }
+    details {
+      background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px;
     }
-    .form-success {
-      display: none;
-      padding: 18px;
-      border-radius: 12px;
-      background: rgba(52,211,153,.12);
-      border: 1px solid rgba(52,211,153,.3);
-      color: var(--green);
-      font-weight: 600;
-      text-align: center;
+    summary { font-weight: 600; cursor: pointer; list-style: none; color: var(--ink); }
+    summary::-webkit-details-marker { display: none; }
+    details p { margin-top: 10px; color: var(--muted); font-size: .9rem; font-weight: 400; line-height: 1.6; }
+
+    footer {
+      border-top: 1px solid var(--line); padding: 32px 0 100px; color: var(--muted); font-size: .85rem;
+    }
+    .foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; align-items: center; }
+    .foot a { color: var(--gold); font-weight: 500; }
+    .foot strong { color: var(--gold-light); }
+
+    .sticky {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 80;
+      display: flex; gap: 8px;
+      padding: 12px 14px calc(12px + env(safe-area-inset-bottom));
+      background: rgba(10, 10, 10, 0.96); border-top: 1px solid var(--line); backdrop-filter: blur(12px);
+    }
+    .sticky a {
+      flex: 1; text-align: center; padding: 14px 8px; border-radius: 14px;
+      font-weight: 700; font-size: .82rem;
+    }
+    .sticky .primary {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-dark)); color: #0a0a0a;
+    }
+    .sticky .secondary {
+      background: transparent; border: 1px solid var(--line2); color: var(--gold-light);
+    }
+    .sticky .hub { background: var(--card); border: 1px solid var(--line); color: var(--soft); }
+
+    .chat-fab {
+      position: fixed; bottom: 92px; right: 18px; z-index: 85;
+      width: 54px; height: 54px; border-radius: 50%; border: none;
+      background: linear-gradient(145deg, var(--gold-light), var(--gold-dark));
+      color: #0a0a0a; font-size: 1.25rem; cursor: pointer;
+      box-shadow: 0 10px 28px rgba(224, 187, 135, 0.3);
+    }
+    .chat-panel {
+      display: none; position: fixed; bottom: 158px; right: 18px; z-index: 86;
+      width: min(340px, calc(100vw - 28px)); background: var(--card);
+      border: 1px solid var(--line2); border-radius: 18px; box-shadow: var(--shadow);
+      overflow: hidden; flex-direction: column; max-height: 420px;
+    }
+    .chat-panel.open { display: flex; }
+    .chat-head {
+      padding: 14px 16px; background: var(--paper); border-bottom: 1px solid var(--line);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .chat-head strong { font-size: .9rem; color: var(--gold-light); }
+    .chat-head small { display: block; color: var(--green); font-size: .7rem; font-weight: 500; }
+    .chat-head button { background: none; border: none; color: var(--muted); font-size: 1.2rem; cursor: pointer; }
+    .chat-body {
+      padding: 14px; min-height: 160px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;
+    }
+    .msg {
+      max-width: 88%; padding: 10px 12px; border-radius: 14px; font-size: .85rem; line-height: 1.45;
+    }
+    .msg.bot { background: var(--paper); border: 1px solid var(--line); align-self: flex-start; color: var(--soft); }
+    .msg.user {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
+      color: #0a0a0a; align-self: flex-end; font-weight: 600;
+    }
+    .chat-quick { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 12px 10px; }
+    .chat-quick button {
+      padding: 6px 10px; border-radius: 999px; border: 1px solid var(--line2);
+      background: var(--paper); color: var(--ink); font-size: .72rem; font-weight: 600;
+      cursor: pointer; font-family: inherit;
+    }
+    .chat-form { display: flex; gap: 6px; padding: 12px; border-top: 1px solid var(--line); }
+    .chat-form input {
+      flex: 1; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line);
+      background: var(--bg); color: var(--ink); font: inherit; font-size: .85rem;
+    }
+    .chat-form button {
+      padding: 10px 14px; border: none; border-radius: 12px;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
+      color: #0a0a0a; font-weight: 700; cursor: pointer; font-family: inherit;
     }
 
-    /* Sections */
-    section { padding: 64px 0; }
-    .section-label {
-      font-size: 0.72rem;
-      font-weight: 800;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 10px;
-    }
-    .section-title {
-      font-family: "Bebas Neue", sans-serif;
-      font-size: clamp(2rem, 4vw, 3rem);
-      letter-spacing: 0.03em;
-      line-height: 1;
-      margin-bottom: 12px;
-      font-weight: 400;
-    }
-    .section-sub {
-      color: var(--muted);
-      max-width: 560px;
-      margin-bottom: 32px;
-      line-height: 1.65;
-    }
-
-    .services {
+    /* Visual art */
+    .hero-visual-stack {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 12px;
+      align-items: stretch;
     }
-    .service {
-      background: var(--card);
+    .hero-visual-stack .hero-img { max-height: none; aspect-ratio: 3/4; }
+    .hero-side {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      gap: 12px;
+    }
+    .hero-side figure {
+      margin: 0;
+      border-radius: 20px;
+      overflow: hidden;
       border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 22px 18px;
-      transition: border-color .2s, transform .2s;
+      position: relative;
+      min-height: 160px;
     }
-    .service:hover {
-      border-color: rgba(232,201,122,.4);
-      transform: translateY(-3px);
-    }
-    .service h3 {
-      font-size: 1.05rem;
-      margin-bottom: 6px;
-    }
-    .service .price {
-      color: var(--gold);
-      font-weight: 800;
-      font-size: 1.1rem;
-      margin-bottom: 8px;
-    }
-    .service p {
-      font-size: 0.85rem;
-      color: var(--muted);
-      line-height: 1.5;
+    .hero-side img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-side figcaption {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      padding: 12px 14px;
+      background: linear-gradient(transparent, rgba(0,0,0,.85));
+      font-size: .72rem; font-weight: 600; color: var(--gold-light);
+      letter-spacing: .04em;
     }
 
-    .gallery {
+    .portrait-band {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 28px;
+      align-items: center;
+    }
+    .portrait-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .portrait-pair figure {
+      margin: 0;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      aspect-ratio: 3/4;
+      position: relative;
+    }
+    .portrait-pair figure:first-child { margin-top: 28px; }
+    .portrait-pair img { width: 100%; height: 100%; object-fit: cover; }
+
+    .art-mosaic {
       display: grid;
       grid-template-columns: 1.2fr 1fr 1fr;
       grid-template-rows: 200px 200px;
       gap: 12px;
     }
-    .gallery figure {
-      position: relative;
-      border-radius: 16px;
+    .art-mosaic figure {
+      margin: 0;
+      border-radius: 18px;
       overflow: hidden;
       border: 1px solid var(--line);
+      position: relative;
       background: var(--card);
     }
-    .gallery figure:first-child {
+    .art-mosaic figure:first-child {
       grid-row: span 2;
       min-height: 412px;
     }
-    .gallery figure img {
-      width: 100%; height: 100%;
-      object-fit: cover;
+    .art-mosaic img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .45s ease;
     }
-    .gallery figcaption {
-      position: absolute;
-      left: 0; right: 0; bottom: 0;
-      padding: 12px 14px;
-      background: linear-gradient(transparent, rgba(0,0,0,.85));
-      font-size: 0.78rem;
-      font-weight: 600;
+    .art-mosaic figure:hover img { transform: scale(1.04); }
+    .art-mosaic figcaption {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      padding: 14px 16px;
+      background: linear-gradient(transparent, rgba(0,0,0,.88));
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--gold-light);
     }
-    .gallery figcaption span {
+    .art-mosaic figcaption span {
       display: block;
-      font-size: 0.68rem;
-      color: var(--gold);
-      margin-top: 2px;
+      font-family: var(--sans);
+      font-style: normal;
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 4px;
     }
 
-    .stylists {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-    .stylist {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 18px;
+    .feat-visual {
       overflow: hidden;
+      padding: 0;
     }
-    .stylist-photo {
-      height: 200px;
+    .feat-visual .feat-photo {
+      height: 140px;
       background-size: cover;
       background-position: center;
-    }
-    .stylist-body { padding: 18px; }
-    .stylist-body h3 { font-size: 1.15rem; margin-bottom: 4px; }
-    .stylist-body .role {
-      font-size: 0.78rem;
-      color: var(--gold);
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-    .stylist-body p {
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin-bottom: 12px;
-    }
-    .stylist-meta {
-      display: flex; justify-content: space-between;
-      font-size: 0.8rem;
-      color: var(--muted);
-      border-top: 1px solid var(--line);
-      padding-top: 10px;
-    }
-    .stylist-meta b { color: var(--gold); }
-
-    .reviews {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-    }
-    .review {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 22px;
-    }
-    .stars { color: var(--gold); letter-spacing: 0.12em; font-size: 0.85rem; margin-bottom: 12px; }
-    .review blockquote {
-      font-size: 1rem;
-      line-height: 1.55;
-      margin-bottom: 14px;
-    }
-    .review cite {
-      font-style: normal;
-      font-size: 0.85rem;
-      font-weight: 700;
-    }
-    .review small {
-      display: block;
-      color: var(--muted);
-      font-size: 0.75rem;
-      margin-top: 3px;
-    }
-    .review-bar {
-      display: flex; flex-wrap: wrap; align-items: center; gap: 16px;
-      margin-bottom: 28px;
-      padding: 18px 20px;
-      border-radius: 14px;
-      background: linear-gradient(90deg, rgba(232,201,122,.12), transparent);
-      border: 1px solid rgba(232,201,122,.2);
-    }
-    .review-bar .big {
-      font-family: "Bebas Neue", sans-serif;
-      font-size: 2.8rem;
-      color: var(--gold);
-      line-height: 1;
-    }
-    .review-bar p { color: var(--muted); font-size: 0.9rem; }
-    .review-bar a {
-      margin-left: auto;
-      color: var(--gold);
-      font-weight: 700;
-      font-size: 0.88rem;
-    }
-
-    .how {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-    }
-    .how-card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 24px;
-    }
-    .how-card .num {
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      display: grid; place-items: center;
-      background: rgba(232,201,122,.15);
-      border: 1px solid rgba(232,201,122,.3);
-      color: var(--gold);
-      font-weight: 800;
-      margin-bottom: 14px;
-    }
-    .how-card h3 { margin-bottom: 8px; }
-    .how-card p { color: var(--muted); font-size: 0.9rem; }
-
-    .map-band {
-      background: var(--bg2);
-      border-top: 1px solid var(--line);
       border-bottom: 1px solid var(--line);
     }
-    .map-grid {
+    .feat-visual .feat-body { padding: 20px 22px 24px; }
+    .feat-visual .ico { margin-bottom: 10px; }
+
+    .bento {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 28px;
-      align-items: center;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: 160px;
+      gap: 12px;
     }
-    .nap {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 24px;
-    }
-    .nap h3 { margin-bottom: 14px; }
-    .nap dl { display: grid; gap: 12px; }
-    .nap dt {
-      font-size: 0.68rem;
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--gold);
-    }
-    .nap dd { color: var(--muted); font-size: 0.95rem; margin: 2px 0 0; }
-    .map-fake {
-      border-radius: 16px;
-      min-height: 280px;
-      border: 1px solid var(--line);
-      background:
-        linear-gradient(180deg, rgba(12,10,9,.2), rgba(12,10,9,.55)),
-        url("https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1000&q=70") center/cover;
-      display: flex;
-      align-items: flex-end;
-      padding: 18px;
-    }
-    .map-pin {
-      background: rgba(12,10,9,.9);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 12px 14px;
-      font-size: 0.85rem;
-    }
-    .map-pin strong { display: block; color: var(--gold); margin-bottom: 2px; }
-
-    .cta-band {
-      text-align: center;
-      padding: 72px 0;
-    }
-    .cta-band h2 {
-      font-family: "Bebas Neue", sans-serif;
-      font-size: clamp(2.2rem, 5vw, 3.4rem);
-      letter-spacing: 0.03em;
-      margin-bottom: 12px;
-      font-weight: 400;
-    }
-    .cta-band p {
-      color: var(--muted);
-      margin-bottom: 24px;
-    }
-    .cta-band .hero-actions { justify-content: center; }
-
-    footer {
-      border-top: 1px solid var(--line);
-      padding: 28px 0 100px;
-      color: var(--muted);
-      font-size: 0.85rem;
-    }
-    .foot {
-      display: flex; flex-wrap: wrap;
-      justify-content: space-between; gap: 16px;
-      align-items: center;
-    }
-    .foot a { color: var(--gold); font-weight: 600; }
-
-    /* Sticky mobile */
-    .sticky-bar {
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      z-index: 80;
-      display: flex;
-      gap: 8px;
-      padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
-      background: rgba(12,10,9,.96);
-      border-top: 1px solid var(--line);
-      backdrop-filter: blur(12px);
-    }
-    .sticky-bar a {
-      flex: 1;
-      text-align: center;
-      padding: 14px 8px;
-      border-radius: 12px;
-      font-weight: 800;
-      font-size: 0.82rem;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-    .sticky-bar .call {
-      background: linear-gradient(135deg, var(--gold), var(--gold2));
-      color: #1a1208;
-    }
-    .sticky-bar .book {
-      background: var(--card);
-      border: 1px solid var(--line);
-    }
-    .sticky-bar .text {
-      background: transparent;
-      border: 1px solid var(--line);
-      color: var(--muted);
-    }
-
-    /* Chat */
-    .chat-fab {
-      position: fixed;
-      bottom: 88px; right: 18px;
-      z-index: 85;
-      width: 56px; height: 56px;
-      border-radius: 50%;
-      border: none;
-      background: linear-gradient(135deg, var(--gold), var(--gold2));
-      color: #1a1208;
-      font-size: 1.35rem;
-      cursor: pointer;
-      box-shadow: 0 8px 28px rgba(232,201,122,.35);
-    }
-    .chat-panel {
-      display: none;
-      position: fixed;
-      bottom: 156px; right: 18px;
-      z-index: 86;
-      width: min(340px, calc(100vw - 28px));
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      box-shadow: var(--shadow);
+    .bento figure {
+      margin: 0;
+      border-radius: 18px;
       overflow: hidden;
-      flex-direction: column;
-      max-height: 420px;
-    }
-    .chat-panel.open { display: flex; }
-    .chat-head {
-      padding: 12px 14px;
-      background: var(--bg2);
-      border-bottom: 1px solid var(--line);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .chat-head strong { font-size: 0.9rem; }
-    .chat-head small { display: block; color: var(--green); font-size: 0.7rem; }
-    .chat-head button {
-      background: none; border: none; color: var(--muted);
-      font-size: 1.2rem; cursor: pointer;
-    }
-    .chat-body {
-      padding: 14px;
-      min-height: 180px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .msg {
-      max-width: 88%;
-      padding: 9px 12px;
-      border-radius: 12px;
-      font-size: 0.85rem;
-      line-height: 1.45;
-    }
-    .msg.bot {
-      background: var(--bg2);
       border: 1px solid var(--line);
-      align-self: flex-start;
+      position: relative;
     }
-    .msg.user {
-      background: linear-gradient(135deg, var(--gold), var(--gold2));
-      color: #1a1208;
-      align-self: flex-end;
-      font-weight: 600;
-    }
-    .chat-quick {
-      display: flex; flex-wrap: wrap; gap: 6px;
-      padding: 0 12px 10px;
-    }
-    .chat-quick button {
-      padding: 6px 10px;
-      border-radius: 100px;
-      border: 1px solid var(--line);
-      background: var(--bg2);
-      color: var(--ink);
-      font-size: 0.72rem;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .chat-form {
-      display: flex; gap: 6px;
-      padding: 10px 12px;
-      border-top: 1px solid var(--line);
-    }
-    .chat-form input {
-      flex: 1;
-      padding: 9px 11px;
-      border-radius: 10px;
-      border: 1px solid var(--line);
-      background: var(--bg);
-      color: var(--ink);
-      font: inherit;
-      font-size: 0.85rem;
-    }
-    .chat-form button {
-      padding: 9px 12px;
-      border: none;
-      border-radius: 10px;
-      background: var(--gold);
-      color: #1a1208;
-      font-weight: 800;
-      cursor: pointer;
+    .bento figure.wide { grid-column: span 2; }
+    .bento figure.tall { grid-row: span 2; }
+    .bento img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+    .bento figure:hover img { transform: scale(1.05); }
+    .bento .overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,.75));
+      display: flex; align-items: flex-end;
+      padding: 16px;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--gold-light);
     }
 
-    @media (max-width: 900px) {
-      .hero-grid, .map-grid { grid-template-columns: 1fr; }
-      .services { grid-template-columns: 1fr 1fr; }
-      .stylists, .reviews, .how { grid-template-columns: 1fr; }
-      .gallery {
+    .lookbook-strip {
+      display: flex;
+      gap: 14px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+    .lookbook-strip::-webkit-scrollbar { height: 6px; }
+    .lookbook-strip::-webkit-scrollbar-thumb { background: var(--line2); border-radius: 99px; }
+    .look-card {
+      flex: 0 0 min(240px, 72vw);
+      scroll-snap-align: start;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: var(--card);
+    }
+    .look-card img { width: 100%; aspect-ratio: 3/4; object-fit: cover; }
+    .look-card .meta {
+      padding: 12px 14px;
+      font-size: .78rem;
+      color: var(--muted);
+    }
+    .look-card .meta strong {
+      display: block;
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--gold-light);
+      margin-bottom: 2px;
+    }
+
+    @media (max-width: 960px) {
+      .hero-grid, .stack, .video-grid, .price-box, .portrait-band, #book .wrap { grid-template-columns: 1fr !important; }
+      .problems, .feat-grid, .trend-grid { grid-template-columns: 1fr; }
+      .hero-visual-stack { grid-template-columns: 1fr; }
+      .hero-side { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .art-mosaic {
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 180px 160px 160px;
       }
-      .gallery figure:first-child {
+      .art-mosaic figure:first-child {
         grid-column: span 2;
         grid-row: span 1;
-        min-height: 200px;
+        min-height: 220px;
       }
+      .bento { grid-template-columns: 1fr 1fr; grid-auto-rows: 140px; }
+      .bento figure.wide { grid-column: span 2; }
+      .bento figure.tall { grid-row: span 1; }
       .nav-links { display: none; }
-      .review-bar a { margin-left: 0; }
+      .float { left: 12px; right: 12px; max-width: none; }
+      .hero-img { max-height: 400px; aspect-ratio: 5/4; }
     }
     @media (max-width: 520px) {
-      .services { grid-template-columns: 1fr; }
-      .row2 { grid-template-columns: 1fr; }
-      .sticky-bar .text { display: none; }
+      .sticky .hub { display: none; }
+      .portrait-pair figure:first-child { margin-top: 0; }
     }
   </style>
 </head>
 <body>
-  <div class="demo-banner">
-    <strong>DEMO SuperSite</strong> — Apex Cuts (sample barbershop) built by JAWSAI911
-    <a href="../../salon-supersite.html">← Back to offer</a>
-    <a href="command.html"><strong>Command Hub →</strong></a>
+  <div class="demo-bar">
+    <strong>DEMO SuperSite · Apex Cuts</strong> — JAWSAI911 double stack
+    <a href="../../salon-supersite.html">← Offer</a>
+    <a href="command.html">Command Hub →</a>
     <a href="../luxe-nails/index.html">Nail demo</a>
+    <a href="../../glowup-supersite/">GlowUP</a>
   </div>
 
   <header>
     <div class="wrap nav">
-      <a href="#" class="brand">
-        <div class="brand-mark">AC</div>
-        <div class="brand-text">
-          <small>Miami, FL</small>
-          <strong>APEX CUTS</strong>
-        </div>
+      <a href="#" class="logo">
+        <span class="logo-mark">✂️</span>
+        Apex<em>Cuts</em>
       </a>
       <nav class="nav-links">
-        <a href="#services">Services</a>
-        <a href="#gallery">Work</a>
-        <a href="#team">Team</a>
-        <a href="#reviews">Reviews</a>
-        <a href="#visit">Visit</a>
+        <a href="#problems">Why SuperSite</a>
+        <a href="#stack">Double stack</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#features">Platform</a>
+        <a href="#social">Social</a>
+        <a href="#faq">FAQ</a>
       </nav>
-      <div class="nav-phone">
-        <div>
-          <small>Tap to call</small>
-          <a href="tel:3055550186">(305) 555-0186</a>
-        </div>
+      <div class="nav-cta">
+        <a class="btn btn-ghost" href="command.html">Command Hub</a>
+        <a class="btn btn-dark" href="#book">Book now</a>
       </div>
     </div>
   </header>
@@ -805,297 +665,514 @@
   <section class="hero">
     <div class="wrap hero-grid">
       <div>
-        <div class="eyebrow"><span class="live"></span> Open today · Walk-ins welcome when chairs free</div>
-        <h1>Fades that hit.<br /><span>Chairs that book.</span></h1>
+        <div class="eyebrow"><span class="dot"></span> SuperSite for barbers · ✂️ · brand 🦈</div>
+        <h1>Fresh cuts.<br /><em>Booked chairs</em> — front to back.</h1>
         <p class="hero-sub">
-          Miami barbershop built on clean work, on-time appointments, and a Google reputation clients actually trust.
-          Book your chair — or call now if you need same-day.
+          Apex Cuts SuperSite: converting public site plus Command Hub that runs after-hours leads, Google reviews, Gen-Viral content, and chair-level follow-up — so the shop stays full without living on Instagram.
         </p>
         <div class="trust-row">
-          <div class="trust-chip">
-            <strong>4.9★</strong>
-            <span>Google<br />rating</span>
-          </div>
-          <div class="trust-chip">
-            <strong>186</strong>
-            <span>Google<br />reviews</span>
-          </div>
-          <div class="trust-chip">
-            <strong>+14</strong>
-            <span>new reviews<br />this month</span>
-          </div>
+          <div class="chip"><b>★ 4.9</b> 186 Google reviews</div>
+          <div class="chip"><b>+14</b> New reviews / mo</div>
+          <div class="chip"><b>24/7</b> After-hours capture</div>
         </div>
         <div class="hero-actions">
-          <a class="btn btn-gold" href="#book">Book Appointment</a>
-          <a class="btn btn-outline" href="tel:3055550186">Call (305) 555-0186</a>
+          <a class="btn btn-rose btn-lg" href="#book">Book now</a>
+          <a class="btn btn-ghost btn-lg" href="command.html">Open Command Hub →</a>
         </div>
       </div>
-
-      <aside class="book-card" id="book">
-        <h2>Book your chair</h2>
-        <p>Same-day openings show below. After hours? We text you back.</p>
-        <form id="book-form">
-          <div class="field">
-            <label for="name">Name</label>
-            <input id="name" name="name" required placeholder="Your name" autocomplete="name" />
+      <div class="hero-visual">
+        <div class="hero-visual-stack">
+          <div class="hero-img">
+            <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=900&q=80" alt="Apex Cuts hero" width="900" height="1200" />
           </div>
-          <div class="row2">
-            <div class="field">
-              <label for="phone">Phone</label>
-              <input id="phone" name="phone" type="tel" required placeholder="(305) 000-0000" autocomplete="tel" />
-            </div>
-            <div class="field">
-              <label for="service">Service</label>
-              <select id="service" name="service" required>
-                <option value="">Select…</option>
-                <option>Skin Fade — $45</option>
-                <option>Classic Cut — $35</option>
-                <option>Beard Shape — $25</option>
-                <option>Cut + Beard — $60</option>
-                <option>Kids Cut — $28</option>
-              </select>
-            </div>
+          <div class="hero-side">
+            <figure>
+              <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=600&q=80" alt="Detail craft" loading="lazy" />
+              <figcaption>Detail · craft</figcaption>
+            </figure>
+            <figure>
+              <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=600&q=80" alt="Studio ambient" loading="lazy" />
+              <figcaption>Miami · studio</figcaption>
+            </figure>
           </div>
-          <div class="row2">
-            <div class="field">
-              <label for="stylist">Stylist</label>
-              <select id="stylist" name="stylist">
-                <option value="">Any available</option>
-                <option>Marcus</option>
-                <option>Diego</option>
-                <option>Jordan</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="when">Preferred time</label>
-              <select id="when" name="when" required>
-                <option value="">Select…</option>
-                <option>Today · ASAP</option>
-                <option>Today · After 4pm</option>
-                <option>Tomorrow morning</option>
-                <option>This weekend</option>
-              </select>
-            </div>
-          </div>
-          <button type="submit" class="btn btn-gold">Request Appointment</button>
-          <p class="form-note">Goes straight into the shop pipeline. No re-typing. Demo only — not a live booking system.</p>
-        </form>
-        <div class="form-success" id="form-success">
-          ✓ Got it. In a live SuperSite this lands in Command Agent, fires a confirmation text, and books follow-up. Demo mode only.
         </div>
-      </aside>
-    </div>
-  </section>
-
-  <section id="services">
-    <div class="wrap">
-      <div class="section-label">Services &amp; pricing</div>
-      <h2 class="section-title">Know what you are walking into</h2>
-      <p class="section-sub">Clear menus convert better than “call for pricing.” Every service is bookable from the form above.</p>
-      <div class="services">
-        <article class="service">
-          <h3>Skin Fade</h3>
-          <div class="price">$45</div>
-          <p>Tight blend, clean line-up. Our most requested cut.</p>
-        </article>
-        <article class="service">
-          <h3>Classic Cut</h3>
-          <div class="price">$35</div>
-          <p>Scissor work, wash, and style. Ready for work or weekend.</p>
-        </article>
-        <article class="service">
-          <h3>Beard Shape</h3>
-          <div class="price">$25</div>
-          <p>Line-up, cheek shape, and hot towel finish.</p>
-        </article>
-        <article class="service">
-          <h3>Cut + Beard</h3>
-          <div class="price">$60</div>
-          <p>Full package. Most clients book this on a 3–4 week cycle.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section id="gallery" style="background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
-    <div class="wrap">
-      <div class="section-label">Recent work · Photo → 5 Lanes feed</div>
-      <h2 class="section-title">The gallery never goes stale</h2>
-      <p class="section-sub">These shots also feed Instagram, Google Business photos, Shorts, and review requests — one photo, five lanes.</p>
-      <div class="gallery">
-        <figure>
-          <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=900&q=80" alt="Fresh fade at Apex Cuts" loading="lazy" />
-          <figcaption>Mid drop fade · this week<span>Marcus · Chair 2</span></figcaption>
-        </figure>
-        <figure>
-          <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=600&q=80" alt="Beard lineup" loading="lazy" />
-          <figcaption>Beard shape-up<span>Diego · Chair 1</span></figcaption>
-        </figure>
-        <figure>
-          <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&w=600&q=80" alt="Classic cut" loading="lazy" />
-          <figcaption>Classic scissor cut<span>Jordan · Chair 3</span></figcaption>
-        </figure>
-        <figure>
-          <img src="https://images.unsplash.com/photo-1493256338651-d82f7acb2b38?auto=format&fit=crop&w=600&q=80" alt="Barbershop interior" loading="lazy" />
-          <figcaption>Shop floor · open seats<span>Walk-ins when free</span></figcaption>
-        </figure>
-        <figure>
-          <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=600&q=80" alt="Barber tools" loading="lazy" />
-          <figcaption>Tools · every chair<span>Sanitized between clients</span></figcaption>
-        </figure>
-      </div>
-    </div>
-  </section>
-
-  <section id="team">
-    <div class="wrap">
-      <div class="section-label">Stylists · content tagged to the chair</div>
-      <h2 class="section-title">Book the chair, not just the shop</h2>
-      <p class="section-sub">When a stylist’s content hits, clients ask for them by name. SuperSite tags photos and reviews to the chair that earned them.</p>
-      <div class="stylists">
-        <article class="stylist">
-          <div class="stylist-photo" style="background-image:url('https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=80')"></div>
-          <div class="stylist-body">
-            <h3>Marcus</h3>
-            <div class="role">Master barber · Fades</div>
-            <p>10 years on the floor. Known for mid and low skin fades that stay clean for weeks.</p>
-            <div class="stylist-meta">
-              <span><b>48</b> reviews this year</span>
-              <a href="#book">Book Marcus →</a>
-            </div>
-          </div>
-        </article>
-        <article class="stylist">
-          <div class="stylist-photo" style="background-image:url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80')"></div>
-          <div class="stylist-body">
-            <h3>Diego</h3>
-            <div class="role">Beard specialist</div>
-            <p>Line-ups, shape-ups, and full cut+beard packages. Regulars rebook every 3 weeks.</p>
-            <div class="stylist-meta">
-              <span><b>36</b> reviews this year</span>
-              <a href="#book">Book Diego →</a>
-            </div>
-          </div>
-        </article>
-        <article class="stylist">
-          <div class="stylist-photo" style="background-image:url('https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=600&q=80')"></div>
-          <div class="stylist-body">
-            <h3>Jordan</h3>
-            <div class="role">Classic &amp; kids</div>
-            <p>Scissor work and kids cuts with patience. Strong Saturday morning book.</p>
-            <div class="stylist-meta">
-              <span><b>29</b> reviews this year</span>
-              <a href="#book">Book Jordan →</a>
-            </div>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section id="reviews" style="background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
-    <div class="wrap">
-      <div class="section-label">Google reviews · dual-path engine</div>
-      <h2 class="section-title">What clients say out loud</h2>
-      <div class="review-bar">
-        <div class="big">4.9</div>
-        <div>
+        <div class="float">
           <div class="stars">★★★★★</div>
-          <p>186 Google reviews · +14 this month from chair stands + auto SMS</p>
+          <p>“On time. Clean fade. They texted me the review link after.”</p>
+          <small>Google · Apex Cuts</small>
         </div>
-        <a href="https://www.google.com/maps" target="_blank" rel="noopener">See all on Google →</a>
-      </div>
-      <div class="reviews">
-        <article class="review">
-          <div class="stars">★★★★★</div>
-          <blockquote>“Marcus lined me up perfect. On time, clean shop, and they actually texted me a review link after — that’s how you run it.”</blockquote>
-          <cite>Andre K.</cite>
-          <small>Google · 2 weeks ago · Fade</small>
-        </article>
-        <article class="review">
-          <div class="stars">★★★★★</div>
-          <blockquote>“Booked Diego through the site after hours. Got a text confirmation in minutes. Beard game is serious.”</blockquote>
-          <cite>Luis R.</cite>
-          <small>Google · 1 month ago · Cut + Beard</small>
-        </article>
-        <article class="review">
-          <div class="stars">★★★★★</div>
-          <blockquote>“Brought my son for Jordan. No chaos, fair price, and the photos on Google match the real cut. Rare.”</blockquote>
-          <cite>Michelle T.</cite>
-          <small>Google · 3 weeks ago · Kids Cut</small>
-        </article>
       </div>
     </div>
   </section>
 
-  <section>
+  <!-- Visual lookbook strip -->
+  <section style="padding:28px 0 8px;border-bottom:1px solid var(--line)">
     <div class="wrap">
-      <div class="section-label">How it works</div>
-      <h2 class="section-title">From search to chair in three steps</h2>
-      <div class="how">
-        <article class="how-card">
-          <div class="num">1</div>
-          <h3>Find us locally</h3>
-          <p>Google maps, reviews, and photos keep Apex Cuts in the “barber near me” conversation.</p>
+      <div class="label" style="margin-bottom:14px">Lookbook · art of the craft</div>
+      <div class="lookbook-strip" aria-label="Lookbook">
+        <article class="look-card">
+          <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=500&q=80" alt="Beard lineup" loading="lazy" />
+          <div class="meta"><strong>Beard lineup</strong>Chair-tagged content</div>
         </article>
-        <article class="how-card">
-          <div class="num">2</div>
-          <h3>Book or call</h3>
-          <p>Sticky phone button, short form, or AI chat after hours. Every lead lands in one pipeline.</p>
+        <article class="look-card">
+          <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=500&q=80" alt="Classic cut" loading="lazy" />
+          <div class="meta"><strong>Classic cut</strong>Book Marcus</div>
         </article>
-        <article class="how-card">
-          <div class="num">3</div>
-          <h3>Leave a review</h3>
-          <p>Chair stand QR after the cut + same-day text if you skip it. Two chances. Zero awkward asking.</p>
+        <article class="look-card">
+          <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=500&q=80" alt="Skin fade" loading="lazy" />
+          <div class="meta"><strong>Skin fade</strong>Transform Reel</div>
+        </article>
+        <article class="look-card">
+          <img src="https://images.unsplash.com/photo-1493256338651-d82f7acb2b38?w=500&q=80" alt="Shop floor" loading="lazy" />
+          <div class="meta"><strong>Shop floor</strong>Walk-ins when free</div>
+        </article>
+        <article class="look-card">
+          <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=500&q=80" alt="Tools" loading="lazy" />
+          <div class="meta"><strong>Tools</strong>Process / ASMR</div>
+        </article>
+        <article class="look-card">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&q=80" alt="Barber portrait" loading="lazy" />
+          <div class="meta"><strong>Barber portrait</strong>Artist spotlight</div>
         </article>
       </div>
     </div>
   </section>
 
-  <section class="map-band" id="visit">
-    <div class="wrap map-grid">
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track"><span>Fades · Beards · Reviews · After-hours · Gen-Viral · Photo → 5 Lanes · Command Hub · Book Marcus · Local SEO</span><span>Fades · Beards · Reviews · After-hours · Gen-Viral · Photo → 5 Lanes · Command Hub · Book Marcus · Local SEO</span></div>
+  </div>
+
+  <section id="problems">
+    <div class="wrap">
+      <div class="label">What beauty businesses lose every week</div>
+      <h2 class="title">The real problems. <em>Fixed by design.</em></h2>
+      <p class="sub">Most barbershops don’t lose on the cut — they lose after hours, on Maps, and when content never ships.</p>
+      <div class="problems">
+        <article class="prob">
+          <div class="x">PROBLEM 01</div>
+          <h3>After-hours leads die</h3>
+          <p>Clients browse at night. Voicemail = they book the next shop on Maps.</p>
+          <div class="fix">→ 24/7 AI chat + sticky call + SMS recovery</div>
+        </article>
+        <article class="prob">
+          <div class="x">PROBLEM 02</div>
+          <h3>Review drought</h3>
+          <p>Happy clients leave. Nobody asks. Map pack stalls.</p>
+          <div class="fix">→ Dual-path Google Review Engine (stand + auto SMS)</div>
+        </article>
+        <article class="prob">
+          <div class="x">PROBLEM 03</div>
+          <h3>Content never ships</h3>
+          <p>Phone full of set photos. Feed goes quiet. GBP goes stale.</p>
+          <div class="fix">→ Photo → 5 Lanes + Gen-Viral approval queue</div>
+        </article>
+        <article class="prob">
+          <div class="x">PROBLEM 04</div>
+          <h3>Tools don’t talk</h3>
+          <p>Booking app ≠ social ≠ reviews ≠ follow-up. Staff memory is the CRM.</p>
+          <div class="fix">→ One Command Hub · CRM · social · reviews</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- About + portraits -->
+  <section id="about" style="border-top:1px solid var(--line)">
+    <div class="wrap portrait-band">
+      <div class="portrait-pair">
+        <figure>
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&q=80" alt="Beauty professional portrait" loading="lazy" />
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&q=80" alt="Editorial face portrait" loading="lazy" />
+        </figure>
+      </div>
       <div>
-        <div class="section-label">Visit · NAP consistency</div>
-        <h2 class="section-title">Same name, address, phone — everywhere</h2>
-        <p class="section-sub">Local SEO starts with consistent NAP. SuperSite, Google Business Profile, and listings all match.</p>
-        <div class="nap">
-          <h3>Apex Cuts Barbershop</h3>
-          <dl>
-            <div>
-              <dt>Address</dt>
-              <dd>1842 NW 2nd Ave, Miami, FL 33136</dd>
-            </div>
-            <div>
-              <dt>Phone</dt>
-              <dd><a href="tel:3055550186" style="color:var(--gold)">(305) 555-0186</a></dd>
-            </div>
-            <div>
-              <dt>Hours</dt>
-              <dd>Mon–Fri 9–7 · Sat 8–6 · Sun 10–4</dd>
-            </div>
-            <div>
-              <dt>Parking</dt>
-              <dd>Street + lot behind the building</dd>
-            </div>
-          </dl>
+        <div class="label">About · your artistry elevated</div>
+        <h2 class="title">Less admin.<br /><em>More artistry.</em></h2>
+        <p class="sub" style="margin-bottom:18px">
+          The SuperSite quietly handles the details behind the scenes so every touchpoint feels considered —
+          from first booking to review request to the Reel that fills next week’s chair.
+        </p>
+        <div class="trust-row">
+          <div class="chip"><b>01</b> Bookings that feel effortless</div>
+          <div class="chip"><b>02</b> Every detail remembered</div>
+          <div class="chip"><b>03</b> Growth you can see</div>
         </div>
+        <a class="btn btn-rose" href="#book" style="margin-top:8px">Book now</a>
       </div>
-      <div class="map-fake" role="img" aria-label="Map area for Apex Cuts Miami">
-        <div class="map-pin">
-          <strong>Apex Cuts</strong>
-          1842 NW 2nd Ave · Miami
+    </div>
+  </section>
+
+  <!-- Gallery mosaic -->
+  <section id="gallery" style="background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+    <div class="wrap">
+      <div class="label">Gallery · Beau<em style="font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:0;font-size:1.1em;color:var(--gold-light)">ty</em></div>
+      <h2 class="title">Created for your kind of <em>beautiful</em></h2>
+      <p class="sub">Not stock for stock’s sake — mood, craft, and finish. The same energy SuperSite turns into reviews, Reels, and booked chairs.</p>
+      <div class="art-mosaic">
+        <figure>
+          <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=900&q=80" alt="Beauty editorial hair" loading="lazy" />
+          <figcaption>Hero craft<span>Transform content · Photo → 5 Lanes</span></figcaption>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&q=80" alt="Portrait beauty" loading="lazy" />
+          <figcaption>Portrait light<span>Artist brand frames</span></figcaption>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&q=80" alt="Fashion beauty pose" loading="lazy" />
+          <figcaption>Campaign energy<span>Social-ready crop</span></figcaption>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1524504388940-b1c17226555e?w=600&q=80" alt="Soft beauty portrait" loading="lazy" />
+          <figcaption>Soft focus<span>Quiet luxury feed</span></figcaption>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1607779097040-26e80aa78e66?w=600&q=80" alt="Nail chrome detail" loading="lazy" />
+          <figcaption>Macro detail<span>ASMR / process hooks</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="stack" style="background:var(--bg);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+    <div class="wrap">
+      <div class="label">Shark SuperSite architecture</div>
+      <h2 class="title">Two layers. <em>One system.</em></h2>
+      <p class="sub">Same double-stack used on JAWSAI911 SuperSites — now under the Apex Cuts beauty brand.</p>
+      <div class="stack">
+        <div class="stack-card front">
+          <div class="layer">Layer 1 · Site Agent</div>
+          <h3>What clients see</h3>
+          <p class="muted" style="color:var(--muted);font-weight:300;font-size:.95rem;line-height:1.6">Mobile-first converting pages that feel as premium as the studio.</p>
+          <ul>
+            <li>Sticky click-to-call + Book CTAs (mobile first)</li>
+            <li>Trust above fold: rating, review count, velocity</li>
+            <li>Artist-tagged gallery &amp; Book the look</li>
+            <li>After-hours AI intake chat</li>
+            <li>LocalBusiness / NailSalon schema + NAP</li>
+            <li>Deposits, waitlists, rebooking paths</li>
+          </ul>
+        </div>
+        <div class="stack-card back">
+          <div class="layer">Layer 2 · Command Hub</div>
+          <h3>What your team runs</h3>
+          <p class="muted" style="font-weight:300;font-size:.95rem;line-height:1.6">The Growth OS: CRM, Gen-Viral, Review Engine, recovery.</p>
+          <ul>
+            <li>Missed-lead recovery · auto text-back</li>
+            <li>CRM roster · open / booked / re-engaged</li>
+            <li>Gen-Viral stack · CapCut-ready queue</li>
+            <li>Social Engine · human approval gate</li>
+            <li>Google Review Lane · dual path</li>
+            <li>Daily brief · follow-up sequences</li>
+          </ul>
+          <a class="btn btn-rose" href="command.html" style="margin-top:18px">Open Command Hub →</a>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="cta-band">
+  <section id="features">
     <div class="wrap">
-      <h2>Ready when you are</h2>
-      <p>Call now, book online, or text the shop. After hours, the SuperSite still answers.</p>
-      <div class="hero-actions">
-        <a class="btn btn-gold" href="tel:3055550186">Call (305) 555-0186</a>
-        <a class="btn btn-outline" href="#book">Book Online</a>
+      <div class="label">Platform · SuperSite edition</div>
+      <h2 class="title">Everything you need. <em>Nothing you don’t.</em></h2>
+      <p class="sub">Original Apex Cuts pillars — bookings, clients, growth — plus the engines that create walk-ins.</p>
+      <div class="feat-grid">
+        <article class="feat feat-visual">
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1633681926022-84c123d5c0e1?w=700&q=80')"></div>
+          <div class="feat-body">
+            <div class="ico">📅</div>
+            <h3>Bookings that feel effortless</h3>
+            <p>Real-time availability, deposits, waitlists, reminders — working while you create.</p>
+          </div>
+        </article>
+        <article class="feat feat-visual">
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=700&q=80')"></div>
+          <div class="feat-body">
+            <div class="ico">👤</div>
+            <h3>Every detail, remembered</h3>
+            <p>Client profiles: formulas, preferences, history, notes for personal service.</p>
+          </div>
+        </article>
+        <article class="feat feat-visual">
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=700&q=80')"></div>
+          <div class="feat-body">
+            <div class="ico">💳</div>
+            <h3>Payments &amp; POS</h3>
+            <p>Retail + services in one flow. Clearer revenue without extra apps.</p>
+          </div>
+        </article>
+        <article class="feat feat-visual">
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1604654894610-df63bc536371?w=700&q=80')"></div>
+          <div class="feat-body">
+            <div class="ico">⭐</div>
+            <h3>Google Review Engine</h3>
+            <p>Station QR + same-day SMS. Two chances per visit. Map-pack fuel.</p>
+          </div>
+        </article>
+        <article class="feat feat-visual">
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=700&q=80')"></div>
+          <div class="feat-body">
+            <div class="ico">▶</div>
+            <h3>Gen-Viral Social Engine</h3>
+            <p>One set photo → IG, TikTok, GBP, gallery, review ask. Approval before post.</p>
+          </div>
+        </article>
+        <article class="feat feat-visual">
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1560066984-138dadb4c035?w=700&q=80')"></div>
+          <div class="feat-body">
+            <div class="ico">📍</div>
+            <h3>Local SEO layer</h3>
+            <p>GBP posts/photos cadence, NAP consistency, schema, sticky mobile convert.</p>
+          </div>
+        </article>
+        <article class="feat feat-visual">
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=700&q=80')"></div>
+          <div class="feat-body">
+            <div class="ico">💬</div>
+            <h3>After-hours AI</h3>
+            <p>Chat captures nights &amp; weekends when beauty searches spike.</p>
+          </div>
+        </article>
+        <article class="feat feat-visual">
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=700&q=80')"></div>
+          <div class="feat-body">
+            <div class="ico">🔄</div>
+            <h3>Rebooking intelligence</h3>
+            <p>Glow opportunity nudges for clients due back — fill the calendar proactively.</p>
+          </div>
+        </article>
+        <article class="feat feat-visual">
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=700&q=80')"></div>
+          <div class="feat-body">
+            <div class="ico">🚀</div>
+            <h3>Growth OS dashboard</h3>
+            <p>Revenue, retention, inventory, commissions — plus social &amp; review KPIs.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bento visual close -->
+  <section style="border-top:1px solid var(--line)">
+    <div class="wrap">
+      <div class="label">Visual system · mood board</div>
+      <h2 class="title">More artistry. <em>On every screen.</em></h2>
+      <p class="sub">A SuperSite should feel as considered as the brand — not a template with a logo sticker.</p>
+      <div class="bento">
+        <figure class="tall">
+          <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=700&q=80" alt="Campaign beauty" loading="lazy" />
+          <div class="overlay">Campaign</div>
+        </figure>
+        <figure class="wide">
+          <img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?w=900&q=80" alt="Hair detail" loading="lazy" />
+          <div class="overlay">Texture &amp; finish</div>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=500&q=80" alt="Nails" loading="lazy" />
+          <div class="overlay">Nails</div>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1524504388940-b1c17226555e?w=500&q=80" alt="Portrait" loading="lazy" />
+          <div class="overlay">Portrait</div>
+        </figure>
+        <figure class="wide">
+          <img src="https://images.unsplash.com/photo-1633681926022-84c123d5c0e1?w=900&q=80" alt="Salon interior" loading="lazy" />
+          <div class="overlay">Space · trust on arrival</div>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="social-band" id="social">
+    <div class="wrap">
+      <div class="label">Social · 2026 formats that book</div>
+      <h2 class="title">Content that stops the scroll — <em>then books the chair</em></h2>
+      <p class="sub">Video gets ~3× engagement vs static. SuperSite packages every service into the formats clients actually save.</p>
+      <div class="trend-grid">
+        <article class="trend">
+          <span class="tag">Format</span>
+          <h3>3-second transformation</h3>
+          <p>Before → after in the first frame. Highest booking intent with “Book this look.”</p>
+          <div class="hook">“Wait for the blend…”</div>
+        </article>
+        <article class="trend">
+          <span class="tag">Format</span>
+          <h3>POV + question hook</h3>
+          <p>Text overlay in the first 3 seconds: the question they already search.</p>
+          <div class="hook">“How often should you really come in?”</div>
+        </article>
+        <article class="trend">
+          <span class="tag">Format</span>
+          <h3>ASMR / process</h3>
+          <p>High completion on TikTok. Caption + SuperSite link does the selling.</p>
+          <div class="hook">“No talking. Just the fade.”</div>
+        </article>
+        <article class="trend">
+          <span class="tag">Format</span>
+          <h3>Quiet luxury / clean girl</h3>
+          <p>Milky neutrals &amp; soft glam — what beauty clients screenshot and rebook.</p>
+          <div class="hook">“Clean fade. No fluff.”</div>
+        </article>
+        <article class="trend">
+          <span class="tag">Format</span>
+          <h3>Review → Reel</h3>
+          <p>5★ Google screenshot + service clip. Social proof + review velocity story.</p>
+          <div class="hook">“He said it still looked fresh at day 10…”</div>
+        </article>
+        <article class="trend">
+          <span class="tag">Ops</span>
+          <h3>7-day content map</h3>
+          <p>Mon transform · Tue artist · Wed POV · Thu FAQ · Fri openings · Sat UGC · Sun review Reel.</p>
+          <div class="hook">Command Hub schedules it</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="studio">
+    <div class="wrap video-grid">
+      <div class="video-frame">
+        <span class="video-badge">Studio film</span>
+        <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1200&q=80">
+          <source src="https://cdn.coverr.co/videos/coverr-woman-getting-a-manicure-4176/1080p.mp4" type="video/mp4" />
+          <source src="https://assets.mixkit.co/videos/39880/39880-720.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div>
+        <div class="label">See the SuperSite loop</div>
+        <h2 class="title">From set photo to <em>booked chair</em></h2>
+        <p class="sub" style="margin-bottom:18px">
+          Client leaves happy → review request fires → photo hits 5 lanes → social books the next chair.
+          Front and back feed each other.
+        </p>
+        <div class="feat" style="padding:18px;margin-bottom:10px">
+          <h3 style="font-size:.95rem">1 · Capture</h3>
+          <p>Station photo + optional walkaround clip</p>
+        </div>
+        <div class="feat" style="padding:18px;margin-bottom:10px">
+          <h3 style="font-size:.95rem">2 · Multiply</h3>
+          <p>Social · Google · Website · Shorts · Review ask</p>
+        </div>
+        <div class="feat" style="padding:18px">
+          <h3 style="font-size:.95rem">3 · Convert</h3>
+          <p>Sticky book · chat · CRM follow-up · rebook nudge</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+    <div class="wrap">
+      <div class="label">Why SuperSite vs typical software</div>
+      <h2 class="title">Typical salon stack vs <em>Apex Cuts SuperSite</em></h2>
+      <div style="overflow-x:auto;margin-top:28px">
+        <table class="compare">
+          <thead>
+            <tr>
+              <th>Capability</th>
+              <th>Typical booking app</th>
+              <th>Apex Cuts SuperSite</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>After-hours leads</td>
+              <td class="bad">Missed / lost</td>
+              <td class="good">AI chat + SMS recovery</td>
+            </tr>
+            <tr>
+              <td>Google reviews</td>
+              <td class="bad">If staff remembers</td>
+              <td class="good">Dual-path Review Engine</td>
+            </tr>
+            <tr>
+              <td>Social / Reels</td>
+              <td class="bad">Separate hustle</td>
+              <td class="good">Gen-Viral + approval queue</td>
+            </tr>
+            <tr>
+              <td>GBP photos &amp; posts</td>
+              <td class="bad">Set and forget</td>
+              <td class="good">Photo → 5 Lanes cadence</td>
+            </tr>
+            <tr>
+              <td>Team visibility</td>
+              <td class="bad">Inbox chaos</td>
+              <td class="good">Shared CRM + Command Hub</td>
+            </tr>
+            <tr>
+              <td>Walk-in flywheel</td>
+              <td class="bad">Hope + word of mouth</td>
+              <td class="good">Reviews + Maps + convert + rebook</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  
+  <section id="book" style="border-top:1px solid var(--line)">
+    <div class="wrap" style="display:grid;grid-template-columns:0.9fr 1.1fr;gap:28px;align-items:start">
+      <div>
+        <div class="label">Visit · NAP</div>
+        <h2 class="title">Apex Cuts</h2>
+        <p class="sub" style="margin-bottom:16px">1842 NW 2nd Ave<br />Miami, FL 33136<br /><a href="tel:3055550186" style="color:var(--gold-light)">(305) 555-0186</a></p>
+        <div class="chip" style="display:inline-flex;margin-bottom:8px"><b>Hours</b>&nbsp; open today · after-hours chat on</div>
+        <p class="sub">Demo SuperSite — form lands in Command Hub pipeline.</p>
+      </div>
+      <div class="stack-card front" style="padding:24px">
+        <div class="layer">Book online</div>
+        <h3 style="font-family:var(--serif);font-size:1.6rem;margin-bottom:12px">Request appointment</h3>
+        <form id="book-form" style="display:grid;gap:10px">
+          <input name="name" required placeholder="Name" style="padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit" />
+          <input name="phone" required type="tel" placeholder="Phone" style="padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit" />
+          <select name="service" required style="padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit">
+            <option value="">Service…</option>
+            <option>Skin Fade — $45</option><option>Classic Cut — $35</option><option>Beard Shape — $25</option><option>Cut + Beard — $60</option>
+          </select>
+          <select name="artist" style="padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit">
+            <option value="">Any available</option>
+            <option>Marcus</option><option>Diego</option><option>Jordan</option>
+          </select>
+          <select name="when" required style="padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit">
+            <option value="">When…</option>
+            <option>Today · ASAP</option>
+            <option>Today · After 3pm</option>
+            <option>Tomorrow morning</option>
+            <option>This weekend</option>
+          </select>
+          <button type="submit" class="btn btn-rose btn-lg" style="width:100%">Request appointment</button>
+        </form>
+        <div id="form-success" style="display:none;margin-top:12px;padding:14px;border-radius:12px;background:rgba(107,196,154,.12);border:1px solid rgba(107,196,154,.3);color:var(--green);font-weight:600;text-align:center">✓ Got it. In a live SuperSite this hits Command Hub CRM + confirmation text.</div>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="label">FAQ</div>
+      <h2 class="title">Questions owners ask</h2>
+      <div class="faq" style="margin-top:28px">
+        <details open>
+          <summary>Is this just another booking tool?</summary>
+          <p>No. Booking is Layer 1 table stakes. SuperSite adds after-hours capture, Review Engine, Gen-Viral content, and a Command Hub so growth doesn’t depend on memory.</p>
+        </details>
+        <details>
+          <summary>How does this help walk-ins and local visibility?</summary>
+          <p>Fresh Google reviews + GBP photos/posts + a site that converts mobile “near me” traffic. Social drives named artist bookings. The loop compounds.</p>
+        </details>
+        <details>
+          <summary>Will my team have to live on social?</summary>
+          <p>They approve. The Social Engine drafts captions, queues formats, and schedules — human gate before anything posts under your brand.</p>
+        </details>
+        <details>
+          <summary>What about nails vs hair vs spa?</summary>
+          <p>Same SuperSite OS. 💅 Luxe Nails · ✂️ Apex Cuts · GlowUP hair platform — JAWSAI911 brand 🦈.</p>
+        </details>
       </div>
     </div>
   </section>
@@ -1103,117 +1180,111 @@
   <footer>
     <div class="wrap foot">
       <div>
-        <strong style="color:var(--ink)">Apex Cuts Barbershop</strong><br />
+        <strong>Apex Cuts</strong><br />
         1842 NW 2nd Ave, Miami, FL 33136 · (305) 555-0186
       </div>
       <div>
-        Demo SuperSite by <a href="../../salon-supersite.html">JAWSAI911</a> ·
-        <a href="command.html">Open Command Agent</a>
+        <a href="command.html">Command Hub</a> ·
+        <a href="../../salon-supersite.html">Offer</a> ·
+        <a href="../luxe-nails/index.html">Nail demo</a> ·
+        <a href="../../glowup-supersite/">GlowUP</a>
       </div>
     </div>
   </footer>
 
-  <div class="sticky-bar" aria-label="Quick actions">
-    <a class="call" href="tel:3055550186">Call</a>
-    <a class="text" href="sms:3055550186">Text</a>
-    <a class="book" href="#book">Book</a>
+  <div class="sticky" aria-label="Quick actions">
+    <a class="hub" href="command.html">Hub</a>
+    <a class="primary" href="tel:3055550186">Call</a>
+    <a class="secondary" href="#book">Book</a>
   </div>
 
   <button class="chat-fab" id="chat-fab" aria-label="Chat">💬</button>
   <div class="chat-panel" id="chat-panel">
     <div class="chat-head">
       <div>
-        <strong>Apex Cuts · After-hours</strong>
-        <small>● AI intake · live when shop is closed</small>
+        <strong>Apex Cuts Concierge</strong>
+        <small>● Online · SuperSite demo</small>
       </div>
       <button type="button" id="chat-close">×</button>
     </div>
     <div class="chat-body" id="chat-body">
-      <div class="msg bot">Hey — want a cut today or this week? I can check openings and take your number for the shop.</div>
+      <div class="msg bot">Hi — looking at Apex Cuts SuperSite? I can cover bookings, Review Engine, Gen-Viral, or open the Command Hub walkthrough.</div>
     </div>
     <div class="chat-quick">
-      <button type="button" data-q="What are your prices?">Prices</button>
-      <button type="button" data-q="Do you have openings today?">Today openings</button>
-      <button type="button" data-q="I want to book Marcus">Book Marcus</button>
+      <button type="button" data-q="What is SuperSite?">SuperSite?</button>
+      <button type="button" data-q="How do reviews work?">Reviews</button>
+      <button type="button" data-q="Show me Command Hub">Command Hub</button>
     </div>
     <form class="chat-form" id="chat-form">
-      <input id="chat-input" placeholder="Type a message…" autocomplete="off" />
+      <input id="chat-input" placeholder="Ask anything…" autocomplete="off" />
       <button type="submit">Send</button>
     </form>
   </div>
 
   <script>
     (function () {
-      // Booking form → simulated pipeline
-      const form = document.getElementById("book-form");
-      const success = document.getElementById("form-success");
-      form.addEventListener("submit", function (e) {
-        e.preventDefault();
-        const data = Object.fromEntries(new FormData(form).entries());
-        // Persist demo lead for Command Agent
-        try {
-          const leads = JSON.parse(localStorage.getItem("apex_leads") || "[]");
-          leads.unshift({
-            id: "L" + Date.now(),
-            ...data,
-            source: "SuperSite form",
-            status: "New",
-            created: new Date().toISOString()
-          });
-          localStorage.setItem("apex_leads", JSON.stringify(leads.slice(0, 50)));
-        } catch (_) {}
-        form.style.display = "none";
-        success.style.display = "block";
-      });
-
-      // Chat
-      const fab = document.getElementById("chat-fab");
-      const panel = document.getElementById("chat-panel");
-      const body = document.getElementById("chat-body");
-      const chatForm = document.getElementById("chat-form");
-      const input = document.getElementById("chat-input");
-
-      fab.addEventListener("click", () => panel.classList.toggle("open"));
-      document.getElementById("chat-close").addEventListener("click", () => panel.classList.remove("open"));
-
+      var fab = document.getElementById("chat-fab");
+      var panel = document.getElementById("chat-panel");
+      var body = document.getElementById("chat-body");
+      var form = document.getElementById("chat-form");
+      var input = document.getElementById("chat-input");
+      fab.addEventListener("click", function () { panel.classList.toggle("open"); });
+      document.getElementById("chat-close").addEventListener("click", function () { panel.classList.remove("open"); });
       function add(cls, text) {
-        const el = document.createElement("div");
+        var el = document.createElement("div");
         el.className = "msg " + cls;
         el.textContent = text;
         body.appendChild(el);
         body.scrollTop = body.scrollHeight;
       }
       function reply(q) {
-        const s = q.toLowerCase();
-        if (s.includes("price") || s.includes("cost") || s.includes("how much")) {
-          return "Skin fade $45 · Classic $35 · Beard $25 · Cut+Beard $60 · Kids $28. Want me to hold a chair? Drop your name + number.";
-        }
-        if (s.includes("today") || s.includes("open") || s.includes("available")) {
-          return "Today we usually free up after 2pm and have walk-in gaps. Best bet: call (305) 555-0186 or leave your number here and the shop texts back.";
-        }
-        if (s.includes("marcus") || s.includes("diego") || s.includes("jordan") || s.includes("book")) {
-          return "Got it — use the Book form on this page and pick the stylist, or text your name + preferred time to (305) 555-0186. In the live SuperSite this creates a pipeline card automatically.";
-        }
-        if (s.includes("hour") || s.includes("open")) {
-          return "Mon–Fri 9–7, Sat 8–6, Sun 10–4. After hours this chat captures your request so nothing is lost.";
-        }
-        return "Thanks — leave a name and phone and the shop will follow up. Or call (305) 555-0186 now. You can also use the Book form on this page.";
+        var s = q.toLowerCase();
+        if (s.indexOf("super") !== -1 || s.indexOf("stack") !== -1)
+          return "SuperSite = Layer 1 converting site + Layer 2 Command Hub. Bookings, CRM, Review Engine, Gen-Viral social, after-hours AI — one system so walk-ins and local visibility compound.";
+        if (s.indexOf("review") !== -1)
+          return "Google Review Engine: station/QR ask right after service + automatic same-day SMS if they skip. Target steady new reviews every month for map pack strength.";
+        if (s.indexOf("command") !== -1 || s.indexOf("hub") !== -1)
+          return "Open the Command Hub from the top nav or sticky bar — CRM, missed-lead recovery, Gen-Viral queue, Social approval, Review Lane. Or go to command.html.";
+        if (s.indexOf("price") !== -1 || s.indexOf("cost") !== -1)
+          return "This is a live SuperSite demo. For the salon special, email info@jawsai911.com or call 786-761-2950.";
+        return "Ask about SuperSite, reviews, Gen-Viral, or Command Hub — or open command.html to see the operator layer.";
       }
       function handle(q) {
         if (!q.trim()) return;
         add("user", q);
-        setTimeout(() => add("bot", reply(q)), 400);
+        setTimeout(function () { add("bot", reply(q)); }, 400);
       }
-      chatForm.addEventListener("submit", (e) => {
+      form.addEventListener("submit", function (e) {
         e.preventDefault();
-        const q = input.value;
+        var q = input.value;
         input.value = "";
         handle(q);
       });
-      document.querySelectorAll(".chat-quick button").forEach((b) => {
-        b.addEventListener("click", () => handle(b.getAttribute("data-q")));
+      document.querySelectorAll(".chat-quick button").forEach(function (b) {
+        b.addEventListener("click", function () { handle(b.getAttribute("data-q")); });
       });
     })();
   </script>
+
+  <script>
+    (function(){
+      var form = document.getElementById('book-form');
+      var success = document.getElementById('form-success');
+      if (form) {
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          var data = Object.fromEntries(new FormData(form).entries());
+          try {
+            var leads = JSON.parse(localStorage.getItem('apex_leads') || '[]');
+            leads.unshift(Object.assign({ id: 'L'+Date.now(), source: 'SuperSite form', status: 'New', created: new Date().toISOString() }, data));
+            localStorage.setItem('apex_leads', JSON.stringify(leads.slice(0, 50)));
+          } catch (err) {}
+          form.style.display = 'none';
+          if (success) success.style.display = 'block';
+        });
+      }
+    })();
+  </script>
+
 </body>
 </html>
