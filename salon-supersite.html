@@ -292,6 +292,73 @@
       line-height: 1.5;
     }
 
+    .prob-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .prob-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .prob-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #ef4444, transparent);
+    }
+    .prob-card.fixed::before {
+      background: linear-gradient(90deg, var(--success), transparent);
+    }
+    .prob-num {
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #f87171;
+      margin-bottom: 10px;
+    }
+    .prob-card.fixed .prob-num { color: var(--success); }
+    .prob-card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+    }
+    .prob-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+    .prob-fix {
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: rgba(34, 197, 94, 0.08);
+      border: 1px solid rgba(34, 197, 94, 0.22);
+      font-size: 0.85rem;
+      color: #86efac;
+      line-height: 1.5;
+    }
+    .prob-fix strong { color: #bbf7d0; }
+    .prob-one-liner {
+      margin-top: 28px;
+      padding: 22px 24px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(0,180,255,.1), rgba(0,119,204,.05));
+      border: 1px solid rgba(0,180,255,.28);
+      font-size: 1.05rem;
+      line-height: 1.55;
+      color: var(--text);
+    }
+    .prob-one-liner em { color: var(--accent); font-style: normal; font-weight: 700; }
+    @media (max-width: 720px) {
+      .prob-grid { grid-template-columns: 1fr; }
+    }
+
     .review-split {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -755,6 +822,7 @@
         <a href="offers.html">Offers</a>
         <a href="demos/luxe-nails/index.html">Nail Demo</a>
         <a href="glowup-supersite/index.html">GlowUP SuperSite</a>
+        <a href="#problems">Problems we fix</a>
         <a href="#book" class="btn btn-primary">Book a Walkthrough</a>
       </nav>
     </div>
@@ -845,6 +913,52 @@
             <strong>After-hours AI</strong>
             <span>Chat captures nights &amp; weekends when most beauty searches happen.</span>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEMS WE FIX -->
+    <section class="ss-section" id="problems">
+      <div class="container">
+        <div class="ss-label">Problems we fix</div>
+        <h2 class="ss-title">Most shops don’t lose on the work.<br />They lose in the gaps.</h2>
+        <p class="ss-sub">
+          After-hours calls, quiet review counts, dead camera rolls, and no shared system.
+          SuperSite closes those gaps — so local visibility and walk-ins compound.
+        </p>
+        <div class="prob-grid">
+          <article class="prob-card fixed">
+            <div class="prob-num">01 · After-hours &amp; missed leads</div>
+            <h3>The phone rings when you’re mid-service</h3>
+            <p>Clients search nights and weekends. Voicemail = they book the next shop on Maps. High-intent traffic dies before the chair does.</p>
+            <div class="prob-fix"><strong>SuperSite fix:</strong> Sticky click-to-call · 24/7 AI chat · missed-call SMS recovery · every lead lands in Command Hub CRM.</div>
+          </article>
+          <article class="prob-card fixed">
+            <div class="prob-num">02 · Review drought</div>
+            <h3>Happy clients leave without reviewing</h3>
+            <p>Local pack rankings reward <em style="color:var(--text);font-style:normal">fresh</em> Google reviews. If staff “forgets to ask,” your map visibility stalls while competitors stack stars.</p>
+            <div class="prob-fix"><strong>SuperSite fix:</strong> Google Review Engine — chair/station QR <strong>+</strong> same-day auto SMS. Two chances per visit. Tracked in Command Hub.</div>
+          </article>
+          <article class="prob-card fixed">
+            <div class="prob-num">03 · Content never ships</div>
+            <h3>Photos die in the camera roll</h3>
+            <p>Great work happens all day. Instagram and Google Business go quiet. No “Book this look” path from social back to the chair.</p>
+            <div class="prob-fix"><strong>SuperSite fix:</strong> Photo → 5 Lanes (Social · Google · Website · Shorts · Review) + Gen-Viral approval queue so content actually posts.</div>
+          </article>
+          <article class="prob-card fixed">
+            <div class="prob-num">04 · Tool chaos</div>
+            <h3>Booking ≠ social ≠ reviews ≠ follow-up</h3>
+            <p>Leads live in DMs, texts, and memory. No one owns the pipeline. Rebooking and reactivation depend on whoever remembers.</p>
+            <div class="prob-fix"><strong>SuperSite fix:</strong> One Command Hub — CRM roster, follow-up drips, social queue, review lane, daily brief. Front and back feed each other.</div>
+          </article>
+        </div>
+        <div class="prob-one-liner">
+          <em>Pitch line:</em> Most salons don’t lose because of bad cuts — they lose because after-hours leads die, reviews don’t happen, and content never ships. SuperSite fixes all three: converting front + Command Hub with CRM, Gen-Viral, and a Google Review Engine — so local search and walk-ins keep feeding each other.
+        </div>
+        <div class="ss-ctas" style="margin-top:24px">
+          <a href="#book" class="btn btn-primary">Claim the special</a>
+          <a href="sales-script.html" class="btn btn-outline">1-page sales script →</a>
+          <a href="demos/luxe-nails/command.html" class="btn btn-outline">See Command Hub</a>
         </div>
       </div>
     </section>

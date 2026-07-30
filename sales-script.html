@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SuperSite 1-Page Sales Script | JAWSAI911</title>
+  <meta name="description" content="Printable 1-page sales script for JAWSAI911 Shark SuperSite — problems we fix, pitch, close." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #0a0e17;
+      --muted: #5a6472;
+      --line: #e2e6ea;
+      --cyan: #00b4ff;
+      --navy: #0b1f33;
+      --green: #1fa37a;
+      --foam: #f7fafb;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Inter, system-ui, sans-serif;
+      color: var(--ink);
+      background: #e8eef2;
+      line-height: 1.45;
+      font-size: 13px;
+    }
+    .sheet {
+      width: min(8.5in, 100%);
+      min-height: 11in;
+      margin: 16px auto;
+      background: #fff;
+      padding: 0.55in 0.6in;
+      box-shadow: 0 12px 40px rgba(0,0,0,.12);
+    }
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+    }
+    .brand { font-weight: 900; font-size: 15px; letter-spacing: -0.02em; }
+    .brand span { color: var(--cyan); }
+    .brand small {
+      display: block;
+      font-weight: 600;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 3px;
+    }
+    .meta {
+      text-align: right;
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .meta strong { color: var(--ink); }
+    h1 {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+    .hook {
+      background: var(--foam);
+      border-left: 3px solid var(--cyan);
+      padding: 10px 12px;
+      font-size: 12.5px;
+      margin-bottom: 14px;
+      color: var(--navy);
+    }
+    h2 {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin: 14px 0 8px;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 11px;
+    }
+    .card .num {
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      color: #c0392b;
+      margin-bottom: 3px;
+    }
+    .card h3 { font-size: 12.5px; font-weight: 800; margin-bottom: 3px; }
+    .card p { font-size: 11.5px; color: var(--muted); margin-bottom: 5px; }
+    .card .fix {
+      font-size: 11px;
+      color: var(--green);
+      font-weight: 600;
+      background: #eef9f4;
+      padding: 5px 7px;
+      border-radius: 5px;
+    }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .step {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px;
+      background: var(--foam);
+    }
+    .step b {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 3px;
+    }
+    .step span { font-size: 11.5px; color: var(--navy); font-weight: 600; line-height: 1.35; }
+    .script-block {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 12px;
+      background: #fafcfd;
+    }
+    .script-block .label {
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .script-block p { font-size: 12px; color: var(--ink); line-height: 1.45; }
+    .script-block + .script-block { margin-top: 8px; }
+    .close-row {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .offer {
+      background: var(--navy);
+      color: #fff;
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+    .offer .lim {
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #7dd3fc;
+      margin-bottom: 4px;
+    }
+    .offer .price { font-size: 22px; font-weight: 900; line-height: 1.1; }
+    .offer .price small { font-size: 12px; font-weight: 600; opacity: .8; }
+    .offer ul {
+      list-style: none;
+      margin-top: 8px;
+      font-size: 11px;
+      opacity: .92;
+    }
+    .offer li { padding: 2px 0; }
+    .offer li::before { content: "✓ "; color: #4ade80; font-weight: 800; }
+    .obj {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+    .obj h3 {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .obj p { font-size: 11.5px; margin-bottom: 6px; color: var(--ink); }
+    .obj p strong { color: #0b1f33; }
+    .footer {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 10.5px;
+      color: var(--muted);
+    }
+    .footer a { color: var(--cyan); font-weight: 700; text-decoration: none; }
+    .demo-links { font-size: 10.5px; line-height: 1.55; }
+    .no-print {
+      max-width: 8.5in;
+      margin: 12px auto 0;
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .no-print a {
+      display: inline-block;
+      margin: 0 6px;
+      color: var(--cyan);
+      font-weight: 700;
+    }
+    .no-print button {
+      margin: 8px 4px 0;
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: none;
+      background: var(--navy);
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    @media print {
+      body { background: #fff; }
+      .sheet { margin: 0; box-shadow: none; width: 100%; min-height: auto; padding: 0.4in 0.5in; }
+      .no-print { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="no-print">
+    <a href="salon-supersite.html">← Offer page</a>
+    <a href="demos/luxe-nails/index.html">Nail demo</a>
+    <a href="demos/luxe-nails/command.html">Command Hub</a>
+    <br />
+    <button type="button" onclick="window.print()">Print / Save PDF</button>
+  </div>
+
+  <article class="sheet">
+    <header class="top">
+      <div class="brand">
+        JAWS<span>AI</span>911
+        <small>Shark SuperSite · 1-page sales script</small>
+      </div>
+      <div class="meta">
+        <strong>✂️ Barbers · 💅 Nails · brand 🦈</strong><br />
+        Special: <strong>$1,000 setup · $497/mo</strong><br />
+        786-761-2950 · hello@jawsai911.com
+      </div>
+    </header>
+
+    <h1>Problems we fix → SuperSite close</h1>
+    <div class="hook">
+      <strong>Opener:</strong> “Most shops don’t lose because of bad work — they lose after hours, on Google reviews, and in the gap between a great set and a booked chair. SuperSite fixes those three so local visibility and walk-ins compound.”
+    </div>
+
+    <h2>1 · Diagnose (ask, then mirror)</h2>
+    <div class="grid-2">
+      <div class="card">
+        <div class="num">Ask</div>
+        <h3>Discovery questions</h3>
+        <p>• What happens when someone calls while you’re mid-service?<br />
+        • How many new Google reviews last month?<br />
+        • Who posts content — and how often does it actually ship?<br />
+        • Where do leads live today (phone, DMs, memory)?</p>
+      </div>
+      <div class="card">
+        <div class="num">Listen for</div>
+        <h3>Pain language</h3>
+        <p>“We miss calls.” “Reviews when we remember.” “Phone full of photos.” “Instagram is inconsistent.” “Walk-ins are random.”</p>
+        <div class="fix">Mirror: “So the work is solid — the system around it is leaky.”</div>
+      </div>
+    </div>
+
+    <h2>2 · Problems we fix (map pain → SuperSite)</h2>
+    <div class="grid-2">
+      <div class="card">
+        <div class="num">01 · After-hours / missed leads</div>
+        <h3>Phone rings mid-service</h3>
+        <p>Night/weekend searchers hit voicemail → next shop on Maps.</p>
+        <div class="fix">Fix: sticky call · AI chat · SMS recovery · CRM pipeline</div>
+      </div>
+      <div class="card">
+        <div class="num">02 · Review drought</div>
+        <h3>Happy clients leave quiet</h3>
+        <p>Map pack needs fresh reviews. Asking by memory fails.</p>
+        <div class="fix">Fix: chair QR + same-day SMS = 2× chances / visit</div>
+      </div>
+      <div class="card">
+        <div class="num">03 · Content never ships</div>
+        <h3>Photos die in camera roll</h3>
+        <p>Feed &amp; Google Business go quiet. No path from Reel → book.</p>
+        <div class="fix">Fix: Photo → 5 Lanes + Gen-Viral approval queue</div>
+      </div>
+      <div class="card">
+        <div class="num">04 · Tool chaos</div>
+        <h3>No shared operating picture</h3>
+        <p>Booking ≠ social ≠ reviews ≠ follow-up. Staff memory = CRM.</p>
+        <div class="fix">Fix: Command Hub — CRM, social, reviews, daily brief</div>
+      </div>
+    </div>
+
+    <h2>3 · Demo path (5 minutes)</h2>
+    <div class="steps">
+      <div class="step"><b>Step 1</b><span>Public SuperSite: trust, sticky Call/Book, chat</span></div>
+      <div class="step"><b>Step 2</b><span>Submit a fake lead on the form</span></div>
+      <div class="step"><b>Step 3</b><span>Command Hub: lead in CRM</span></div>
+      <div class="step"><b>Step 4</b><span>Show Review Lane + Gen-Viral + 5 Lanes</span></div>
+    </div>
+
+    <h2>4 · Script blocks (say this)</h2>
+    <div class="script-block">
+      <div class="label">Value bridge</div>
+      <p>“Booking software fills a slot. SuperSite fills the funnel — Maps, reviews, social, and after-hours — then hands the team one screen to run it.”</p>
+    </div>
+    <div class="script-block">
+      <div class="label">Investment case</div>
+      <p>“One extra regular a week — or one saved after-hours lead that rebooks — usually covers the month. Reviews and photos compound: more stars → higher rank → more near-me traffic → more chairs.”</p>
+    </div>
+    <div class="script-block">
+      <div class="label">Pitch line (memorize)</div>
+      <p>“Most salons don’t lose because of bad cuts — they lose because after-hours leads die, reviews don’t happen, and content never ships. SuperSite fixes all three.”</p>
+    </div>
+
+    <div class="close-row">
+      <div class="obj">
+        <h3>Objections</h3>
+        <p><strong>“I don’t want more apps.”</strong> — This replaces the scramble. Front + hub, not five logins.</p>
+        <p><strong>“We’re bad at social.”</strong> — You approve. Engine drafts, queues, multiplies one photo five ways.</p>
+        <p><strong>“Can we start smaller?”</strong> — Special is already the salon stack: SuperSite + Review + Shorts + visibility. No long-term lock.</p>
+        <p><strong>Close:</strong> “We’ll map your chairs and Google profile in 20 minutes. Setup $1,000, then $497/mo — everything included. Want the walkthrough this week?”</p>
+      </div>
+      <div class="offer">
+        <div class="lim">Limited-time special</div>
+        <div class="price">$497 <small>/ mo</small></div>
+        <div style="font-size:12px;opacity:.85;margin-top:2px">+ $1,000 setup · no long contract</div>
+        <ul>
+          <li>SuperSite front</li>
+          <li>Command Hub · CRM</li>
+          <li>Review Engine (2× path)</li>
+          <li>Gen-Viral · Photo → 5 Lanes</li>
+          <li>Reply + Google Visibility agents</li>
+          <li>Chair stand setup support</li>
+        </ul>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div>
+        <strong style="color:var(--ink)">JAWS AI 911</strong> · Leave the school behind<br />
+        jawsai911.com · 786-761-2950 · hello@jawsai911.com
+      </div>
+      <div class="demo-links">
+        Offer: jawsai911.com/salon-supersite.html<br />
+        Nail: …/demos/luxe-nails/<br />
+        Hub: …/demos/luxe-nails/command.html<br />
+        GlowUP: …/glowup-supersite/
+      </div>
+    </footer>
+  </article>
+</body>
+</html>
