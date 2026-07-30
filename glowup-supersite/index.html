@@ -422,15 +422,200 @@
       color: #0a0a0a; font-weight: 700; cursor: pointer; font-family: inherit;
     }
 
+    /* Visual art */
+    .hero-visual-stack {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 12px;
+      align-items: stretch;
+    }
+    .hero-visual-stack .hero-img { max-height: none; aspect-ratio: 3/4; }
+    .hero-side {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      gap: 12px;
+    }
+    .hero-side figure {
+      margin: 0;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      position: relative;
+      min-height: 160px;
+    }
+    .hero-side img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-side figcaption {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      padding: 12px 14px;
+      background: linear-gradient(transparent, rgba(0,0,0,.85));
+      font-size: .72rem; font-weight: 600; color: var(--gold-light);
+      letter-spacing: .04em;
+    }
+
+    .portrait-band {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 28px;
+      align-items: center;
+    }
+    .portrait-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .portrait-pair figure {
+      margin: 0;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      aspect-ratio: 3/4;
+      position: relative;
+    }
+    .portrait-pair figure:first-child { margin-top: 28px; }
+    .portrait-pair img { width: 100%; height: 100%; object-fit: cover; }
+
+    .art-mosaic {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      grid-template-rows: 200px 200px;
+      gap: 12px;
+    }
+    .art-mosaic figure {
+      margin: 0;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      position: relative;
+      background: var(--card);
+    }
+    .art-mosaic figure:first-child {
+      grid-row: span 2;
+      min-height: 412px;
+    }
+    .art-mosaic img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .45s ease;
+    }
+    .art-mosaic figure:hover img { transform: scale(1.04); }
+    .art-mosaic figcaption {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      padding: 14px 16px;
+      background: linear-gradient(transparent, rgba(0,0,0,.88));
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--gold-light);
+    }
+    .art-mosaic figcaption span {
+      display: block;
+      font-family: var(--sans);
+      font-style: normal;
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .feat-visual {
+      overflow: hidden;
+      padding: 0;
+    }
+    .feat-visual .feat-photo {
+      height: 140px;
+      background-size: cover;
+      background-position: center;
+      border-bottom: 1px solid var(--line);
+    }
+    .feat-visual .feat-body { padding: 20px 22px 24px; }
+    .feat-visual .ico { margin-bottom: 10px; }
+
+    .bento {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: 160px;
+      gap: 12px;
+    }
+    .bento figure {
+      margin: 0;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      position: relative;
+    }
+    .bento figure.wide { grid-column: span 2; }
+    .bento figure.tall { grid-row: span 2; }
+    .bento img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+    .bento figure:hover img { transform: scale(1.05); }
+    .bento .overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,.75));
+      display: flex; align-items: flex-end;
+      padding: 16px;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--gold-light);
+    }
+
+    .lookbook-strip {
+      display: flex;
+      gap: 14px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+    .lookbook-strip::-webkit-scrollbar { height: 6px; }
+    .lookbook-strip::-webkit-scrollbar-thumb { background: var(--line2); border-radius: 99px; }
+    .look-card {
+      flex: 0 0 min(240px, 72vw);
+      scroll-snap-align: start;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: var(--card);
+    }
+    .look-card img { width: 100%; aspect-ratio: 3/4; object-fit: cover; }
+    .look-card .meta {
+      padding: 12px 14px;
+      font-size: .78rem;
+      color: var(--muted);
+    }
+    .look-card .meta strong {
+      display: block;
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--gold-light);
+      margin-bottom: 2px;
+    }
+
     @media (max-width: 960px) {
-      .hero-grid, .stack, .video-grid, .price-box { grid-template-columns: 1fr; }
+      .hero-grid, .stack, .video-grid, .price-box, .portrait-band { grid-template-columns: 1fr; }
       .problems, .feat-grid, .trend-grid { grid-template-columns: 1fr; }
+      .hero-visual-stack { grid-template-columns: 1fr; }
+      .hero-side { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .art-mosaic {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 180px 160px 160px;
+      }
+      .art-mosaic figure:first-child {
+        grid-column: span 2;
+        grid-row: span 1;
+        min-height: 220px;
+      }
+      .bento { grid-template-columns: 1fr 1fr; grid-auto-rows: 140px; }
+      .bento figure.wide { grid-column: span 2; }
+      .bento figure.tall { grid-row: span 1; }
       .nav-links { display: none; }
       .float { left: 12px; right: 12px; max-width: none; }
       .hero-img { max-height: 400px; aspect-ratio: 5/4; }
     }
     @media (max-width: 520px) {
       .sticky .hub { display: none; }
+      .portrait-pair figure:first-child { margin-top: 0; }
     }
   </style>
 </head>
@@ -450,6 +635,7 @@
       <nav class="nav-links">
         <a href="#problems">Why SuperSite</a>
         <a href="#stack">Double stack</a>
+        <a href="#gallery">Gallery</a>
         <a href="#features">Platform</a>
         <a href="#social">Social</a>
         <a href="#faq">FAQ</a>
@@ -482,14 +668,59 @@
         </div>
       </div>
       <div class="hero-visual">
-        <div class="hero-img">
-          <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1200&q=80" alt="Luxury salon interior" width="800" height="1000" />
+        <div class="hero-visual-stack">
+          <div class="hero-img">
+            <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=900&q=80" alt="Beauty portrait with soft light" width="900" height="1200" />
+          </div>
+          <div class="hero-side">
+            <figure>
+              <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600&q=80" alt="Manicure detail art" loading="lazy" />
+              <figcaption>Detail · hands &amp; finish</figcaption>
+            </figure>
+            <figure>
+              <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&q=80" alt="Salon chairs ambient" loading="lazy" />
+              <figcaption>Studio · ambient gold</figcaption>
+            </figure>
+          </div>
         </div>
         <div class="float">
           <div class="stars">★★★★★</div>
           <p>“Evenings back. Studio feels premium before they walk in.”</p>
           <small>Studio owner · SuperSite stack</small>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Visual lookbook strip -->
+  <section style="padding:28px 0 8px;border-bottom:1px solid var(--line)">
+    <div class="wrap">
+      <div class="label" style="margin-bottom:14px">Lookbook · art of the craft</div>
+      <div class="lookbook-strip" aria-label="Beauty lookbook">
+        <article class="look-card">
+          <img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=500&q=80" alt="Editorial beauty close-up" loading="lazy" />
+          <div class="meta"><strong>Editorial skin</strong>Quiet luxury · soft focus</div>
+        </article>
+        <article class="look-card">
+          <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=500&q=80" alt="Makeup artistry" loading="lazy" />
+          <div class="meta"><strong>Color story</strong>Artist-led proof for Reels</div>
+        </article>
+        <article class="look-card">
+          <img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=500&q=80" alt="Nail art french tips" loading="lazy" />
+          <div class="meta"><strong>Modern french</strong>Book-the-look ready</div>
+        </article>
+        <article class="look-card">
+          <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=500&q=80" alt="Hair styling art" loading="lazy" />
+          <div class="meta"><strong>Hair sculpture</strong>Transform in 3 seconds</div>
+        </article>
+        <article class="look-card">
+          <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500&q=80" alt="Beauty tools flat lay" loading="lazy" />
+          <div class="meta"><strong>Tools &amp; ritual</strong>ASMR / process content</div>
+        </article>
+        <article class="look-card">
+          <img src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=500&q=80" alt="Spa product styling" loading="lazy" />
+          <div class="meta"><strong>Retail glow</strong>POS + product stories</div>
+        </article>
       </div>
     </div>
   </section>
@@ -539,7 +770,66 @@
     </div>
   </section>
 
-  <section id="stack" style="background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <!-- About + portraits -->
+  <section id="about" style="border-top:1px solid var(--line)">
+    <div class="wrap portrait-band">
+      <div class="portrait-pair">
+        <figure>
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&q=80" alt="Beauty professional portrait" loading="lazy" />
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&q=80" alt="Editorial face portrait" loading="lazy" />
+        </figure>
+      </div>
+      <div>
+        <div class="label">About · your artistry elevated</div>
+        <h2 class="title">Less admin.<br /><em>More artistry.</em></h2>
+        <p class="sub" style="margin-bottom:18px">
+          GlowUP quietly handles the details behind the scenes so every touchpoint feels considered —
+          from first booking to review request to the Reel that fills next week’s chair.
+        </p>
+        <div class="trust-row">
+          <div class="chip"><b>01</b> Bookings that feel effortless</div>
+          <div class="chip"><b>02</b> Every detail remembered</div>
+          <div class="chip"><b>03</b> Growth you can see</div>
+        </div>
+        <a class="btn btn-rose" href="#start" style="margin-top:8px">Start your glow</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery mosaic -->
+  <section id="gallery" style="background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+    <div class="wrap">
+      <div class="label">Gallery · Beau<em style="font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:0;font-size:1.1em;color:var(--gold-light)">ty</em></div>
+      <h2 class="title">Created for your kind of <em>beautiful</em></h2>
+      <p class="sub">Not stock for stock’s sake — mood, craft, and finish. The same energy SuperSite turns into reviews, Reels, and booked chairs.</p>
+      <div class="art-mosaic">
+        <figure>
+          <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=900&q=80" alt="Beauty editorial hair" loading="lazy" />
+          <figcaption>Hero craft<span>Transform content · Photo → 5 Lanes</span></figcaption>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&q=80" alt="Portrait beauty" loading="lazy" />
+          <figcaption>Portrait light<span>Artist brand frames</span></figcaption>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&q=80" alt="Fashion beauty pose" loading="lazy" />
+          <figcaption>Campaign energy<span>Social-ready crop</span></figcaption>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1524504388940-b1c17226555e?w=600&q=80" alt="Soft beauty portrait" loading="lazy" />
+          <figcaption>Soft focus<span>Quiet luxury feed</span></figcaption>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1607779097040-26e80aa78e66?w=600&q=80" alt="Nail chrome detail" loading="lazy" />
+          <figcaption>Macro detail<span>ASMR / process hooks</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="stack" style="background:var(--bg);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
     <div class="wrap">
       <div class="label">Shark SuperSite architecture</div>
       <h2 class="title">Two layers. <em>One system.</em></h2>
@@ -582,51 +872,109 @@
       <h2 class="title">Everything you need. <em>Nothing you don’t.</em></h2>
       <p class="sub">Original GlowUP pillars — bookings, clients, growth — plus the engines that create walk-ins.</p>
       <div class="feat-grid">
-        <article class="feat">
-          <div class="ico">📅</div>
-          <h3>Bookings that feel effortless</h3>
-          <p>Real-time availability, deposits, waitlists, reminders — working while you create.</p>
+        <article class="feat feat-visual">
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1633681926022-84c123d5c0e1?w=700&q=80')"></div>
+          <div class="feat-body">
+            <div class="ico">📅</div>
+            <h3>Bookings that feel effortless</h3>
+            <p>Real-time availability, deposits, waitlists, reminders — working while you create.</p>
+          </div>
         </article>
-        <article class="feat">
-          <div class="ico">👤</div>
-          <h3>Every detail, remembered</h3>
-          <p>Client profiles: formulas, preferences, history, notes for personal service.</p>
+        <article class="feat feat-visual">
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=700&q=80')"></div>
+          <div class="feat-body">
+            <div class="ico">👤</div>
+            <h3>Every detail, remembered</h3>
+            <p>Client profiles: formulas, preferences, history, notes for personal service.</p>
+          </div>
         </article>
-        <article class="feat">
-          <div class="ico">💳</div>
-          <h3>Payments &amp; POS</h3>
-          <p>Retail + services in one flow. Clearer revenue without extra apps.</p>
+        <article class="feat feat-visual">
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=700&q=80')"></div>
+          <div class="feat-body">
+            <div class="ico">💳</div>
+            <h3>Payments &amp; POS</h3>
+            <p>Retail + services in one flow. Clearer revenue without extra apps.</p>
+          </div>
         </article>
-        <article class="feat">
-          <div class="ico">⭐</div>
-          <h3>Google Review Engine</h3>
-          <p>Station QR + same-day SMS. Two chances per visit. Map-pack fuel.</p>
+        <article class="feat feat-visual">
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1604654894610-df63bc536371?w=700&q=80')"></div>
+          <div class="feat-body">
+            <div class="ico">⭐</div>
+            <h3>Google Review Engine</h3>
+            <p>Station QR + same-day SMS. Two chances per visit. Map-pack fuel.</p>
+          </div>
         </article>
-        <article class="feat">
-          <div class="ico">▶</div>
-          <h3>Gen-Viral Social Engine</h3>
-          <p>One set photo → IG, TikTok, GBP, gallery, review ask. Approval before post.</p>
+        <article class="feat feat-visual">
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=700&q=80')"></div>
+          <div class="feat-body">
+            <div class="ico">▶</div>
+            <h3>Gen-Viral Social Engine</h3>
+            <p>One set photo → IG, TikTok, GBP, gallery, review ask. Approval before post.</p>
+          </div>
         </article>
-        <article class="feat">
-          <div class="ico">📍</div>
-          <h3>Local SEO layer</h3>
-          <p>GBP posts/photos cadence, NAP consistency, schema, sticky mobile convert.</p>
+        <article class="feat feat-visual">
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1560066984-138dadb4c035?w=700&q=80')"></div>
+          <div class="feat-body">
+            <div class="ico">📍</div>
+            <h3>Local SEO layer</h3>
+            <p>GBP posts/photos cadence, NAP consistency, schema, sticky mobile convert.</p>
+          </div>
         </article>
-        <article class="feat">
-          <div class="ico">💬</div>
-          <h3>After-hours AI</h3>
-          <p>Chat captures nights &amp; weekends when beauty searches spike.</p>
+        <article class="feat feat-visual">
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=700&q=80')"></div>
+          <div class="feat-body">
+            <div class="ico">💬</div>
+            <h3>After-hours AI</h3>
+            <p>Chat captures nights &amp; weekends when beauty searches spike.</p>
+          </div>
         </article>
-        <article class="feat">
-          <div class="ico">🔄</div>
-          <h3>Rebooking intelligence</h3>
-          <p>Glow opportunity nudges for clients due back — fill the calendar proactively.</p>
+        <article class="feat feat-visual">
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=700&q=80')"></div>
+          <div class="feat-body">
+            <div class="ico">🔄</div>
+            <h3>Rebooking intelligence</h3>
+            <p>Glow opportunity nudges for clients due back — fill the calendar proactively.</p>
+          </div>
         </article>
-        <article class="feat">
-          <div class="ico">🚀</div>
-          <h3>Growth OS dashboard</h3>
-          <p>Revenue, retention, inventory, commissions — plus social &amp; review KPIs.</p>
+        <article class="feat feat-visual">
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=700&q=80')"></div>
+          <div class="feat-body">
+            <div class="ico">🚀</div>
+            <h3>Growth OS dashboard</h3>
+            <p>Revenue, retention, inventory, commissions — plus social &amp; review KPIs.</p>
+          </div>
         </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bento visual close -->
+  <section style="border-top:1px solid var(--line)">
+    <div class="wrap">
+      <div class="label">Visual system · mood board</div>
+      <h2 class="title">More artistry. <em>On every screen.</em></h2>
+      <p class="sub">A SuperSite should feel as considered as the brand — not a template with a logo sticker.</p>
+      <div class="bento">
+        <figure class="tall">
+          <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=700&q=80" alt="Campaign beauty" loading="lazy" />
+          <div class="overlay">Campaign</div>
+        </figure>
+        <figure class="wide">
+          <img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?w=900&q=80" alt="Hair detail" loading="lazy" />
+          <div class="overlay">Texture &amp; finish</div>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=500&q=80" alt="Nails" loading="lazy" />
+          <div class="overlay">Nails</div>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1524504388940-b1c17226555e?w=500&q=80" alt="Portrait" loading="lazy" />
+          <div class="overlay">Portrait</div>
+        </figure>
+        <figure class="wide">
+          <img src="https://images.unsplash.com/photo-1633681926022-84c123d5c0e1?w=900&q=80" alt="Salon interior" loading="lazy" />
+          <div class="overlay">Space · trust on arrival</div>
+        </figure>
       </div>
     </div>
   </section>
@@ -709,7 +1057,7 @@
     </div>
   </section>
 
-  <section style="background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <section style="background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
     <div class="wrap">
       <div class="label">Why SuperSite vs typical software</div>
       <h2 class="title">Typical salon stack vs <em>GlowUP SuperSite</em></h2>
