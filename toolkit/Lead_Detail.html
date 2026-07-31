@@ -518,6 +518,22 @@ function leadField(name) {
   return fields && typeof fields === 'object' ? fields[name] : null;
 }
 
+function proposalTemplateUrl() {
+  const categoryMeta = categoryTemplateMeta() || {};
+  const proof = googleProofData();
+  const key = String(proof.proposal_template_key || '').trim();
+  if (key && key === categoryMeta.secondary_proposal_template_key && categoryMeta.secondary_proposal_template_url) {
+    return categoryMeta.secondary_proposal_template_url;
+  }
+  if (key && key === categoryMeta.proposal_template_key && categoryMeta.proposal_template_url) {
+    return categoryMeta.proposal_template_url;
+  }
+  if (key && /\.html?$/i.test(key)) {
+    return key;
+  }
+  return categoryMeta.proposal_template_url || categoryMeta.secondary_proposal_template_url || 'Proposal_Generator.html?client_id=' + encodeURIComponent(currentClientId) + '&lead_id=' + encodeURIComponent(currentLeadId);
+}
+
 function businessDisplayName() {
   return (lead && (lead.company || lead.full_name)) || 'your business';
 }
@@ -719,7 +735,7 @@ function renderLead() {
   document.getElementById('invoiceBtn').href = 'JAWSAI911_Invoicing.html?client_id=' + encodeURIComponent(currentClientId) + '&lead_id=' + encodeURIComponent(currentLeadId) + '&type=invoice';
   document.getElementById('docsBtn').href = 'Sales_Documents.html?client_id=' + encodeURIComponent(currentClientId) + '&lead_id=' + encodeURIComponent(currentLeadId);
   document.getElementById('newInvoiceBtn').href = 'JAWSAI911_Invoicing.html?client_id=' + encodeURIComponent(currentClientId) + '&lead_id=' + encodeURIComponent(currentLeadId) + '&type=invoice';
-  document.getElementById('reviewProposalBtn').href = 'Proposal_Generator.html?client_id=' + encodeURIComponent(currentClientId) + '&lead_id=' + encodeURIComponent(currentLeadId);
+  document.getElementById('reviewProposalBtn').href = proposalTemplateUrl();
   document.getElementById('reviewInvoiceBtn').href = 'JAWSAI911_Invoicing.html?client_id=' + encodeURIComponent(currentClientId) + '&lead_id=' + encodeURIComponent(currentLeadId) + '&type=invoice';
   document.getElementById('reviewEstimateBtn').href = 'JAWSAI911_Invoicing.html?client_id=' + encodeURIComponent(currentClientId) + '&lead_id=' + encodeURIComponent(currentLeadId) + '&type=estimate';
   document.getElementById('reviewDocsBtn').href = '#documentsList';
@@ -864,6 +880,7 @@ function renderOutreachWorkspace() {
   document.getElementById('openReceiptTemplateBtn').href = categoryMeta.outreach_template_url || '#';
   document.getElementById('openProposalTemplateBtn').href = categoryMeta.proposal_template_url || '#';
   document.getElementById('openProposalTemplate2Btn').href = categoryMeta.secondary_proposal_template_url || '#';
+  document.getElementById('reviewProposalBtn').href = proposalTemplateUrl();
   const summary = document.getElementById('outreachWorkspaceSummary');
   const receiptLabel = categoryMeta.outreach_template_key || 'No receipt template';
   const proposalLabel = categoryMeta.proposal_template_key || 'No proposal template';
