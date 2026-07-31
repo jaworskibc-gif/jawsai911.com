@@ -46,6 +46,12 @@
     if (alt) node.alt = alt;
   }
 
+  function setLinkHref(selector, value) {
+    if (!value) return;
+    var node = document.querySelector(selector);
+    if (node) node.setAttribute("href", value);
+  }
+
   function escapeHtml(value) {
     return String(value || "")
       .replace(/&/g, "&amp;")
@@ -138,9 +144,21 @@
     var stored = readStoredPayload();
     var name = textParam(params, "name") || (stored && stored.name) || "";
     var owner = textParam(params, "owner") || (stored && stored.owner) || "";
+    var phone = textParam(params, "phone") || (stored && stored.phone) || "";
+    var email = textParam(params, "email") || (stored && stored.email) || "";
+    var city = textParam(params, "city") || (stored && stored.city) || "";
+    var state = textParam(params, "state") || (stored && stored.state) || "";
+    var category = textParam(params, "category") || (stored && stored.category) || "";
+    var pitchAngle = textParam(params, "pitch_angle") || (stored && stored.pitch_angle) || "";
+    var websiteStatus = textParam(params, "website_status") || (stored && stored.website_status) || "";
+    var loomUrl = textParam(params, "loom_url") || (stored && stored.loom_url) || "";
+    var hookAngle = textParam(params, "hook_angle") || (stored && stored.hook_angle) || "";
+    var smsCopy = textParam(params, "sms_copy") || (stored && stored.sms_copy) || "";
     var rating = textParam(params, "rating") || (stored && stored.rating) || "";
     var reviewCount = textParam(params, "review_count") || (stored && stored.review_count) || "";
     var reviewUrl = textParam(params, "review_url") || (stored && stored.review_url) || "";
+    var reviewNotes = textParam(params, "review_notes") || (stored && stored.review_notes) || "";
+    var photoNotes = textParam(params, "photo_notes") || (stored && stored.photo_notes) || "";
     var reviews = ["review_1", "review_2", "review_3"].map(function (key) {
       return textParam(params, key) || (stored && stored[key]) || "";
     }).filter(Boolean);
@@ -166,6 +184,10 @@
       setText(".hero h1", name);
       setHtml(".hero .hero-sub", escapeHtml(name) + " now has a live demo showing after-hours lead capture, review follow-up, and fresh service content that turns visits into new bookings.");
     }
+    if (city || state) {
+      var locationLine = [city, state].filter(Boolean).join(", ");
+      setText(".hero .eyebrow", locationLine ? locationLine + " · client demo" : "Client demo");
+    }
     if (rating || reviewCount) {
       var chipParts = [];
       if (rating) chipParts.push("<b>★ " + rating + "</b>");
@@ -179,6 +201,47 @@
     if (owner) {
       var secondCard = document.querySelector(".lookbook-strip .look-card:nth-child(2) .meta strong");
       if (secondCard) secondCard.textContent = owner;
+    }
+    if (phone) {
+      setLinkHref('.hero .btn-ghost', 'tel:' + phone.replace(/[^0-9+]/g, ""));
+      setLinkHref('.mobile-cta .primary', 'tel:' + phone.replace(/[^0-9+]/g, ""));
+    }
+    if (hookAngle) {
+      var hookNode = document.querySelector(".social-band .trend .hook");
+      if (hookNode) hookNode.textContent = hookAngle;
+    }
+    if (smsCopy) {
+      var chatFirst = document.querySelector(".chat-body .msg.bot");
+      if (chatFirst) chatFirst.textContent = smsCopy;
+    }
+    if (reviewNotes) {
+      var proofHead = document.querySelector(".crm-proof-head h3");
+      if (proofHead) proofHead.textContent = reviewNotes;
+    }
+    if (photoNotes) {
+      var lookbookLabel = document.querySelector(".lookbook-strip .look-card:nth-child(1) .meta");
+      if (lookbookLabel) lookbookLabel.innerHTML = "<strong>Placement note</strong>" + escapeHtml(photoNotes);
+    }
+    if (category || websiteStatus || loomUrl || email) {
+      var existing = document.querySelector(".crm-lead-meta");
+      if (!existing) {
+        var meta = document.createElement("section");
+        meta.className = "crm-proof-band crm-lead-meta";
+        meta.innerHTML =
+          '<div class="wrap"><div class="crm-proof-head"><div><div class="label">Lead context · CRM payload</div><h3>Active lead data on this demo.</h3></div></div>' +
+          '<div class="crm-proof-grid">' +
+          '<article class="crm-proof-card"><p><strong>Category</strong><br>' + escapeHtml(category || "Not set") + '</p><small>Website status: ' + escapeHtml(websiteStatus || "Not set") + '</small></article>' +
+          '<article class="crm-proof-card"><p><strong>Hook angle</strong><br>' + escapeHtml(hookAngle || pitchAngle || "Not set") + '</p><small>Loom: ' + escapeHtml(loomUrl || "Not set") + '</small></article>' +
+          '<article class="crm-proof-card"><p><strong>Contact</strong><br>' + escapeHtml(phone || "No phone") + '</p><small>' + escapeHtml(email || "No email") + '</small></article>' +
+          '</div></div>';
+        var anchor = document.querySelector(".crm-proof-band");
+        if (anchor) {
+          anchor.insertAdjacentElement("afterend", meta);
+        } else {
+          var hero = document.querySelector(".hero");
+          if (hero) hero.insertAdjacentElement("afterend", meta);
+        }
+      }
     }
 
     applyPhotos(name, photos);

@@ -307,12 +307,25 @@
   }
   function demoPreviewPayload(lead) {
     const proof = googleProofData(lead);
+    const workspace = outreachWorkspaceData(lead);
     return {
       name: businessDisplayName(lead),
       owner: ownerDisplayName(lead),
+      phone: lead && lead.phone || '',
+      email: lead && lead.email || '',
+      city: lead && lead.city || '',
+      state: lead && lead.state || '',
+      category: lead && lead.custom_fields ? (lead.custom_fields.category || '') : '',
+      pitch_angle: lead && lead.custom_fields ? (lead.custom_fields.pitch_angle || '') : '',
+      website_status: lead && lead.custom_fields ? (lead.custom_fields.website_status || '') : '',
+      loom_url: workspace.loom_url || '',
+      hook_angle: workspace.hook_angle || '',
+      sms_copy: workspace.sms_copy || '',
       rating: proof.rating || '',
       review_count: proof.review_count || '',
       review_url: proof.review_url || '',
+      review_notes: proof.review_notes || '',
+      photo_notes: proof.photo_notes || '',
       review_1: proof.review_quote_1 || '',
       review_2: proof.review_quote_2 || '',
       review_3: proof.review_quote_3 || '',
@@ -341,13 +354,26 @@
     try {
       const url = new URL(source, window.location.href);
       const proof = googleProofData(lead);
+      const workspace = outreachWorkspaceData(lead);
       const reviews = [proof.review_quote_1, proof.review_quote_2, proof.review_quote_3].filter(Boolean);
       const photos = [proof.photo_url_1, proof.photo_url_2, proof.photo_url_3].filter(Boolean);
       url.searchParams.set('name', businessDisplayName(lead));
       if (ownerDisplayName(lead)) url.searchParams.set('owner', ownerDisplayName(lead));
+      if (lead && lead.phone) url.searchParams.set('phone', lead.phone);
+      if (lead && lead.email) url.searchParams.set('email', lead.email);
+      if (lead && lead.city) url.searchParams.set('city', lead.city);
+      if (lead && lead.state) url.searchParams.set('state', lead.state);
+      if (lead && lead.custom_fields && lead.custom_fields.category) url.searchParams.set('category', lead.custom_fields.category);
+      if (lead && lead.custom_fields && lead.custom_fields.pitch_angle) url.searchParams.set('pitch_angle', lead.custom_fields.pitch_angle);
+      if (lead && lead.custom_fields && lead.custom_fields.website_status) url.searchParams.set('website_status', lead.custom_fields.website_status);
+      if (workspace.loom_url) url.searchParams.set('loom_url', workspace.loom_url);
+      if (workspace.hook_angle) url.searchParams.set('hook_angle', workspace.hook_angle);
+      if (workspace.sms_copy) url.searchParams.set('sms_copy', workspace.sms_copy);
       if (proof.rating) url.searchParams.set('rating', proof.rating);
       if (proof.review_count) url.searchParams.set('review_count', proof.review_count);
       if (proof.review_url) url.searchParams.set('review_url', proof.review_url);
+      if (proof.review_notes) url.searchParams.set('review_notes', proof.review_notes);
+      if (proof.photo_notes) url.searchParams.set('photo_notes', proof.photo_notes);
       reviews.forEach(function (review, index) {
         url.searchParams.set('review_' + (index + 1), review);
       });
