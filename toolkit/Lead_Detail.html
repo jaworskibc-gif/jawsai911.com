@@ -360,6 +360,44 @@
             <textarea id="smsCopy" placeholder="Paste or tune the text Aaron will send with the Loom and demo link."></textarea>
           </div>
         </div>
+        <div class="workspace-grid">
+          <div class="field">
+            <label>Offer Message 1</label>
+            <textarea id="offerMessage1" placeholder="First offer message preset."></textarea>
+          </div>
+          <div class="field">
+            <label>Offer Message 2</label>
+            <textarea id="offerMessage2" placeholder="Second offer message preset."></textarea>
+          </div>
+        </div>
+        <div class="workspace-grid">
+          <div class="field">
+            <label>Offer Message 3</label>
+            <textarea id="offerMessage3" placeholder="Third offer message preset."></textarea>
+          </div>
+          <div class="field">
+            <label>Hook 1</label>
+            <input id="hookPreset1" placeholder="First hook preset">
+          </div>
+        </div>
+        <div class="workspace-grid">
+          <div class="field">
+            <label>Hook 2</label>
+            <input id="hookPreset2" placeholder="Second hook preset">
+          </div>
+          <div class="field">
+            <label>Hook 3</label>
+            <input id="hookPreset3" placeholder="Third hook preset">
+          </div>
+        </div>
+        <div class="smartsite-actions">
+          <button class="btn" type="button" onclick="applyOfferMessage(1)">Use Message 1</button>
+          <button class="btn" type="button" onclick="applyOfferMessage(2)">Use Message 2</button>
+          <button class="btn" type="button" onclick="applyOfferMessage(3)">Use Message 3</button>
+          <button class="btn" type="button" onclick="applyHookPreset(1)">Use Hook 1</button>
+          <button class="btn" type="button" onclick="applyHookPreset(2)">Use Hook 2</button>
+          <button class="btn" type="button" onclick="applyHookPreset(3)">Use Hook 3</button>
+        </div>
         <div class="proof-actions">
           <button class="btn primary" type="button" onclick="saveOutreachWorkspace()">Save Loom & Send</button>
           <a class="btn" id="openReceiptTemplateBtn" href="#" target="_blank" rel="noopener">Open Receipt Template</a>
@@ -877,6 +915,12 @@ function renderOutreachWorkspace() {
   document.getElementById('repEmail').value = workspace.rep_email || savedRepEmail || '';
   document.getElementById('hookAngle').value = workspace.hook_angle || leadField('pitch_angle') || '';
   document.getElementById('smsCopy').value = workspace.sms_copy || '';
+  document.getElementById('offerMessage1').value = workspace.offer_message_1 || '';
+  document.getElementById('offerMessage2').value = workspace.offer_message_2 || '';
+  document.getElementById('offerMessage3').value = workspace.offer_message_3 || '';
+  document.getElementById('hookPreset1').value = workspace.hook_preset_1 || '';
+  document.getElementById('hookPreset2').value = workspace.hook_preset_2 || '';
+  document.getElementById('hookPreset3').value = workspace.hook_preset_3 || '';
   document.getElementById('openReceiptTemplateBtn').href = categoryMeta.outreach_template_url || '#';
   document.getElementById('openProposalTemplateBtn').href = categoryMeta.proposal_template_url || '#';
   document.getElementById('openProposalTemplate2Btn').href = categoryMeta.secondary_proposal_template_url || '#';
@@ -885,7 +929,7 @@ function renderOutreachWorkspace() {
   const receiptLabel = categoryMeta.outreach_template_key || 'No receipt template';
   const proposalLabel = categoryMeta.proposal_template_key || 'No proposal template';
   const proposal2Label = categoryMeta.secondary_proposal_template_key || 'No second proposal template';
-  if (!workspace.loom_url && !workspace.rep_phone && !workspace.rep_email && !workspace.sms_copy && !workspace.hook_angle) {
+  if (!workspace.loom_url && !workspace.rep_phone && !workspace.rep_email && !workspace.sms_copy && !workspace.hook_angle && !workspace.offer_message_1 && !workspace.offer_message_2 && !workspace.offer_message_3 && !workspace.hook_preset_1 && !workspace.hook_preset_2 && !workspace.hook_preset_3) {
     summary.innerHTML = '<div class="item"><div class="item-title">Category send set</div><div class="item-meta">Receipt template: ' + escapeHtml(receiptLabel) + '<br>Proposal 1: ' + escapeHtml(proposalLabel) + '<br>Proposal 2: ' + escapeHtml(proposal2Label) + '</div></div>';
     return;
   }
@@ -893,10 +937,34 @@ function renderOutreachWorkspace() {
     'Loom: ' + escapeHtml(workspace.loom_url || 'Not set') + '<br>' +
     'Rep phone: ' + escapeHtml(workspace.rep_phone || '') + '<br>' +
     'Rep email: ' + escapeHtml(workspace.rep_email || '') + '<br>' +
+    'Offer presets: ' + escapeHtml([
+      workspace.offer_message_1 ? '1' : '',
+      workspace.offer_message_2 ? '2' : '',
+      workspace.offer_message_3 ? '3' : ''
+    ].filter(Boolean).join(', ') || 'None') + '<br>' +
+    'Hook presets: ' + escapeHtml([
+      workspace.hook_preset_1 ? '1' : '',
+      workspace.hook_preset_2 ? '2' : '',
+      workspace.hook_preset_3 ? '3' : ''
+    ].filter(Boolean).join(', ') || 'None') + '<br>' +
     'Receipt template: ' + escapeHtml(receiptLabel) + '<br>' +
     'Proposal 1: ' + escapeHtml(proposalLabel) + '<br>' +
     'Proposal 2: ' + escapeHtml(proposal2Label) +
     '</div></div>';
+}
+
+function applyOfferMessage(index) {
+  const field = document.getElementById('offerMessage' + index);
+  const target = document.getElementById('smsCopy');
+  if (!field || !target) return;
+  target.value = field.value || '';
+}
+
+function applyHookPreset(index) {
+  const field = document.getElementById('hookPreset' + index);
+  const target = document.getElementById('hookAngle');
+  if (!field || !target) return;
+  target.value = field.value || '';
 }
 
 function renderReviewChecklist() {
@@ -1076,7 +1144,13 @@ async function saveOutreachWorkspace() {
     rep_phone: document.getElementById('repPhone').value.trim() || null,
     rep_email: document.getElementById('repEmail').value.trim() || null,
     hook_angle: document.getElementById('hookAngle').value.trim() || null,
-    sms_copy: document.getElementById('smsCopy').value.trim() || null
+    sms_copy: document.getElementById('smsCopy').value.trim() || null,
+    offer_message_1: document.getElementById('offerMessage1').value.trim() || null,
+    offer_message_2: document.getElementById('offerMessage2').value.trim() || null,
+    offer_message_3: document.getElementById('offerMessage3').value.trim() || null,
+    hook_preset_1: document.getElementById('hookPreset1').value.trim() || null,
+    hook_preset_2: document.getElementById('hookPreset2').value.trim() || null,
+    hook_preset_3: document.getElementById('hookPreset3').value.trim() || null
   };
   window.localStorage.setItem('jawscrm_rep_phone', nextData.rep_phone || '');
   window.sessionStorage.setItem('jawscrm_rep_phone', nextData.rep_phone || '');
