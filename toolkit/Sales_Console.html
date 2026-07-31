@@ -340,6 +340,7 @@
   function storageKey() { return 'jawscrm_operator_name'; }
   function employeeStorageKey() { return EMPLOYEE_STORAGE_KEY; }
   function clientStorageKey() { return CLIENT_STORAGE_KEY; }
+  function defaultSalesClientName() { return 'South FL Salon SuperSite Outreach'; }
   function currentOwnerFilter() { return document.getElementById('ownerFilter').value || ''; }
   function readOperatorName() { return String(document.getElementById('operatorName').value || '').trim(); }
   function readEmployeeNumber() { return String(document.getElementById('employeeNumber').value || '').trim(); }
@@ -395,7 +396,7 @@
     const preferredClient = data.find(client => client.id === currentClientId)
       || data.find(client => client.id === requestedClientId)
       || data.find(client => client.id === savedClientId)
-      || data.find(client => client.name === 'South FL Salon SuperSite Outreach')
+      || data.find(client => client.name === defaultSalesClientName())
       || data[0];
     currentClientId = preferredClient.id;
     currentClientName = preferredClient.name;
@@ -404,18 +405,45 @@
     await loadConsole();
   }
 
+  async function loadLeadsForClient(clientId, assignedTo) {
+    const leadFilters = assignedTo ? { assignedTo: assignedTo } : {};
+    return window.JAWSCRM.listCrmLeads(supabaseClient, clientId, leadFilters);
+  }
+
   async function loadConsole() {
     if (!currentClientId) return;
     if (!ensureRepIdentity()) return;
     statusMsg('Loading Sales Console for ' + currentClientName + '...');
     try {
       const filterMode = currentOwnerFilter();
-      const leadFilters = filterMode === 'me' && operatorName ? { assignedTo: operatorName } : {};
-      const [leadRows, taskRows, callCount] = await Promise.all([
-        window.JAWSCRM.listCrmLeads(supabaseClient, currentClientId, leadFilters),
+      const assignedTo = filterMode === 'me' && operatorName ? operatorName : '';
+      let [leadRows, taskRows, callCount] = await Promise.all([
+        loadLeadsForClient(currentClientId, assignedTo),
         window.JAWSCRM.getCrmTasks(supabaseClient, currentClientId, { status: 'open' }),
         window.JAWSCRM.countCrmCalls(supabaseClient, currentClientId)
       ]);
+      if ((!leadRows || !leadRows.length) && assignedTo) {
+        document.getElementById('ownerFilter').value = '';
+        leadRows = await loadLeadsForClient(currentClientId, '');
+        statusMsg('No leads were assigned to ' + operatorName + '. Showing all leads for ' + currentClientName + ' instead.');
+      }
+      if ((!leadRows || !leadRows.length) && currentClientName !== defaultSalesClientName()) {
+        const { data: clientRows, error: clientError } = await supabaseClient.from('clients').select('id, name').eq('name', defaultSalesClientName()).limit(1);
+        if (clientError) throw clientError;
+        const fallbackClient = (clientRows || [])[0];
+        if (fallbackClient) {
+          currentClientId = fallbackClient.id;
+          currentClientName = fallbackClient.name;
+          document.getElementById('clientSelect').value = currentClientId;
+          saveSelectedClientId(currentClientId);
+          [leadRows, taskRows, callCount] = await Promise.all([
+            loadLeadsForClient(currentClientId, ''),
+            window.JAWSCRM.getCrmTasks(supabaseClient, currentClientId, { status: 'open' }),
+            window.JAWSCRM.countCrmCalls(supabaseClient, currentClientId)
+          ]);
+          statusMsg('Switched to ' + currentClientName + ' because the previous client had no visible leads.');
+        }
+      }
       leads = leadRows || [];
       tasks = taskRows || [];
       callsLogged = callCount || 0;
