@@ -1,38 +1,49 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" fill="none">
-  <rect width="1200" height="900" fill="#111315"/>
-  <rect x="70" y="70" width="1060" height="760" rx="32" fill="#1B1F23"/>
-  <rect x="130" y="120" width="940" height="660" rx="28" fill="#F4F0E8"/>
-  <rect x="180" y="170" width="840" height="110" rx="20" fill="#15181B"/>
-  <text x="220" y="220" fill="#F3F5F7" font-family="Arial, sans-serif" font-size="38" font-weight="700">Rivet Fade Co.</text>
-  <text x="220" y="255" fill="#F04F3D" font-family="Arial, sans-serif" font-size="22" font-weight="700">Scan to leave a Google review</text>
-  <g transform="translate(210 330)">
-    <rect width="320" height="320" rx="18" fill="#fff"/>
-    <g fill="#15181B">
-      <rect x="24" y="24" width="80" height="80"/>
-      <rect x="216" y="24" width="80" height="80"/>
-      <rect x="24" y="216" width="80" height="80"/>
-      <rect x="144" y="24" width="24" height="24"/>
-      <rect x="168" y="48" width="24" height="24"/>
-      <rect x="120" y="72" width="24" height="24"/>
-      <rect x="144" y="96" width="48" height="24"/>
-      <rect x="120" y="144" width="24" height="24"/>
-      <rect x="168" y="144" width="24" height="24"/>
-      <rect x="216" y="144" width="24" height="24"/>
-      <rect x="240" y="168" width="24" height="24"/>
-      <rect x="144" y="192" width="24" height="24"/>
-      <rect x="168" y="216" width="24" height="24"/>
-      <rect x="120" y="240" width="24" height="24"/>
-      <rect x="144" y="264" width="48" height="24"/>
-      <rect x="216" y="240" width="24" height="24"/>
-      <rect x="240" y="264" width="56" height="24"/>
+  <rect width="1200" height="900" fill="#0E1012"/>
+  <rect x="0" y="0" width="1200" height="520" fill="url(#bg)"/>
+  <rect x="0" y="520" width="1200" height="380" fill="#201A17"/>
+  <rect x="96" y="102" width="1008" height="356" rx="32" fill="rgba(10,12,14,.34)" stroke="rgba(255,255,255,.08)" stroke-width="2"/>
+  <rect x="130" y="560" width="940" height="180" rx="28" fill="#2A211D"/>
+  <rect x="172" y="598" width="856" height="104" rx="18" fill="#3A2D26"/>
+  <circle cx="980" cy="285" r="84" fill="#F04F3D" fill-opacity=".12"/>
+  <circle cx="980" cy="285" r="52" fill="#F04F3D" fill-opacity=".18"/>
+  <rect x="316" y="218" width="568" height="342" rx="24" fill="#171A1D"/>
+  <rect x="354" y="246" width="492" height="242" rx="18" fill="#F7F2E9"/>
+  <rect x="390" y="278" width="420" height="62" rx="14" fill="#171A1D"/>
+  <text x="426" y="319" fill="#F3F5F7" font-family="Arial, sans-serif" font-size="28" font-weight="700">Rivet Fade Co.</text>
+  <text x="426" y="381" fill="#5D646B" font-family="Arial, sans-serif" font-size="22">Tap or scan to leave a Google review</text>
+  <g transform="translate(430 404)">
+    <rect width="140" height="140" rx="12" fill="#fff"/>
+    <g fill="#171A1D">
+      <rect x="12" y="12" width="36" height="36"/>
+      <rect x="92" y="12" width="36" height="36"/>
+      <rect x="12" y="92" width="36" height="36"/>
+      <rect x="60" y="12" width="12" height="12"/>
+      <rect x="72" y="24" width="12" height="12"/>
+      <rect x="48" y="36" width="12" height="12"/>
+      <rect x="60" y="48" width="24" height="12"/>
+      <rect x="48" y="72" width="12" height="12"/>
+      <rect x="72" y="72" width="12" height="12"/>
+      <rect x="96" y="72" width="12" height="12"/>
+      <rect x="108" y="84" width="12" height="12"/>
+      <rect x="60" y="96" width="12" height="12"/>
+      <rect x="72" y="108" width="12" height="12"/>
+      <rect x="48" y="120" width="12" height="12"/>
+      <rect x="60" y="120" width="24" height="12"/>
+      <rect x="96" y="108" width="12" height="12"/>
+      <rect x="108" y="120" width="20" height="12"/>
     </g>
   </g>
-  <rect x="590" y="340" width="360" height="130" rx="22" fill="#F7E5E2"/>
-  <text x="620" y="392" fill="#15181B" font-family="Arial, sans-serif" font-size="26" font-weight="700">Chair-side ask</text>
-  <text x="620" y="430" fill="#5C6268" font-family="Arial, sans-serif" font-size="20">Client scans right after the mirror check.</text>
-  <rect x="590" y="500" width="360" height="130" rx="22" fill="#EEF4F1"/>
-  <text x="620" y="552" fill="#15181B" font-family="Arial, sans-serif" font-size="26" font-weight="700">Backup text ask</text>
-  <text x="620" y="590" fill="#5C6268" font-family="Arial, sans-serif" font-size="20">If they leave fast, the review link fires later.</text>
-  <rect x="180" y="690" width="770" height="44" rx="22" fill="#15181B"/>
-  <text x="210" y="720" fill="#F3F5F7" font-family="Arial, sans-serif" font-size="20" font-weight="700">Google Review Engine · physical stand + same-day SMS</text>
+  <rect x="610" y="410" width="158" height="56" rx="18" fill="#F7E4E0"/>
+  <text x="640" y="447" fill="#171A1D" font-family="Arial, sans-serif" font-size="22" font-weight="700">Tap here</text>
+  <rect x="458" y="560" width="284" height="34" rx="17" fill="#100F0F"/>
+  <text x="488" y="583" fill="#F3F5F7" font-family="Arial, sans-serif" font-size="18" font-weight="700">Chair-side review stand</text>
+  <text x="168" y="644" fill="#F3F5F7" font-family="Arial, sans-serif" font-size="26" font-weight="700">What sits at the chair</text>
+  <text x="168" y="682" fill="#C3CCD3" font-family="Arial, sans-serif" font-size="21">Client sees the stand right after the mirror check, taps or scans, and the SMS backup covers the misses.</text>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="520" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#171A1D"/>
+      <stop offset="1" stop-color="#0B0D10"/>
+    </linearGradient>
+  </defs>
 </svg>
