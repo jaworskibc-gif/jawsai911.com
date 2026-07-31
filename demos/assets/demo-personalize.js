@@ -15,6 +15,15 @@
     if (node) node.innerHTML = value;
   }
 
+  function setManyText(selectors, value) {
+    if (!value) return;
+    selectors.forEach(function (selector) {
+      document.querySelectorAll(selector).forEach(function (node) {
+        node.textContent = value;
+      });
+    });
+  }
+
   function setImage(selector, url, alt) {
     if (!url) return;
     var node = document.querySelector(selector);
@@ -48,6 +57,35 @@
     targets.forEach(function (selector, index) {
       var photo = photos[index % photos.length];
       setImage(selector, photo, name ? name + " work photo" : "Business work photo");
+    });
+  }
+
+  function replaceBrandText(name) {
+    if (!name) return;
+    var patterns = [
+      /Rivet Fade Co\. Barbershop/g,
+      /Rivet Fade Co\./g,
+      /Rivet Fade Co/g,
+      /Rivet Fade/g,
+      /Softline Studio/g,
+      /Softline/g,
+      /LuminaDesk/g,
+      /Hair SuperSite/g
+    ];
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
+    var nodes = [];
+    while (walker.nextNode()) {
+      var node = walker.currentNode;
+      if (!node || !node.nodeValue) continue;
+      if (node.parentNode && /SCRIPT|STYLE|NOSCRIPT/.test(node.parentNode.nodeName)) continue;
+      nodes.push(node);
+    }
+    nodes.forEach(function (node) {
+      var nextValue = node.nodeValue;
+      patterns.forEach(function (pattern) {
+        nextValue = nextValue.replace(pattern, name);
+      });
+      if (nextValue !== node.nodeValue) node.nodeValue = nextValue;
     });
   }
 
@@ -98,8 +136,20 @@
 
     if (name) {
       document.title = name + " | Demo";
+      var metaDescription = document.querySelector('meta[name="description"]');
+      if (metaDescription) metaDescription.setAttribute("content", name + " demo site with live reviews, client photos, and after-hours lead capture.");
+      var ogTitle = document.querySelector('meta[property="og:title"]');
+      if (ogTitle) ogTitle.setAttribute("content", name + " | Demo");
+      replaceBrandText(name);
+      setManyText([
+        ".demo-bar strong",
+        ".logo",
+        ".hero .float small",
+        "#faq + * strong",
+        ".chat-head strong"
+      ], name);
       setText(".hero h1", name);
-      setText(".hero .hero-sub", name + " now has a live demo showing after-hours lead capture, review follow-up, and fresh service content that turns visits into new bookings.");
+      setHtml(".hero .hero-sub", escapeHtml(name) + " now has a live demo showing after-hours lead capture, review follow-up, and fresh service content that turns visits into new bookings.");
     }
     if (rating || reviewCount) {
       var chipParts = [];
