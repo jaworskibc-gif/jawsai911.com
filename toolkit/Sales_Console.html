@@ -406,8 +406,12 @@
   }
 
   async function loadLeadsForClient(clientId, assignedTo) {
-    const leadFilters = assignedTo ? { assignedTo: assignedTo } : {};
-    return window.JAWSCRM.listCrmLeads(supabaseClient, clientId, leadFilters);
+    const rows = await window.JAWSCRM.listCrmLeads(supabaseClient, clientId, {});
+    if (!assignedTo) return rows;
+    const target = String(assignedTo || '').trim().toLowerCase();
+    return (rows || []).filter(function (lead) {
+      return String(lead.assigned_to || '').trim().toLowerCase() === target;
+    });
   }
 
   async function loadConsole() {
