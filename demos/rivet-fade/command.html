@@ -14,58 +14,47 @@
   --line:rgba(255,255,255,.08);
   --text:#eef4fb;
   --muted:#8ea1b4;
-  --cyan:#3db7ff;
-  --gold:#d4a96c;
-  --green:#39d391;
-  --amber:#f0bc4a;
+  --accent:#3db7ff;
+  --accent-2:#39d391;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{
-  min-height:100vh;
-  font-family:Arial,sans-serif;
-  background:linear-gradient(180deg,#0b0f14,#101721 55%,#0b0f14);
-  color:var(--text);
-}
-.wrap{max-width:1180px;margin:0 auto;padding:20px}
-.topbar,.hero,.card{background:var(--panel);border:1px solid var(--line);border-radius:20px}
-.topbar{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:18px 20px}
-.kicker{font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--cyan)}
+html{scroll-behavior:smooth}
+body{min-height:100vh;font-family:Arial,sans-serif;background:linear-gradient(180deg,#0b0f14,#101721 55%,#0b0f14);color:var(--text)}
+.wrap{max-width:1120px;margin:0 auto;padding:20px}
+.topbar,.intro,.lane{background:var(--panel);border:1px solid var(--line);border-radius:20px}
+.topbar{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:20px}
+.kicker{font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent)}
 .title{font-size:34px;font-weight:800;margin-top:8px}
 .sub{font-size:14px;line-height:1.6;color:var(--muted);margin-top:8px;max-width:760px}
-.toplinks{display:flex;gap:10px;flex-wrap:wrap}
-.pill,.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;text-decoration:none;font-weight:700}
-.pill{min-height:38px;padding:0 14px;font-size:11px;letter-spacing:.8px;text-transform:uppercase;background:rgba(255,255,255,.03);border:1px solid var(--line);color:var(--muted)}
-.hero{margin-top:16px;padding:22px}
-.hero h2{font-size:26px;line-height:1.05}
-.hero p{font-size:15px;line-height:1.7;color:var(--muted);margin-top:10px;max-width:820px}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
-.stat{background:var(--panel-2);border:1px solid var(--line);border-radius:16px;padding:16px}
-.stat strong{display:block;font-size:28px}
-.stat span{display:block;margin-top:6px;font-size:12px;color:var(--muted);line-height:1.45}
-.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:16px}
-.card{padding:18px}
-.card h3{font-size:18px}
-.card p{font-size:13px;line-height:1.6;color:var(--muted);margin-top:8px}
-.list{display:grid;gap:10px;margin-top:14px}
+.toplinks,.lane-nav,.chip-row{display:flex;gap:10px;flex-wrap:wrap}
+.pill,.nav-pill,.chip{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;text-decoration:none}
+.pill,.nav-pill{min-height:40px;padding:0 14px;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;background:rgba(255,255,255,.03);border:1px solid var(--line);color:var(--muted)}
+.nav-pill:hover,.pill:hover{color:var(--text);border-color:rgba(255,255,255,.18)}
+.intro{margin-top:16px;padding:22px}
+.intro h2{font-size:26px;line-height:1.05}
+.intro p{font-size:15px;line-height:1.7;color:var(--muted);margin-top:10px;max-width:820px}
+.lane-nav{margin-top:18px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+.lane{padding:20px}
+.lane h3{font-size:20px;margin-top:10px}
+.lane p{font-size:13px;line-height:1.65;color:var(--muted);margin-top:8px}
+.list{display:grid;gap:10px;margin-top:16px}
 .item{border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.03);padding:12px}
 .item strong{display:block;font-size:13px}
-.item span{display:block;font-size:12px;color:var(--muted);line-height:1.5;margin-top:5px}
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-.btn{padding:11px 14px;font-size:12px;letter-spacing:.6px;text-transform:uppercase;border:1px solid var(--line);color:var(--text);background:rgba(255,255,255,.03)}
-.btn.primary{background:var(--cyan);border-color:var(--cyan);color:#07111b}
-.btn.green{background:var(--green);border-color:var(--green);color:#07140e}
-.note{margin-top:16px;padding:16px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid var(--line);font-size:13px;line-height:1.65;color:var(--muted)}
-.note strong{color:var(--text)}
-@media (max-width:960px){.stats,.grid{grid-template-columns:1fr}}
+.item span{display:block;font-size:12px;line-height:1.5;color:var(--muted);margin-top:5px}
+.chip{min-height:30px;padding:0 12px;background:var(--panel-2);border:1px solid var(--line);font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text)}
+.rule{margin-top:16px;padding:16px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid var(--line);font-size:13px;line-height:1.65;color:var(--muted)}
+.rule strong{color:var(--text)}
+@media (max-width:960px){.grid{grid-template-columns:1fr}.topbar{flex-direction:column}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="topbar">
     <div>
-      <div class="kicker">Private Operator Layer</div>
+      <div class="kicker">Shark Operator Layer</div>
       <div class="title">Rivet Fade Co. Command Hub</div>
-      <div class="sub">This screen only exists to solve 2 problems: missed calls while the shop is busy or closed, and fresh cut photos sitting in the phone instead of bringing in new bookings.</div>
+      <div class="sub">This hub only exists to solve the few problems that actually matter: missed calls while the barber is with a client, missed leads after hours, fresh cut photos not getting posted, and happy clients leaving without a Google review.</div>
     </div>
     <div class="toplinks">
       <a class="pill" href="index.html">Public Demo</a>
@@ -73,73 +62,69 @@ body{
     </div>
   </div>
 
-  <section class="hero">
-    <div class="kicker">What This Runs</div>
-    <h2>Missed Call Agent. Social Manager. Google Review Lane.</h2>
-    <p>Nothing else. The barber version should stay about calls, reviews, and cut photos turning into Reels, Google photos, and booked chairs.</p>
-    <div class="stats">
-      <div class="stat">
-        <strong>24/7</strong>
-        <span>AI bot answers missed calls and after-hours texts so the shop does not lose bookings when everyone is in the chair.</span>
-      </div>
-      <div class="stat">
-        <strong>1 Photo</strong>
-        <span>One fresh fade or beard photo becomes Reel, Google photo, site gallery update, review ask, and next-chair content.</span>
-      </div>
-      <div class="stat">
-        <strong>2 Lanes</strong>
-        <span>Review stand at the chair plus same-day text ask so happy clients actually leave Google reviews.</span>
-      </div>
+  <section class="intro">
+    <div class="kicker">Only 3 Lanes</div>
+    <h2>Agent. Social Manager. Google Review Engine.</h2>
+    <p>Nothing else belongs here. This page should stay simple enough that a shop owner can open it and know exactly what is handling missed leads, what is posting fresh cuts, and what is asking for reviews.</p>
+    <div class="lane-nav">
+      <a class="nav-pill" href="#agent">Agent</a>
+      <a class="nav-pill" href="#social">Social Manager</a>
+      <a class="nav-pill" href="#reviews">Google Review Engine</a>
     </div>
   </section>
 
   <section class="grid">
-    <div class="card">
-      <div class="kicker">Problem 1</div>
+    <article class="lane" id="agent">
+      <div class="kicker">Lane 1</div>
       <h3>Missed Call Agent</h3>
-      <p>When the barber is with a client or the shop is closed, the AI bot answers, texts back, captures the lead, and pushes the booking forward.</p>
+      <p>The bot handles everything missed while the shop is closed or while the barber has someone in the chair. It answers, texts back, captures the lead, and keeps the booking moving.</p>
+      <div class="chip-row" style="margin-top:14px">
+        <span class="chip">Missed calls</span>
+        <span class="chip">After-hours text back</span>
+        <span class="chip">Lead handoff</span>
+      </div>
       <div class="list">
-        <div class="item"><strong>In-chair recovery</strong><span>Answers new callers when the barber cannot pick up.</span></div>
-        <div class="item"><strong>After-hours texting</strong><span>Sends the text-back and keeps the lead warm until morning.</span></div>
-        <div class="item"><strong>Lead handoff</strong><span>Drops name, phone, and service intent into CRM for follow-up.</span></div>
+        <div class="item"><strong>In-chair recovery</strong><span>New callers get answered when nobody can pick up.</span></div>
+        <div class="item"><strong>Closed-hours coverage</strong><span>After-hours leads get an immediate text-back instead of dying overnight.</span></div>
+        <div class="item"><strong>Booking intent capture</strong><span>Name, phone, and requested service get pushed into the operator workflow for follow-up.</span></div>
       </div>
-      <div class="actions">
-        <a class="btn primary" href="#agent">Open Agent Flow</a>
-      </div>
-    </div>
+    </article>
 
-    <div class="card">
-      <div class="kicker">Problem 2</div>
+    <article class="lane" id="social">
+      <div class="kicker">Lane 2</div>
       <h3>Social Manager</h3>
-      <p>The phone is already full of proof. This lane takes the cut photos and turns them into the simple formats that still work for barber shops in 2026.</p>
+      <p>This lane turns fresh cut photos into useful content instead of leaving them in the phone. One result should become a Reel, a Google photo, a site update, and a book-the-look post.</p>
+      <div class="chip-row" style="margin-top:14px">
+        <span class="chip">Reels</span>
+        <span class="chip">Google photos</span>
+        <span class="chip">Book-the-look</span>
+      </div>
       <div class="list">
-        <div class="item"><strong>Fade reveal Reel</strong><span>Short blend reveal with strong first-frame proof.</span></div>
-        <div class="item"><strong>Google photo lane</strong><span>Fresh work gets posted to the profile, not buried in the camera roll.</span></div>
-        <div class="item"><strong>Book-the-look CTA</strong><span>Each piece points back to booking or call.</span></div>
+        <div class="item"><strong>Fade reveal content</strong><span>Fresh fades, beard work, and texture crops turned into content that still books in 2026.</span></div>
+        <div class="item"><strong>Photo distribution</strong><span>Fresh work gets moved onto the channels that drive discovery and bookings.</span></div>
+        <div class="item"><strong>Direct booking CTA</strong><span>Every content piece points back to call, book, or request the barber.</span></div>
       </div>
-      <div class="actions">
-        <a class="btn green" href="#social">Open Social Lane</a>
-        <a class="btn" href="https://www.capcut.com/" target="_blank" rel="noopener">Open CapCut</a>
-      </div>
-    </div>
+    </article>
 
-    <div class="card">
-      <div class="kicker">Proof</div>
-      <h3>Google Review Lane</h3>
-      <p>This stays simple: ask at the chair, ask again by text, stack recent reviews, and keep the map result strong.</p>
+    <article class="lane" id="reviews">
+      <div class="kicker">Lane 3</div>
+      <h3>Google Review Engine</h3>
+      <p>This lane keeps the map result alive. Ask at the chair, ask again by text, and keep recent reviews and recent photos stacking every week.</p>
+      <div class="chip-row" style="margin-top:14px">
+        <span class="chip">Chair ask</span>
+        <span class="chip">Text follow-up</span>
+        <span class="chip">Map pack trust</span>
+      </div>
       <div class="list">
-        <div class="item"><strong>Chair stand</strong><span>Scan while the client is still looking at the result.</span></div>
-        <div class="item"><strong>Same-day text ask</strong><span>Second chance if they leave without reviewing.</span></div>
-        <div class="item"><strong>Recent proof</strong><span>New reviews and fresh photos compound local trust.</span></div>
+        <div class="item"><strong>Review ask at the finish</strong><span>Prompt the review while the client is still looking at the result.</span></div>
+        <div class="item"><strong>Same-day backup ask</strong><span>If they leave without reviewing, the text follow-up gives the second shot.</span></div>
+        <div class="item"><strong>Fresh proof loop</strong><span>New reviews plus new photos keep local trust and click-through strength moving.</span></div>
       </div>
-      <div class="actions">
-        <a class="btn" href="#reviews">Open Review Lane</a>
-      </div>
-    </div>
+    </article>
   </section>
 
-  <div class="note">
-    <strong>Operator rule:</strong> if it does not help catch a missed call, text back after hours, post a fresh cut photo, or collect a Google review, it should not be on this command page.
+  <div class="rule">
+    <strong>Operator rule:</strong> if it does not help catch missed calls, text back after hours, post finished work, or collect Google reviews, it should not be in this hub.
   </div>
 </div>
 </body>

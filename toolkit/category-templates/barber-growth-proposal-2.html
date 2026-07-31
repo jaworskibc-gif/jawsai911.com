@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Barber SuperSite — Growth Proposal</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap');
+
+  :root{
+    --navy:#0D0D0F;
+    --cyan:#C9A227;
+    --teal:#6B6F76;
+    --pink:#A8192E;
+    --paper:#F3EEE3;
+    --ink:#1C1815;
+    --ink-soft:#6B6255;
+    --rule:#D9CFB8;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;
+    -webkit-print-color-adjust:exact !important;
+    print-color-adjust:exact !important;
+    color-adjust:exact !important;
+  }
+  @media print{
+    @page{ size: 8.5in 11in; margin:0; }
+    html, body{ -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
+  }
+  body{ font-family:'Inter',sans-serif; background:#e8e8e8; }
+  .page{
+    width:850px;
+    min-height:1100px;
+    background:var(--paper);
+    position:relative;
+    page-break-after:always;
+    margin:0 auto 20px;
+    overflow:hidden;
+  }
+  .page:last-child{ page-break-after:auto; }
+
+  .cover{
+    background:var(--navy);
+    color:#fff;
+    height:1345px;
+    display:flex;
+    flex-direction:column;
+    padding:60px 70px;
+    position:relative;
+    overflow:hidden;
+  }
+  .cover-bg{
+    position:absolute;
+    top:0; left:0;
+    width:100%; height:100%;
+    z-index:0;
+  }
+  .cover-top, .cover-mid, .cover-bottom{
+    position:relative;
+    z-index:1;
+  }
+  .cover::after{
+    content:"";
+    position:absolute;
+    top:0; left:0; right:0;
+    height:6px;
+    background:linear-gradient(90deg, var(--cyan), var(--teal), var(--pink));
+  }
+  .cover-top{ display:flex; align-items:center; gap:16px; }
+  .cover-fin{ width:48px; height:48px; }
+  .cover-brand{ font-family:'Oswald',sans-serif; font-size:26px; letter-spacing:3px; font-weight:700; }
+  .cover-brand span{ color:var(--cyan); }
+  .cover-sub{ font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:2px; color:var(--teal); margin-top:4px; }
+
+  .cover-mid{ margin-top:auto; margin-bottom:auto; padding:80px 0; }
+  .cover-eyebrow{ font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:3px; color:var(--pink); font-weight:700; margin-bottom:20px; }
+  .cover-title{ font-family:'Oswald',sans-serif; font-size:56px; font-weight:700; line-height:1.08; max-width:14ch; }
+  .cover-title em{ font-style:normal; color:var(--cyan); }
+  .cover-prepared{ margin-top:auto; font-family:'JetBrains Mono',monospace; font-size:14px; color:#B9C6DA; line-height:2; }
+  .cover-prepared .field{ color:#fff; font-weight:700; border-bottom:1px dashed #4A5872; padding-bottom:2px; }
+  .cover-bottom{ font-family:'Oswald',sans-serif; font-size:13px; letter-spacing:3px; color:var(--cyan); font-weight:600; }
+
+  .body-header{
+    background:var(--navy);
+    color:#fff;
+    padding:22px 60px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    border-bottom:4px solid transparent;
+    border-image: linear-gradient(90deg, var(--cyan), var(--teal), var(--pink)) 1;
+  }
+  .body-header .fin{ width:26px; height:26px; }
+  .body-header .brand{ font-family:'Oswald',sans-serif; font-size:15px; letter-spacing:1.5px; font-weight:700; }
+  .body-header .brand span{ color:var(--cyan); }
+  .body-header .pagelabel{
+    margin-left:auto;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;
+    letter-spacing:1px;
+    color:#9FB0C8;
+  }
+  .body-content{ padding:40px 60px; }
+
+  .page-title{
+    font-family:'Oswald',sans-serif;
+    font-size:28px;
+    font-weight:600;
+    color:var(--ink);
+    margin-bottom:8px;
+  }
+  .page-title em{ font-style:normal; color:var(--pink); }
+  .page-subtitle{
+    font-size:14px;
+    color:var(--ink-soft);
+    margin-bottom:28px;
+    max-width:64ch;
+    line-height:1.5;
+  }
+
+  .block-title{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11.5px;
+    letter-spacing:1.5px;
+    color:var(--ink-soft);
+    font-weight:700;
+    padding-bottom:8px;
+    border-bottom:1.5px solid var(--ink);
+    margin-bottom:16px;
+    margin-top:30px;
+  }
+  .block-title:first-of-type{ margin-top:0; }
+
+  .leak-item{
+    display:flex;
+    gap:14px;
+    padding:14px 0;
+    border-bottom:1px dashed var(--rule);
+  }
+  .leak-item:last-child{ border-bottom:none; }
+  .leak-num{
+    font-family:'JetBrains Mono',monospace;
+    font-weight:700;
+    font-size:15px;
+    color:var(--pink);
+    width:24px;
+    flex-shrink:0;
+  }
+  .leak-title{ font-family:'Oswald',sans-serif; font-size:15px; font-weight:600; color:var(--ink); text-transform:uppercase; }
+  .leak-desc{ font-size:13px; color:var(--ink-soft); margin-top:4px; line-height:1.5; }
+
+  .feature-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px 28px;
+  }
+  .feature-item{ display:flex; gap:10px; align-items:flex-start; }
+  .feature-item .check{ color:var(--teal); font-weight:700; font-family:'JetBrains Mono',monospace; font-size:15px; flex-shrink:0; }
+  .feature-item .txt b{ display:block; font-family:'Oswald',sans-serif; font-size:14px; font-weight:600; color:var(--ink); }
+  .feature-item .txt p{ font-size:12.5px; color:var(--ink-soft); margin-top:2px; line-height:1.4; }
+
+  .stands-row{ display:flex; gap:24px; align-items:center; margin-top:6px; }
+  .stands-img{ width:200px; height:165px; object-fit:cover; border-radius:10px; border:1px solid var(--rule); flex-shrink:0; }
+  .stands-copy p{ font-size:13px; color:var(--ink-soft); line-height:1.6; }
+  .value-tag{ display:inline-block; background:var(--teal); color:#fff; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:11.5px; padding:5px 12px; border-radius:14px; margin-bottom:10px; }
+
+  .price-block{
+    background:var(--navy);
+    color:#fff;
+    padding:30px 36px;
+    margin-top:10px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .price-block .label{ font-family:'Oswald',sans-serif; font-size:13px; letter-spacing:1px; color:#B9C6DA; text-transform:uppercase; margin-bottom:8px; }
+  .price-block .was{ font-family:'JetBrains Mono',monospace; font-size:13px; color:#6B7A94; text-decoration:line-through; }
+  .price-block .now{ font-family:'JetBrains Mono',monospace; font-weight:700; font-size:32px; color:var(--cyan); line-height:1.3; }
+  .price-block .now small{ font-size:15px; color:var(--teal); font-weight:500; }
+  .price-block .roi{ font-family:'Inter'; font-size:13px; color:var(--teal); font-weight:600; max-width:20ch; text-align:right; line-height:1.4; }
+
+  .included-list{ margin-top:24px; }
+  .included-item{ display:flex; gap:10px; padding:8px 0; font-size:13px; color:var(--ink); align-items:center; }
+  .included-item .check{ color:var(--teal); font-weight:700; font-family:'JetBrains Mono',monospace; }
+
+  .signoff{
+    margin-top:36px;
+    display:flex;
+    gap:40px;
+  }
+  .signoff-col{ flex:1; }
+  .signoff-label{ font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:1px; color:var(--ink-soft); margin-bottom:30px; }
+  .signoff-line{ border-bottom:1.5px solid var(--ink); padding-bottom:4px; }
+
+  .body-footer{
+    background:var(--navy);
+    color:#fff;
+    padding:16px 60px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:40px;
+  }
+  .body-footer .tag{ font-family:'Oswald',sans-serif; font-size:11px; letter-spacing:2px; color:var(--cyan); font-weight:600; }
+  .body-footer .contact{ font-family:'JetBrains Mono',monospace; font-size:10px; color:#B9C6DA; text-align:right; line-height:1.5; }
+  .body-footer .contact b{ color:#fff; }
+  .body-page{ position:relative; padding-bottom:0; }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <div class="cover">
+    <div class="cover-top">
+      <div>
+        <div class="cover-brand">JAWS<span>AI</span>911</div>
+        <div class="cover-sub">GROWTH SYSTEMS FOR LOCAL SHOPS</div>
+      </div>
+    </div>
+    <div class="cover-mid">
+      <div class="cover-eyebrow">BARBER SUPERSITE — GROWTH PROPOSAL</div>
+      <div class="cover-title">Everything your shop needs to <em>stop leaking clients.</em></div>
+      <div class="cover-prepared">
+        PREPARED FOR &nbsp; <span class="field">[BUSINESS NAME]</span><br>
+        CONTACT &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="field">[OWNER NAME]</span><br>
+        DATE &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="field">[DATE]</span>
+      </div>
+    </div>
+    <div class="cover-bottom">LEAVE THE SCHOOL BEHIND</div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="body-page">
+    <div class="body-header">
+      <div class="brand">JAWS<span>AI</span>911</div>
+      <div class="pagelabel">02 / 03 — THE PROBLEM &amp; THE FIX</div>
+    </div>
+    <div class="body-content">
+      <div class="page-title">Where <em>[BUSINESS NAME]</em> is leaking clients</div>
+      <div class="page-subtitle">Same pattern we see in almost every barbershop — the cuts are good, but the systems around the chair are still leaking business.</div>
+
+      <div class="leak-item">
+        <div class="leak-num">01</div>
+        <div>
+          <div class="leak-title">After-hours calls go to voicemail</div>
+          <div class="leak-desc">Night and weekend searches spike — a missed call books the next barbershop on Google, not yours.</div>
+        </div>
+      </div>
+      <div class="leak-item">
+        <div class="leak-num">02</div>
+        <div>
+          <div class="leak-title">Reviews aren't happening</div>
+          <div class="leak-desc">Happy clients leave without reviewing. Review velocity — not just star count — is what the algorithm rewards.</div>
+        </div>
+      </div>
+      <div class="leak-item">
+        <div class="leak-num">03</div>
+        <div>
+          <div class="leak-title">Content never ships</div>
+          <div class="leak-desc">Fresh fades sit in the camera roll. Instagram and Google go quiet — no path from “that cut is clean” to “book me in.”</div>
+        </div>
+      </div>
+
+      <div class="block-title">WHAT BARBER SUPERSITE FIXES</div>
+      <div class="feature-grid">
+        <div class="feature-item">
+          <div class="check">✓</div>
+          <div class="txt"><b>After-Hours AI Capture</b><p>Every missed call, DM, or form gets caught, answered, and booked — nights and weekends included.</p></div>
+        </div>
+        <div class="feature-item">
+          <div class="check">✓</div>
+          <div class="txt"><b>Gen-Viral: Photo → 5 Lanes</b><p>One cut photo becomes a Social Post, Google Photos, Website Gallery, Shorts/Reels clip, and a Review Request.</p></div>
+        </div>
+        <div class="feature-item">
+          <div class="check">✓</div>
+          <div class="txt"><b>Dual-Path Review Engine</b><p>Chair stand + same-day SMS — two chances per client instead of zero. Reviews start compounding.</p></div>
+        </div>
+        <div class="feature-item">
+          <div class="check">✓</div>
+          <div class="txt"><b>Full SuperSite</b><p>Booking page, gallery, and 24/7 AI chat — built, hosted, and ready to share.</p></div>
+        </div>
+      </div>
+
+      <div class="block-title">INCLUDED — 3 GOOGLE REVIEW STANDS</div>
+      <div class="stands-row">
+        <img class="stands-img" src="images/review-stand-all3.png" alt="Google, Facebook, and Instagram NFC/QR review stands">
+        <div class="stands-copy">
+          <div class="value-tag">3 STANDS · $100 VALUE INCLUDED</div>
+          <p>Tap-or-scan NFC + QR stands for Google, Facebook, or Instagram — whichever fits your market. Set one at the chair, one at the desk, one wherever clients linger.</p>
+        </div>
+      </div>
+    </div>
+    <div class="body-footer">
+      <div class="tag">LEAVE THE SCHOOL BEHIND</div>
+      <div class="contact"><b>786-761-2950</b> · hello@jawsai911.com</div>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="body-page">
+    <div class="body-header">
+      <div class="brand">JAWS<span>AI</span>911</div>
+      <div class="pagelabel">03 / 03 — INVESTMENT &amp; NEXT STEPS</div>
+    </div>
+    <div class="body-content">
+      <div class="page-title">The <em>investment</em></div>
+      <div class="page-subtitle">Everything on the previous page, fully built, hosted, and running — one setup fee, one flat monthly rate. No long-term contract.</div>
+
+      <div class="price-block">
+        <div>
+          <div class="label">Barber SuperSite — Full System</div>
+          <div class="was">was $3,500 setup</div>
+          <div class="now">$1,000 <small>setup</small></div>
+          <div class="was" style="margin-top:8px;">was $2,000/mo</div>
+          <div class="now" style="font-size:22px; margin-top:2px;">$497<small>/mo</small></div>
+        </div>
+        <div class="roi">One extra regular a month covers it.</div>
+      </div>
+
+      <div class="block-title">EVERYTHING INCLUDED</div>
+      <div class="included-list">
+        <div class="included-item"><span class="check">✓</span> Full SuperSite — booking, gallery, 24/7 AI chat</div>
+        <div class="included-item"><span class="check">✓</span> After-Hours AI capture &amp; SMS recovery</div>
+        <div class="included-item"><span class="check">✓</span> Dual-Path Google Review Engine (2× chances)</div>
+        <div class="included-item"><span class="check">✓</span> Gen-Viral: Photo → 5 Lanes content engine</div>
+        <div class="included-item"><span class="check">✓</span> 3 Google Review Stands ($100 value)</div>
+        <div class="included-item"><span class="check">✓</span> No long-term contract</div>
+      </div>
+
+      <div class="block-title">WHAT HAPPENS NEXT</div>
+      <div class="leak-item">
+        <div class="leak-num">01</div>
+        <div>
+          <div class="leak-title">Kickoff call — 20 minutes</div>
+          <div class="leak-desc">We map your Google Business Profile, chair flow, and review/booking process together.</div>
+        </div>
+      </div>
+      <div class="leak-item">
+        <div class="leak-num">02</div>
+        <div>
+          <div class="leak-title">Build &amp; setup</div>
+          <div class="leak-desc">Your SuperSite, review stands, and after-hours AI get built and configured for your shop specifically.</div>
+        </div>
+      </div>
+      <div class="leak-item">
+        <div class="leak-num">03</div>
+        <div>
+          <div class="leak-title">Go live</div>
+          <div class="leak-desc">Everything switches on — bookings, reviews, and content start compounding from day one.</div>
+        </div>
+      </div>
+
+      <div class="page-subtitle" style="margin-top:24px; margin-bottom:8px;">Reply YES below, or call/text to get started. This proposal is valid for 14 days from the date above.</div>
+
+      <div class="signoff">
+        <div class="signoff-col">
+          <div class="signoff-label">CLIENT SIGN-OFF</div>
+          <div class="signoff-line">&nbsp;</div>
+        </div>
+        <div class="signoff-col">
+          <div class="signoff-label">DATE</div>
+          <div class="signoff-line">&nbsp;</div>
+        </div>
+      </div>
+    </div>
+    <div class="body-footer">
+      <div class="tag">LEAVE THE SCHOOL BEHIND</div>
+      <div class="contact">
+        <b>786-761-2950</b> · hello@jawsai911.com<br>
+        jawsai911.com/salon-supersite.html
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

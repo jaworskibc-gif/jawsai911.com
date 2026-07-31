@@ -11,7 +11,7 @@
   <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -38,28 +38,28 @@
   }
   </script>
   <style>
-    /* Original Rivet Fade Co. brand tokens (dark luxury + gold) */
+    /* Rivet Fade Co. brand tokens (dark steel + red accents) */
     :root {
-      --bg: #0a0a0a;
-      --bg2: #111111;
-      --card: #161616;
-      --paper: #1c1c1c;
-      --ink: #f5f0e6;
-      --soft: #ccbfae;
-      --muted: #8c827f;
-      --line: #363837;
-      --line2: rgba(224, 187, 135, 0.22);
-      --gold: #e0bb87;
-      --gold-light: #f0d9b0;
-      --gold-dark: #be9c7f;
-      --blush: #463b3b;
-      --rose: #e0bb87;
-      --green: #6bc49a;
-      --green-soft: rgba(107, 196, 154, 0.12);
+      --bg: #080909;
+      --bg2: #101214;
+      --card: #15181b;
+      --paper: #1c2024;
+      --ink: #f3f5f7;
+      --soft: #c5ccd3;
+      --muted: #8b949d;
+      --line: #31363b;
+      --line2: rgba(218, 59, 43, 0.24);
+      --gold: #da3b2b;
+      --gold-light: #f04f3d;
+      --gold-dark: #9e2319;
+      --blush: #2a1a19;
+      --rose: #da3b2b;
+      --green: #77d69d;
+      --green-soft: rgba(119, 214, 157, 0.12);
       --shadow: 0 28px 60px rgba(0, 0, 0, 0.55);
       --r: 22px;
-      --serif: "Playfair Display", Georgia, serif;
-      --sans: "DM Sans", system-ui, sans-serif;
+      --serif: "Rajdhani", Impact, sans-serif;
+      --sans: "Inter", system-ui, sans-serif;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -97,7 +97,7 @@
       font-family: var(--serif); font-weight: 500; font-size: 1.2rem; letter-spacing: -.01em;
       color: var(--gold-light);
     }
-    .logo em { font-style: italic; font-weight: 400; color: var(--gold); }
+    .logo em { font-style: normal; font-weight: 700; color: var(--gold-light); }
     .logo-mark {
       width: 36px; height: 36px; border-radius: 50%;
       background: linear-gradient(145deg, var(--gold-light), var(--gold-dark));
@@ -114,11 +114,11 @@
     .btn:hover { transform: translateY(-1px); }
     .btn-dark {
       background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
-      color: #0a0a0a; box-shadow: 0 8px 24px rgba(224, 187, 135, 0.22);
+      color: #0a0a0a; box-shadow: 0 8px 24px rgba(218, 59, 43, 0.24);
     }
     .btn-rose {
       background: linear-gradient(135deg, var(--gold-light), var(--gold));
-      color: #0a0a0a; box-shadow: 0 8px 24px rgba(224, 187, 135, 0.28);
+      color: #0a0a0a; box-shadow: 0 8px 24px rgba(218, 59, 43, 0.32);
     }
     .btn-ghost {
       background: transparent; border: 1px solid var(--line2); color: var(--ink);
@@ -156,7 +156,7 @@
       font-weight: 500; line-height: 1.02; letter-spacing: -.02em; margin-bottom: 16px;
       color: var(--ink);
     }
-    h1 em { font-style: italic; color: var(--gold-light); font-weight: 400; }
+    h1 em { font-style: normal; color: var(--gold-light); font-weight: 700; }
     .hero-sub {
       color: var(--soft); font-size: 1.08rem; line-height: 1.7; max-width: 480px;
       font-weight: 400; margin-bottom: 22px;
@@ -182,7 +182,7 @@
       backdrop-filter: blur(10px);
     }
     .float .stars { color: var(--gold); letter-spacing: .1em; font-size: .75rem; margin-bottom: 6px; }
-    .float p { font-family: var(--serif); font-size: 1.05rem; font-style: italic; line-height: 1.35; color: var(--ink); }
+    .float p { font-family: var(--sans); font-size: 1.05rem; font-weight: 700; line-height: 1.35; color: var(--ink); }
     .float small { display: block; margin-top: 6px; font-size: .72rem; color: var(--muted); font-family: var(--sans); }
 
     section { padding: 72px 0; }
@@ -195,7 +195,7 @@
       font-size: clamp(2rem, 3.8vw, 2.9rem);
       font-weight: 500; line-height: 1.1; margin-bottom: 12px; color: var(--ink);
     }
-    .title em { font-style: italic; color: var(--gold-light); }
+    .title em { font-style: normal; color: var(--gold-light); font-weight: 700; }
     .sub { color: var(--muted); max-width: 540px; font-weight: 400; font-size: 1.02rem; line-height: 1.65; margin-bottom: 36px; }
 
     .marquee {
@@ -287,8 +287,8 @@
     .trend p { font-size: .85rem; color: var(--muted); font-weight: 400; line-height: 1.5; }
     .trend .hook {
       margin-top: 12px; padding: 10px 12px; border-left: 3px solid var(--gold);
-      background: rgba(224, 187, 135, 0.06); font-family: var(--serif);
-      font-style: italic; font-size: 1rem; color: var(--gold-light);
+      background: rgba(218, 59, 43, 0.08); font-family: var(--sans);
+      font-size: 1rem; font-weight: 700; color: var(--gold-light);
     }
 
     .video-grid {
@@ -514,9 +514,9 @@
       position: absolute; left: 0; right: 0; bottom: 0;
       padding: 14px 16px;
       background: linear-gradient(transparent, rgba(0,0,0,.88));
-      font-family: var(--serif);
-      font-size: 1rem;
-      font-style: italic;
+      font-family: var(--sans);
+      font-size: .98rem;
+      font-weight: 700;
       color: var(--gold-light);
     }
     .art-mosaic figcaption span {
@@ -566,9 +566,9 @@
       background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,.75));
       display: flex; align-items: flex-end;
       padding: 16px;
-      font-family: var(--serif);
-      font-style: italic;
-      font-size: 1.05rem;
+      font-family: var(--sans);
+      font-size: 1rem;
+      font-weight: 700;
       color: var(--gold-light);
     }
 
@@ -598,9 +598,9 @@
     }
     .look-card .meta strong {
       display: block;
-      font-family: var(--serif);
-      font-size: 1.05rem;
-      font-weight: 500;
+      font-family: var(--sans);
+      font-size: 1rem;
+      font-weight: 700;
       color: var(--gold-light);
       margin-bottom: 2px;
     }
@@ -667,7 +667,7 @@
 <body>
   <div class="demo-bar">
     <strong>DEMO SuperSite · Rivet Fade Co.</strong> — JAWSAI911 double stack
-    <a href="../../salon-supersite.html">← Offer</a>
+    <a href="#problems">Why it works</a>
     <a href="#stack">See stack</a>
     <a href="#book">Book demo</a>
   </div>
@@ -695,10 +695,10 @@
   <section class="hero">
     <div class="wrap hero-grid">
       <div>
-        <div class="eyebrow"><span class="dot"></span> SuperSite for barbers · ✂️ · brand 🦈</div>
-        <h1>Fresh cuts.<br /><em>Booked chairs</em> — front to back.</h1>
+        <div class="eyebrow"><span class="dot"></span> SuperSite for barbers · built to convert</div>
+        <h1>Sharp cuts.<br /><em>Full chairs</em> all week.</h1>
         <p class="hero-sub">
-          Rivet Fade Co. SuperSite: converting public site plus 🦈 that runs after-hours leads, Google reviews, Gen-Viral content, and chair-level follow-up — so the shop stays full without living on Instagram.
+          Rivet Fade Co. runs a harder-working shop site backed by after-hours lead capture, review follow-up, repeat-visit reminders, and content that turns fresh cuts into real bookings.
         </p>
         <div class="trust-row">
           <div class="chip"><b>★ 4.9</b> 186 Google reviews</div>
@@ -718,11 +718,11 @@
           <div class="hero-side">
             <figure>
               <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=600&q=80" alt="Detail craft" loading="lazy" />
-              <figcaption>Detail · craft</figcaption>
+              <figcaption>Clean work · close detail</figcaption>
             </figure>
             <figure>
               <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=600&q=80" alt="Studio ambient" loading="lazy" />
-              <figcaption>Miami · studio</figcaption>
+              <figcaption>Shop tools · ready all day</figcaption>
             </figure>
           </div>
         </div>
@@ -738,7 +738,7 @@
   <!-- Visual lookbook strip -->
   <section style="padding:28px 0 8px;border-bottom:1px solid var(--line)">
     <div class="wrap">
-      <div class="label" style="margin-bottom:14px">Lookbook · art of the craft</div>
+      <div class="label" style="margin-bottom:14px">Cut board · recent work</div>
       <div class="lookbook-strip" aria-label="Lookbook">
         <article class="look-card">
           <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=500&q=80" alt="Beard lineup" loading="lazy" />
@@ -750,7 +750,7 @@
         </article>
         <article class="look-card">
           <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=500&q=80" alt="Skin fade" loading="lazy" />
-          <div class="meta"><strong>Skin fade</strong>Transform Reel</div>
+          <div class="meta"><strong>Skin fade</strong>Before / after Reel</div>
         </article>
         <article class="look-card">
           <img src="https://images.unsplash.com/photo-1493256338651-d82f7acb2b38?w=500&q=80" alt="Shop floor" loading="lazy" />
@@ -758,11 +758,11 @@
         </article>
         <article class="look-card">
           <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=500&q=80" alt="Tools" loading="lazy" />
-          <div class="meta"><strong>Tools</strong>Process / ASMR</div>
+          <div class="meta"><strong>Tools</strong>Clipper detail</div>
         </article>
         <article class="look-card">
-          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&q=80" alt="Barber portrait" loading="lazy" />
-          <div class="meta"><strong>Barber portrait</strong>Artist spotlight</div>
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&q=80" alt="Barber lineup" loading="lazy" />
+          <div class="meta"><strong>Barber lineup</strong>Available this week</div>
         </article>
       </div>
     </div>
@@ -775,7 +775,7 @@
   <section id="problems">
     <div class="wrap">
       <div class="label">What barbershops lose every week</div>
-      <h2 class="title">Two real problems. <em>Fixed by design.</em></h2>
+      <h2 class="title">Two real problems. <em>Handled on purpose.</em></h2>
       <p class="sub">Most barbershops lose in two places: missed calls after hours or while everyone is busy, and fresh cut photos that never get posted, ranked, or booked.</p>
       <div class="problems">
         <article class="prob">
@@ -806,28 +806,27 @@
     </div>
   </section>
 
-  <!-- About + portraits -->
+  <!-- About + shop proof -->
   <section id="about" style="border-top:1px solid var(--line)">
     <div class="wrap portrait-band">
       <div class="portrait-pair">
         <figure>
-          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80" alt="Barber portrait" loading="lazy" />
+          <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=600&q=80" alt="Fresh cut detail" loading="lazy" />
         </figure>
         <figure>
-          <img src="https://images.unsplash.com/photo-1517832606299-7ae9b720a186?w=600&q=80" alt="Barber chair portrait" loading="lazy" />
+          <img src="https://images.unsplash.com/photo-1493256338651-d82f7acb2b38?w=600&q=80" alt="Barbershop interior" loading="lazy" />
         </figure>
       </div>
       <div>
         <div class="label">About · run the shop tighter</div>
-        <h2 class="title">Less admin.<br /><em>More booked chairs.</em></h2>
+        <h2 class="title">Less chasing.<br /><em>More booked chairs.</em></h2>
         <p class="sub" style="margin-bottom:18px">
-          The SuperSite quietly handles the details behind the scenes so every touchpoint feels considered —
-          from first booking to review request to the Reel that fills next week’s chair.
+          The SuperSite handles the work most shops drop: missed calls, review asks, rebooking nudges, and content flow from the chair to the site.
         </p>
         <div class="trust-row">
-          <div class="chip"><b>01</b> Bookings that feel effortless</div>
-          <div class="chip"><b>02</b> Every detail remembered</div>
-          <div class="chip"><b>03</b> Growth you can see</div>
+          <div class="chip"><b>01</b> Faster call recovery</div>
+          <div class="chip"><b>02</b> Better rebook timing</div>
+          <div class="chip"><b>03</b> Clearer shop pipeline</div>
         </div>
         <a class="btn btn-rose" href="#book" style="margin-top:8px">Book now</a>
       </div>
@@ -837,8 +836,8 @@
   <!-- Gallery mosaic -->
   <section id="gallery" style="background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
     <div class="wrap">
-      <div class="label">Gallery · Cut culture</div>
-      <h2 class="title">Built for your kind of <em>shop</em></h2>
+      <div class="label">Gallery · shop proof</div>
+      <h2 class="title">Built for a busy <em>barbershop</em></h2>
       <p class="sub">Clean fades, lineups, beard work, and shop energy. The same content SuperSite turns into reviews, Reels, and booked chairs.</p>
       <div class="art-mosaic">
         <figure>
@@ -846,16 +845,16 @@
           <figcaption>Hero cut<span>Transform content · Photo → 5 Lanes</span></figcaption>
         </figure>
         <figure>
-          <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=600&q=80" alt="Barber portrait" loading="lazy" />
-          <figcaption>Barber portrait<span>Artist brand frames</span></figcaption>
+          <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=600&q=80" alt="Barber at work" loading="lazy" />
+          <figcaption>Barber at work<span>Trusted chair energy</span></figcaption>
         </figure>
         <figure>
           <img src="https://images.unsplash.com/photo-1593702288056-f93370f28151?w=600&q=80" alt="Fade detail" loading="lazy" />
           <figcaption>Fade detail<span>Social-ready crop</span></figcaption>
         </figure>
         <figure>
-          <img src="https://images.unsplash.com/photo-1512690459411-b0fd1c86b8c8?w=600&q=80" alt="Shop vibe portrait" loading="lazy" />
-          <figcaption>Shop vibe<span>Local brand feed</span></figcaption>
+          <img src="https://images.unsplash.com/photo-1512690459411-b0fd1c86b8c8?w=600&q=80" alt="Client in chair" loading="lazy" />
+          <figcaption>Client in chair<span>Service proof that converts</span></figcaption>
         </figure>
         <figure>
           <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=600&q=80" alt="Barber tools" loading="lazy" />
@@ -874,13 +873,13 @@
         <div class="stack-card front">
           <div class="layer">Layer 1 · Site Agent</div>
           <h3>What clients see</h3>
-          <p class="muted" style="color:var(--muted);font-weight:300;font-size:.95rem;line-height:1.6">Mobile-first converting pages that feel as premium as the studio.</p>
+          <p class="muted" style="color:var(--muted);font-weight:300;font-size:.95rem;line-height:1.6">Mobile-first converting pages built to turn traffic into calls, bookings, and repeat clients.</p>
           <ul>
             <li>Sticky click-to-call + Book CTAs (mobile first)</li>
             <li>Trust above fold: rating, review count, velocity</li>
             <li>Artist-tagged gallery &amp; Book the look</li>
             <li>After-hours AI intake chat</li>
-            <li>LocalBusiness / NailSalon schema + NAP</li>
+            <li>LocalBusiness / Barbershop schema + NAP</li>
             <li>Deposits, waitlists, rebooking paths</li>
           </ul>
         </div>
@@ -904,27 +903,27 @@
   <section id="features">
     <div class="wrap">
       <div class="label">Platform · SuperSite edition</div>
-      <h2 class="title">Everything you need. <em>Nothing you don’t.</em></h2>
-      <p class="sub">Original Rivet Fade Co. pillars — bookings, clients, growth — plus the engines that create walk-ins.</p>
+      <h2 class="title">Everything you need. <em>Nothing soft.</em></h2>
+      <p class="sub">Rivet Fade Co. keeps the focus on bookings, repeat clients, and local demand capture without turning the site into a fashion spread.</p>
       <div class="feat-grid">
         <article class="feat feat-visual">
-          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1633681926022-84c123d5c0e1?w=700&q=80')"></div>
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1493256338651-d82f7acb2b38?w=700&q=80')"></div>
           <div class="feat-body">
             <div class="ico">📅</div>
-            <h3>Bookings that feel effortless</h3>
+            <h3>Bookings that stay tight</h3>
             <p>Real-time availability, deposits, waitlists, reminders — working while you create.</p>
           </div>
         </article>
         <article class="feat feat-visual">
-          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=700&q=80')"></div>
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=700&q=80')"></div>
           <div class="feat-body">
             <div class="ico">👤</div>
-            <h3>Every detail, remembered</h3>
-            <p>Client profiles: formulas, preferences, history, notes for personal service.</p>
+            <h3>Client details, locked in</h3>
+            <p>Client profiles track preferences, history, and notes so the service stays consistent.</p>
           </div>
         </article>
         <article class="feat feat-visual">
-          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=700&q=80')"></div>
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=700&q=80')"></div>
           <div class="feat-body">
             <div class="ico">💳</div>
             <h3>Payments &amp; POS</h3>
@@ -932,7 +931,7 @@
           </div>
         </article>
         <article class="feat feat-visual">
-          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1604654894610-df63bc536371?w=700&q=80')"></div>
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=700&q=80')"></div>
           <div class="feat-body">
             <div class="ico">⭐</div>
             <h3>Google Review Engine</h3>
@@ -940,15 +939,15 @@
           </div>
         </article>
         <article class="feat feat-visual">
-          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=700&q=80')"></div>
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=700&q=80')"></div>
           <div class="feat-body">
             <div class="ico">▶</div>
             <h3>Gen-Viral Social Engine</h3>
-            <p>One set photo → IG, TikTok, GBP, gallery, review ask. Approval before post.</p>
+            <p>One cut photo → IG, TikTok, GBP, gallery, review ask. Approval before post.</p>
           </div>
         </article>
         <article class="feat feat-visual">
-          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1560066984-138dadb4c035?w=700&q=80')"></div>
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1493256338651-d82f7acb2b38?w=700&q=80')"></div>
           <div class="feat-body">
             <div class="ico">📍</div>
             <h3>Local SEO layer</h3>
@@ -956,23 +955,23 @@
           </div>
         </article>
         <article class="feat feat-visual">
-          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=700&q=80')"></div>
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=700&q=80')"></div>
           <div class="feat-body">
             <div class="ico">💬</div>
             <h3>After-hours AI</h3>
-            <p>Chat captures nights &amp; weekends when beauty searches spike.</p>
+            <p>Chat captures nights, weekends, and in-chair missed calls before they turn into lost bookings.</p>
           </div>
         </article>
         <article class="feat feat-visual">
-          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=700&q=80')"></div>
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1593702288056-f93370f28151?w=700&q=80')"></div>
           <div class="feat-body">
             <div class="ico">🔄</div>
             <h3>Rebooking intelligence</h3>
-            <p>Glow opportunity nudges for clients due back — fill the calendar proactively.</p>
+            <p>Re-cut and beard cleanup nudges hit at the right time so empty chair time gets filled faster.</p>
           </div>
         </article>
         <article class="feat feat-visual">
-          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=700&q=80')"></div>
+          <div class="feat-photo" style="background-image:url('https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=700&q=80')"></div>
           <div class="feat-body">
             <div class="ico">🚀</div>
             <h3>Growth OS dashboard</h3>
@@ -986,29 +985,29 @@
   <!-- Bento visual close -->
   <section style="border-top:1px solid var(--line)">
     <div class="wrap">
-      <div class="label">Visual system · mood board</div>
-      <h2 class="title">More artistry. <em>On every screen.</em></h2>
-      <p class="sub">A SuperSite should feel as considered as the brand — not a template with a logo sticker.</p>
+      <div class="label">Visual system · shop identity</div>
+      <h2 class="title">More edge. <em>On every screen.</em></h2>
+      <p class="sub">A barbershop site should look sharp, direct, and local. Not polished into something that feels soft or generic.</p>
       <div class="bento">
         <figure class="tall">
-          <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=700&q=80" alt="Campaign beauty" loading="lazy" />
-          <div class="overlay">Campaign</div>
+          <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=700&q=80" alt="Barber at work" loading="lazy" />
+          <div class="overlay">Shop floor authority</div>
         </figure>
         <figure class="wide">
-          <img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?w=900&q=80" alt="Hair detail" loading="lazy" />
+          <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=900&q=80" alt="Fade texture detail" loading="lazy" />
           <div class="overlay">Texture &amp; finish</div>
         </figure>
         <figure>
-          <img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=500&q=80" alt="Nails" loading="lazy" />
-          <div class="overlay">Nails</div>
+          <img src="https://images.unsplash.com/photo-1593702288056-f93370f28151?w=500&q=80" alt="Lineup detail" loading="lazy" />
+          <div class="overlay">Lineup detail</div>
         </figure>
         <figure>
-          <img src="https://images.unsplash.com/photo-1524504388940-b1c17226555e?w=500&q=80" alt="Portrait" loading="lazy" />
-          <div class="overlay">Portrait</div>
+          <img src="https://images.unsplash.com/photo-1512690459411-b0fd1c86b8c8?w=500&q=80" alt="Client result" loading="lazy" />
+          <div class="overlay">Client result</div>
         </figure>
         <figure class="wide">
-          <img src="https://images.unsplash.com/photo-1633681926022-84c123d5c0e1?w=900&q=80" alt="Salon interior" loading="lazy" />
-          <div class="overlay">Space · trust on arrival</div>
+          <img src="https://images.unsplash.com/photo-1493256338651-d82f7acb2b38?w=900&q=80" alt="Barbershop interior" loading="lazy" />
+          <div class="overlay">Shop floor · trust on arrival</div>
         </figure>
       </div>
     </div>
@@ -1017,7 +1016,7 @@
   <section class="social-band" id="social">
     <div class="wrap">
       <div class="label">Social · 2026 formats that book</div>
-      <h2 class="title">Content that stops the scroll — <em>then books the chair</em></h2>
+      <h2 class="title">Content that stops the scroll and <em>fills the chair</em></h2>
       <p class="sub">Video gets ~3× engagement vs static. SuperSite packages every service into the formats clients actually save.</p>
       <div class="trend-grid">
         <article class="trend">
@@ -1063,15 +1062,12 @@
   <section id="studio">
     <div class="wrap video-grid">
       <div class="video-frame">
-        <span class="video-badge">Studio film</span>
-        <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1200&q=80">
-          <source src="https://cdn.coverr.co/videos/coverr-woman-getting-a-manicure-4176/1080p.mp4" type="video/mp4" />
-          <source src="https://assets.mixkit.co/videos/39880/39880-720.mp4" type="video/mp4" />
-        </video>
+        <span class="video-badge">Shop workflow</span>
+        <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1200&q=80" alt="Barber workflow preview" loading="lazy" />
       </div>
       <div>
         <div class="label">See the SuperSite loop</div>
-        <h2 class="title">From set photo to <em>booked chair</em></h2>
+        <h2 class="title">From fresh cut to <em>booked chair</em></h2>
         <p class="sub" style="margin-bottom:18px">
           Client leaves happy → review request fires → photo hits 5 lanes → social books the next chair.
           Front and back feed each other.
@@ -1095,7 +1091,7 @@
   <section style="background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
     <div class="wrap">
       <div class="label">Why SuperSite vs typical software</div>
-      <h2 class="title">Typical salon stack vs <em>Rivet Fade Co. SuperSite</em></h2>
+      <h2 class="title">Typical barber stack vs <em>Rivet Fade Co. SuperSite</em></h2>
       <div style="overflow-x:auto;margin-top:28px">
         <table class="compare">
           <thead>
@@ -1213,7 +1209,7 @@
         1842 NW 2nd Ave, Miami, FL 33136 · (305) 555-0186
       </div>
       <div> ·
-        <a href="../../salon-supersite.html">Offer</a> ·
+        <a href="#stack">Stack</a> ·
         <a href="#gallery">Gallery</a> ·
         <a href="#book">Book demo</a>
       </div>
@@ -1274,7 +1270,7 @@
         if (s.indexOf("command") !== -1 || s.indexOf("hub") !== -1)
           return "Operator stack is staff-only (access code 911). Public site focuses on booking, trust, and reviews.";
         if (s.indexOf("price") !== -1 || s.indexOf("cost") !== -1)
-          return "This is a live SuperSite demo. For the salon special, email info@jawsai911.com or call 786-761-2950.";
+          return "This is a live barber SuperSite demo. For pricing on your shop, email info@jawsai911.com or call 786-761-2950.";
         return "Ask about SuperSite, reviews, Gen-Viral, booking, or local visibility.";
       }
       function handle(q) {
