@@ -62,6 +62,7 @@
   .smartsite-actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
   .proof-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; }
   .proof-actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+  .workspace-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; }
   .review-grid { display:grid; grid-template-columns:.9fr 1.1fr; gap:16px; }
   .review-card { border:1px solid var(--line); background:var(--foam); border-radius:8px; padding:12px; }
   .review-card h3 { font-size:13px; font-weight:800; margin-bottom:8px; }
@@ -73,7 +74,7 @@
   .preview-frame { width:100%; height:520px; border:0; background:#fff; }
   .workflow-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px; }
   .empty { padding:20px; text-align:center; color:var(--ink-soft); font-size:12px; }
-  @media (max-width:1000px) { .hero,.grid,.doc-form,.smartsite-grid,.proof-grid,.review-grid,.workflow-grid { grid-template-columns:1fr; } }
+  @media (max-width:1000px) { .hero,.grid,.doc-form,.smartsite-grid,.proof-grid,.workspace-grid,.review-grid,.workflow-grid { grid-template-columns:1fr; } }
 </style>
 </head>
 <body>
@@ -319,6 +320,45 @@
           <button class="btn" type="button" onclick="copyGoogleReviewUrl()">Copy Review URL</button>
         </div>
       </div>
+      <div class="panel">
+        <div class="section-head">
+          <h2>Loom & Send</h2>
+          <span class="mini">Rep contact, Loom link, and category send templates</span>
+        </div>
+        <div id="outreachWorkspaceSummary" class="list"></div>
+        <div class="workspace-grid">
+          <div class="field">
+            <label>Loom Video URL</label>
+            <input id="loomUrl" placeholder="https://www.loom.com/share/...">
+          </div>
+          <div class="field">
+            <label>Rep Phone</label>
+            <input id="repPhone" placeholder="786-761-2950">
+          </div>
+        </div>
+        <div class="workspace-grid">
+          <div class="field">
+            <label>Rep Email</label>
+            <input id="repEmail" placeholder="aaron@jawsai911.com">
+          </div>
+          <div class="field">
+            <label>Hook / Angle</label>
+            <input id="hookAngle" placeholder="After-hours + reviews">
+          </div>
+        </div>
+        <div class="edit-grid full">
+          <div class="field">
+            <label>SMS / Loom Text</label>
+            <textarea id="smsCopy" placeholder="Paste or tune the text Aaron will send with the Loom and demo link."></textarea>
+          </div>
+        </div>
+        <div class="proof-actions">
+          <button class="btn primary" type="button" onclick="saveOutreachWorkspace()">Save Loom & Send</button>
+          <a class="btn" id="openReceiptTemplateBtn" href="#" target="_blank" rel="noopener">Open Receipt Template</a>
+          <a class="btn" id="openProposalTemplateBtn" href="#" target="_blank" rel="noopener">Open Proposal Template</a>
+          <button class="btn navy" type="button" onclick="copySmartSiteText()">Copy Text + Loom</button>
+        </div>
+      </div>
       <div class="panel" style="grid-column:1 / -1">
         <div class="section-head">
           <h2>Review Before Send</h2>
@@ -452,6 +492,16 @@ function googleProofData() {
   return data && typeof data === 'object' ? data : {};
 }
 
+function outreachWorkspaceData() {
+  const data = leadField('outreach_workspace');
+  return data && typeof data === 'object' ? data : {};
+}
+
+function categoryTemplateMeta() {
+  const category = leadField('category');
+  return window.JAWS_DEMO_REGISTRY && window.JAWS_DEMO_REGISTRY.resolveByCategory(category);
+}
+
 function leadField(name) {
   const fields = lead && lead.custom_fields ? lead.custom_fields : {};
   return fields && typeof fields === 'object' ? fields[name] : null;
@@ -460,14 +510,16 @@ function leadField(name) {
 function composeSmartSiteText() {
   const data = smartSiteData();
   const proof = googleProofData();
+  const workspace = outreachWorkspaceData();
   const name = lead.full_name || lead.company || 'your business';
   const reviewLine = [proof.rating, proof.review_count].filter(Boolean).join(' · ');
-  const customText = leadField('outreach_workspace') && leadField('outreach_workspace').sms_copy;
+  const customText = workspace.sms_copy;
   if (customText) return customText;
   return [
     'Hey, this is ' + (lead.assigned_to || 'Bryan') + ' with JAWSAI.',
     'I put together a quick Smart Site demo for ' + name + ' so you can see how this could look live.',
     reviewLine ? 'I also pulled your Google proof: ' + reviewLine + '.' : null,
+    workspace.loom_url ? 'Loom: ' + workspace.loom_url : null,
     data.url ? 'Here is the link: ' + data.url : null
   ].filter(Boolean).join(' ');
 }
@@ -532,6 +584,7 @@ async function loadLeadDetail() {
   renderDocuments();
   renderSmartSite();
   renderGoogleProof();
+  renderOutreachWorkspace();
   renderPortalEvents();
   statusMsg('Lead detail ready.');
 }
@@ -690,6 +743,34 @@ function renderGoogleProof() {
       return '<div class="review-quote">' + escapeHtml(quote) + '</div>';
     }).join('') : '');
   renderReviewChecklist();
+}
+
+function renderOutreachWorkspace() {
+  const workspace = outreachWorkspaceData();
+  const categoryMeta = categoryTemplateMeta() || {};
+  const savedRepPhone = window.sessionStorage.getItem('jawscrm_rep_phone') || window.localStorage.getItem('jawscrm_rep_phone') || '';
+  const savedRepEmail = window.sessionStorage.getItem('jawscrm_rep_email') || window.localStorage.getItem('jawscrm_rep_email') || '';
+  document.getElementById('loomUrl').value = workspace.loom_url || '';
+  document.getElementById('repPhone').value = workspace.rep_phone || savedRepPhone || '';
+  document.getElementById('repEmail').value = workspace.rep_email || savedRepEmail || '';
+  document.getElementById('hookAngle').value = workspace.hook_angle || leadField('pitch_angle') || '';
+  document.getElementById('smsCopy').value = workspace.sms_copy || '';
+  document.getElementById('openReceiptTemplateBtn').href = categoryMeta.outreach_template_url || '#';
+  document.getElementById('openProposalTemplateBtn').href = categoryMeta.proposal_template_url || '#';
+  const summary = document.getElementById('outreachWorkspaceSummary');
+  const receiptLabel = categoryMeta.outreach_template_key || 'No receipt template';
+  const proposalLabel = categoryMeta.proposal_template_key || 'No proposal template';
+  if (!workspace.loom_url && !workspace.rep_phone && !workspace.rep_email && !workspace.sms_copy && !workspace.hook_angle) {
+    summary.innerHTML = '<div class="item"><div class="item-title">Category send set</div><div class="item-meta">Receipt template: ' + escapeHtml(receiptLabel) + '<br>Proposal template: ' + escapeHtml(proposalLabel) + '</div></div>';
+    return;
+  }
+  summary.innerHTML = '<div class="item"><div class="item-title">Send setup ready</div><div class="item-meta">' +
+    'Loom: ' + escapeHtml(workspace.loom_url || 'Not set') + '<br>' +
+    'Rep phone: ' + escapeHtml(workspace.rep_phone || '') + '<br>' +
+    'Rep email: ' + escapeHtml(workspace.rep_email || '') + '<br>' +
+    'Receipt template: ' + escapeHtml(receiptLabel) + '<br>' +
+    'Proposal template: ' + escapeHtml(proposalLabel) +
+    '</div></div>';
 }
 
 function renderReviewChecklist() {
@@ -861,6 +942,34 @@ async function saveGoogleProof() {
   statusMsg('Google proof and asset notes saved.');
 }
 
+async function saveOutreachWorkspace() {
+  const nextData = {
+    loom_url: document.getElementById('loomUrl').value.trim() || null,
+    rep_phone: document.getElementById('repPhone').value.trim() || null,
+    rep_email: document.getElementById('repEmail').value.trim() || null,
+    hook_angle: document.getElementById('hookAngle').value.trim() || null,
+    sms_copy: document.getElementById('smsCopy').value.trim() || null
+  };
+  window.localStorage.setItem('jawscrm_rep_phone', nextData.rep_phone || '');
+  window.sessionStorage.setItem('jawscrm_rep_phone', nextData.rep_phone || '');
+  window.localStorage.setItem('jawscrm_rep_email', nextData.rep_email || '');
+  window.sessionStorage.setItem('jawscrm_rep_email', nextData.rep_email || '');
+  const nextCustomFields = Object.assign({}, lead.custom_fields || {}, { outreach_workspace: nextData });
+  const { data, error } = await supabaseClient
+    .from('crm_leads')
+    .update({ custom_fields: nextCustomFields })
+    .eq('id', currentLeadId)
+    .select('*')
+    .single();
+  if (error) {
+    statusMsg(error.message);
+    return;
+  }
+  lead = data;
+  renderOutreachWorkspace();
+  statusMsg('Loom and send setup saved.');
+}
+
 async function copyGoogleReviewUrl() {
   const proof = googleProofData();
   if (!proof.review_url) {
@@ -870,6 +979,15 @@ async function copyGoogleReviewUrl() {
   try {
     await navigator.clipboard.writeText(proof.review_url);
     statusMsg('Google review URL copied.');
+  } catch (error) {
+    statusMsg('Clipboard copy failed.');
+  }
+}
+
+async function copySmartSiteText() {
+  try {
+    await navigator.clipboard.writeText(composeSmartSiteText());
+    statusMsg('Text + Loom copied.');
   } catch (error) {
     statusMsg('Clipboard copy failed.');
   }
@@ -1033,6 +1151,7 @@ async function saveLeadEdits() {
   renderLead();
   renderSmartSite();
   renderGoogleProof();
+  renderOutreachWorkspace();
   statusMsg('Lead updates saved.');
 }
 
