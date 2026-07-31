@@ -300,6 +300,38 @@
     const fields = lead && lead.custom_fields ? lead.custom_fields : {};
     return fields && typeof fields === 'object' ? (fields.owner_barber_name || lead.full_name || lead.company || '') : (lead && (lead.full_name || lead.company) || '');
   }
+  function previewPayloadStorageKey() {
+    return 'jaws_demo_preview_payloads';
+  }
+  function demoPreviewPayload(lead) {
+    const proof = googleProofData(lead);
+    return {
+      name: businessDisplayName(lead),
+      owner: ownerDisplayName(lead),
+      rating: proof.rating || '',
+      review_count: proof.review_count || '',
+      review_url: proof.review_url || '',
+      review_1: proof.review_quote_1 || '',
+      review_2: proof.review_quote_2 || '',
+      review_3: proof.review_quote_3 || '',
+      photo_1: proof.photo_url_1 || '',
+      photo_2: proof.photo_url_2 || '',
+      photo_3: proof.photo_url_3 || ''
+    };
+  }
+  function persistDemoPreviewPayload(lead) {
+    const demo = smartSiteData(lead);
+    const source = String(demo.url || '').trim();
+    if (!source) return;
+    try {
+      const url = new URL(source, window.location.href);
+      const key = url.pathname;
+      const raw = window.localStorage.getItem(previewPayloadStorageKey()) || '{}';
+      const next = JSON.parse(raw);
+      next[key] = demoPreviewPayload(lead);
+      window.localStorage.setItem(previewPayloadStorageKey(), JSON.stringify(next));
+    } catch (error) {}
+  }
   function personalizedDemoUrl(lead) {
     const demo = smartSiteData(lead);
     const source = String(demo.url || '').trim();
@@ -586,6 +618,7 @@
     ].filter(Boolean).join(' · ') || 'Assets still need paste-in';
     const quotes = [proof.review_quote_1, proof.review_quote_2, proof.review_quote_3].filter(Boolean);
     const demoUrl = personalizedDemoUrl(lead);
+    persistDemoPreviewPayload(lead);
     const previewBlock = demo.url
       ? '<div class="preview-shell"><iframe class="preview-frame" title="SuperSite preview" loading="lazy" src="' + escapeHtml(demoUrl) + '"></iframe></div>'
       : '<div class="preview-shell"><div class="preview-empty">No SuperSite URL is attached to this lead yet.</div></div>';

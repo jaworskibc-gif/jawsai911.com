@@ -526,6 +526,40 @@ function ownerDisplayName() {
   return (lead && (leadField('owner_barber_name') || lead.full_name || lead.company)) || '';
 }
 
+function previewPayloadStorageKey() {
+  return 'jaws_demo_preview_payloads';
+}
+
+function demoPreviewPayload(proofOverride) {
+  const proof = proofOverride || googleProofData();
+  return {
+    name: businessDisplayName(),
+    owner: ownerDisplayName(),
+    rating: proof.rating || '',
+    review_count: proof.review_count || '',
+    review_url: proof.review_url || '',
+    review_1: proof.review_quote_1 || '',
+    review_2: proof.review_quote_2 || '',
+    review_3: proof.review_quote_3 || '',
+    photo_1: proof.photo_url_1 || '',
+    photo_2: proof.photo_url_2 || '',
+    photo_3: proof.photo_url_3 || ''
+  };
+}
+
+function persistDemoPreviewPayload(baseUrl, proofOverride) {
+  const source = String(baseUrl || '').trim();
+  if (!source) return;
+  try {
+    const url = new URL(source, window.location.href);
+    const key = url.pathname;
+    const raw = window.localStorage.getItem(previewPayloadStorageKey()) || '{}';
+    const next = JSON.parse(raw);
+    next[key] = demoPreviewPayload(proofOverride);
+    window.localStorage.setItem(previewPayloadStorageKey(), JSON.stringify(next));
+  } catch (error) {}
+}
+
 function personalizedDemoUrl(baseUrl, proofOverride) {
   const source = String(baseUrl || '').trim();
   if (!source) return '';
@@ -718,6 +752,7 @@ function renderDocuments() {
 function renderSmartSite() {
   const data = smartSiteData();
   const demoUrl = personalizedDemoUrl(data.url);
+  persistDemoPreviewPayload(data.url);
   document.getElementById('smartSiteName').value = data.name || '';
   document.getElementById('smartSiteUrl').value = data.url || '';
   document.getElementById('smartSiteStatus').value = data.status || 'not_started';
@@ -942,6 +977,7 @@ async function saveSmartSite() {
   }
   const firstCreated = !existing.url && !!nextData.url;
   lead = data;
+  persistDemoPreviewPayload(nextData.url);
   renderSmartSite();
   if (firstCreated) {
     await supabaseClient.from('crm_portal_events').insert({
@@ -990,6 +1026,7 @@ async function saveGoogleProof() {
     return;
   }
   lead = data;
+  persistDemoPreviewPayload(smartSiteData().url, nextProof);
   renderGoogleProof();
   statusMsg('Google proof and asset notes saved.');
 }

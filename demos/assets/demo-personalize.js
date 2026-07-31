@@ -1,4 +1,18 @@
 (function () {
+  function storageKey() {
+    return "jaws_demo_preview_payloads";
+  }
+
+  function readStoredPayload() {
+    try {
+      var raw = window.localStorage.getItem(storageKey()) || "{}";
+      var data = JSON.parse(raw);
+      return data && typeof data === "object" ? (data[window.location.pathname] || null) : null;
+    } catch (error) {
+      return null;
+    }
+  }
+
   function textParam(params, key) {
     return String(params.get(key) || "").trim();
   }
@@ -121,16 +135,17 @@
 
   function run() {
     var params = new URLSearchParams(window.location.search);
-    var name = textParam(params, "name");
-    var owner = textParam(params, "owner");
-    var rating = textParam(params, "rating");
-    var reviewCount = textParam(params, "review_count");
-    var reviewUrl = textParam(params, "review_url");
+    var stored = readStoredPayload();
+    var name = textParam(params, "name") || (stored && stored.name) || "";
+    var owner = textParam(params, "owner") || (stored && stored.owner) || "";
+    var rating = textParam(params, "rating") || (stored && stored.rating) || "";
+    var reviewCount = textParam(params, "review_count") || (stored && stored.review_count) || "";
+    var reviewUrl = textParam(params, "review_url") || (stored && stored.review_url) || "";
     var reviews = ["review_1", "review_2", "review_3"].map(function (key) {
-      return textParam(params, key);
+      return textParam(params, key) || (stored && stored[key]) || "";
     }).filter(Boolean);
     var photos = ["photo_1", "photo_2", "photo_3"].map(function (key) {
-      return textParam(params, key);
+      return textParam(params, key) || (stored && stored[key]) || "";
     }).filter(Boolean);
     if (!name && !reviews.length && !photos.length && !rating && !reviewCount) return;
 
