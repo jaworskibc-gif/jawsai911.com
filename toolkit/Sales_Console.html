@@ -606,7 +606,6 @@
     const proof = googleProofData(lead);
     const workspace = outreachWorkspaceData(lead);
     const detailUrl = 'Lead_Detail.html?client_id=' + encodeURIComponent(currentClientId || '') + '&lead_id=' + encodeURIComponent(lead.id) + '#review';
-    const proposalUrl = 'Proposal_Generator.html?client_id=' + encodeURIComponent(currentClientId || '') + '&lead_id=' + encodeURIComponent(lead.id);
     const invoiceUrl = 'JAWSAI911_Invoicing.html?client_id=' + encodeURIComponent(currentClientId || '') + '&lead_id=' + encodeURIComponent(lead.id) + '&type=invoice';
     const estimateUrl = 'JAWSAI911_Invoicing.html?client_id=' + encodeURIComponent(currentClientId || '') + '&lead_id=' + encodeURIComponent(lead.id) + '&type=estimate';
     const docsUrl = 'Sales_Documents.html?client_id=' + encodeURIComponent(currentClientId || '') + '&lead_id=' + encodeURIComponent(lead.id);
@@ -637,7 +636,6 @@
       '<a class="btn primary" href="' + escapeHtml(telHref(lead.phone)) + '">Call</a>' +
       '<a class="btn" href="' + escapeHtml(smsHref(lead.phone)) + '">Text</a>' +
       '<a class="btn" href="' + escapeHtml(detailUrl) + '">Open Lead Record</a>' +
-      '<a class="btn" href="' + escapeHtml(proposalUrl) + '">Proposal</a>' +
       '<a class="btn" href="' + escapeHtml(invoiceUrl) + '">Invoice</a>' +
       '</div>' +
       '<div class="pipe-meta" style="margin-top:14px">Status: ' + escapeHtml(lead.status) + ' · Last outcome: ' + escapeHtml(lead.last_call_outcome || 'none') + ' · Attempts: ' + escapeHtml(String(lead.call_attempts || 0)) + '</div>' +
