@@ -526,11 +526,37 @@ function ownerDisplayName() {
   return (lead && (leadField('owner_barber_name') || lead.full_name || lead.company)) || '';
 }
 
+function personalizedDemoUrl(baseUrl, proofOverride) {
+  const source = String(baseUrl || '').trim();
+  if (!source) return '';
+  try {
+    const url = new URL(source, window.location.href);
+    const proof = proofOverride || googleProofData();
+    const reviews = [proof.review_quote_1, proof.review_quote_2, proof.review_quote_3].filter(Boolean);
+    const photos = [proof.photo_url_1, proof.photo_url_2, proof.photo_url_3].filter(Boolean);
+    url.searchParams.set('name', businessDisplayName());
+    if (ownerDisplayName()) url.searchParams.set('owner', ownerDisplayName());
+    if (proof.rating) url.searchParams.set('rating', proof.rating);
+    if (proof.review_count) url.searchParams.set('review_count', proof.review_count);
+    if (proof.review_url) url.searchParams.set('review_url', proof.review_url);
+    reviews.forEach(function (review, index) {
+      url.searchParams.set('review_' + (index + 1), review);
+    });
+    photos.forEach(function (photo, index) {
+      url.searchParams.set('photo_' + (index + 1), photo);
+    });
+    return url.toString();
+  } catch (error) {
+    return source;
+  }
+}
+
 function composeSmartSiteText() {
   const data = smartSiteData();
   const proof = googleProofData();
   const workspace = outreachWorkspaceData();
   const name = businessDisplayName();
+  const demoUrl = personalizedDemoUrl(data.url, proof);
   const reviewLine = [proof.rating, proof.review_count].filter(Boolean).join(' · ');
   const customText = workspace.sms_copy;
   if (customText) return customText;
@@ -539,21 +565,22 @@ function composeSmartSiteText() {
     'I put together a quick Smart Site demo for ' + name + ' so you can see how this could look live.',
     reviewLine ? 'I also pulled your Google proof: ' + reviewLine + '.' : null,
     workspace.loom_url ? 'Loom: ' + workspace.loom_url : null,
-    data.url ? 'Here is the link: ' + data.url : null
+    demoUrl ? 'Here is the link: ' + demoUrl : null
   ].filter(Boolean).join(' ');
 }
 
 function composeSmartSiteEmail() {
   const data = smartSiteData();
   const name = businessDisplayName();
+  const demoUrl = personalizedDemoUrl(data.url);
   return {
     subject: 'Smart Site Demo for ' + name,
     body: [
       'Hey, this is ' + (lead.assigned_to || 'Bryan') + ' with JAWSAI.',
       '',
       'I put together a quick Smart Site demo for ' + name + ' so you can see how this could look live.',
-      data.url ? '' : null,
-      data.url ? 'Demo link: ' + data.url : null
+      demoUrl ? '' : null,
+      demoUrl ? 'Demo link: ' + demoUrl : null
     ].filter(Boolean).join('\n')
   };
 }
@@ -690,16 +717,17 @@ function renderDocuments() {
 
 function renderSmartSite() {
   const data = smartSiteData();
+  const demoUrl = personalizedDemoUrl(data.url);
   document.getElementById('smartSiteName').value = data.name || '';
   document.getElementById('smartSiteUrl').value = data.url || '';
   document.getElementById('smartSiteStatus').value = data.status || 'not_started';
   document.getElementById('smartSiteNotes').value = data.notes || '';
-  document.getElementById('openSmartSiteBtn').href = data.url || '#';
-  document.getElementById('reviewOpenDemoBtn').href = data.url || '#';
+  document.getElementById('openSmartSiteBtn').href = demoUrl || '#';
+  document.getElementById('reviewOpenDemoBtn').href = demoUrl || '#';
   const preview = document.getElementById('smartSitePreview');
   const previewEmpty = document.getElementById('previewEmpty');
   if (data.url) {
-    preview.src = data.url;
+    preview.src = demoUrl;
     preview.style.display = 'block';
     previewEmpty.style.display = 'none';
   } else {
@@ -818,7 +846,7 @@ function renderReviewChecklist() {
     { label: 'Asset proof', value: proofAssetsSummary },
     { label: 'Demo assigned', value: demo.name || 'Missing' },
     { label: 'Demo status', value: demo.status || 'not_started' },
-    { label: 'Demo URL', value: demo.url || 'Missing' }
+    { label: 'Demo URL', value: personalizedDemoUrl(demo.url) || 'Missing' }
   ];
   container.innerHTML = lines.map(function (line) {
     return '<div class="review-line"><strong>' + escapeHtml(line.label) + ':</strong> ' + escapeHtml(line.value) + '</div>';

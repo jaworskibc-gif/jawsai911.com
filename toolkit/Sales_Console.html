@@ -293,11 +293,43 @@
       loom_script: match.videoScript || null
     };
   }
-  function composeSmartSiteText(lead) {
+  function businessDisplayName(lead) {
+    return lead && (lead.company || lead.full_name) || 'your business';
+  }
+  function ownerDisplayName(lead) {
+    const fields = lead && lead.custom_fields ? lead.custom_fields : {};
+    return fields && typeof fields === 'object' ? (fields.owner_barber_name || lead.full_name || lead.company || '') : (lead && (lead.full_name || lead.company) || '');
+  }
+  function personalizedDemoUrl(lead) {
     const demo = smartSiteData(lead);
+    const source = String(demo.url || '').trim();
+    if (!source) return '';
+    try {
+      const url = new URL(source, window.location.href);
+      const proof = googleProofData(lead);
+      const reviews = [proof.review_quote_1, proof.review_quote_2, proof.review_quote_3].filter(Boolean);
+      const photos = [proof.photo_url_1, proof.photo_url_2, proof.photo_url_3].filter(Boolean);
+      url.searchParams.set('name', businessDisplayName(lead));
+      if (ownerDisplayName(lead)) url.searchParams.set('owner', ownerDisplayName(lead));
+      if (proof.rating) url.searchParams.set('rating', proof.rating);
+      if (proof.review_count) url.searchParams.set('review_count', proof.review_count);
+      if (proof.review_url) url.searchParams.set('review_url', proof.review_url);
+      reviews.forEach(function (review, index) {
+        url.searchParams.set('review_' + (index + 1), review);
+      });
+      photos.forEach(function (photo, index) {
+        url.searchParams.set('photo_' + (index + 1), photo);
+      });
+      return url.toString();
+    } catch (error) {
+      return source;
+    }
+  }
+  function composeSmartSiteText(lead) {
+    const demoUrl = personalizedDemoUrl(lead);
     const proof = googleProofData(lead);
     const workspace = outreachWorkspaceData(lead);
-    const name = lead.full_name || lead.company || 'your business';
+    const name = businessDisplayName(lead);
     const reviewLine = [proof.rating, proof.review_count].filter(Boolean).join(' · ');
     if (workspace.sms_copy) return workspace.sms_copy;
     const bits = [
@@ -305,19 +337,19 @@
       'I put together a quick Smart Site demo for ' + name + ' so you can see how this could look live.',
       reviewLine ? 'I also pulled your Google proof: ' + reviewLine + '.' : null
     ];
-    if (demo.url) bits.push('Here is the link: ' + demo.url);
+    if (demoUrl) bits.push('Here is the link: ' + demoUrl);
     return bits.filter(Boolean).join(' ');
   }
   function composeSmartSiteEmail(lead) {
-    const name = lead.full_name || lead.company || 'your business';
-    const demo = smartSiteData(lead);
+    const name = businessDisplayName(lead);
+    const demoUrl = personalizedDemoUrl(lead);
     const subject = 'Smart Site Demo for ' + name;
     const body = [
       'Hey, this is ' + (operatorName || 'Bryan') + ' with JAWSAI.',
       '',
       'I put together a quick Smart Site demo for ' + name + ' so you can see how this could look live.',
-      demo.url ? '' : null,
-      demo.url ? 'Demo link: ' + demo.url : null
+      demoUrl ? '' : null,
+      demoUrl ? 'Demo link: ' + demoUrl : null
     ].filter(Boolean).join('\n');
     return { subject, body };
   }
@@ -553,8 +585,9 @@
       proof.photo_notes ? 'placement noted' : null
     ].filter(Boolean).join(' · ') || 'Assets still need paste-in';
     const quotes = [proof.review_quote_1, proof.review_quote_2, proof.review_quote_3].filter(Boolean);
+    const demoUrl = personalizedDemoUrl(lead);
     const previewBlock = demo.url
-      ? '<div class="preview-shell"><iframe class="preview-frame" title="SuperSite preview" loading="lazy" src="' + escapeHtml(demo.url) + '"></iframe></div>'
+      ? '<div class="preview-shell"><iframe class="preview-frame" title="SuperSite preview" loading="lazy" src="' + escapeHtml(demoUrl) + '"></iframe></div>'
       : '<div class="preview-shell"><div class="preview-empty">No SuperSite URL is attached to this lead yet.</div></div>';
     const workstationBlock = '<div class="workspace-shell"><iframe class="workspace-frame" title="Lead workstation" loading="lazy" src="' + escapeHtml(detailUrl) + '"></iframe></div>';
     const quoteBlock = quotes.length
@@ -563,7 +596,7 @@
       }).join('') + '</div>'
       : '<div class="detail-meta" style="margin-top:10px">No review quotes saved yet.</div>';
     const smartSiteBlock = demo.url
-      ? '<div class="smartsite-box"><strong>SuperSite</strong><div class="pipe-meta">' + escapeHtml(demo.name || 'Demo') + ' · ' + escapeHtml(demo.status || 'draft') + '<br>' + escapeHtml(demo.url) + '</div><div class="action-row" style="margin-top:10px"><a class="btn" href="' + escapeHtml(demo.url) + '" target="_blank" rel="noopener">Open Demo</a><button class="btn" type="button" onclick="copyCurrentLeadDemoLink()">Copy Demo Link</button><button class="btn" type="button" onclick="textCurrentLeadDemo()">Text Demo</button><button class="btn" type="button" onclick="emailCurrentLeadDemo()">Email Demo</button></div></div>'
+      ? '<div class="smartsite-box"><strong>SuperSite</strong><div class="pipe-meta">' + escapeHtml(demo.name || 'Demo') + ' · ' + escapeHtml(demo.status || 'draft') + '<br>' + escapeHtml(demoUrl) + '</div><div class="action-row" style="margin-top:10px"><a class="btn" href="' + escapeHtml(demoUrl) + '" target="_blank" rel="noopener">Open Demo</a><button class="btn" type="button" onclick="copyCurrentLeadDemoLink()">Copy Demo Link</button><button class="btn" type="button" onclick="textCurrentLeadDemo()">Text Demo</button><button class="btn" type="button" onclick="emailCurrentLeadDemo()">Email Demo</button></div></div>'
       : '<div class="smartsite-box"><strong>SuperSite</strong><div class="pipe-meta">No demo linked yet. Open Lead Detail to add one.</div></div>';
     container.innerHTML = '<h3>' + escapeHtml(lead.full_name || lead.company || 'Unnamed Lead') + '</h3>' +
       '<div class="lead-meta">' + escapeHtml(lead.phone || 'No phone') + ' · ' + escapeHtml(lead.city || 'No city') + ', ' + escapeHtml(lead.state || 'FL') + '</div>' +
@@ -668,19 +701,19 @@
 
   async function copyCurrentLeadDemoLink() {
     const lead = selectedLead();
-    const demo = smartSiteData(lead);
-    if (!demo.url) {
+    const demoUrl = personalizedDemoUrl(lead);
+    if (!demoUrl) {
       statusMsg('No Smart Site demo is linked to this lead yet.');
       return;
     }
-    await copyToClipboard(demo.url, 'Demo link copied.');
+    await copyToClipboard(demoUrl, 'Demo link copied.');
   }
 
   function textCurrentLeadDemo() {
     const lead = selectedLead();
     if (!lead) return;
-    const demo = smartSiteData(lead);
-    if (!demo.url) {
+    const demoUrl = personalizedDemoUrl(lead);
+    if (!demoUrl) {
       statusMsg('No Smart Site demo is linked to this lead yet.');
       return;
     }
@@ -690,8 +723,8 @@
   function emailCurrentLeadDemo() {
     const lead = selectedLead();
     if (!lead) return;
-    const demo = smartSiteData(lead);
-    if (!demo.url) {
+    const demoUrl = personalizedDemoUrl(lead);
+    if (!demoUrl) {
       statusMsg('No Smart Site demo is linked to this lead yet.');
       return;
     }
