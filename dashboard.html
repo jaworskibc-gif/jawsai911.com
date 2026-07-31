@@ -109,7 +109,7 @@ body{min-height:100vh;background:radial-gradient(circle at top,rgba(56,189,248,.
           <button type="button" onclick="startSalesSession()">Save & Open Sales Console</button>
           <a href="toolkit/Sales_Console.html">Open Without Editing</a>
         </div>
-        <div class="signin-note">Current known rep code: Aaron = <strong>123</strong><button type="button" onclick="useAaronPreset()">Use Aaron</button></div>
+        <div class="signin-note">Current rep codes: Aaron = <strong>123</strong> · Bryan = <strong>499</strong><button type="button" onclick="useAaronPreset()">Use Aaron</button><button type="button" onclick="useBryanPreset()">Use Bryan</button></div>
       </div>
       <div class="stat-grid">
         <div class="stat"><strong>1. Sales Console</strong><span>Daily queue, current lead workspace, demo preview, proof summary, send path.</span></div>
@@ -158,6 +158,11 @@ function preloadSalesIdentity(){
 function useAaronPreset(){
   document.getElementById('salesName').value = 'Aaron';
   document.getElementById('employeeNumber').value = '123';
+}
+
+function useBryanPreset(){
+  document.getElementById('salesName').value = 'Bryan';
+  document.getElementById('employeeNumber').value = '499';
 }
 
 function startSalesSession(){
