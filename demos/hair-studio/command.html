@@ -34,6 +34,10 @@ body{min-height:100vh;font-family:Arial,sans-serif;background:linear-gradient(18
 .intro h2{font-size:26px;line-height:1.05}
 .intro p{font-size:15px;line-height:1.7;color:var(--muted);margin-top:10px;max-width:820px}
 .lane-nav{margin-top:18px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+.stat{padding:14px 16px;border-radius:16px;background:var(--panel-2);border:1px solid var(--line)}
+.stat strong{display:block;font-size:26px}
+.stat span{display:block;margin-top:6px;font-size:12px;line-height:1.5;color:var(--muted)}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
 .lane{padding:20px}
 .lane h3{font-size:20px;margin-top:10px}
@@ -42,6 +46,7 @@ body{min-height:100vh;font-family:Arial,sans-serif;background:linear-gradient(18
 .item{border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.03);padding:12px}
 .item strong{display:block;font-size:13px}
 .item span{display:block;font-size:12px;line-height:1.5;color:var(--muted);margin-top:5px}
+.item small{display:block;font-size:11px;line-height:1.4;color:var(--text);margin-top:6px}
 .chip{min-height:30px;padding:0 12px;background:var(--panel-2);border:1px solid var(--line);font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text)}
 .rule{margin-top:16px;padding:16px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid var(--line);font-size:13px;line-height:1.65;color:var(--muted)}
 .rule strong{color:var(--text)}
@@ -54,7 +59,7 @@ body{min-height:100vh;font-family:Arial,sans-serif;background:linear-gradient(18
     <div>
       <div class="kicker">Shark Operator Layer</div>
       <div class="title">Hair SuperSite Command Hub</div>
-      <div class="sub">This hub only exists to solve the few problems that actually matter: missed calls while the stylist is with a client, missed leads after hours, fresh hair photos not getting posted, and happy clients leaving without a Google review.</div>
+      <div class="sub">Friday, July 31, 2026. Live operator view for the studio. This is what the system looks like on a normal day while the stylist is with clients, the bot is catching what gets missed, and CapCut has a fresh transformation video queued to go out.</div>
     </div>
     <div class="toplinks">
       <a class="pill" href="index.html">Public Demo</a>
@@ -63,9 +68,14 @@ body{min-height:100vh;font-family:Arial,sans-serif;background:linear-gradient(18
   </div>
 
   <section class="intro">
-    <div class="kicker">Only 3 Lanes</div>
+    <div class="kicker">Today At A Glance</div>
     <h2>Agent. Social Manager. Google Review Engine.</h2>
-    <p>Nothing else belongs here. This page should stay simple enough that an owner can open it and know exactly what is handling missed leads, what is posting finished work, and what is asking for reviews.</p>
+    <p>One screen. Three things running: missed-lead recovery, transformation content moving toward publish, and review asks going out after appointments wrap.</p>
+    <div class="stats">
+      <div class="stat"><strong>5</strong><span>Missed leads caught today. Two color consults, one blowout, two cut inquiries in recovery.</span></div>
+      <div class="stat"><strong>1</strong><span>CapCut video queued for 5:30 PM. Color transformation reel with booking CTA attached.</span></div>
+      <div class="stat"><strong>3</strong><span>Review asks sent since open. One review posted, two waiting on reply.</span></div>
+    </div>
     <div class="lane-nav">
       <a class="nav-pill" href="#agent">Agent</a>
       <a class="nav-pill" href="#social">Social Manager</a>
@@ -77,54 +87,54 @@ body{min-height:100vh;font-family:Arial,sans-serif;background:linear-gradient(18
     <article class="lane" id="agent">
       <div class="kicker">Lane 1</div>
       <h3>Missed Call Agent</h3>
-      <p>The bot handles everything missed while the salon is closed or while the stylist has someone in the chair. It answers, texts back, captures the lead, and keeps the appointment moving.</p>
+      <p>What the bot is handling right now while chairs are full and the studio keeps moving.</p>
       <div class="chip-row" style="margin-top:14px">
-        <span class="chip">Missed calls</span>
-        <span class="chip">After-hours text back</span>
-        <span class="chip">Lead handoff</span>
+        <span class="chip">3 live replies</span>
+        <span class="chip">1 consult booked</span>
+        <span class="chip">1 follow-up due</span>
       </div>
       <div class="list">
-        <div class="item"><strong>In-service recovery</strong><span>New callers get answered when nobody can pick up.</span></div>
-        <div class="item"><strong>Closed-hours coverage</strong><span>After-hours leads get an immediate text-back instead of dying overnight.</span></div>
-        <div class="item"><strong>Booking intent capture</strong><span>Name, phone, and requested service get pushed into the operator workflow for follow-up.</span></div>
+        <div class="item"><strong>10:18 AM · missed call recovered</strong><span>Color consult inquiry texted back automatically with stylist request and booking link.</span><small>Status: consult booked for Tuesday at 4:00 PM.</small></div>
+        <div class="item"><strong>12:56 PM · in-service catch</strong><span>Blowout caller routed into text thread while the stylist was mid-color service.</span><small>Status: waiting on preferred day reply.</small></div>
+        <div class="item"><strong>6:08 PM · closed-hours cover armed</strong><span>After-hours response is ready with service menu, hours, and callback capture.</span><small>Status: auto-text fires if call is missed after close.</small></div>
       </div>
     </article>
 
     <article class="lane" id="social">
       <div class="kicker">Lane 2</div>
       <h3>Social Manager</h3>
-      <p>This lane turns finished hair photos into useful content instead of leaving them in the phone. One result should become a Reel, a Google photo, a site update, and a book-the-look post.</p>
+      <p>Fresh work is already in motion. CapCut is open, the reel is staged, and the result is being pushed into the channels that actually book appointments.</p>
       <div class="chip-row" style="margin-top:14px">
-        <span class="chip">Reels</span>
-        <span class="chip">Google photos</span>
-        <span class="chip">Book-the-look</span>
+        <span class="chip">CapCut open</span>
+        <span class="chip">5:30 PM publish</span>
+        <span class="chip">Google photo ready</span>
       </div>
       <div class="list">
-        <div class="item"><strong>Transformation content</strong><span>Color reveals, cut finishes, and before/after clips built from real service proof.</span></div>
-        <div class="item"><strong>Photo distribution</strong><span>Fresh work gets moved onto the channels that drive discovery and bookings.</span></div>
-        <div class="item"><strong>Direct booking CTA</strong><span>Every content piece points back to call, book, or request the stylist.</span></div>
+        <div class="item"><strong>CapCut queue · blonde refresh reveal</strong><span>14-second transformation video with before/after first frame and text hook already cut.</span><small>Status: caption loaded, posting at 5:30 PM.</small></div>
+        <div class="item"><strong>Google photo lane</strong><span>Three after shots cropped and ready for the GBP upload after the reel publishes.</span><small>Status: final cover frame selected.</small></div>
+        <div class="item"><strong>Book-the-look CTA</strong><span>Stylist tagged, booking link attached, "Book this result" CTA locked to the post.</span><small>Status: ready for publish.</small></div>
       </div>
     </article>
 
     <article class="lane" id="reviews">
       <div class="kicker">Lane 3</div>
       <h3>Google Review Engine</h3>
-      <p>This lane keeps the map result alive. Ask in the chair, ask again by text, and keep recent reviews and recent photos stacking every week.</p>
+      <p>This is the live review lane for the day. Review asks go out while the result is fresh and the backup text handles the misses.</p>
       <div class="chip-row" style="margin-top:14px">
-        <span class="chip">Chair ask</span>
-        <span class="chip">Text follow-up</span>
-        <span class="chip">Map pack trust</span>
+        <span class="chip">1 new review in</span>
+        <span class="chip">2 text asks pending</span>
+        <span class="chip">Map pack active</span>
       </div>
       <div class="list">
-        <div class="item"><strong>Review ask at the finish</strong><span>Prompt the review while the client is still reacting to the result.</span></div>
-        <div class="item"><strong>Same-day backup ask</strong><span>If they leave without reviewing, the text follow-up gives the second shot.</span></div>
-        <div class="item"><strong>Fresh proof loop</strong><span>New reviews plus new photos keep local trust and click-through strength moving.</span></div>
+        <div class="item"><strong>1:38 PM · chair ask complete</strong><span>Client scanned the review QR right after final mirror check.</span><small>Status: 5-star review posted.</small></div>
+        <div class="item"><strong>4:12 PM · backup text scheduled</strong><span>Cut client left quickly, so the review text is queued for 7:05 PM.</span><small>Status: pending send.</small></div>
+        <div class="item"><strong>Fresh proof loop</strong><span>New review plus today’s finish photos keep the profile active before the weekend booking push.</span><small>Status: next photo batch posts tonight.</small></div>
       </div>
     </article>
   </section>
 
   <div class="rule">
-    <strong>Operator rule:</strong> if it does not help catch missed calls, text back after hours, post finished work, or collect Google reviews, it should not be in this hub.
+    <strong>Operator rule:</strong> this hub should feel like a real day in motion, not an explanation page.
   </div>
 </div>
 </body>

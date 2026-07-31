@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" fill="none">
+  <rect width="1200" height="900" fill="#111315"/>
+  <rect x="70" y="70" width="1060" height="760" rx="32" fill="#1B1F23"/>
+  <rect x="130" y="120" width="940" height="660" rx="28" fill="#F4F0E8"/>
+  <rect x="180" y="170" width="840" height="110" rx="20" fill="#15181B"/>
+  <text x="220" y="220" fill="#F3F5F7" font-family="Arial, sans-serif" font-size="38" font-weight="700">Rivet Fade Co.</text>
+  <text x="220" y="255" fill="#F04F3D" font-family="Arial, sans-serif" font-size="22" font-weight="700">Scan to leave a Google review</text>
+  <g transform="translate(210 330)">
+    <rect width="320" height="320" rx="18" fill="#fff"/>
+    <g fill="#15181B">
+      <rect x="24" y="24" width="80" height="80"/>
+      <rect x="216" y="24" width="80" height="80"/>
+      <rect x="24" y="216" width="80" height="80"/>
+      <rect x="144" y="24" width="24" height="24"/>
+      <rect x="168" y="48" width="24" height="24"/>
+      <rect x="120" y="72" width="24" height="24"/>
+      <rect x="144" y="96" width="48" height="24"/>
+      <rect x="120" y="144" width="24" height="24"/>
+      <rect x="168" y="144" width="24" height="24"/>
+      <rect x="216" y="144" width="24" height="24"/>
+      <rect x="240" y="168" width="24" height="24"/>
+      <rect x="144" y="192" width="24" height="24"/>
+      <rect x="168" y="216" width="24" height="24"/>
+      <rect x="120" y="240" width="24" height="24"/>
+      <rect x="144" y="264" width="48" height="24"/>
+      <rect x="216" y="240" width="24" height="24"/>
+      <rect x="240" y="264" width="56" height="24"/>
+    </g>
+  </g>
+  <rect x="590" y="340" width="360" height="130" rx="22" fill="#F7E5E2"/>
+  <text x="620" y="392" fill="#15181B" font-family="Arial, sans-serif" font-size="26" font-weight="700">Chair-side ask</text>
+  <text x="620" y="430" fill="#5C6268" font-family="Arial, sans-serif" font-size="20">Client scans right after the mirror check.</text>
+  <rect x="590" y="500" width="360" height="130" rx="22" fill="#EEF4F1"/>
+  <text x="620" y="552" fill="#15181B" font-family="Arial, sans-serif" font-size="26" font-weight="700">Backup text ask</text>
+  <text x="620" y="590" fill="#5C6268" font-family="Arial, sans-serif" font-size="20">If they leave fast, the review link fires later.</text>
+  <rect x="180" y="690" width="770" height="44" rx="22" fill="#15181B"/>
+  <text x="210" y="720" fill="#F3F5F7" font-family="Arial, sans-serif" font-size="20" font-weight="700">Google Review Engine · physical stand + same-day SMS</text>
+</svg>
