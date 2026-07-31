@@ -355,7 +355,8 @@
         <div class="proof-actions">
           <button class="btn primary" type="button" onclick="saveOutreachWorkspace()">Save Loom & Send</button>
           <a class="btn" id="openReceiptTemplateBtn" href="#" target="_blank" rel="noopener">Open Receipt Template</a>
-          <a class="btn" id="openProposalTemplateBtn" href="#" target="_blank" rel="noopener">Open Proposal Template</a>
+          <a class="btn" id="openProposalTemplateBtn" href="#" target="_blank" rel="noopener">Open Proposal 1</a>
+          <a class="btn" id="openProposalTemplate2Btn" href="#" target="_blank" rel="noopener">Open Proposal 2</a>
           <button class="btn navy" type="button" onclick="copySmartSiteText()">Copy Text + Loom</button>
         </div>
       </div>
@@ -757,11 +758,13 @@ function renderOutreachWorkspace() {
   document.getElementById('smsCopy').value = workspace.sms_copy || '';
   document.getElementById('openReceiptTemplateBtn').href = categoryMeta.outreach_template_url || '#';
   document.getElementById('openProposalTemplateBtn').href = categoryMeta.proposal_template_url || '#';
+  document.getElementById('openProposalTemplate2Btn').href = categoryMeta.secondary_proposal_template_url || '#';
   const summary = document.getElementById('outreachWorkspaceSummary');
   const receiptLabel = categoryMeta.outreach_template_key || 'No receipt template';
   const proposalLabel = categoryMeta.proposal_template_key || 'No proposal template';
+  const proposal2Label = categoryMeta.secondary_proposal_template_key || 'No second proposal template';
   if (!workspace.loom_url && !workspace.rep_phone && !workspace.rep_email && !workspace.sms_copy && !workspace.hook_angle) {
-    summary.innerHTML = '<div class="item"><div class="item-title">Category send set</div><div class="item-meta">Receipt template: ' + escapeHtml(receiptLabel) + '<br>Proposal template: ' + escapeHtml(proposalLabel) + '</div></div>';
+    summary.innerHTML = '<div class="item"><div class="item-title">Category send set</div><div class="item-meta">Receipt template: ' + escapeHtml(receiptLabel) + '<br>Proposal 1: ' + escapeHtml(proposalLabel) + '<br>Proposal 2: ' + escapeHtml(proposal2Label) + '</div></div>';
     return;
   }
   summary.innerHTML = '<div class="item"><div class="item-title">Send setup ready</div><div class="item-meta">' +
@@ -769,7 +772,8 @@ function renderOutreachWorkspace() {
     'Rep phone: ' + escapeHtml(workspace.rep_phone || '') + '<br>' +
     'Rep email: ' + escapeHtml(workspace.rep_email || '') + '<br>' +
     'Receipt template: ' + escapeHtml(receiptLabel) + '<br>' +
-    'Proposal template: ' + escapeHtml(proposalLabel) +
+    'Proposal 1: ' + escapeHtml(proposalLabel) + '<br>' +
+    'Proposal 2: ' + escapeHtml(proposal2Label) +
     '</div></div>';
 }
 
