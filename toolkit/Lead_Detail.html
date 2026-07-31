@@ -235,7 +235,7 @@
         </div>
         <div class="smartsite-actions">
           <button class="btn primary" type="button" onclick="saveSmartSite()">Save Smart Site</button>
-          <a class="btn navy" id="openSmartSiteBtn" href="#" target="_blank" rel="noopener">Open Demo</a>
+          <button class="btn navy" id="openSmartSiteBtn" type="button" onclick="openSmartSiteDemo()">Open Demo</button>
           <button class="btn" type="button" onclick="copySmartSiteLink()">Copy Demo Link</button>
           <button class="btn" type="button" onclick="openSmartSiteTextDraft()">Text Draft</button>
           <button class="btn" type="button" onclick="openSmartSiteEmailDraft()">Email Draft</button>
@@ -378,7 +378,7 @@
             <h3>Lead Check</h3>
             <div id="reviewChecklist" class="review-list"></div>
             <div class="smartsite-actions">
-              <a class="btn navy" id="reviewOpenDemoBtn" href="#" target="_blank" rel="noopener">Open Demo</a>
+              <button class="btn navy" id="reviewOpenDemoBtn" type="button" onclick="openSmartSiteDemo()">Open Demo</button>
               <button class="btn" type="button" onclick="copySmartSiteLink()">Copy Demo Link</button>
               <button class="btn" type="button" onclick="openSmartSiteTextDraft()">Text Draft</button>
               <button class="btn" type="button" onclick="openSmartSiteEmailDraft()">Email Draft</button>
@@ -753,8 +753,6 @@ function renderSmartSite() {
   document.getElementById('smartSiteUrl').value = data.url || '';
   document.getElementById('smartSiteStatus').value = data.status || 'not_started';
   document.getElementById('smartSiteNotes').value = data.notes || '';
-  document.getElementById('openSmartSiteBtn').href = demoUrl || '#';
-  document.getElementById('reviewOpenDemoBtn').href = demoUrl || '#';
   const preview = document.getElementById('smartSitePreview');
   const previewEmpty = document.getElementById('previewEmpty');
   if (data.url) {
@@ -1136,16 +1134,29 @@ async function markSmartSiteSent() {
 
 async function copySmartSiteLink() {
   const data = smartSiteData();
-  if (!data.url) {
+  const demoUrl = personalizedDemoUrl(data.url);
+  if (!demoUrl) {
     statusMsg('Save a Smart Site URL first.');
     return;
   }
+  persistDemoPreviewPayload(data.url);
   try {
-    await navigator.clipboard.writeText(data.url);
+    await navigator.clipboard.writeText(demoUrl);
     statusMsg('Smart Site link copied.');
   } catch (error) {
     statusMsg('Clipboard copy failed.');
   }
+}
+
+function openSmartSiteDemo() {
+  const data = smartSiteData();
+  const demoUrl = personalizedDemoUrl(data.url);
+  if (!demoUrl) {
+    statusMsg('Save a Smart Site URL first.');
+    return;
+  }
+  persistDemoPreviewPayload(data.url);
+  window.open(demoUrl, '_blank', 'noopener');
 }
 
 function openSmartSiteTextDraft() {
