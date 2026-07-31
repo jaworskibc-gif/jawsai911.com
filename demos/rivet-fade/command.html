@@ -4,783 +4,143 @@
 <script src="../../hub-auth.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rivet Fade Co. · 🦈 | JAWSAI911 SuperSite</title>
+<title>Rivet Fade Co. Command Hub</title>
 <meta name="robots" content="noindex,nofollow,noarchive">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#060b12;
-  --panel:#121922;
-  --panel-2:#161f2a;
-  --panel-3:#24160f;
-  --line:rgba(255,255,255,0.08);
-  --line-strong:rgba(255,255,255,0.12);
-  --text:#eff5fb;
+  --bg:#0b0f14;
+  --panel:#131a22;
+  --panel-2:#1a2430;
+  --line:rgba(255,255,255,.08);
+  --text:#eef4fb;
   --muted:#8ea1b4;
-  --teal:#268ECB;
-  --teal-2:#43b6ff;
-  --orange:#ff7a2f;
-  --orange-soft:rgba(255,122,47,0.12);
+  --cyan:#3db7ff;
+  --gold:#d4a96c;
   --green:#39d391;
-  --green-soft:rgba(57,211,145,0.12);
   --amber:#f0bc4a;
-  --red:#ef7b7b;
-  --shadow:0 28px 60px -34px rgba(0,0,0,0.75);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{
   min-height:100vh;
-  font-family:'Inter',Marcusl,sans-serif;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(180deg,#0b0f14,#101721 55%,#0b0f14);
   color:var(--text);
-  background:
-    radial-gradient(circle at top right, rgba(67,182,255,0.08), transparent 24%),
-    radial-gradient(circle at bottom left, rgba(255,122,47,0.08), transparent 18%),
-    var(--bg);
 }
-.wrap{max-width:1540px;margin:0 auto;padding:22px}
-.topbar,.panel,.metric,.overview-card,.card{
-  background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
-  border:1px solid var(--line);
-  box-shadow:var(--shadow);
-}
-.topbar{
-  display:flex;justify-content:space-between;align-items:flex-start;gap:20px;
-  border-radius:24px;padding:20px 22px;margin-bottom:16px;
-}
-.brand-kicker{
-  font-size:11px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--teal-2);
-}
-.brand-title{
-  font-family:'Fraunces',serif;font-size:34px;line-height:1.02;margin-top:8px;
-}
-.brand-sub{
-  font-size:13px;color:var(--muted);margin-top:8px;max-width:640px;line-height:1.5;
-}
-.status-row{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:10px}
-.status-pill,.tag,.tool-btn,.mini-btn{
-  display:inline-flex;align-items:center;justify-content:center;
-  border-radius:999px;font-size:10px;font-weight:800;letter-spacing:0.9px;text-transform:uppercase;
-}
-.status-pill{
-  min-height:38px;padding:0 14px;border:1px solid var(--line);background:rgba(255,255,255,0.035);color:var(--muted);
-}
-.status-pill.live{color:#dffcf0;border-color:rgba(57,211,145,0.34);background:var(--green-soft)}
-.status-pill.orange{color:#ffd5be;border-color:rgba(255,122,47,0.28);background:var(--orange-soft)}
-.logout{color:#d7eeff;text-decoration:none}
-.overview{
-  display:grid;grid-template-columns:1.1fr 0.9fr;gap:16px;margin-bottom:16px;
-}
-.overview-card{
-  border-radius:22px;padding:20px 22px;
-}
-.overview-card.strategy{background:linear-gradient(180deg, rgba(60,35,21,0.96), rgba(41,24,16,0.96));border-color:rgba(255,122,47,0.16)}
-.section-kicker{
-  font-size:11px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:var(--orange);margin-bottom:14px;
-}
-.strategy-title{
-  font-family:'Fraunces',serif;font-size:30px;line-height:1.05;
-}
-.strategy-sub{
-  font-size:13px;color:#d6b6a3;margin-top:8px;
-}
-.chip-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
-.tool-btn{
-  padding:12px 14px;color:#ffc6a4;border:1px solid rgba(255,122,47,0.22);background:rgba(255,122,47,0.04);
-}
-.windows{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px;
-}
-.window{
-  border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,0.03);padding:16px 14px;min-height:110px;
-}
-.window-time{
-  font-family:'Fraunces',serif;font-size:22px;color:#fff;
-}
-.window-title{
-  font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--orange);margin-top:6px;
-}
-.window-meta{
-  font-size:11px;color:var(--muted);margin-top:8px;line-height:1.45;
-}
-.metrics{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px;
-}
-.metric{
-  border-radius:20px;padding:18px;
-}
-.metric-label{
-  font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);
-}
-.metric-value{
-  font-family:'Fraunces',serif;font-size:36px;margin-top:10px;
-}
-.metric-note{
-  font-size:12px;color:var(--muted);margin-top:7px;line-height:1.45;
-}
-.main-grid{
-  display:grid;grid-template-columns:1.08fr 1.08fr 0.84fr;gap:16px;
-}
-.column{display:grid;gap:16px}
-.panel{
-  border-radius:22px;overflow:hidden;
-}
-.panel-head{
-  display:flex;justify-content:space-between;align-items:flex-start;gap:12px;
-  padding:16px 18px;border-bottom:1px solid var(--line);
-}
-.panel-title{
-  font-size:13px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase;
-}
-.panel-sub{
-  font-size:11px;color:var(--muted);margin-top:5px;line-height:1.45;
-}
-.panel-body{padding:16px 18px}
-.list{display:grid;gap:12px}
-.item,.card{
-  border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,0.03);
-}
-.item{padding:14px}
-.item-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
-.item-title{font-size:13px;font-weight:700;line-height:1.4}
-.item-meta{font-size:11px;color:var(--muted);margin-top:7px;line-height:1.5}
-.tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-.tag{
-  padding:6px 9px;background:rgba(38,142,203,0.12);border:1px solid rgba(38,142,203,0.26);color:#d7eeff;
-}
-.tag.green{background:var(--green-soft);border-color:rgba(57,211,145,0.28);color:#dffcf0}
-.tag.orange{background:var(--orange-soft);border-color:rgba(255,122,47,0.24);color:#ffd5be}
-.tag.amber{background:rgba(240,188,74,0.12);border-color:rgba(240,188,74,0.22);color:#fff2d1}
-.tag.red{background:rgba(239,123,123,0.12);border-color:rgba(239,123,123,0.22);color:#ffdada}
-.calendar{display:grid;gap:12px}
-.slot{
-  display:grid;grid-template-columns:90px 1fr auto;gap:12px;align-items:center;
-  padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.06);
-}
-.slot:last-child{border-bottom:none}
-.slot-day{
-  font-size:12px;font-weight:800;letter-spacing:0.9px;text-transform:uppercase;color:var(--orange);
-}
-.slot-copy{font-size:13px;font-weight:700}
-.slot-meta{font-size:11px;color:var(--muted);margin-top:5px}
-.mini-btn,.capcut-btn{
-  border:none;cursor:pointer;color:#fff;background:linear-gradient(135deg,var(--teal),#1c648f);
-}
-.mini-btn{padding:9px 11px}
-.capcut-btn{padding:10px 12px}
-.research-grid,.tool-grid{
-  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;
-}
-.card{padding:16px}
-.card-icon{font-size:20px}
-.card-title{
-  font-size:12px;font-weight:800;letter-spacing:0.9px;text-transform:uppercase;margin-top:12px;
-}
-.card-copy{
-  font-size:11px;color:var(--muted);margin-top:8px;line-height:1.5;
-}
-.brief-tabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
-.brief-tab{
-  display:inline-flex;align-items:center;justify-content:center;padding:9px 12px;border-radius:999px;
-  border:1px solid var(--line);background:rgba(255,255,255,0.03);font-size:10px;font-weight:800;letter-spacing:0.9px;text-transform:uppercase;color:var(--muted)
-}
-.brief-tab.active{background:rgba(38,142,203,0.16);border-color:rgba(38,142,203,0.32);color:#fff}
-.crm-row{
-  display:grid;grid-template-columns:1fr auto;gap:14px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.06)
-}
-.crm-row:last-child{border-bottom:none}
-.mini{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.45}
-.rule{
-  font-size:11px;color:var(--muted);margin-top:12px;line-height:1.5;padding-top:12px;border-top:1px solid rgba(255,255,255,0.06)
-}
-@media (max-width:1220px){
-  .overview,.main-grid{grid-template-columns:1fr}
-  .metrics{grid-template-columns:repeat(2,1fr)}
-}
-@media (max-width:720px){
-  .wrap{padding:14px}
-  .topbar{padding:16px}
-  .metrics,.windows,.research-grid,.tool-grid{grid-template-columns:1fr}
-  .slot{grid-template-columns:1fr}
-}
+.wrap{max-width:1180px;margin:0 auto;padding:20px}
+.topbar,.hero,.card{background:var(--panel);border:1px solid var(--line);border-radius:20px}
+.topbar{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:18px 20px}
+.kicker{font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--cyan)}
+.title{font-size:34px;font-weight:800;margin-top:8px}
+.sub{font-size:14px;line-height:1.6;color:var(--muted);margin-top:8px;max-width:760px}
+.toplinks{display:flex;gap:10px;flex-wrap:wrap}
+.pill,.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;text-decoration:none;font-weight:700}
+.pill{min-height:38px;padding:0 14px;font-size:11px;letter-spacing:.8px;text-transform:uppercase;background:rgba(255,255,255,.03);border:1px solid var(--line);color:var(--muted)}
+.hero{margin-top:16px;padding:22px}
+.hero h2{font-size:26px;line-height:1.05}
+.hero p{font-size:15px;line-height:1.7;color:var(--muted);margin-top:10px;max-width:820px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+.stat{background:var(--panel-2);border:1px solid var(--line);border-radius:16px;padding:16px}
+.stat strong{display:block;font-size:28px}
+.stat span{display:block;margin-top:6px;font-size:12px;color:var(--muted);line-height:1.45}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:16px}
+.card{padding:18px}
+.card h3{font-size:18px}
+.card p{font-size:13px;line-height:1.6;color:var(--muted);margin-top:8px}
+.list{display:grid;gap:10px;margin-top:14px}
+.item{border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.03);padding:12px}
+.item strong{display:block;font-size:13px}
+.item span{display:block;font-size:12px;color:var(--muted);line-height:1.5;margin-top:5px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.btn{padding:11px 14px;font-size:12px;letter-spacing:.6px;text-transform:uppercase;border:1px solid var(--line);color:var(--text);background:rgba(255,255,255,.03)}
+.btn.primary{background:var(--cyan);border-color:var(--cyan);color:#07111b}
+.btn.green{background:var(--green);border-color:var(--green);color:#07140e}
+.note{margin-top:16px;padding:16px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid var(--line);font-size:13px;line-height:1.65;color:var(--muted)}
+.note strong{color:var(--text)}
+@media (max-width:960px){.stats,.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-
-<div style="background:#0a0e17;color:#94a3b8;text-align:center;padding:10px 16px;font-size:12px">
-  <strong style="color:#00b4ff">DEMO · Layer 2 🦈</strong> — Rivet Fade Co. SuperSite back end (Operator Growth OS)
-  &nbsp;·&nbsp; <a href="index.html" style="color:#00b4ff">Public SuperSite</a>
-  &nbsp;·&nbsp; <a href="../../salon-supersite.html" style="color:#00b4ff">Offer page</a>
-  &nbsp;·&nbsp; <a href="../softline-nails/command.html" style="color:#00b4ff">Nail command</a>
-</div>
-
 <div class="wrap">
   <div class="topbar">
     <div>
-      <div class="brand-kicker">Private Staff Operator Layer</div>
-      <div class="brand-title">Rivet Fade Co. Growth OS</div>
-      <div class="brand-sub">Miami SuperSite command center — after-hours lead recovery, CRM, Gen-Viral social engine, Google Review Engine, Photo → 5 Lanes, and chair-level operator intel.</div>
+      <div class="kicker">Private Operator Layer</div>
+      <div class="title">Rivet Fade Co. Command Hub</div>
+      <div class="sub">This screen only exists to solve 2 problems: missed calls while the shop is busy or closed, and fresh cut photos sitting in the phone instead of bringing in new bookings.</div>
     </div>
-    <div class="status-row">
-      <div class="status-pill live">System Online</div>
-      <div class="status-pill">Live Demo</div>
-      <div class="status-pill orange">Miami · NW 2nd Ave</div>
-      <a class="status-pill logout" href="login.html" id="logoutLink">Log Out</a>
+    <div class="toplinks">
+      <a class="pill" href="index.html">Public Demo</a>
+      <a class="pill" href="login.html">Log Out</a>
     </div>
   </div>
 
-  <div class="overview">
-    <div class="overview-card strategy">
-      <div class="section-kicker">Strategy</div>
-      <div class="strategy-title">Full Shop Growth Strategy · SuperSite Stack</div>
-      <div class="strategy-sub">Chair booking · 30-day content map · review proof · stylist traffic · reactivation · AI intake · Photo → 5 Lanes</div>
-      <div class="chip-row">
-        <div class="tool-btn">Fade Menu</div>
-        <div class="tool-btn">Barber Spotlight</div>
-        <div class="tool-btn">Review Proof Stack</div>
-        <div class="tool-btn">Walk-In FAQ</div>
-        <div class="tool-btn">This Week Brief</div>
-        <div class="tool-btn">Gen-Viral Stack</div>
-        <div class="tool-btn">2-Page Brief</div>
-        <div class="tool-btn">Full Playbook</div>
+  <section class="hero">
+    <div class="kicker">What This Runs</div>
+    <h2>Missed Call Agent. Social Manager. Google Review Lane.</h2>
+    <p>Nothing else. The barber version should stay about calls, reviews, and cut photos turning into Reels, Google photos, and booked chairs.</p>
+    <div class="stats">
+      <div class="stat">
+        <strong>24/7</strong>
+        <span>AI bot answers missed calls and after-hours texts so the shop does not lose bookings when everyone is in the chair.</span>
+      </div>
+      <div class="stat">
+        <strong>1 Photo</strong>
+        <span>One fresh fade or beard photo becomes Reel, Google photo, site gallery update, review ask, and next-chair content.</span>
+      </div>
+      <div class="stat">
+        <strong>2 Lanes</strong>
+        <span>Review stand at the chair plus same-day text ask so happy clients actually leave Google reviews.</span>
       </div>
     </div>
-    <div class="overview-card">
-      <div class="section-kicker">Posting Windows (Eastern)</div>
-      <div class="windows">
-        <div class="window">
-          <div class="window-time">Now</div>
-          <div class="window-title">Cut Reveal Reel</div>
-          <div class="window-meta">Drop a soft-gel transform or 5★ review proof while booking intent is active.</div>
-        </div>
-        <div class="window">
-          <div class="window-time">12:15 PM</div>
-          <div class="window-title">Insurance / Walk-In FAQ</div>
-          <div class="window-meta">Midday post that kills price confusion and pushes “Book the look” to SuperSite.</div>
-        </div>
-        <div class="window">
-          <div class="window-time">6:00 PM</div>
-          <div class="window-title">Artist Authority Story</div>
-          <div class="window-meta">Artist-tagged cut stories and clean fade clips convert best here.</div>
-        </div>
+  </section>
+
+  <section class="grid">
+    <div class="card">
+      <div class="kicker">Problem 1</div>
+      <h3>Missed Call Agent</h3>
+      <p>When the barber is with a client or the shop is closed, the AI bot answers, texts back, captures the lead, and pushes the booking forward.</p>
+      <div class="list">
+        <div class="item"><strong>In-chair recovery</strong><span>Answers new callers when the barber cannot pick up.</span></div>
+        <div class="item"><strong>After-hours texting</strong><span>Sends the text-back and keeps the lead warm until morning.</span></div>
+        <div class="item"><strong>Lead handoff</strong><span>Drops name, phone, and service intent into CRM for follow-up.</span></div>
       </div>
-      <div class="rule"><b>Rule:</b> First hour matters. Reply to comments quickly, move booking intent into SMS follow-up, and use every artist-led post to drive chair bookings instead of generic salon fluff.</div>
-    </div>
-  </div>
-
-  <div class="metrics">
-    <div class="metric">
-      <div class="metric-label">Recovered Leads</div>
-      <div class="metric-value">18</div>
-      <div class="metric-note">11 text recoveries, 5 callbacks, 2 after-hours chat books pulled back into the pipeline today.</div>
-    </div>
-    <div class="metric">
-      <div class="metric-label">CRM Roster</div>
-      <div class="metric-value">326</div>
-      <div class="metric-note">Open bookings, past-client reactivation, artist waitlists, and follow-up tasks in one layer.</div>
-    </div>
-    <div class="metric">
-      <div class="metric-label">Gen-Viral Queue</div>
-      <div class="metric-value">9</div>
-      <div class="metric-note">5 reels, 2 cut transforms, 1 clean fade carousel, 1 artist spotlight clip ready for deployment.</div>
-    </div>
-    <div class="metric">
-      <div class="metric-label">CapCut Ready</div>
-      <div class="metric-value">4</div>
-      <div class="metric-note">Template-linked drafts waiting for light polish before publish across Reels, Stories, and Shorts.</div>
-    </div>
-  </div>
-
-  <div class="main-grid">
-    <div class="column">
-      <div class="panel">
-        <div class="panel-head">
-          <div>
-            <div class="panel-title">Missed-Lead Recovery</div>
-            <div class="panel-sub">Calls, texts, forms, and after-hours intent that should never go cold.</div>
-          </div>
-          <div class="tag green">Auto-Reply On</div>
-        </div>
-        <div class="panel-body list">
-          <div class="item">
-            <div class="item-top">
-              <div class="item-title">New client text: skin fade + line-up</div>
-              <div class="tag green">Recovered</div>
-            </div>
-            <div class="item-meta">Lead asked skin fade pricing. System replied with menu, Marcus availability, and SuperSite book link in under 20 seconds.</div>
-            <div class="tag-row">
-              <div class="tag">SMS</div>
-              <div class="tag orange">Needs Booking</div>
-            </div>
-          </div>
-          <div class="item">
-            <div class="item-top">
-              <div class="item-title">Missed call: Cut + Beard full set</div>
-              <div class="tag amber">Pending Callback</div>
-            </div>
-            <div class="item-meta">Voicemail transcript captured, callback task created, and text follow-up sent with length options + Diego booking path.</div>
-            <div class="tag-row">
-              <div class="tag">Voice</div>
-              <div class="tag red">Owner Review</div>
-            </div>
-          </div>
-          <div class="item">
-            <div class="item-top">
-              <div class="item-title">Reactivation reply: wedding cut inquiry</div>
-              <div class="tag green">Warm Lead</div>
-            </div>
-            <div class="item-meta">Past client clicked a line-up cut Reel and asked about Saturday. Reactivation sequence handed off to Marcus’s chair.</div>
-            <div class="tag-row">
-              <div class="tag">Reactivation</div>
-              <div class="tag orange">Assign Staff</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="panel">
-        <div class="panel-head">
-          <div>
-            <div class="panel-title">Today’s Research</div>
-            <div class="panel-sub">Daily brief stack for local patient acquisition, content planning, and positioning.</div>
-          </div>
-          <div class="tag">June 23</div>
-        </div>
-        <div class="panel-body research-grid">
-          <div class="card">
-            <div class="card-icon">📊</div>
-            <div class="card-title">Client Intent Brief</div>
-            <div class="card-copy">Most common inbound themes: skin fade vs acrylic, same-day openings, line-up trends, wedding sets, and walk-in policy.</div>
-          </div>
-          <div class="card">
-            <div class="card-icon">🗞️</div>
-            <div class="card-title">Daily News Agent</div>
-            <div class="card-copy">Pulls cut trends, clean fade, line-up, and Miami lifestyle angles so posts stay current without sounding generic.</div>
-          </div>
-          <div class="card">
-            <div class="card-icon">📸</div>
-            <div class="card-title">Instagram Brief</div>
-            <div class="card-copy">Artist-led cut reveals, Book-the-look CTAs, and clean-girl aesthetics working best right now.</div>
-          </div>
-          <div class="card">
-            <div class="card-icon">🎵</div>
-            <div class="card-title">TikTok Brief</div>
-            <div class="card-copy">ASMR process cuts and POV transforms that translate into booked chairs rather than vanity views.</div>
-          </div>
-          <div class="card">
-            <div class="card-icon">⭐</div>
-            <div class="card-title">Review Proof Brief</div>
-            <div class="card-copy">Latest five-star proof themes to recycle into SuperSite, GBP, Stories, and review Reels.</div>
-          </div>
-          <div class="card">
-            <div class="card-icon">📍</div>
-            <div class="card-title">Competitor Watch</div>
-            <div class="card-copy">Tracks nearby salons’ weak generic posts so Rivet Fade keeps leaning into artists, reviews, and clean studio proof.</div>
-          </div>
-        </div>
+      <div class="actions">
+        <a class="btn primary" href="#agent">Open Agent Flow</a>
       </div>
     </div>
 
-    <div class="column">
-      <div class="panel">
-        <div class="panel-head">
-          <div>
-            <div class="panel-title">Gen-Viral Stack</div>
-            <div class="panel-sub">Publishing engine for cut transforms, review proof, and artist-led authority.</div>
-          </div>
-          <div class="tag green">Publishing Active</div>
-        </div>
-        <div class="panel-body calendar">
-          <div class="slot">
-            <div class="slot-day">Thu 5:30p</div>
-            <div>
-              <div class="slot-copy">Marcus answers: "How often should I come in?"</div>
-              <div class="slot-meta">Education reel with Book-the-look CTA and SuperSite booking path.</div>
-            </div>
-            <button class="capcut-btn">CapCut</button>
-          </div>
-          <div class="slot">
-            <div class="slot-day">Fri 12:15p</div>
-            <div>
-              <div class="slot-copy">Cut transform: blush skin fade</div>
-              <div class="slot-meta">Before/after cut clip tuned for beach week + lasting skin fade audiences.</div>
-            </div>
-            <button class="capcut-btn">CapCut</button>
-          </div>
-          <div class="slot">
-            <div class="slot-day">Sat 9:00a</div>
-            <div>
-              <div class="slot-copy">Studio ASMR process cut</div>
-              <div class="slot-meta">Process clip + artist tag to keep the chair visible and the studio top of mind.</div>
-            </div>
-            <button class="capcut-btn">CapCut</button>
-          </div>
-          <div class="slot">
-            <div class="slot-day">Sun 7:45p</div>
-            <div>
-              <div class="slot-copy">Review → Reel carousel</div>
-              <div class="slot-meta">214-review social proof piece synchronized with SuperSite trust modules.</div>
-            </div>
-            <button class="capcut-btn">CapCut</button>
-          </div>
-        </div>
+    <div class="card">
+      <div class="kicker">Problem 2</div>
+      <h3>Social Manager</h3>
+      <p>The phone is already full of proof. This lane takes the cut photos and turns them into the simple formats that still work for barber shops in 2026.</p>
+      <div class="list">
+        <div class="item"><strong>Fade reveal Reel</strong><span>Short blend reveal with strong first-frame proof.</span></div>
+        <div class="item"><strong>Google photo lane</strong><span>Fresh work gets posted to the profile, not buried in the camera roll.</span></div>
+        <div class="item"><strong>Book-the-look CTA</strong><span>Each piece points back to booking or call.</span></div>
       </div>
-
-
-      <div class="panel">
-        <div class="panel-head">
-          <div>
-            <div class="panel-title">Photo → 5 Lanes</div>
-            <div class="panel-sub">One cut photo becomes social, Google, website, Shorts, and a review request.</div>
-          </div>
-          <div class="tag green">Engine On</div>
-        </div>
-        <div class="panel-body list">
-          <div class="item">
-            <div class="item-title">Blush skin fade · Marcus · Chair 1</div>
-            <div class="item-meta">Lanes: ✓ Social · ✓ Google · ✓ Website · ○ Shorts · ✓ Review request armed</div>
-            <div class="tag-row">
-              <div class="tag green">4/5 Done</div>
-              <div class="tag orange">Shorts pending</div>
-            </div>
-          </div>
-          <div class="item">
-            <div class="item-title">Modern French · Diego · Chair 2</div>
-            <div class="item-meta">All five lanes complete. Live on SuperSite gallery + GBP photos.</div>
-            <div class="tag-row">
-              <div class="tag green">Complete</div>
-            </div>
-          </div>
-          <div class="item">
-            <div class="item-title">Chrome micro · Marcus</div>
-            <div class="item-meta">Queued for tonight’s Gen-Viral Reel + chair review stand QR refresh.</div>
-            <div class="tag-row">
-              <div class="tag">In Queue</div>
-              <div class="tag orange">Needs Approve</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="panel">
-        <div class="panel-head">
-          <div>
-            <div class="panel-title">Social Engine · Approval Queue</div>
-            <div class="panel-sub">Nothing posts without a look first. Daily brief for IG, TikTok, Facebook, and GBP.</div>
-          </div>
-          <div class="tag green">Human Gate On</div>
-        </div>
-        <div class="panel-body list">
-          <div class="item">
-            <div class="item-top">
-              <div class="item-title">IG Reel · "Wait for the line-up…"</div>
-              <div class="tag amber">Approve</div>
-            </div>
-            <div class="item-meta">Caption + hashtags drafted. Platforms: Instagram Reels, TikTok, Shorts. CTA: Book Marcus on SuperSite.</div>
-            <div class="tag-row">
-              <div class="tag green">Yes</div>
-              <div class="tag red">Hold</div>
-              <div class="tag">Edit caption</div>
-            </div>
-          </div>
-          <div class="item">
-            <div class="item-top">
-              <div class="item-title">GBP post · Weekend openings</div>
-              <div class="tag green">Scheduled Fri 10a</div>
-            </div>
-            <div class="item-meta">Google Business post synced with SuperSite hours and click-to-call.</div>
-          </div>
-          <div class="item">
-            <div class="item-title">First-hour rule</div>
-            <div class="item-meta">Reply Agent drafts ready for comments with booking intent. Move high-intent replies into CRM SMS within 60 minutes.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="panel">
-        <div class="panel-head">
-          <div>
-            <div class="panel-title">Content Tools</div>
-            <div class="panel-sub">Internal production lanes for daily execution and monthly planning.</div>
-          </div>
-          <div class="tag">Growth OS</div>
-        </div>
-        <div class="panel-body tool-grid">
-          <div class="card">
-            <div class="card-icon">✅</div>
-            <div class="card-title">Daily Brief</div>
-            <div class="card-copy">Today’s post, caption engine, proof check, and operator priorities in one morning view.</div>
-          </div>
-          <div class="card">
-            <div class="card-icon">🗓️</div>
-            <div class="card-title">30-Day Calendar</div>
-            <div class="card-copy">Mapped month of artist posts, cut proof, trend education, and seasonal wedding angles.</div>
-          </div>
-          <div class="card">
-            <div class="card-icon">📈</div>
-            <div class="card-title">Post Tracker</div>
-            <div class="card-copy">Marks what was posted, reach, comments, Book-the-look clicks, and which content filled chairs.</div>
-          </div>
-          <div class="card">
-            <div class="card-icon">🎬</div>
-            <div class="card-title">Clip Studio</div>
-            <div class="card-copy">Arrange raw footage, rough trim, package captions, and jump straight into CapCut publishing prep.</div>
-          </div>
-          <div class="card">
-            <div class="card-icon">💬</div>
-            <div class="card-title">DM Scripts</div>
-            <div class="card-copy">Price replies, same-day answers, reactivation texts, and soft booking nudges for fast staff response.</div>
-          </div>
-          <div class="card">
-            <div class="card-icon">🚀</div>
-            <div class="card-title">Growth OS</div>
-            <div class="card-copy">Ties post tracker, review engine, CRM, follow-up, and SuperSite conversion into one operating layer.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="panel">
-        <div class="panel-head">
-          <div>
-            <div class="panel-title">Content Calendar</div>
-            <div class="panel-sub">Seven-day operating view of what is scheduled, reviewed, and waiting on footage.</div>
-          </div>
-          <div class="tag">7-Day View</div>
-        </div>
-        <div class="panel-body list">
-          <div class="item">
-            <div class="item-title">Mon: Meet Marcus hero set</div>
-            <div class="item-meta">SuperSite sync post tied to artist hero and studio positioning.</div>
-          </div>
-          <div class="item">
-            <div class="item-title">Wed: skin fade vs acrylic carousel</div>
-            <div class="item-meta">Educational post that reduces price friction and pushes booking.</div>
-          </div>
-          <div class="item">
-            <div class="item-title">Fri: client cut micro-story</div>
-            <div class="item-meta">Short proof clip focused on lasting wear instead of generic “pretty cuts” copy.</div>
-          </div>
-        </div>
+      <div class="actions">
+        <a class="btn green" href="#social">Open Social Lane</a>
+        <a class="btn" href="https://www.capcut.com/" target="_blank" rel="noopener">Open CapCut</a>
       </div>
     </div>
 
-    <div class="column">
-      <div class="panel">
-        <div class="panel-head">
-          <div>
-            <div class="panel-title">CRM Roster</div>
-            <div class="panel-sub">Live client and prospect view with follow-up state and reactivation signals.</div>
-          </div>
-          <div class="tag">Live Roster</div>
-        </div>
-        <div class="panel-body">
-          <div class="crm-row">
-            <div>
-              <div class="item-title">Sofia M. - skin fade consult</div>
-              <div class="mini">Last touch: SMS · asked about skin fade pricing + Marcus</div>
-            </div>
-            <div class="tag orange">Open</div>
-          </div>
-          <div class="crm-row">
-            <div>
-              <div class="item-title">Priya K. - return client</div>
-              <div class="mini">Last touch: reactivation · clicked line-up Reel</div>
-            </div>
-            <div class="tag green">Re-Engaged</div>
-          </div>
-          <div class="crm-row">
-            <div>
-              <div class="item-title">Elena R. - wedding set</div>
-              <div class="mini">Last touch: deposit pending · Saturday hold</div>
-            </div>
-            <div class="tag">Booked</div>
-          </div>
-          <div class="crm-row">
-            <div>
-              <div class="item-title">Mia L. - Cut + Beard inquiry</div>
-              <div class="mini">Last touch: SuperSite form · wants Diego</div>
-            </div>
-            <div class="tag amber">Verify</div>
-          </div>
-        </div>
+    <div class="card">
+      <div class="kicker">Proof</div>
+      <h3>Google Review Lane</h3>
+      <p>This stays simple: ask at the chair, ask again by text, stack recent reviews, and keep the map result strong.</p>
+      <div class="list">
+        <div class="item"><strong>Chair stand</strong><span>Scan while the client is still looking at the result.</span></div>
+        <div class="item"><strong>Same-day text ask</strong><span>Second chance if they leave without reviewing.</span></div>
+        <div class="item"><strong>Recent proof</strong><span>New reviews and fresh photos compound local trust.</span></div>
       </div>
-
-      <div class="panel">
-        <div class="panel-head">
-          <div>
-            <div class="panel-title">Briefings</div>
-            <div class="panel-sub">Brand, competitor, and operator briefs to guide client acquisition decisions.</div>
-          </div>
-          <div class="tag">Daily / Weekly</div>
-        </div>
-        <div class="panel-body">
-          <div class="brief-tabs">
-            <div class="brief-tab active">Brand</div>
-            <div class="brief-tab">Competitors</div>
-            <div class="brief-tab">Ops</div>
-          </div>
-          <div class="list">
-            <div class="item">
-              <div class="item-title">Brand brief</div>
-              <div class="item-meta">Artist-led sets and clean fade education are outperforming generic salon promos. Keep Marcus/Diego/Jordan visible in hero, social, and booking CTAs.</div>
-            </div>
-            <div class="item">
-              <div class="item-title">Competitor brief</div>
-              <div class="item-meta">Nearby salons lean on generic cut pics. Rivet Fade wins with named artists, review velocity, and clean studio proof.</div>
-            </div>
-            <div class="item">
-              <div class="item-title">Operator brief</div>
-              <div class="item-meta">Most common friction today remains price + wait time. Push those answers into chat, DM scripts, and the next content cycle.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="panel">
-        <div class="panel-head">
-          <div>
-            <div class="panel-title">Follow-Up System</div>
-            <div class="panel-sub">Text, email, and reminder sequences that keep booking intent from dying in the queue.</div>
-          </div>
-          <div class="tag green">Sequences Live</div>
-        </div>
-        <div class="panel-body list">
-          <div class="item">
-            <div class="item-title">New booking drip</div>
-            <div class="item-meta">Immediate text, 2-hour reminder, next-morning SMS, and SuperSite booking path for unbooked inquiries.</div>
-          </div>
-          <div class="item">
-            <div class="item-title">No-show recovery</div>
-            <div class="item-meta">Text sequence with reschedule language, artist-tagged cut clip, and front-desk task creation.</div>
-          </div>
-          <div class="item">
-            <div class="item-title">Past client reactivation</div>
-            <div class="item-meta">Segmented outreach tied to last cut date, preferred artist, and trend looks they saved.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="panel">
-        <div class="panel-head">
-          <div>
-            <div class="panel-title">Google Review Lane</div>
-            <div class="panel-sub">Dual-path review workflow: chair QR + same-day SMS, with one-touch reminders.</div>
-          </div>
-          <div class="tag green">Review Push On</div>
-        </div>
-        <div class="panel-body list">
-          <div class="item">
-            <div class="item-top">
-              <div class="item-title">Today’s review requests</div>
-              <div class="tag">14 Sent</div>
-            </div>
-            <div class="item-meta">Sent after completed sets via chair stand scan + Review Agent SMS for walk-outs.</div>
-            <div class="tag-row">
-              <div class="tag green">4 New Reviews</div>
-              <div class="tag orange">6 Pending</div>
-            </div>
-          </div>
-          <div class="item">
-            <div class="item-title">Chair script</div>
-            <div class="item-meta">“If you love the set, scan the stand for a 30-second Google review — it helps your artist and the studio.”</div>
-          </div>
-          <div class="item">
-            <div class="item-title">SMS review ask</div>
-            <div class="item-meta">“Thanks for coming to Rivet Fade Co. today ✨ If we earned it: [Google Review Link] — it helps your artist get booked by name.”</div>
-          </div>
-          <div class="item">
-            <div class="item-title">24-hour reminder</div>
-            <div class="item-meta">“Quick follow-up from Rivet Fade Co.: review link from yesterday if you haven’t had a chance — [Google Review Link]”</div>
-          </div>
-        </div>
+      <div class="actions">
+        <a class="btn" href="#reviews">Open Review Lane</a>
       </div>
     </div>
+  </section>
+
+  <div class="note">
+    <strong>Operator rule:</strong> if it does not help catch a missed call, text back after hours, post a fresh cut photo, or collect a Google review, it should not be on this command page.
   </div>
 </div>
-<script>
-if (sessionStorage.getItem('rivet_staff_auth') !== '1') {
-  window.location.href = 'login.html';
-}
-document.getElementById('logoutLink').addEventListener('click', function () {
-  sessionStorage.removeItem('rivet_staff_auth');
-});
-// Live date
-(function(){
-  var el = document.querySelector('.status-pill:nth-child(2)');
-  if (el) el.textContent = new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
-})();
-</script>
-
-<script>
-(function () {
-  // Toast
-  function toast(msg) {
-    var t = document.getElementById('hub-toast');
-    if (!t) {
-      t = document.createElement('div');
-      t.id = 'hub-toast';
-      t.style.cssText = 'position:fixed;bottom:24px;right:24px;background:#0b1f33;color:#fff;padding:12px 16px;border-radius:10px;font-size:13px;font-weight:700;z-index:99;opacity:0;transition:opacity .2s;box-shadow:0 12px 40px rgba(0,0,0,.4)';
-      document.body.appendChild(t);
-    }
-    t.textContent = msg;
-    t.style.opacity = '1';
-    setTimeout(function () { t.style.opacity = '0'; }, 2000);
-  }
-
-  // Wire Social Engine approve/hold tags
-  document.querySelectorAll('.panel').forEach(function (panel) {
-    var title = panel.querySelector('.panel-title');
-    if (!title || title.textContent.indexOf('Social Engine') === -1) return;
-    panel.querySelectorAll('.tag').forEach(function (tag) {
-      var tx = tag.textContent.trim().toLowerCase();
-      if (tx === 'yes' || tx === 'hold' || tx === 'edit caption') {
-        tag.style.cursor = 'pointer';
-        tag.addEventListener('click', function () {
-          if (tx === 'yes') toast('Approved · queued for publish window');
-          else if (tx === 'hold') toast('Held · will not post until approved');
-          else toast('Caption editor would open (demo)');
-        });
-      }
-    });
-  });
-
-  // CapCut buttons
-  document.querySelectorAll('.capcut-btn').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      toast('Opens CapCut template pack for this clip (demo)');
-    });
-  });
-
-  // Merge SuperSite form leads into CRM if present
-  try {
-    var keys = ['softline_leads', 'rivet_leads'];
-    var found = [];
-    keys.forEach(function (k) {
-      var arr = JSON.parse(localStorage.getItem(k) || '[]');
-      if (Array.isArray(arr)) found = found.concat(arr);
-    });
-    if (found.length) {
-      var roster = document.querySelector('.panel-title');
-      // find CRM panel body
-      document.querySelectorAll('.panel').forEach(function (panel) {
-        var t = panel.querySelector('.panel-title');
-        if (!t || t.textContent.indexOf('CRM') === -1) return;
-        var body = panel.querySelector('.panel-body');
-        if (!body) return;
-        found.slice(0, 4).forEach(function (lead) {
-          var row = document.createElement('div');
-          row.className = 'crm-row';
-          row.innerHTML = '<div><div class="item-title">' +
-            (lead.name || 'Web lead') + ' - ' + (lead.service || lead.when || 'inquiry') +
-            '</div><div class="mini">Last touch: SuperSite form · ' + (lead.phone || 'no phone') +
-            (lead.artist || lead.stylist ? ' · wants ' + (lead.artist || lead.stylist) : '') +
-            '</div></div><div class="tag orange">New</div>';
-          body.insertBefore(row, body.firstChild);
-        });
-      });
-    }
-  } catch (e) {}
-})();
-</script>
-
 </body>
 </html>
