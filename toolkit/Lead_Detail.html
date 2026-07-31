@@ -126,6 +126,16 @@
         </div>
         <div class="edit-grid">
           <div class="field">
+            <label>Business Name</label>
+            <input id="leadCompanyName" placeholder="Shop or business name">
+          </div>
+          <div class="field">
+            <label>Owner / Barber Name</label>
+            <input id="leadBarberName" placeholder="Owner or barber name">
+          </div>
+        </div>
+        <div class="edit-grid">
+          <div class="field">
             <label>Email</label>
             <input id="leadEmail" placeholder="name@example.com">
           </div>
@@ -508,11 +518,19 @@ function leadField(name) {
   return fields && typeof fields === 'object' ? fields[name] : null;
 }
 
+function businessDisplayName() {
+  return (lead && (lead.company || lead.full_name)) || 'your business';
+}
+
+function ownerDisplayName() {
+  return (lead && (leadField('owner_barber_name') || lead.full_name || lead.company)) || '';
+}
+
 function composeSmartSiteText() {
   const data = smartSiteData();
   const proof = googleProofData();
   const workspace = outreachWorkspaceData();
-  const name = lead.full_name || lead.company || 'your business';
+  const name = businessDisplayName();
   const reviewLine = [proof.rating, proof.review_count].filter(Boolean).join(' · ');
   const customText = workspace.sms_copy;
   if (customText) return customText;
@@ -527,7 +545,7 @@ function composeSmartSiteText() {
 
 function composeSmartSiteEmail() {
   const data = smartSiteData();
-  const name = lead.full_name || lead.company || 'your business';
+  const name = businessDisplayName();
   return {
     subject: 'Smart Site Demo for ' + name,
     body: [
@@ -594,7 +612,7 @@ function renderLead() {
   const hero = document.getElementById('leadHero');
   const category = leadField('category');
   const pitchAngle = leadField('pitch_angle');
-  hero.innerHTML = '<h1>' + escapeHtml(lead.full_name || lead.company || 'Unnamed Lead') + '</h1>' +
+  hero.innerHTML = '<h1>' + escapeHtml(lead.company || lead.full_name || 'Unnamed Lead') + '</h1>' +
     '<div class="meta">' + escapeHtml(lead.phone || 'No phone') + '<br>' +
     escapeHtml((lead.city || 'No city') + ', ' + (lead.state || 'FL')) + '<br>' +
     escapeHtml(lead.email || 'No email on file') + '</div>' +
@@ -622,6 +640,8 @@ function renderLead() {
   document.getElementById('reviewDocsBtn').href = '#documentsList';
   document.getElementById('leadStatus').value = lead.status || 'new';
   document.getElementById('leadOwner').value = lead.assigned_to || '';
+  document.getElementById('leadCompanyName').value = lead.company || '';
+  document.getElementById('leadBarberName').value = ownerDisplayName();
   document.getElementById('leadEmail').value = lead.email || '';
   document.getElementById('leadPhoneEdit').value = lead.phone || '';
   document.getElementById('leadNotesEdit').value = lead.notes || '';
@@ -788,7 +808,7 @@ function renderReviewChecklist() {
     proof.photo_notes ? 'placement noted' : null
   ].filter(Boolean).join(' · ') || 'Asset slots open';
   const lines = [
-    { label: 'Business', value: lead ? (lead.full_name || lead.company || 'Missing') : 'Missing' },
+    { label: 'Business', value: lead ? (lead.company || lead.full_name || 'Missing') : 'Missing' },
     { label: 'Category', value: leadField('category') || 'Missing' },
     { label: 'City', value: lead ? (lead.city || 'Missing') : 'Missing' },
     { label: 'Phone', value: lead ? (lead.phone || 'Missing') : 'Missing' },
@@ -1108,7 +1128,7 @@ async function addDocument() {
   const file = fileInput.files && fileInput.files[0];
   if (file) {
     statusMsg('Uploading document...');
-    const safeLead = String(lead.full_name || lead.company || 'lead').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    const safeLead = String(lead.company || lead.full_name || 'lead').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
     const ext = file.name.includes('.') ? '.' + file.name.split('.').pop() : '';
     const path = (currentClientId || 'client') + '/' + (currentLeadId || 'lead') + '/' + safeLead + '-' + Date.now() + ext;
     const { error: uploadError } = await supabaseClient.storage.from(DOC_BUCKET).upload(path, file, { upsert: true });
@@ -1134,12 +1154,17 @@ async function removeDocument(index) {
 }
 
 async function saveLeadEdits() {
+  const nextCustomFields = Object.assign({}, lead.custom_fields || {}, {
+    owner_barber_name: document.getElementById('leadBarberName').value.trim() || null
+  });
   const payload = {
     status: document.getElementById('leadStatus').value,
+    company: document.getElementById('leadCompanyName').value.trim() || null,
     assigned_to: document.getElementById('leadOwner').value.trim() || null,
     email: document.getElementById('leadEmail').value.trim() || null,
     phone: document.getElementById('leadPhoneEdit').value.trim() || null,
-    notes: document.getElementById('leadNotesEdit').value.trim() || null
+    notes: document.getElementById('leadNotesEdit').value.trim() || null,
+    custom_fields: nextCustomFields
   };
   const { data, error } = await supabaseClient
     .from('crm_leads')
