@@ -3,102 +3,70 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JAWSAI911 Toolkit</title>
+<title>JAWSAI911 CRM</title>
 <script src="../hub-auth.js"></script>
 <style>
   :root {
-    --navy: #010711; --navy-2: #0B1F33;
-    --cyan: #00B4FF; --teal: #00C4B4; --pink: #E8175D;
-    --ink: #1a2230; --ink-soft: #5A6472; --foam: #F7FAFB; --line: #E2E6EA;
+    --navy:#010711; --navy-2:#0B1F33; --cyan:#00B4FF; --teal:#00C4B4;
+    --ink:#1a2230; --ink-soft:#5A6472; --foam:#F7FAFB; --line:#E2E6EA;
   }
   * { margin:0; padding:0; box-sizing:border-box; font-family:'Liberation Sans', Arial, sans-serif; }
-  body { background: var(--foam); color: var(--ink); }
-  .topbar { background: var(--navy); color: white; padding: 26px 32px; }
-  .brand { font-size: 20px; font-weight: 900; }
-  .brand span { color: var(--cyan); }
-  .subtitle { font-size: 12.5px; color: rgba(255,255,255,0.6); margin-top: 4px; }
-  .back-link {
-    display: inline-flex; align-items: center; gap: 8px; margin-top: 14px;
-    color: rgba(255,255,255,0.86); text-decoration: none; font-size: 12px; font-weight: 700;
-  }
-  .back-link:hover { color: white; }
-
-  .wrap { max-width: 1040px; margin: 0 auto; padding: 30px; }
-  .section { margin-bottom: 28px; }
-  .section-head { margin-bottom: 14px; }
-  .section-title { font-size: 15px; font-weight: 900; color: var(--ink); }
-  .section-copy { font-size: 12px; color: var(--ink-soft); margin-top: 4px; line-height: 1.5; }
-  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  .card {
-    background: white; border: 1px solid var(--line); border-radius: 10px; padding: 20px;
-    text-decoration: none; color: var(--ink); display: block; transition: border-color 0.15s;
-  }
-  .card:hover { border-color: var(--teal); }
-  .card-icon { width: 34px; height: 34px; border-radius: 8px; margin-bottom: 12px; background: linear-gradient(135deg, var(--cyan), var(--teal)); }
-  .card-name { font-size: 14px; font-weight: 800; margin-bottom: 5px; }
-  .card-desc { font-size: 11.5px; color: var(--ink-soft); line-height: 1.4; }
-  .connected-note {
-    margin-top: 24px; background: #EAF6FF; border: 1px solid #C8E8F7; border-radius: 8px;
-    padding: 12px 16px; font-size: 11.5px; color: #0A5A80;
-  }
-  @media (max-width: 760px) { .grid { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
+  body { background:var(--foam); color:var(--ink); }
+  .topbar { background:var(--navy); color:#fff; padding:28px 32px; }
+  .brand { font-size:22px; font-weight:900; }
+  .brand span { color:var(--cyan); }
+  .subtitle { margin-top:6px; font-size:13px; color:rgba(255,255,255,.68); }
+  .back-link { display:inline-block; margin-top:14px; color:rgba(255,255,255,.88); text-decoration:none; font-size:12px; font-weight:700; }
+  .wrap { max-width:980px; margin:0 auto; padding:30px; }
+  .hero { background:#fff; border:1px solid var(--line); border-radius:14px; padding:26px; }
+  .hero h1 { font-size:34px; line-height:1.05; margin-bottom:12px; }
+  .hero p { font-size:14px; line-height:1.7; color:var(--ink-soft); max-width:760px; }
+  .launch-grid { display:grid; grid-template-columns:1.2fr .8fr; gap:16px; margin-top:18px; }
+  .card { background:#fff; border:1px solid var(--line); border-radius:12px; padding:22px; }
+  .card h2 { font-size:16px; margin-bottom:8px; }
+  .card p { font-size:12.5px; line-height:1.6; color:var(--ink-soft); }
+  .actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
+  .btn { display:inline-flex; align-items:center; justify-content:center; padding:12px 16px; border-radius:9px; border:1px solid var(--line); background:#fff; color:var(--ink); text-decoration:none; font-size:12px; font-weight:800; }
+  .btn.primary { background:var(--teal); border-color:var(--teal); color:var(--navy); }
+  .list { margin-top:12px; display:grid; gap:10px; }
+  .list-item { padding:12px 14px; border:1px solid var(--line); border-radius:9px; background:var(--foam); font-size:12px; line-height:1.55; color:var(--ink-soft); }
+  .list-item strong { display:block; color:var(--ink); margin-bottom:3px; }
+  .note { margin-top:18px; padding:14px 16px; border:1px solid #C8E8F7; background:#EAF6FF; color:#0A5A80; border-radius:10px; font-size:12px; line-height:1.6; }
+  @media (max-width:820px) { .launch-grid { grid-template-columns:1fr; } }
 </style>
 </head>
 <body>
-
   <div class="topbar">
-    <div class="brand">JAWS<span>AI</span>911 Toolkit</div>
-    <div class="subtitle">CRM-first workflow · review lead · preview SuperSite · send · follow up</div>
+    <div class="brand">JAWS<span>AI</span>911 CRM</div>
+    <div class="subtitle">Daily sales workspace only</div>
     <a class="back-link" href="../dashboard.html">← Back to Command Center</a>
   </div>
 
-  <div class="wrap">
-    <section class="section">
-      <div class="section-head">
-        <div class="section-title">CRM Core</div>
-        <div class="section-copy">Daily sales workflow only. Reps should start here, review the lead, preview the SuperSite, send outreach, and set the next action.</div>
+  <main class="wrap">
+    <section class="hero">
+      <h1>Sales should land here and start sending.</h1>
+      <p>Open the CRM queue, pull up the current lead, verify the SuperSite and Google proof, send the text or email, then handle proposal, invoice, docs, and follow-up from the lead record. Builder screens are out of the default path.</p>
+      <div class="launch-grid">
+        <div class="card">
+          <h2>Primary Workflow</h2>
+          <p>`Sales Console` is the daily starting point. It holds the queue, current lead workspace, fallback flagship demos, proof summary, and send actions. `Lead Detail` is still available when deeper edits are needed.</p>
+          <div class="actions">
+            <a class="btn primary" href="Sales_Console.html">Open Sales Console</a>
+            <a class="btn" href="Lead_Detail.html">Open Lead Detail</a>
+            <a class="btn" href="JAWSAI911_Pipeline_CRM.html">Open Pipeline</a>
+          </div>
+        </div>
+        <div class="card">
+          <h2>What Sales Needs</h2>
+          <div class="list">
+            <div class="list-item"><strong>Lead + SuperSite</strong> The assigned or fallback flagship demo should show on the active lead.</div>
+            <div class="list-item"><strong>Proof + Assets</strong> Google reviews, logo notes, photos, and quotes stay on the lead record.</div>
+            <div class="list-item"><strong>Closeout</strong> Proposal, invoice, docs, and follow-up stay tied to the same lead.</div>
+          </div>
+        </div>
       </div>
-      <div class="grid">
-        <a class="card" href="Sales_Console.html"><div class="card-icon"></div><div class="card-name">Sales Console</div><div class="card-desc">Main rep screen for queue, current lead, send path, and call logging.</div></a>
-        <a class="card" href="Lead_Detail.html"><div class="card-icon"></div><div class="card-name">Lead Detail</div><div class="card-desc">Review the lead, preview the SuperSite, send outreach, create proposal/invoice, and set follow-up.</div></a>
-        <a class="card" href="JAWSAI911_Pipeline_CRM.html"><div class="card-icon"></div><div class="card-name">Pipeline</div><div class="card-desc">See all leads by stage and import or clean up records when needed.</div></a>
-        <a class="card" href="JAWSAI911_Dashboard.html"><div class="card-icon"></div><div class="card-name">Dashboard</div><div class="card-desc">High-level CRM counts, due follow-ups, recent calls, and lead volume.</div></a>
-      </div>
+      <div class="note">Internal builder and package screens are no longer part of the launcher. If they are still linked elsewhere, they should be treated as admin-only, not the daily sales flow.</div>
     </section>
-
-    <section class="section">
-      <div class="section-head">
-        <div class="section-title">Client Packages</div>
-        <div class="section-copy">Open these only when building, attaching, or updating deliverables for a client package.</div>
-      </div>
-      <div class="grid">
-        <a class="card" href="Proposal_Generator.html"><div class="card-icon"></div><div class="card-name">Proposal Generator</div><div class="card-desc">Create package proposals and save them into the estimate flow.</div></a>
-        <a class="card" href="JAWSAI911_Invoicing.html"><div class="card-icon"></div><div class="card-name">Invoicing &amp; Estimating</div><div class="card-desc">Create invoices, estimates, and billing records tied to the lead.</div></a>
-        <a class="card" href="Sales_Documents.html"><div class="card-icon"></div><div class="card-name">Sales Documents</div><div class="card-desc">Store receipts, docs, proofs, and package attachments.</div></a>
-        <a class="card" href="JAWSAI911_Site_Builder.html"><div class="card-icon"></div><div class="card-name">Site Builder</div><div class="card-desc">Only for building or editing a client deliverable.</div></a>
-        <a class="card" href="JAWSAI911_Form_Builder.html"><div class="card-icon"></div><div class="card-name">Form Builder</div><div class="card-desc">Only for adding client package forms or intake assets.</div></a>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="section-head">
-        <div class="section-title">Ops Tools</div>
-        <div class="section-copy">Back-office tools. Keep these out of the rep workflow unless you are changing process or building delivery support.</div>
-      </div>
-      <div class="grid">
-        <a class="card" href="JAWSAI911_Call_Tracker.html"><div class="card-icon"></div><div class="card-name">Call Tracker</div><div class="card-desc">Back-office call logging and record cleanup.</div></a>
-        <a class="card" href="JAWSAI911_Power_Dialer.html"><div class="card-icon"></div><div class="card-name">Power Dialer</div><div class="card-desc">Optional fast-call workflow, not the default CRM path.</div></a>
-        <a class="card" href="JAWSAI911_Workflow_Builder.html"><div class="card-icon"></div><div class="card-name">Workflow Builder</div><div class="card-desc">Build follow-up systems and task templates.</div></a>
-        <a class="card" href="JAWSAI911_Reputation_Manager.html"><div class="card-icon"></div><div class="card-name">Reputation Manager</div><div class="card-desc">Review requests and reputation support.</div></a>
-        <a class="card" href="JAWSAI911_Content_Planner.html"><div class="card-icon"></div><div class="card-name">Content Planner</div><div class="card-desc">Content operations, not the main CRM screen.</div></a>
-      </div>
-    </section>
-
-    <div class="connected-note">
-      ℹ Default rep path: `Sales Console -> Lead Detail -> Review SuperSite -> Send -> Proposal / Invoice / Follow-Up`. Everything else is secondary.
-    </div>
-  </div>
-
+  </main>
 </body>
 </html>

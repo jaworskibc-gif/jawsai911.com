@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Command Hub - JAWSAI911</title>
+<title>JAWSAI911 Sales Hub</title>
 <script src="hub-auth.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -13,6 +13,7 @@
   --line:rgba(59,130,246,.22);
   --line-strong:rgba(56,189,248,.44);
   --sky:#38bdf8;
+  --teal:#00c4b4;
   --text:#eef2ff;
   --muted:#8fa4c7;
 }
@@ -25,9 +26,9 @@ body{min-height:100vh;background:radial-gradient(circle at top,rgba(56,189,248,.
 .header-links{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .header-links a,.header-links button{padding:11px 16px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--text);text-decoration:none;font:700 12px/1 inherit;letter-spacing:.6px;text-transform:uppercase;cursor:pointer}
 .header-links a.primary{background:linear-gradient(180deg,#0877ff,#0052dc);border-color:transparent}
-.wrap{max-width:1220px;margin:0 auto;padding:34px 24px 56px}
-.hero{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.85fr);gap:24px;margin-bottom:24px}
-.hero-card,.side-card,.tool-card{background:linear-gradient(180deg,rgba(9,17,32,.96),rgba(5,11,22,.98));border:1px solid var(--line);border-radius:18px;box-shadow:0 24px 80px rgba(0,0,0,.22)}
+.wrap{max-width:1080px;margin:0 auto;padding:34px 24px 56px}
+.hero{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(300px,.7fr);gap:24px;margin-bottom:24px}
+.hero-card,.side-card,.path-card{background:linear-gradient(180deg,rgba(9,17,32,.96),rgba(5,11,22,.98));border:1px solid var(--line);border-radius:18px;box-shadow:0 24px 80px rgba(0,0,0,.22)}
 .hero-card{padding:28px}
 .kicker{font-size:11px;font-weight:800;letter-spacing:2.8px;color:var(--sky);text-transform:uppercase;margin-bottom:10px}
 .hero-card h1{font-size:clamp(30px,4vw,46px);line-height:1.06;margin-bottom:12px}
@@ -37,25 +38,33 @@ body{min-height:100vh;background:radial-gradient(circle at top,rgba(56,189,248,.
 .hero-actions a.primary{background:linear-gradient(180deg,#0877ff,#0052dc);color:#fff}
 .hero-actions a.secondary{border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--text)}
 .side-card{padding:24px}
-.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}
+.signin-form{display:grid;gap:12px;margin-top:16px}
+.field label{display:block;font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--sky);margin-bottom:5px}
+.field input{width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:#fff;font-size:13px}
+.field input::placeholder{color:#87a0c5}
+.signin-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+.signin-row button,.signin-row a{display:inline-flex;align-items:center;justify-content:center;padding:12px 16px;border-radius:10px;border:1px solid var(--line);text-decoration:none;font-size:12px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;cursor:pointer}
+.signin-row button{background:linear-gradient(180deg,#00c4b4,#059b8f);border-color:transparent;color:#021018}
+.signin-row a{background:rgba(255,255,255,.03);color:var(--text)}
+.signin-note{margin-top:10px;font-size:12px;line-height:1.55;color:var(--muted)}
+.signin-note button{margin-left:8px;padding:7px 10px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--text);font-size:11px;font-weight:800;cursor:pointer}
+.stat-grid{display:grid;gap:12px;margin-top:16px}
 .stat{padding:16px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid rgba(59,130,246,.14)}
-.stat strong{display:block;font-size:26px;font-weight:900;color:#fff}
+.stat strong{display:block;font-size:18px;font-weight:900;color:#fff}
 .stat span{display:block;margin-top:6px;font-size:12px;line-height:1.5;color:var(--muted)}
 .section-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin:30px 0 16px}
 .section-head h2{font-size:24px;font-weight:900}
 .section-head p{max-width:700px;color:var(--muted);font-size:14px;line-height:1.6}
-.tools{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
-.tool-card{display:flex;flex-direction:column;padding:22px;text-decoration:none;color:inherit;transition:transform .15s,border-color .2s,box-shadow .2s}
-.tool-card:hover{transform:translateY(-3px);border-color:var(--line-strong);box-shadow:0 16px 42px rgba(56,189,248,.12)}
-.tool-icon{font-size:28px;line-height:1;margin-bottom:14px}
-.tool-card h3{font-size:18px;font-weight:900;color:#fff;margin-bottom:8px}
-.tool-card p{font-size:13px;line-height:1.6;color:var(--muted);margin-bottom:16px}
-.tool-link{margin-top:auto;font-size:12px;font-weight:800;letter-spacing:1px;color:var(--sky);text-transform:uppercase}
-.notes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:18px}
-.note{padding:20px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid var(--line)}
+.paths{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.path-card{display:flex;flex-direction:column;padding:22px;text-decoration:none;color:inherit;transition:transform .15s,border-color .2s,box-shadow .2s}
+.path-card:hover{transform:translateY(-3px);border-color:var(--line-strong);box-shadow:0 16px 42px rgba(56,189,248,.12)}
+.path-card h3{font-size:18px;font-weight:900;color:#fff;margin-bottom:8px}
+.path-card p{font-size:13px;line-height:1.6;color:var(--muted);margin-bottom:16px}
+.path-link{margin-top:auto;font-size:12px;font-weight:800;letter-spacing:1px;color:var(--sky);text-transform:uppercase}
+.note{margin-top:18px;padding:20px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid var(--line)}
 .note h3{font-size:16px;font-weight:900;margin-bottom:8px}
 .note p{font-size:13px;line-height:1.65;color:var(--muted)}
-@media(max-width:980px){.hero,.notes,.tools{grid-template-columns:1fr}}
+@media(max-width:980px){.hero,.paths{grid-template-columns:1fr}}
 @media(max-width:640px){.header{padding:16px 18px}.brand{align-items:flex-start}.brand img{height:34px}.wrap{padding:22px 16px 40px}}
 </style>
 </head>
@@ -65,112 +74,112 @@ body{min-height:100vh;background:radial-gradient(circle at top,rgba(56,189,248,.
     <img src="jawsai911-logo-dark-nav.jpeg" alt="JAWSAI911">
     <div class="brand-copy">
       <small>Restricted Access</small>
-      <strong>JAWSAI911 Command Hub</strong>
+      <strong>JAWSAI911 Sales Hub</strong>
     </div>
   </div>
   <div class="header-links">
-    <a class="primary" href="toolkit/index.html">Open Toolkit</a>
+    <a class="primary" href="toolkit/Sales_Console.html">Open Sales Console</a>
     <button type="button" onclick="logout()">Logout</button>
   </div>
 </header>
 <main class="wrap">
   <section class="hero">
     <div class="hero-card">
-      <div class="kicker">Operator Surface</div>
-      <h1>One hub for the JAWSAI911 tools, pipeline views, and outbound workflows.</h1>
-      <p>The public site stays clean. This page is the private entry for your internal operating stack: site builder, CRM, dialer, forms, invoicing, content planning, and the prospect desk.</p>
+      <div class="kicker">Daily Sales Start</div>
+      <h1>Log in, open the CRM, pull up the lead, review the SuperSite, and send.</h1>
+      <p>This hub now starts with the sales workflow only. Reps should open the queue, work the current lead, verify the demo and Google proof, then handle proposal, invoice, docs, and follow-up without bouncing through extra tools.</p>
       <div class="hero-actions">
-        <a class="primary" href="toolkit/index.html">Launch Full Toolkit</a>
-        <a class="secondary" href="toolkit/JAWSAI911_Dashboard.html">Client Dashboard</a>
+        <a class="primary" href="toolkit/Sales_Console.html">Start In Sales Console</a>
+        <a class="secondary" href="toolkit/Lead_Detail.html">Open Lead Detail</a>
       </div>
     </div>
     <aside class="side-card">
-      <div class="kicker">What Is Live</div>
+      <div class="kicker">Rep Sign-In</div>
+      <p style="color:var(--muted);font-size:13px;line-height:1.65">Save the rep identity first. Sales Console will carry the same name and employee number through the session.</p>
+      <div class="signin-form">
+        <div class="field">
+          <label for="salesName">Sales Name</label>
+          <input id="salesName" placeholder="Bryan Jaworski">
+        </div>
+        <div class="field">
+          <label for="employeeNumber">Employee #</label>
+          <input id="employeeNumber" placeholder="EMP-001">
+        </div>
+        <div class="signin-row">
+          <button type="button" onclick="startSalesSession()">Save & Open Sales Console</button>
+          <a href="toolkit/Sales_Console.html">Open Without Editing</a>
+        </div>
+        <div class="signin-note">Current known rep code: Aaron = <strong>123</strong><button type="button" onclick="useAaronPreset()">Use Aaron</button></div>
+      </div>
       <div class="stat-grid">
-        <div class="stat"><strong>10</strong><span>Connected JAWSAI911 tools in the toolkit.</span></div>
-        <div class="stat"><strong>1</strong><span>Hidden login path surfaced only through the shark footer link.</span></div>
-        <div class="stat"><strong>10</strong><span>Pool SuperSite demos ready inside the new sales SOP section.</span></div>
-        <div class="stat"><strong>24/7</strong><span>Static-hosted access with client-side session locking.</span></div>
+        <div class="stat"><strong>1. Sales Console</strong><span>Daily queue, current lead workspace, demo preview, proof summary, send path.</span></div>
+        <div class="stat"><strong>2. Lead Detail</strong><span>Deep lead edit, Google proof, docs, proposal, invoice, follow-up, portal events.</span></div>
+        <div class="stat"><strong>3. Pipeline</strong><span>Only for admin cleanup, imports, and stage-wide record checks.</span></div>
       </div>
     </aside>
   </section>
+
   <div class="section-head">
-    <h2>Tool Stack</h2>
-    <p>Use the toolkit landing page for the full set, or jump straight into the tools you use most.</p>
+    <h2>CRM Only</h2>
+    <p>The first screen after login should only show the working sales path.</p>
   </div>
-  <section class="tools">
-    <a class="tool-card" href="toolkit/index.html"><div class="tool-icon">🧰</div><h3>Toolkit Directory</h3><p>All connected JAWSAI911 tools in one place with the shared client-data pattern.</p><div class="tool-link">Open all tools</div></a>
-    <a class="tool-card" href="toolkit/JAWSAI911_Dashboard.html"><div class="tool-icon">📊</div><h3>Client Dashboard</h3><p>Unified client snapshot that rolls up activity from the other operational tools.</p><div class="tool-link">Open dashboard</div></a>
-    <a class="tool-card" href="toolkit/JAWSAI911_Pipeline_CRM.html"><div class="tool-icon">🗂️</div><h3>Pipeline CRM</h3><p>Track leads, stage movement, and next actions without leaving the stack.</p><div class="tool-link">Open CRM</div></a>
-    <a class="tool-card" href="toolkit/JAWSAI911_Power_Dialer.html"><div class="tool-icon">📞</div><h3>Power Dialer</h3><p>Move through lead queues fast and keep call logging in the same environment.</p><div class="tool-link">Open dialer</div></a>
-    <a class="tool-card" href="toolkit/JAWSAI911_Site_Builder.html"><div class="tool-icon">🦈</div><h3>Site Builder</h3><p>Update public-site content blocks and layouts from the internal builder tool.</p><div class="tool-link">Open builder</div></a>
-    <a class="tool-card" href="toolkit/site-demos/index.html"><div class="tool-icon">🎥</div><h3>Site Demos</h3><p>Private batch pages for lead-specific SuperSite mockups and outreach recording.</p><div class="tool-link">Open demos</div></a>
-  </section>
-  <div class="section-head">
-    <h2>Hot Leads Ready For Demo Text</h2>
-    <p>Pool-company hot leads with demo pages already built. Open the lead pack, paste in the final review snippets if needed, then text the demo link and work the call.</p>
-  </div>
-  <section class="tools">
-    <a class="tool-card" href="hot-leads/sales-sop.html">
-      <div class="tool-icon">📋</div>
-      <h3>Pool Sales SOP</h3>
-      <p>The sales-team entry point for all ten pool SuperSite demos, ranked send order, and the exact demo-text workflow to use.</p>
-      <div class="tool-link">Open SOP</div>
+  <section class="paths">
+    <a class="path-card" href="toolkit/Sales_Console.html">
+      <h3>Sales Console</h3>
+      <p>Main daily screen. Work the queue, see the current lead, preview the SuperSite, review proof, send outreach, and log the call outcome.</p>
+      <div class="path-link">Open queue</div>
     </a>
-    <a class="tool-card" href="hot-leads/index.html">
-      <div class="tool-icon">🔥</div>
-      <h3>Pool Hot Leads</h3>
-      <p>Lead launcher with the ranked demo builds, matching Google review counts, business phone numbers, and source links for fast outreach.</p>
-      <div class="tool-link">Open hot leads</div>
+    <a class="path-card" href="toolkit/Lead_Detail.html">
+      <h3>Lead Detail</h3>
+      <p>Open when the rep needs to edit the lead, add Google reviews/photos, attach docs, or generate proposal and invoice items on the record.</p>
+      <div class="path-link">Open lead record</div>
     </a>
-    <a class="tool-card" href="hot-leads/pool-hot-leads-queue.csv">
-      <div class="tool-icon">🧾</div>
-      <h3>Lead Queue CSV</h3>
-      <p>The source queue with rankings, call opening, text copy, Loom notes, and lead angles behind the demo pages.</p>
-      <div class="tool-link">Open queue file</div>
-    </a>
-    <a class="tool-card" href="hot-leads/leads/brighton-pools-by-costa.html">
-      <div class="tool-icon">📱</div>
-      <h3>Flagship Demo</h3>
-      <p>Direct open to the premium Brighton / Blue Mirror demo built in the luxury-pool style so you can text the strongest example immediately from the hub.</p>
-      <div class="tool-link">Open flagship demo</div>
+    <a class="path-card" href="toolkit/JAWSAI911_Pipeline_CRM.html">
+      <h3>Pipeline CRM</h3>
+      <p>Admin-only backup screen for record cleanup, stage checks, and manual import review. Not the daily starting point for reps.</p>
+      <div class="path-link">Open admin view</div>
     </a>
   </section>
-  <div class="section-head">
-    <h2>Sales SOP Live</h2>
-    <p>The pool SuperSite workflow is now centralized for sales. Start in the SOP, open the ready demos first, then move into the cleanup set when you need more volume.</p>
-  </div>
-  <section class="tools">
-    <a class="tool-card" href="hot-leads/sales-sop.html">
-      <div class="tool-icon">🚀</div>
-      <h3>Demo Send Order</h3>
-      <p>Five strongest send-ready pages first, followed by five pages that still need review cleanup if time allows.</p>
-      <div class="tool-link">Open send order</div>
-    </a>
-    <a class="tool-card" href="hot-leads/real-leads-21-30/README.md">
-      <div class="tool-icon">🗃️</div>
-      <h3>Lead Source Files</h3>
-      <p>JSON source files for all ten real-company pages so operators can patch review snippets, photos, and company details fast.</p>
-      <div class="tool-link">Open source set</div>
-    </a>
-    <a class="tool-card" href="hot-leads/leads/pools-by-g-e-corp.html">
-      <div class="tool-icon">⭐</div>
-      <h3>Top Send-Ready Demo</h3>
-      <p>Direct jump to the strongest immediate demo page in the current set for fast Loom recording and first send-out.</p>
-      <div class="tool-link">Open top demo</div>
-    </a>
-  </section>
-  <section class="notes">
-    <div class="note"><h3>Hidden Entry</h3><p>The public site now exposes the login only through a low-visibility shark emoji in the footer. That keeps the hub reachable without advertising the route in the main navigation.</p></div>
-    <div class="note"><h3>Current Guardrail</h3><p>The dashboard, toolkit landing page, each toolkit app, and the new pool sales SOP all redirect back to the login screen whenever the session flag is missing.</p></div>
+
+  <section class="note">
+    <h3>Daily Rule</h3>
+    <p>Sales should start in <strong>Sales Console</strong>, not the pipeline, not the builder, and not the old tool stack. The current lead should already show the matching SuperSite or a fallback category demo so the rep can review and send without hunting around.</p>
   </section>
 </main>
 <script>
+const SALES_NAME_KEY = 'jawscrm_operator_name';
+const SALES_EMPLOYEE_KEY = 'jawscrm_employee_number';
+
+function preloadSalesIdentity(){
+  document.getElementById('salesName').value = sessionStorage.getItem(SALES_NAME_KEY) || localStorage.getItem(SALES_NAME_KEY) || '';
+  document.getElementById('employeeNumber').value = sessionStorage.getItem(SALES_EMPLOYEE_KEY) || localStorage.getItem(SALES_EMPLOYEE_KEY) || '';
+}
+
+function useAaronPreset(){
+  document.getElementById('salesName').value = 'Aaron';
+  document.getElementById('employeeNumber').value = '123';
+}
+
+function startSalesSession(){
+  const name = String(document.getElementById('salesName').value || '').trim();
+  const employeeNumber = String(document.getElementById('employeeNumber').value || '').trim();
+  if (!name || !employeeNumber) {
+    window.alert('Enter sales name and employee number.');
+    return;
+  }
+  sessionStorage.setItem(SALES_NAME_KEY, name);
+  sessionStorage.setItem(SALES_EMPLOYEE_KEY, employeeNumber);
+  localStorage.setItem(SALES_NAME_KEY, name);
+  localStorage.setItem(SALES_EMPLOYEE_KEY, employeeNumber);
+  location.href = 'toolkit/Sales_Console.html';
+}
+
 function logout(){
   sessionStorage.removeItem('jaw_auth');
   sessionStorage.removeItem('jaw_return');
   location.href='login.html';
 }
+preloadSalesIdentity();
 </script>
 </body>
 </html>

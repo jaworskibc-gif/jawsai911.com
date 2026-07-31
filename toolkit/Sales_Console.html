@@ -6,6 +6,8 @@
 <title>JAWSAI911 Sales Console</title>
 <script src="../hub-auth.js"></script>
 <script src="crm-shared.js"></script>
+<script src="demo-registry.js"></script>
+<script src="site-demos/data.js"></script>
 <style>
   :root{
     --navy:#010711; --navy-2:#0b1f33; --cyan:#00b4ff; --teal:#00c4b4; --pink:#e8175d;
@@ -49,6 +51,17 @@
   .action-row,.outcome-row{display:flex;gap:8px;flex-wrap:wrap}
   .smartsite-box{margin-top:14px;padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--foam)}
   .smartsite-box strong{display:block;font-size:12px;margin-bottom:4px}
+  .detail-stack{display:grid;gap:12px;margin-top:14px}
+  .detail-box{padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--foam)}
+  .detail-box strong{display:block;font-size:12px;margin-bottom:6px}
+  .detail-meta{font-size:11px;color:var(--ink-soft);line-height:1.55}
+  .quote-list{display:grid;gap:8px;margin-top:10px}
+  .quote-item{padding:10px 12px;border-left:3px solid var(--cyan);background:#fff;border-radius:6px;font-size:12px;line-height:1.5}
+  .workspace-shell{margin-top:16px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+  .workspace-frame{width:100%;height:1200px;border:0;background:#fff}
+  .preview-shell{margin-top:14px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#dbe4ec}
+  .preview-frame{width:100%;height:380px;border:0;background:#fff}
+  .preview-empty{padding:24px;text-align:center;color:var(--ink-soft);font-size:12px}
   .btn,.outcome-btn{
     padding:10px 14px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--ink);font-size:12px;font-weight:800;cursor:pointer
   }
@@ -71,6 +84,7 @@
     <div class="brand">JAWS<span>AI</span>911 <span style="font-weight:400;color:#fff">Sales Console</span></div>
     <div class="picker">
       <input id="operatorName" placeholder="Operator name">
+      <input id="employeeNumber" placeholder="Employee #">
       <select id="clientSelect"></select>
       <select id="ownerFilter">
         <option value="">Assigned: All</option>
@@ -78,7 +92,7 @@
       </select>
     </div>
   </div>
-  <div class="banner">Caller workspace for owned leads, next actions, and follow-up. Use this as the main sales screen once the CRM tables are live.</div>
+  <div class="banner">Main rep CRM. Open the lead, verify the SuperSite and proof, send outreach, then create proposal, invoice, docs, and follow-up from the same screen.</div>
 
   <main class="wrap">
     <div class="status-msg" id="statusMsg">Loading...</div>
@@ -105,7 +119,7 @@
 
       <div class="lead-card">
         <div class="section-head">
-          <h2>Current Lead</h2>
+          <h2>Current Lead Workspace</h2>
           <span class="mini" id="nextMeta">Select a lead</span>
         </div>
         <div id="nextLeadContainer" class="queue-empty">No lead selected.</div>
@@ -173,26 +187,126 @@
   let selectedOutcome = 'no_answer';
   let callsLogged = 0;
   let operatorName = '';
+  let employeeNumber = '';
   const CLIENT_STORAGE_KEY = 'jawscrm_selected_client_id';
+  const EMPLOYEE_STORAGE_KEY = 'jawscrm_employee_number';
 
   function statusMsg(text) { document.getElementById('statusMsg').textContent = text; }
   function escapeHtml(value) { const div = document.createElement('div'); div.textContent = value || ''; return div.innerHTML; }
   function todayIso() { return new Date().toISOString(); }
   function telHref(phone) { return 'tel:' + String(phone || '').replace(/[^0-9+]/g, ''); }
   function smsHref(phone) { return 'sms:' + String(phone || '').replace(/[^0-9+]/g, ''); }
+  function normalizeDemoUrl(url) {
+    const value = String(url || '').trim();
+    if (!value) return value;
+    return value
+      .replace('/demos/rivet-fade/command.html', '/demos/apex-cuts/command.html')
+      .replace('/demos/rivet-fade/index.html', '/demos/apex-cuts/index.html')
+      .replace('/demos/softline-nails/command.html', '/demos/luxe-nails/command.html')
+      .replace('/demos/softline-nails/index.html', '/demos/luxe-nails/index.html')
+      .replace('/glowup-supersite/command.html', '/lumina-desk/command.html')
+      .replace('/glowup-supersite/', '/lumina-desk/')
+      .replace('/lumina-desk/command.html', '/demos/hair-studio/command.html')
+      .replace('/lumina-desk/', '/demos/hair-studio/index.html');
+  }
+  function normalizeSmartSiteData(data) {
+    return Object.assign({}, data || {}, {
+      url: normalizeDemoUrl(data && data.url),
+      command_url: normalizeDemoUrl(data && data.command_url)
+    });
+  }
   function smartSiteData(lead) {
     const data = lead && lead.custom_fields ? lead.custom_fields.smart_site_demo : null;
-    return data && typeof data === 'object' ? data : {};
+    const saved = data && typeof data === 'object' ? data : {};
+    if (saved.url || saved.name) return normalizeSmartSiteData(saved);
+    return fallbackDemoForLead(lead);
+  }
+  function googleProofData(lead) {
+    const data = lead && lead.custom_fields ? lead.custom_fields.google_proof : null;
+    const saved = data && typeof data === 'object' ? data : {};
+    const fallback = fallbackProofForLead(lead);
+    return Object.assign({}, fallback, saved);
+  }
+  function outreachWorkspaceData(lead) {
+    const data = lead && lead.custom_fields ? lead.custom_fields.outreach_workspace : null;
+    const saved = data && typeof data === 'object' ? data : {};
+    const fallback = fallbackWorkspaceForLead(lead);
+    return Object.assign({}, fallback, saved);
+  }
+  function normalizeLeadName(value) {
+    return String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  }
+  function poolHotLeadMatch(lead) {
+    const source = window.POOL_HOT_LEADS || {};
+    const options = [
+      normalizeLeadName(lead && (lead.full_name || lead.company)),
+      normalizeLeadName(lead && lead.company),
+      normalizeLeadName(lead && lead.full_name)
+    ].filter(Boolean);
+    for (const key of options) {
+      if (source[key]) return source[key];
+    }
+    return null;
+  }
+  function fallbackDemoForLead(lead) {
+    const categoryMatch = window.JAWS_DEMO_REGISTRY && window.JAWS_DEMO_REGISTRY.resolveByCategory(lead && lead.custom_fields && lead.custom_fields.category);
+    if (categoryMatch) {
+      return normalizeSmartSiteData({
+        name: categoryMatch.label,
+        url: categoryMatch.public_url,
+        status: 'ready',
+        notes: categoryMatch.demo_type + ' category fallback',
+        command_url: categoryMatch.command_url || null,
+        source: 'category_demo_registry'
+      });
+    }
+    const match = poolHotLeadMatch(lead);
+    if (!match || !match.slug) return {};
+    return normalizeSmartSiteData({
+      name: 'Flagship SuperSite Demo',
+      url: 'site-demos/lead.html#' + match.slug,
+      status: 'ready',
+      notes: match.serviceLane || 'Pool flagship demo fallback',
+      source: 'pool_hot_leads_fallback'
+    });
+  }
+  function fallbackProofForLead(lead) {
+    const match = poolHotLeadMatch(lead);
+    if (!match) return {};
+    return {
+      rating: match.rating || null,
+      review_count: match.reviewCount || null,
+      review_notes: match.reviewSource || null,
+      review_quote_1: Array.isArray(match.reviews) ? (match.reviews[0] || null) : null,
+      review_quote_2: Array.isArray(match.reviews) ? (match.reviews[1] || null) : null,
+      review_quote_3: Array.isArray(match.reviews) ? (match.reviews[2] || null) : null,
+      photo_notes: Array.isArray(match.photoNotes) ? match.photoNotes.join(' | ') : null,
+      logo_url: match.logoNote || null
+    };
+  }
+  function fallbackWorkspaceForLead(lead) {
+    const match = poolHotLeadMatch(lead);
+    if (!match) return {};
+    return {
+      sms_copy: match.textMessage || null,
+      hook_angle: match.headline || match.serviceLane || null,
+      loom_script: match.videoScript || null
+    };
   }
   function composeSmartSiteText(lead) {
     const demo = smartSiteData(lead);
+    const proof = googleProofData(lead);
+    const workspace = outreachWorkspaceData(lead);
     const name = lead.full_name || lead.company || 'your business';
+    const reviewLine = [proof.rating, proof.review_count].filter(Boolean).join(' · ');
+    if (workspace.sms_copy) return workspace.sms_copy;
     const bits = [
       'Hey, this is ' + (operatorName || 'Bryan') + ' with JAWSAI.',
-      'I put together a quick Smart Site demo for ' + name + ' so you can see how this could look live.'
+      'I put together a quick Smart Site demo for ' + name + ' so you can see how this could look live.',
+      reviewLine ? 'I also pulled your Google proof: ' + reviewLine + '.' : null
     ];
     if (demo.url) bits.push('Here is the link: ' + demo.url);
-    return bits.join(' ');
+    return bits.filter(Boolean).join(' ');
   }
   function composeSmartSiteEmail(lead) {
     const name = lead.full_name || lead.company || 'your business';
@@ -224,9 +338,11 @@
     window.location.href = 'mailto:' + encodeURIComponent(lead.email || '') + '?subject=' + encodeURIComponent(payload.subject) + '&body=' + encodeURIComponent(payload.body);
   }
   function storageKey() { return 'jawscrm_operator_name'; }
+  function employeeStorageKey() { return EMPLOYEE_STORAGE_KEY; }
   function clientStorageKey() { return CLIENT_STORAGE_KEY; }
   function currentOwnerFilter() { return document.getElementById('ownerFilter').value || ''; }
   function readOperatorName() { return String(document.getElementById('operatorName').value || '').trim(); }
+  function readEmployeeNumber() { return String(document.getElementById('employeeNumber').value || '').trim(); }
   function readSavedClientId() { return String(window.localStorage.getItem(clientStorageKey()) || '').trim(); }
   function saveSelectedClientId(value) {
     if (!value) return;
@@ -234,13 +350,28 @@
   }
 
   function loadOperatorName() {
-    operatorName = String(window.localStorage.getItem(storageKey()) || '').trim();
+    operatorName = String(window.sessionStorage.getItem(storageKey()) || window.localStorage.getItem(storageKey()) || '').trim();
+    employeeNumber = String(window.sessionStorage.getItem(employeeStorageKey()) || window.localStorage.getItem(employeeStorageKey()) || '').trim();
     document.getElementById('operatorName').value = operatorName;
+    document.getElementById('employeeNumber').value = employeeNumber;
   }
 
   function saveOperatorName() {
     operatorName = readOperatorName();
+    employeeNumber = readEmployeeNumber();
     window.localStorage.setItem(storageKey(), operatorName);
+    window.sessionStorage.setItem(storageKey(), operatorName);
+    window.localStorage.setItem(employeeStorageKey(), employeeNumber);
+    window.sessionStorage.setItem(employeeStorageKey(), employeeNumber);
+  }
+
+  function ensureRepIdentity() {
+    saveOperatorName();
+    if (!operatorName || !employeeNumber) {
+      statusMsg('Enter sales name and employee number to use the CRM.');
+      return false;
+    }
+    return true;
   }
 
   async function loadClientList() {
@@ -275,6 +406,7 @@
 
   async function loadConsole() {
     if (!currentClientId) return;
+    if (!ensureRepIdentity()) return;
     statusMsg('Loading Sales Console for ' + currentClientName + '...');
     try {
       const filterMode = currentOwnerFilter();
@@ -375,20 +507,54 @@
     document.getElementById('nextMeta').textContent = 'Current lead: ' + (lead.full_name || lead.company || 'Unnamed Lead');
     container.className = 'lead-card';
     const demo = smartSiteData(lead);
+    const proof = googleProofData(lead);
+    const workspace = outreachWorkspaceData(lead);
     const detailUrl = 'Lead_Detail.html?client_id=' + encodeURIComponent(currentClientId || '') + '&lead_id=' + encodeURIComponent(lead.id) + '#review';
+    const proposalUrl = 'Proposal_Generator.html?client_id=' + encodeURIComponent(currentClientId || '') + '&lead_id=' + encodeURIComponent(lead.id);
+    const invoiceUrl = 'JAWSAI911_Invoicing.html?client_id=' + encodeURIComponent(currentClientId || '') + '&lead_id=' + encodeURIComponent(lead.id) + '&type=invoice';
+    const estimateUrl = 'JAWSAI911_Invoicing.html?client_id=' + encodeURIComponent(currentClientId || '') + '&lead_id=' + encodeURIComponent(lead.id) + '&type=estimate';
+    const docsUrl = 'Sales_Documents.html?client_id=' + encodeURIComponent(currentClientId || '') + '&lead_id=' + encodeURIComponent(lead.id);
+    const reviewSummary = [proof.rating, proof.review_count].filter(Boolean).join(' · ') || (proof.review_notes || 'Pending Google proof');
+    const assetSummary = [
+      proof.logo_url ? 'logo ready' : null,
+      proof.photo_folder_url ? 'photos ready' : null,
+      proof.photo_notes ? 'placement noted' : null
+    ].filter(Boolean).join(' · ') || 'Assets still need paste-in';
+    const quotes = [proof.review_quote_1, proof.review_quote_2, proof.review_quote_3].filter(Boolean);
+    const previewBlock = demo.url
+      ? '<div class="preview-shell"><iframe class="preview-frame" title="SuperSite preview" loading="lazy" src="' + escapeHtml(demo.url) + '"></iframe></div>'
+      : '<div class="preview-shell"><div class="preview-empty">No SuperSite URL is attached to this lead yet.</div></div>';
+    const workstationBlock = '<div class="workspace-shell"><iframe class="workspace-frame" title="Lead workstation" loading="lazy" src="' + escapeHtml(detailUrl) + '"></iframe></div>';
+    const quoteBlock = quotes.length
+      ? '<div class="quote-list">' + quotes.map(function (quote) {
+        return '<div class="quote-item">' + escapeHtml(quote) + '</div>';
+      }).join('') + '</div>'
+      : '<div class="detail-meta" style="margin-top:10px">No review quotes saved yet.</div>';
     const smartSiteBlock = demo.url
-      ? '<div class="smartsite-box"><strong>Smart Site Demo</strong><div class="pipe-meta">' + escapeHtml(demo.name || 'Demo') + ' · ' + escapeHtml(demo.status || 'draft') + '<br>' + escapeHtml(demo.url) + '</div><div class="action-row" style="margin-top:10px"><a class="btn" href="' + escapeHtml(demo.url) + '" target="_blank" rel="noopener">Open Demo</a><button class="btn" type="button" onclick="copyCurrentLeadDemoLink()">Copy Demo Link</button><a class="btn primary" href="' + escapeHtml(detailUrl) + '">Review &amp; Send</a></div></div>'
-      : '<div class="smartsite-box"><strong>Smart Site Demo</strong><div class="pipe-meta">No demo linked yet. Open Lead Detail to add one.</div></div>';
+      ? '<div class="smartsite-box"><strong>SuperSite</strong><div class="pipe-meta">' + escapeHtml(demo.name || 'Demo') + ' · ' + escapeHtml(demo.status || 'draft') + '<br>' + escapeHtml(demo.url) + '</div><div class="action-row" style="margin-top:10px"><a class="btn" href="' + escapeHtml(demo.url) + '" target="_blank" rel="noopener">Open Demo</a><button class="btn" type="button" onclick="copyCurrentLeadDemoLink()">Copy Demo Link</button><button class="btn" type="button" onclick="textCurrentLeadDemo()">Text Demo</button><button class="btn" type="button" onclick="emailCurrentLeadDemo()">Email Demo</button></div></div>'
+      : '<div class="smartsite-box"><strong>SuperSite</strong><div class="pipe-meta">No demo linked yet. Open Lead Detail to add one.</div></div>';
     container.innerHTML = '<h3>' + escapeHtml(lead.full_name || lead.company || 'Unnamed Lead') + '</h3>' +
       '<div class="lead-meta">' + escapeHtml(lead.phone || 'No phone') + ' · ' + escapeHtml(lead.city || 'No city') + ', ' + escapeHtml(lead.state || 'FL') + '</div>' +
       '<div class="action-row">' +
       '<a class="btn primary" href="' + escapeHtml(telHref(lead.phone)) + '">Call</a>' +
       '<a class="btn" href="' + escapeHtml(smsHref(lead.phone)) + '">Text</a>' +
-      '<a class="btn" href="' + escapeHtml(detailUrl) + '">Lead Detail</a>' +
+      '<a class="btn" href="' + escapeHtml(detailUrl) + '">Open Lead Record</a>' +
+      '<a class="btn" href="' + escapeHtml(proposalUrl) + '">Proposal</a>' +
+      '<a class="btn" href="' + escapeHtml(invoiceUrl) + '">Invoice</a>' +
       '</div>' +
       '<div class="pipe-meta" style="margin-top:14px">Status: ' + escapeHtml(lead.status) + ' · Last outcome: ' + escapeHtml(lead.last_call_outcome || 'none') + ' · Attempts: ' + escapeHtml(String(lead.call_attempts || 0)) + '</div>' +
       '<div class="pipe-meta" style="margin-top:8px">' + escapeHtml(lead.notes || 'No notes yet.') + '</div>' +
-      smartSiteBlock;
+      smartSiteBlock +
+      '<div class="detail-stack">' +
+      '<div class="detail-box"><strong>Google Proof</strong><div class="detail-meta">' + escapeHtml(reviewSummary) + '<br>' + escapeHtml(assetSummary) + (proof.review_url ? '<br>' + escapeHtml(proof.review_url) : '') + '</div>' + quoteBlock + '</div>' +
+      '<div class="detail-box"><strong>Outreach Workspace</strong><div class="detail-meta">' +
+      'Hook: ' + escapeHtml(workspace.hook_angle || lead.custom_fields?.pitch_angle || 'Not set') + '<br>' +
+      'Loom: ' + escapeHtml(workspace.loom_url || 'Not set') + '<br>' +
+      'SMS: ' + escapeHtml(workspace.sms_copy || 'Uses default Smart Site text draft') +
+      '</div><div class="action-row" style="margin-top:10px"><a class="btn" href="' + escapeHtml(detailUrl) + '">Edit Workspace</a><a class="btn" href="' + escapeHtml(estimateUrl) + '">Estimate</a><a class="btn" href="' + escapeHtml(docsUrl) + '">Docs / Receipt</a></div></div>' +
+      '</div>' +
+      previewBlock +
+      workstationBlock;
   }
 
   function renderTasks() {
@@ -428,6 +594,7 @@
     const lead = leads.find(item => item.id === selectedLeadId);
     if (!lead) return;
     saveOperatorName();
+    if (!ensureRepIdentity()) return;
     const notes = document.getElementById('logNotes').value.trim();
     const nextStage = document.getElementById('stageSelect').value;
     const dueAt = ['no_answer', 'voicemail'].includes(selectedOutcome)
@@ -447,7 +614,7 @@
         notes: notes || null,
         followUpAt: dueAt,
         assigned_to: operatorName || null,
-        called_by: operatorName || 'sales_console'
+        called_by: employeeNumber ? (operatorName + ' (' + employeeNumber + ')') : (operatorName || 'sales_console')
       });
     } catch (error) {
       statusMsg(error.message || 'Unable to log call.');
@@ -517,6 +684,9 @@
       selectedLeadId = null;
       await loadConsole();
     }
+  });
+  document.getElementById('employeeNumber').addEventListener('change', function () {
+    saveOperatorName();
   });
   document.getElementById('saveNextBtn').addEventListener('click', logCallAndAdvance);
   loadOperatorName();

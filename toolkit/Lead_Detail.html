@@ -6,6 +6,7 @@
 <title>JAWSAI911 Lead Detail</title>
 <script src="../hub-auth.js"></script>
 <script src="crm-shared.js"></script>
+<script src="demo-registry.js"></script>
 <style>
   :root {
     --navy:#010711; --navy-2:#0B1F33; --cyan:#00B4FF; --teal:#00C4B4; --pink:#E8175D; --amber:#F2C879;
@@ -268,6 +269,26 @@
             <input id="photoFolderUrl" placeholder="https://drive-folder-or-asset-link">
           </div>
         </div>
+        <div class="proof-grid">
+          <div class="field">
+            <label>Photo Slot 1 URL</label>
+            <input id="photoUrl1" placeholder="https://photo-asset-1">
+          </div>
+          <div class="field">
+            <label>Photo Slot 2 URL</label>
+            <input id="photoUrl2" placeholder="https://photo-asset-2">
+          </div>
+        </div>
+        <div class="proof-grid">
+          <div class="field">
+            <label>Photo Slot 3 URL</label>
+            <input id="photoUrl3" placeholder="https://photo-asset-3">
+          </div>
+          <div class="field">
+            <label>Proposal Category Template</label>
+            <input id="proposalTemplateKey" placeholder="barber-standard / nail-standard / hair-standard">
+          </div>
+        </div>
         <div class="edit-grid full">
           <div class="field">
             <label>Photo / Logo Placement Notes</label>
@@ -385,6 +406,25 @@ function escapeHtml(value) { const div = document.createElement('div'); div.text
 function queryValue(name) { return new URLSearchParams(window.location.search).get(name); }
 function telHref(phone) { return 'tel:' + String(phone || '').replace(/[^0-9+]/g, ''); }
 function smsHref(phone) { return 'sms:' + String(phone || '').replace(/[^0-9+]/g, ''); }
+function normalizeDemoUrl(url) {
+  const value = String(url || '').trim();
+  if (!value) return value;
+  return value
+    .replace('/demos/rivet-fade/command.html', '/demos/apex-cuts/command.html')
+    .replace('/demos/rivet-fade/index.html', '/demos/apex-cuts/index.html')
+    .replace('/demos/softline-nails/command.html', '/demos/luxe-nails/command.html')
+    .replace('/demos/softline-nails/index.html', '/demos/luxe-nails/index.html')
+    .replace('/glowup-supersite/command.html', '/lumina-desk/command.html')
+    .replace('/glowup-supersite/', '/lumina-desk/')
+    .replace('/lumina-desk/command.html', '/demos/hair-studio/command.html')
+    .replace('/lumina-desk/', '/demos/hair-studio/index.html');
+}
+function normalizeSmartSiteData(data) {
+  return Object.assign({}, data || {}, {
+    url: normalizeDemoUrl(data && data.url),
+    command_url: normalizeDemoUrl(data && data.command_url)
+  });
+}
 function leadDocuments() {
   const docs = lead && lead.custom_fields ? lead.custom_fields.documents : [];
   return Array.isArray(docs) ? docs : [];
@@ -392,7 +432,19 @@ function leadDocuments() {
 
 function smartSiteData() {
   const data = lead && lead.custom_fields ? lead.custom_fields.smart_site_demo : null;
-  return data && typeof data === 'object' ? data : {};
+  const saved = data && typeof data === 'object' ? data : {};
+  if (saved.url || saved.name) return normalizeSmartSiteData(saved);
+  const category = leadField('category');
+  const fallback = window.JAWS_DEMO_REGISTRY && window.JAWS_DEMO_REGISTRY.resolveByCategory(category);
+  if (!fallback) return {};
+  return normalizeSmartSiteData({
+    name: fallback.label,
+    url: fallback.public_url,
+    status: 'ready',
+    notes: fallback.demo_type + ' category fallback',
+    command_url: fallback.command_url || null,
+    source: 'category_demo_registry'
+  });
 }
 
 function googleProofData() {
@@ -604,6 +656,10 @@ function renderGoogleProof() {
   document.getElementById('googleReviewNotes').value = proof.review_notes || '';
   document.getElementById('logoUrl').value = proof.logo_url || '';
   document.getElementById('photoFolderUrl').value = proof.photo_folder_url || '';
+  document.getElementById('photoUrl1').value = proof.photo_url_1 || '';
+  document.getElementById('photoUrl2').value = proof.photo_url_2 || '';
+  document.getElementById('photoUrl3').value = proof.photo_url_3 || '';
+  document.getElementById('proposalTemplateKey').value = proof.proposal_template_key || '';
   document.getElementById('photoPlacementNotes').value = proof.photo_notes || '';
   document.getElementById('reviewQuote1').value = proof.review_quote_1 || '';
   document.getElementById('reviewQuote2').value = proof.review_quote_2 || '';
@@ -612,7 +668,7 @@ function renderGoogleProof() {
 
   const summary = document.getElementById('googleProofSummary');
   const quotes = [proof.review_quote_1, proof.review_quote_2, proof.review_quote_3].filter(Boolean);
-  if (!proof.rating && !proof.review_count && !proof.review_url && !proof.review_notes && !proof.logo_url && !proof.photo_folder_url && !quotes.length) {
+  if (!proof.rating && !proof.review_count && !proof.review_url && !proof.review_notes && !proof.logo_url && !proof.photo_folder_url && !proof.photo_url_1 && !proof.photo_url_2 && !proof.photo_url_3 && !quotes.length) {
     summary.innerHTML = '<div class="empty">No Google proof or asset notes saved yet.</div>';
     renderReviewChecklist();
     return;
@@ -624,6 +680,10 @@ function renderGoogleProof() {
     (proof.review_notes ? escapeHtml(proof.review_notes) + '<br>' : '') +
     (proof.logo_url ? 'Logo: ' + escapeHtml(proof.logo_url) + '<br>' : '') +
     (proof.photo_folder_url ? 'Photos: ' + escapeHtml(proof.photo_folder_url) + '<br>' : '') +
+    (proof.photo_url_1 ? 'Photo 1: ' + escapeHtml(proof.photo_url_1) + '<br>' : '') +
+    (proof.photo_url_2 ? 'Photo 2: ' + escapeHtml(proof.photo_url_2) + '<br>' : '') +
+    (proof.photo_url_3 ? 'Photo 3: ' + escapeHtml(proof.photo_url_3) + '<br>' : '') +
+    (proof.proposal_template_key ? 'Proposal template: ' + escapeHtml(proof.proposal_template_key) + '<br>' : '') +
     (proof.photo_notes ? 'Placement: ' + escapeHtml(proof.photo_notes) : '') +
     '</div></div>' +
     (quotes.length ? quotes.map(function (quote) {
@@ -775,6 +835,10 @@ async function saveGoogleProof() {
     review_notes: document.getElementById('googleReviewNotes').value.trim() || null,
     logo_url: document.getElementById('logoUrl').value.trim() || null,
     photo_folder_url: document.getElementById('photoFolderUrl').value.trim() || null,
+    photo_url_1: document.getElementById('photoUrl1').value.trim() || null,
+    photo_url_2: document.getElementById('photoUrl2').value.trim() || null,
+    photo_url_3: document.getElementById('photoUrl3').value.trim() || null,
+    proposal_template_key: document.getElementById('proposalTemplateKey').value.trim() || null,
     photo_notes: document.getElementById('photoPlacementNotes').value.trim() || null,
     review_quote_1: document.getElementById('reviewQuote1').value.trim() || null,
     review_quote_2: document.getElementById('reviewQuote2').value.trim() || null,
