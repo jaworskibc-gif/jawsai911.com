@@ -103,6 +103,7 @@
           <a class="btn" id="textBtn" href="#">Text Lead</a>
           <a class="btn" id="invoiceBtn" href="#">Open Invoicing</a>
           <a class="btn" id="docsBtn" href="#">Open Sales Docs</a>
+          <a class="btn navy" id="telegramConsoleBtn" href="#">Telegram + Grok</a>
         </div>
         <div class="edit-grid">
           <div class="field">
@@ -772,6 +773,7 @@ function renderLead() {
   document.getElementById('textBtn').href = smsHref(lead.phone);
   document.getElementById('invoiceBtn').href = 'JAWSAI911_Invoicing.html?client_id=' + encodeURIComponent(currentClientId) + '&lead_id=' + encodeURIComponent(currentLeadId) + '&type=invoice';
   document.getElementById('docsBtn').href = 'Sales_Documents.html?client_id=' + encodeURIComponent(currentClientId) + '&lead_id=' + encodeURIComponent(currentLeadId);
+  document.getElementById('telegramConsoleBtn').href = 'Telegram_Grok_Console.html?client_id=' + encodeURIComponent(currentClientId) + '&lead_id=' + encodeURIComponent(currentLeadId);
   document.getElementById('newInvoiceBtn').href = 'JAWSAI911_Invoicing.html?client_id=' + encodeURIComponent(currentClientId) + '&lead_id=' + encodeURIComponent(currentLeadId) + '&type=invoice';
   document.getElementById('reviewProposalBtn').href = proposalTemplateUrl();
   document.getElementById('reviewInvoiceBtn').href = 'JAWSAI911_Invoicing.html?client_id=' + encodeURIComponent(currentClientId) + '&lead_id=' + encodeURIComponent(currentLeadId) + '&type=invoice';

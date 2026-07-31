@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JAWSAI911 Telegram + Grok Console</title>
+<script src="../hub-auth.js"></script>
+<script src="crm-shared.js"></script>
+<style>
+  :root {
+    --navy:#07111d; --navy-2:#10253b; --cyan:#1bb3ff; --teal:#16c7b0; --ink:#182433; --soft:#5f6c7b;
+    --paper:#f4f7fa; --line:#d7dfe7; --green:#1f9d63; --amber:#f0b54d;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; font-family:'Liberation Sans', Arial, sans-serif; }
+  body { background:var(--paper); color:var(--ink); }
+  .topbar { background:var(--navy); color:#fff; padding:16px 22px; display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+  .brand { font-size:16px; font-weight:900; }
+  .brand span { color:var(--cyan); }
+  .back-link { color:rgba(255,255,255,.86); text-decoration:none; font-size:12px; font-weight:700; }
+  .banner { background:#eaf6ff; color:#0a5a80; border-bottom:1px solid #c8e8f7; padding:9px 22px; font-size:11.5px; }
+  .wrap { max-width:1280px; margin:0 auto; padding:22px; }
+  .status-msg { font-size:11px; color:var(--soft); margin-bottom:16px; }
+  .grid { display:grid; grid-template-columns:1.05fr .95fr; gap:16px; }
+  .panel { background:#fff; border:1px solid var(--line); border-radius:12px; padding:18px; }
+  .section-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; gap:12px; }
+  .section-head h2 { font-size:14px; font-weight:900; }
+  .mini { font-size:11px; color:var(--soft); }
+  .field-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; }
+  .field-grid.full { grid-template-columns:1fr; }
+  .field label { display:block; font-size:11px; color:var(--soft); font-weight:700; margin-bottom:4px; }
+  .field input, .field textarea, .field select {
+    width:100%; padding:10px; border:1px solid var(--line); border-radius:8px; font-size:13px; color:var(--ink);
+  }
+  .field textarea { min-height:92px; resize:vertical; }
+  .actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:14px; }
+  .btn { padding:10px 14px; border-radius:8px; border:1px solid var(--line); background:#fff; color:var(--ink); font-size:12px; font-weight:800; text-decoration:none; cursor:pointer; }
+  .btn.primary { background:var(--teal); border-color:var(--teal); color:#042333; }
+  .btn.navy { background:var(--navy); border-color:var(--navy); color:#fff; }
+  .btn.ghost { background:#eef5fb; border-color:#dce9f4; color:#0a5a80; }
+  .summary-card { border:1px solid var(--line); background:#f9fbfd; border-radius:10px; padding:14px; }
+  .summary-card pre { white-space:pre-wrap; word-break:break-word; font-size:12px; line-height:1.55; color:var(--ink); }
+  .chip-row { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+  .chip { font-size:11px; font-weight:800; padding:6px 10px; border-radius:999px; background:#eff5fa; color:#46617a; }
+  .reply-box { border:1px solid var(--line); border-radius:10px; background:#fbfdff; padding:12px; margin-top:12px; }
+  .reply-box pre { white-space:pre-wrap; font-size:12px; line-height:1.65; color:var(--ink); }
+  .stack { display:grid; gap:12px; }
+  @media (max-width:960px) { .grid, .field-grid { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div>
+      <div class="brand">JAWS<span>AI</span>911 <span style="font-weight:400;color:#fff">Telegram + Grok Console</span></div>
+      <a class="back-link" href="Sales_Console.html">← Back to Sales Console</a>
+    </div>
+    <a class="back-link" id="leadBackLink" href="Lead_Detail.html">Open Lead Detail</a>
+  </div>
+  <div class="banner">Operator tool. Load a lead, draft a Grok reply, then push the lead summary or reply into Telegram. This is Telegram messaging, not SMS or phone calling.</div>
+
+  <main class="wrap">
+    <div class="status-msg" id="statusMsg">Loading...</div>
+    <div class="grid">
+      <section class="panel">
+        <div class="section-head">
+          <h2>Lead Context</h2>
+          <span class="mini">What Grok and Telegram will see</span>
+        </div>
+        <div class="summary-card">
+          <pre id="leadSummary">No lead loaded.</pre>
+        </div>
+        <div class="chip-row" id="leadChips"></div>
+        <div class="actions">
+          <button class="btn primary" type="button" onclick="sendLeadSummaryToTelegram()">Send Lead Summary</button>
+          <button class="btn" type="button" onclick="copyLeadSummary()">Copy Lead Summary</button>
+        </div>
+      </section>
+
+      <section class="panel stack">
+        <div>
+          <div class="section-head">
+            <h2>Bridge Config</h2>
+            <span class="mini">Stored in this browser only</span>
+          </div>
+          <div class="field-grid">
+            <div class="field">
+              <label>xAI API Key</label>
+              <input id="xaiKey" type="password" placeholder="xai-...">
+            </div>
+            <div class="field">
+              <label>xAI Model</label>
+              <input id="xaiModel" placeholder="grok-4">
+            </div>
+          </div>
+          <div class="field-grid">
+            <div class="field">
+              <label>Telegram Bot Token</label>
+              <input id="telegramToken" type="password" placeholder="123456:ABC...">
+            </div>
+            <div class="field">
+              <label>Telegram Chat ID</label>
+              <input id="telegramChatId" placeholder="123456789 or -100...">
+            </div>
+          </div>
+          <div class="field-grid">
+            <div class="field">
+              <label>Bot Username</label>
+              <input id="telegramBotUsername" placeholder="your_bot_name">
+            </div>
+            <div class="field">
+              <label>Reply Mode</label>
+              <select id="replyMode">
+                <option value="operator">Operator reply</option>
+                <option value="owner">Owner-facing text</option>
+                <option value="followup">Follow-up nudge</option>
+              </select>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn primary" type="button" onclick="saveConfig()">Save Config</button>
+            <button class="btn" type="button" onclick="openTelegramBot()">Open Bot Chat</button>
+          </div>
+        </div>
+
+        <div>
+          <div class="section-head">
+            <h2>Prompt + Reply</h2>
+            <span class="mini">Generate in Grok, then push to Telegram</span>
+          </div>
+          <div class="field-grid full">
+            <div class="field">
+              <label>Prompt</label>
+              <textarea id="grokPrompt" placeholder="Ask Grok to summarize the lead, draft a Telegram reply, or turn the lead notes into an operator message."></textarea>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn navy" type="button" onclick="generateGrokReply()">Generate Grok Reply</button>
+            <button class="btn" type="button" onclick="sendGrokReplyToTelegram()">Send Reply To Telegram</button>
+            <button class="btn ghost" type="button" onclick="useLeadSummaryPrompt()">Use Lead Summary Prompt</button>
+          </div>
+          <div class="reply-box">
+            <pre id="grokReply">No Grok reply yet.</pre>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = 'https://owkqfledeuetwwmlvnmb.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93a3FmbGVkZXVldHd3bWx2bm1iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxMzM5MTQsImV4cCI6MjEwMDcwOTkxNH0.lOwjIzs-DyVtvKR8-b1L6RTdlb8iY9_1chgKbY2ml3c';
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const CONFIG_KEY = 'jaws_telegram_grok_console';
+
+let currentLeadId = new URLSearchParams(window.location.search).get('lead_id');
+let currentClientId = new URLSearchParams(window.location.search).get('client_id');
+let lead = null;
+let leadSummaryText = '';
+let latestGrokReply = '';
+
+function statusMsg(text) { document.getElementById('statusMsg').textContent = text; }
+function esc(value) { const div = document.createElement('div'); div.textContent = value || ''; return div.innerHTML; }
+
+function readConfig() {
+  try {
+    return JSON.parse(window.localStorage.getItem(CONFIG_KEY) || '{}');
+  } catch (error) {
+    return {};
+  }
+}
+
+function writeConfig(next) {
+  window.localStorage.setItem(CONFIG_KEY, JSON.stringify(next));
+}
+
+function fillConfig() {
+  const config = readConfig();
+  document.getElementById('xaiKey').value = config.xaiKey || '';
+  document.getElementById('xaiModel').value = config.xaiModel || 'grok-4';
+  document.getElementById('telegramToken').value = config.telegramToken || '';
+  document.getElementById('telegramChatId').value = config.telegramChatId || '';
+  document.getElementById('telegramBotUsername').value = config.telegramBotUsername || '';
+  document.getElementById('replyMode').value = config.replyMode || 'operator';
+}
+
+function saveConfig() {
+  writeConfig({
+    xaiKey: document.getElementById('xaiKey').value.trim(),
+    xaiModel: document.getElementById('xaiModel').value.trim() || 'grok-4',
+    telegramToken: document.getElementById('telegramToken').value.trim(),
+    telegramChatId: document.getElementById('telegramChatId').value.trim(),
+    telegramBotUsername: document.getElementById('telegramBotUsername').value.trim(),
+    replyMode: document.getElementById('replyMode').value
+  });
+  statusMsg('Telegram + Grok config saved in this browser.');
+}
+
+function googleProof() {
+  const fields = lead && lead.custom_fields ? lead.custom_fields : {};
+  return fields.google_proof || {};
+}
+
+function workspaceData() {
+  const fields = lead && lead.custom_fields ? lead.custom_fields : {};
+  return fields.outreach_workspace || {};
+}
+
+function leadField(name) {
+  const fields = lead && lead.custom_fields ? lead.custom_fields : {};
+  return fields[name] || '';
+}
+
+function leadName() {
+  return lead ? (lead.company || lead.full_name || 'Unnamed Lead') : 'Unnamed Lead';
+}
+
+function buildLeadSummary() {
+  if (!lead) return 'No lead loaded.';
+  const proof = googleProof();
+  const workspace = workspaceData();
+  const lines = [
+    'Business: ' + (lead.company || lead.full_name || 'Missing'),
+    'Owner / Barber: ' + (leadField('owner_barber_name') || lead.full_name || 'Missing'),
+    'Category: ' + (leadField('category') || 'Missing'),
+    'City / State: ' + [lead.city || '', lead.state || ''].filter(Boolean).join(', '),
+    'Phone: ' + (lead.phone || 'Missing'),
+    'Email: ' + (lead.email || 'Missing'),
+    'Website status: ' + (leadField('website_status') || 'Not set'),
+    'Pitch angle: ' + (leadField('pitch_angle') || 'Not set'),
+    'Hook angle: ' + (workspace.hook_angle || 'Not set'),
+    'Loom URL: ' + (workspace.loom_url || 'Not set'),
+    'Google proof: ' + ([proof.rating, proof.review_count].filter(Boolean).join(' · ') || 'Not set'),
+    'Google review URL: ' + (proof.review_url || 'Not set'),
+    'Review note: ' + (proof.review_notes || 'None'),
+    'Review 1: ' + (proof.review_quote_1 || 'None'),
+    'Review 2: ' + (proof.review_quote_2 || 'None'),
+    'Review 3: ' + (proof.review_quote_3 || 'None'),
+    'Photo 1: ' + (proof.photo_url_1 || 'None'),
+    'Photo 2: ' + (proof.photo_url_2 || 'None'),
+    'Photo 3: ' + (proof.photo_url_3 || 'None'),
+    'Photo notes: ' + (proof.photo_notes || 'None'),
+    'Current SMS copy: ' + (workspace.sms_copy || 'None'),
+    'Lead notes: ' + (lead.notes || 'None')
+  ];
+  return lines.join('\n');
+}
+
+function renderLeadSummary() {
+  leadSummaryText = buildLeadSummary();
+  document.getElementById('leadSummary').textContent = leadSummaryText;
+  const chips = [
+    leadField('category') || 'No category',
+    [googleProof().rating, googleProof().review_count].filter(Boolean).join(' · ') || 'No Google proof',
+    workspaceData().hook_angle || 'No hook',
+    lead.phone || 'No phone'
+  ];
+  document.getElementById('leadChips').innerHTML = chips.map(function (item) {
+    return '<span class="chip">' + esc(item) + '</span>';
+  }).join('');
+}
+
+function useLeadSummaryPrompt() {
+  const mode = document.getElementById('replyMode').value;
+  const prompt = [
+    'Use the lead context below and write a concise ' + mode + ' Telegram message.',
+    'Keep it practical and ready to send.',
+    '',
+    leadSummaryText
+  ].join('\n');
+  document.getElementById('grokPrompt').value = prompt;
+}
+
+async function loadLead() {
+  if (!currentLeadId) {
+    statusMsg('Open this from a lead so the console can load context.');
+    renderLeadSummary();
+    return;
+  }
+  statusMsg('Loading lead context...');
+  lead = await window.JAWSCRM.getCrmLeadById(supabaseClient, currentLeadId);
+  if (!lead) {
+    statusMsg('Lead not found.');
+    renderLeadSummary();
+    return;
+  }
+  currentClientId = lead.client_id;
+  document.getElementById('leadBackLink').href = 'Lead_Detail.html?client_id=' + encodeURIComponent(currentClientId || '') + '&lead_id=' + encodeURIComponent(currentLeadId);
+  renderLeadSummary();
+  useLeadSummaryPrompt();
+  statusMsg('Lead context ready.');
+}
+
+async function copyLeadSummary() {
+  await navigator.clipboard.writeText(leadSummaryText || '');
+  statusMsg('Lead summary copied.');
+}
+
+async function sendTelegramMessage(text) {
+  const config = readConfig();
+  if (!config.telegramToken || !config.telegramChatId) {
+    statusMsg('Save Telegram bot token and chat id first.');
+    return false;
+  }
+  const response = await fetch('https://api.telegram.org/bot' + encodeURIComponent(config.telegramToken) + '/sendMessage', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      chat_id: config.telegramChatId,
+      text: text,
+      parse_mode: 'HTML',
+      disable_web_page_preview: true
+    })
+  });
+  if (!response.ok) {
+    const body = await response.text();
+    throw new Error('Telegram send failed: ' + body);
+  }
+  return true;
+}
+
+async function sendLeadSummaryToTelegram() {
+  try {
+    statusMsg('Sending lead summary to Telegram...');
+    await sendTelegramMessage('<b>' + esc(leadName()) + '</b>\n<pre>' + esc(leadSummaryText) + '</pre>');
+    statusMsg('Lead summary sent to Telegram.');
+  } catch (error) {
+    statusMsg(error.message || 'Telegram send failed.');
+  }
+}
+
+async function generateGrokReply() {
+  const config = readConfig();
+  const prompt = document.getElementById('grokPrompt').value.trim();
+  if (!config.xaiKey) {
+    statusMsg('Save an xAI API key first.');
+    return;
+  }
+  if (!prompt) {
+    statusMsg('Enter a prompt first.');
+    return;
+  }
+  statusMsg('Generating Grok reply...');
+  const response = await fetch('https://api.x.ai/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + config.xaiKey
+    },
+    body: JSON.stringify({
+      model: config.xaiModel || 'grok-4',
+      messages: [
+        { role: 'system', content: 'You are an operator assistant for JAWSAI911. Write concise Telegram-ready replies grounded only in the lead context provided.' },
+        { role: 'user', content: prompt }
+      ],
+      temperature: 0.4
+    })
+  });
+  if (!response.ok) {
+    const body = await response.text();
+    statusMsg('Grok request failed: ' + body);
+    return;
+  }
+  const data = await response.json();
+  latestGrokReply = (((data || {}).choices || [])[0] || {}).message ? (((data || {}).choices || [])[0] || {}).message.content || '' : '';
+  document.getElementById('grokReply').textContent = latestGrokReply || 'No reply returned.';
+  statusMsg('Grok reply ready.');
+}
+
+async function sendGrokReplyToTelegram() {
+  if (!latestGrokReply) {
+    statusMsg('Generate a Grok reply first.');
+    return;
+  }
+  try {
+    statusMsg('Sending Grok reply to Telegram...');
+    await sendTelegramMessage(latestGrokReply);
+    statusMsg('Grok reply sent to Telegram.');
+  } catch (error) {
+    statusMsg(error.message || 'Telegram send failed.');
+  }
+}
+
+function openTelegramBot() {
+  const config = readConfig();
+  if (!config.telegramBotUsername) {
+    statusMsg('Save the bot username first.');
+    return;
+  }
+  window.open('https://t.me/' + encodeURIComponent(config.telegramBotUsername), '_blank', 'noopener');
+}
+
+fillConfig();
+loadLead().catch(function (error) {
+  statusMsg(error.message || 'Unable to load lead.');
+});
+</script>
+</body>
+</html>
