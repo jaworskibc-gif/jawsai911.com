@@ -123,6 +123,46 @@
 
         <div>
           <div class="section-head">
+            <h2>Offer + Hook Presets</h2>
+            <span class="mini">Pulls from the current lead workspace</span>
+          </div>
+          <div class="field-grid">
+            <div class="field">
+              <label>Offer Message 1</label>
+              <textarea id="offerMessage1" readonly></textarea>
+            </div>
+            <div class="field">
+              <label>Offer Message 2</label>
+              <textarea id="offerMessage2" readonly></textarea>
+            </div>
+          </div>
+          <div class="field-grid">
+            <div class="field">
+              <label>Offer Message 3</label>
+              <textarea id="offerMessage3" readonly></textarea>
+            </div>
+            <div class="field">
+              <label>Hook Presets</label>
+              <textarea id="hookPresetSummary" readonly></textarea>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn" type="button" onclick="useOfferMessage(1)">Use Message 1</button>
+            <button class="btn" type="button" onclick="useOfferMessage(2)">Use Message 2</button>
+            <button class="btn" type="button" onclick="useOfferMessage(3)">Use Message 3</button>
+            <button class="btn ghost" type="button" onclick="sendOfferMessageToTelegram(1)">Send Message 1</button>
+            <button class="btn ghost" type="button" onclick="sendOfferMessageToTelegram(2)">Send Message 2</button>
+            <button class="btn ghost" type="button" onclick="sendOfferMessageToTelegram(3)">Send Message 3</button>
+          </div>
+          <div class="actions">
+            <button class="btn" type="button" onclick="useHookPreset(1)">Use Hook 1</button>
+            <button class="btn" type="button" onclick="useHookPreset(2)">Use Hook 2</button>
+            <button class="btn" type="button" onclick="useHookPreset(3)">Use Hook 3</button>
+          </div>
+        </div>
+
+        <div>
+          <div class="section-head">
             <h2>Prompt + Reply</h2>
             <span class="mini">Generate in Grok, then push to Telegram</span>
           </div>
@@ -240,6 +280,12 @@ function buildLeadSummary() {
     'Photo 3: ' + (proof.photo_url_3 || 'None'),
     'Photo notes: ' + (proof.photo_notes || 'None'),
     'Current SMS copy: ' + (workspace.sms_copy || 'None'),
+    'Offer Message 1: ' + (workspace.offer_message_1 || 'None'),
+    'Offer Message 2: ' + (workspace.offer_message_2 || 'None'),
+    'Offer Message 3: ' + (workspace.offer_message_3 || 'None'),
+    'Hook Preset 1: ' + (workspace.hook_preset_1 || 'None'),
+    'Hook Preset 2: ' + (workspace.hook_preset_2 || 'None'),
+    'Hook Preset 3: ' + (workspace.hook_preset_3 || 'None'),
     'Lead notes: ' + (lead.notes || 'None')
   ];
   return lines.join('\n');
@@ -247,7 +293,16 @@ function buildLeadSummary() {
 
 function renderLeadSummary() {
   leadSummaryText = buildLeadSummary();
+  const workspace = workspaceData();
   document.getElementById('leadSummary').textContent = leadSummaryText;
+  document.getElementById('offerMessage1').value = workspace.offer_message_1 || '';
+  document.getElementById('offerMessage2').value = workspace.offer_message_2 || '';
+  document.getElementById('offerMessage3').value = workspace.offer_message_3 || '';
+  document.getElementById('hookPresetSummary').value = [
+    workspace.hook_preset_1 ? 'Hook 1: ' + workspace.hook_preset_1 : '',
+    workspace.hook_preset_2 ? 'Hook 2: ' + workspace.hook_preset_2 : '',
+    workspace.hook_preset_3 ? 'Hook 3: ' + workspace.hook_preset_3 : ''
+  ].filter(Boolean).join('\n');
   const chips = [
     leadField('category') || 'No category',
     [googleProof().rating, googleProof().review_count].filter(Boolean).join(' · ') || 'No Google proof',
@@ -268,6 +323,38 @@ function useLeadSummaryPrompt() {
     leadSummaryText
   ].join('\n');
   document.getElementById('grokPrompt').value = prompt;
+}
+
+function offerMessage(index) {
+  const workspace = workspaceData();
+  return workspace['offer_message_' + index] || '';
+}
+
+function hookPreset(index) {
+  const workspace = workspaceData();
+  return workspace['hook_preset_' + index] || '';
+}
+
+function useOfferMessage(index) {
+  const value = offerMessage(index);
+  if (!value) {
+    statusMsg('No offer message ' + index + ' saved on this lead.');
+    return;
+  }
+  document.getElementById('grokPrompt').value = value;
+  latestGrokReply = value;
+  document.getElementById('grokReply').textContent = value;
+  statusMsg('Offer message ' + index + ' loaded.');
+}
+
+function useHookPreset(index) {
+  const value = hookPreset(index);
+  if (!value) {
+    statusMsg('No hook preset ' + index + ' saved on this lead.');
+    return;
+  }
+  document.getElementById('grokPrompt').value = value;
+  statusMsg('Hook preset ' + index + ' loaded.');
 }
 
 async function loadLead() {
@@ -323,6 +410,21 @@ async function sendLeadSummaryToTelegram() {
     statusMsg('Sending lead summary to Telegram...');
     await sendTelegramMessage('<b>' + esc(leadName()) + '</b>\n<pre>' + esc(leadSummaryText) + '</pre>');
     statusMsg('Lead summary sent to Telegram.');
+  } catch (error) {
+    statusMsg(error.message || 'Telegram send failed.');
+  }
+}
+
+async function sendOfferMessageToTelegram(index) {
+  const value = offerMessage(index);
+  if (!value) {
+    statusMsg('No offer message ' + index + ' saved on this lead.');
+    return;
+  }
+  try {
+    statusMsg('Sending offer message ' + index + ' to Telegram...');
+    await sendTelegramMessage(value);
+    statusMsg('Offer message ' + index + ' sent to Telegram.');
   } catch (error) {
     statusMsg(error.message || 'Telegram send failed.');
   }
