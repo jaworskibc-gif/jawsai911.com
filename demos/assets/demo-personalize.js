@@ -52,6 +52,23 @@
     if (node) node.setAttribute("href", value);
   }
 
+  function setAllTelLinks(phone) {
+    if (!phone) return;
+    var digits = phone.replace(/[^0-9+]/g, "");
+    document.querySelectorAll('a[href^="tel:"]').forEach(function (node) {
+      node.setAttribute("href", "tel:" + digits);
+    });
+  }
+
+  function formatPhone(phone) {
+    var digits = String(phone || "").replace(/\D/g, "");
+    if (digits.length === 11 && digits[0] === "1") digits = digits.slice(1);
+    if (digits.length === 10) {
+      return "(" + digits.slice(0, 3) + ") " + digits.slice(3, 6) + "-" + digits.slice(6);
+    }
+    return phone;
+  }
+
   function escapeHtml(value) {
     return String(value || "")
       .replace(/&/g, "&amp;")
@@ -146,6 +163,7 @@
     var owner = textParam(params, "owner") || (stored && stored.owner) || "";
     var phone = textParam(params, "phone") || (stored && stored.phone) || "";
     var email = textParam(params, "email") || (stored && stored.email) || "";
+    var address = textParam(params, "address") || (stored && stored.address) || "";
     var city = textParam(params, "city") || (stored && stored.city) || "";
     var state = textParam(params, "state") || (stored && stored.state) || "";
     var category = textParam(params, "category") || (stored && stored.category) || "";
@@ -203,8 +221,7 @@
       if (secondCard) secondCard.textContent = owner;
     }
     if (phone) {
-      setLinkHref('.hero .btn-ghost', 'tel:' + phone.replace(/[^0-9+]/g, ""));
-      setLinkHref('.mobile-cta .primary', 'tel:' + phone.replace(/[^0-9+]/g, ""));
+      setAllTelLinks(phone);
     }
     if (hookAngle) {
       var hookNode = document.querySelector(".social-band .trend .hook");
@@ -232,7 +249,7 @@
           '<div class="crm-proof-grid">' +
           '<article class="crm-proof-card"><p><strong>Category</strong><br>' + escapeHtml(category || "Not set") + '</p><small>Website status: ' + escapeHtml(websiteStatus || "Not set") + '</small></article>' +
           '<article class="crm-proof-card"><p><strong>Hook angle</strong><br>' + escapeHtml(hookAngle || pitchAngle || "Not set") + '</p><small>Loom: ' + escapeHtml(loomUrl || "Not set") + '</small></article>' +
-          '<article class="crm-proof-card"><p><strong>Contact</strong><br>' + escapeHtml(phone || "No phone") + '</p><small>' + escapeHtml(email || "No email") + '</small></article>' +
+          '<article class="crm-proof-card"><p><strong>Contact</strong><br>' + escapeHtml(formatPhone(phone) || "No phone") + '</p><small>' + escapeHtml(email || "No email") + '</small></article>' +
           '</div></div>';
         var anchor = document.querySelector(".crm-proof-band");
         if (anchor) {
@@ -242,6 +259,51 @@
           if (hero) hero.insertAdjacentElement("afterend", meta);
         }
       }
+    }
+
+    if (address || city || state || phone) {
+      var footerPrimary = document.querySelector("footer .wrap > div:first-child");
+      var footerName = name || "Business";
+      var locationBits = [address, city, state].filter(Boolean);
+      var footerLine = locationBits.join(address && (city || state) ? ", " : " ");
+      if (footerPrimary) {
+        footerPrimary.innerHTML = "<strong>" + escapeHtml(footerName) + "</strong><br />" +
+          escapeHtml(footerLine || "Address not set") +
+          (phone ? " · " : "") +
+          (phone ? '<a href="tel:' + escapeHtml(String(phone).replace(/[^0-9+]/g, "")) + '" style="color:inherit">' + escapeHtml(formatPhone(phone)) + '</a>' : '');
+      }
+      var contactSub = document.querySelector('.contact-card .sub, section .sub a[href^="tel:"]');
+      if (contactSub && phone) {
+        contactSub.textContent = formatPhone(phone);
+      }
+    }
+
+    if (phone) {
+      var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
+      var textNodes = [];
+      while (walker.nextNode()) {
+        var node = walker.currentNode;
+        if (!node || !node.nodeValue) continue;
+        if (node.parentNode && /SCRIPT|STYLE|NOSCRIPT/.test(node.parentNode.nodeName)) continue;
+        textNodes.push(node);
+      }
+      textNodes.forEach(function (node) {
+        var next = node.nodeValue
+          .replace(/\(305\)\s555-0186/g, formatPhone(phone))
+          .replace(/\(305\)\s555-0247/g, formatPhone(phone))
+          .replace(/786-761-2950/g, formatPhone(phone));
+        if (address) {
+          next = next
+            .replace(/1842 NW 2nd Ave/g, address)
+            .replace(/210 Coral Way Suite 110/g, address);
+        }
+        if (city) {
+          next = next
+            .replace(/Miami, FL 33136/g, [city, state].filter(Boolean).join(", "))
+            .replace(/Miami, FL 33145/g, [city, state].filter(Boolean).join(", "));
+        }
+        if (next !== node.nodeValue) node.nodeValue = next;
+      });
     }
 
     applyPhotos(name, photos);

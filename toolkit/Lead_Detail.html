@@ -593,6 +593,7 @@ function demoPreviewPayload(proofOverride) {
     owner: ownerDisplayName(),
     phone: lead && lead.phone || '',
     email: lead && lead.email || '',
+    address: lead && lead.address || '',
     city: lead && lead.city || '',
     state: lead && lead.state || '',
     category: leadField('category') || '',
@@ -641,6 +642,7 @@ function personalizedDemoUrl(baseUrl, proofOverride) {
     if (ownerDisplayName()) url.searchParams.set('owner', ownerDisplayName());
     if (lead && lead.phone) url.searchParams.set('phone', lead.phone);
     if (lead && lead.email) url.searchParams.set('email', lead.email);
+    if (lead && lead.address) url.searchParams.set('address', lead.address);
     if (lead && lead.city) url.searchParams.set('city', lead.city);
     if (lead && lead.state) url.searchParams.set('state', lead.state);
     if (leadField('category')) url.searchParams.set('category', leadField('category'));
