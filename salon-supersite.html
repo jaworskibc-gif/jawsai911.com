@@ -54,7 +54,7 @@
       position: absolute;
       top: -15%; right: -10%;
       width: 560px; height: 560px;
-      background: radial-gradient(circle, rgba(0,180,255,.18) 0%, transparent 68%);
+      background: radial-gradient(circle, rgba(199,164,101,.18) 0%, transparent 68%);
       pointer-events: none;
     }
     .ss-hero-grid {
@@ -109,8 +109,8 @@
     .ss-price-pill {
       display: inline-flex; flex-wrap: wrap; align-items: center; gap: 12px 18px;
       padding: 14px 20px;
-      background: linear-gradient(135deg, rgba(0,180,255,.12), rgba(0,119,204,.06));
-      border: 1px solid rgba(0,180,255,.28);
+      background: linear-gradient(135deg, rgba(199,164,101,.12), rgba(171,128,57,.06));
+      border: 1px solid rgba(199,164,101,.28);
       border-radius: 14px;
       margin-bottom: 26px;
     }
@@ -135,7 +135,7 @@
       border: 1px solid var(--border);
       border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 24px 80px rgba(0,0,0,.4), 0 0 0 1px rgba(0,180,255,.08);
+      box-shadow: 0 24px 80px rgba(0,0,0,.4), 0 0 0 1px rgba(199,164,101,.08);
     }
     .ss-preview-bar {
       display: flex; align-items: center; gap: 8px;
@@ -270,8 +270,8 @@
     }
     .lane-card:hover {
       transform: translateY(-4px);
-      border-color: rgba(0,180,255,.4);
-      box-shadow: 0 12px 40px rgba(0,180,255,.12);
+      border-color: rgba(199,164,101,.4);
+      box-shadow: 0 12px 40px rgba(199,164,101,.12);
     }
     .lane-num {
       position: absolute;
@@ -348,8 +348,8 @@
       margin-top: 28px;
       padding: 22px 24px;
       border-radius: 16px;
-      background: linear-gradient(135deg, rgba(0,180,255,.1), rgba(0,119,204,.05));
-      border: 1px solid rgba(0,180,255,.28);
+      background: linear-gradient(135deg, rgba(199,164,101,.1), rgba(171,128,57,.05));
+      border: 1px solid rgba(199,164,101,.28);
       font-size: 1.05rem;
       line-height: 1.55;
       color: var(--text);
@@ -390,7 +390,7 @@
       text-transform: uppercase;
       padding: 4px 10px;
       border-radius: 100px;
-      background: rgba(0,180,255,.12);
+      background: rgba(199,164,101,.12);
       color: var(--accent);
       margin-bottom: 14px;
     }
@@ -452,8 +452,8 @@
       border-radius: 12px;
       display: grid;
       place-items: center;
-      background: rgba(0,180,255,.1);
-      border: 1px solid rgba(0,180,255,.2);
+      background: rgba(199,164,101,.1);
+      border: 1px solid rgba(199,164,101,.2);
       font-size: 1.2rem;
       margin-bottom: 14px;
     }
@@ -490,8 +490,8 @@
       margin-top: 8px;
     }
     .trend-chip {
-      background: rgba(0,180,255,.06);
-      border: 1px solid rgba(0,180,255,.15);
+      background: rgba(199,164,101,.06);
+      border: 1px solid rgba(199,164,101,.15);
       border-radius: 12px;
       padding: 16px;
     }
@@ -508,16 +508,16 @@
 
     .offer-box {
       background:
-        linear-gradient(135deg, rgba(0,180,255,.14), rgba(0,119,204,.05)),
+        linear-gradient(135deg, rgba(199,164,101,.14), rgba(171,128,57,.05)),
         var(--bg-card);
-      border: 1px solid rgba(0,180,255,.35);
+      border: 1px solid rgba(199,164,101,.35);
       border-radius: 24px;
       padding: 40px 36px;
       display: grid;
       grid-template-columns: 1.2fr 0.8fr;
       gap: 32px;
       align-items: center;
-      box-shadow: 0 20px 60px rgba(0,180,255,.1);
+      box-shadow: 0 20px 60px rgba(199,164,101,.1);
     }
     .offer-box h2 {
       font-size: clamp(1.6rem, 3vw, 2.2rem);
@@ -685,7 +685,7 @@
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
       color: #fff;
       font-size: 1.4rem;
-      box-shadow: 0 8px 28px rgba(0,180,255,.4);
+      box-shadow: 0 8px 28px rgba(199,164,101,.4);
       transition: transform .2s;
     }
     .ss-chat-fab:hover { transform: scale(1.06); }
@@ -810,11 +810,13 @@
     }
   </style>
 <link rel="stylesheet" href="css/public-audit.css">
+<link rel="stylesheet" href="css/premium.css">
 </head>
-<body>
-  <header class="audit-header"><a class="audit-brand" href="index.html">JAWS<span>AI</span>911</a><button class="audit-menu" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="public-navigation">☰</button><div class="audit-links" id="public-navigation" role="navigation" aria-label="Main navigation"><a href="index.html">Home</a><a href="about.html">About</a><a href="solutions.html">Solutions</a><a href="platform.html">CCM Platform</a><a href="supersite.html">Portfolio</a><a href="contact.html">Contact</a><a href="contact.html#demo-form">Request Demo</a></div></header>
+<body class="premium-site premium-interior">
+  <header class="audit-header"><a class="audit-brand" href="index.html" aria-label="JAWSAI911 home"><span class="premium-brand-name">JAWS<span>AI</span>911</span><span class="premium-brand-sub">AI SYSTEMS &amp; AUTOMATION</span></a><button class="audit-menu" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="public-navigation">☰</button><div class="audit-links" id="public-navigation" role="navigation" aria-label="Main navigation"><a href="index.html">Home</a><a href="about.html">About</a><a href="solutions.html">Solutions</a><a href="platform.html">CCM Platform</a><a href="supersite.html">Portfolio</a><a href="contact.html">Contact</a><a href="contact.html#demo-form">Request Demo</a></div></header>
+<a class="premium-skip" href="#premium-content">Skip to content</a>
 
-  <main>
+  <main id="premium-content">
     <!-- HERO -->
     <section class="ss-hero">
       <div class="container ss-hero-grid">
@@ -1308,7 +1310,7 @@
       <button type="button" data-q="I want a walkthrough">Book walkthrough</button>
     </div>
     <form class="ss-chat-form" id="ss-chat-form">
-      <input type="text" id="ss-chat-input" placeholder="Ask anything…" autocomplete="off" />
+      <input type="text" id="ss-chat-input" aria-label="Message to the SuperSite assistant" placeholder="Ask anything…" autocomplete="off" />
       <button type="submit">Send</button>
     </form>
   </div>
