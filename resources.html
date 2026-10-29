@@ -286,41 +286,12 @@ footer{background:#000;border-top:1px solid rgba(59,130,246,0.12);padding:24px 4
   .fc:nth-child(odd){border-right:none}
 }
 </style>
+<link rel="stylesheet" href="css/public-audit.css">
 </head>
 <body>
 <!-- NAV -->
-<nav>
-  <a href="index.html" class="nav-logo-wrap">
-    <img src="jawsai911-logo-dark-nav.jpeg" class="nav-logo-img" alt="JAWSAI911">
-    <div class="nav-logo-text">
-      <div class="nav-logo-name">JAWS<span>AI</span>911</div>
-      <div class="nav-logo-sub">AI Incident Command Center</div>
-    </div>
-  </a>
-  <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="solutions.html">Solutions</a></li>
-    <li><a href="platform.html">Platform</a></li>
-    <li><a href="resources.html" class="active">Resources</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="contact.html">Contact</a></li>
-  </ul>
-  <div class="nav-right">
-    <a href="contact.html" class="nav-cta">Workflow Review</a>
-  </div>
-</nav>
-<!-- PORTAL MODAL -->
-<div class="portal-overlay" id="portal-overlay">
-  <div class="portal-box">
-    <h3>JAWSAI911 Portal</h3>
-    <p>Enter your access code to open the CRM dashboard.</p>
-    <input type="password" class="portal-input" id="portal-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter') checkPortal()">
-    <div class="portal-error" id="portal-error">Incorrect code. Try again.</div>
-    <button class="portal-btn" onclick="checkPortal()">Enter Portal →</button>
-    <button class="portal-btn" style="background:rgba(56,189,248,0.12);border:1px solid rgba(56,189,248,0.35);color:var(--sky)" onclick="checkPortal(JOB_URL)">Open Job Tracker →</button>
-    <div class="portal-cancel" onclick="closePortal()">Cancel</div>
-  </div>
-</div>
+<header class="audit-header"><a class="audit-brand" href="index.html">JAWS<span>AI</span>911</a><button class="audit-menu" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="public-navigation">☰</button><div class="audit-links" id="public-navigation" role="navigation" aria-label="Main navigation"><a href="index.html">Home</a><a href="about.html">About</a><a href="solutions.html">Solutions</a><a href="platform.html">CCM Platform</a><a href="supersite.html">Portfolio</a><a href="contact.html">Contact</a><a href="contact.html#demo-form">Request Demo</a></div></header>
+
 
 
 <div style="height:118px"></div>
@@ -398,18 +369,12 @@ info@jawsai911.com</div>
       <div style="font-size:11px;color:var(--dim)">Bryan Jaworski © 2026 · South Florida</div>
     </div>
   </div>
-  <div class="footer-right">Built with AI · Royal Palm Beach, FL · info@jawsai911.com <a class="shark-link" href="login.html" aria-label="Command hub login" title="Command hub">🦈</a></div>
+  <div class="footer-right">Built with AI · Royal Palm Beach, FL · info@jawsai911.com </div>
 </footer>
 <script>
-const PORTAL_PASS = 'jawsai911';
-const CRM_URL = '/crm';
-const JOB_URL = '/jobs';
-function openPortal(e){if(e)e.preventDefault();document.getElementById('portal-overlay').classList.add('open');setTimeout(()=>document.getElementById('portal-pass').focus(),100)}
-function closePortal(){document.getElementById('portal-overlay').classList.remove('open');document.getElementById('portal-pass').value='';document.getElementById('portal-error').style.display='none'}
-function checkPortal(target){const v=document.getElementById('portal-pass').value;if(v===PORTAL_PASS){window.open(target||CRM_URL,'_blank');closePortal()}else{document.getElementById('portal-error').style.display='block';document.getElementById('portal-pass').value='';document.getElementById('portal-pass').focus()}}
-document.getElementById('portal-overlay').addEventListener('click',function(e){if(e.target===this)closePortal()});
 function copyTemplate(btn){const text=document.getElementById('email-template').innerText;const done=()=>{btn.textContent='✓ Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy Email';btn.classList.remove('copied')},2500)};if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(text).then(done).catch(()=>fallbackCopy(text,done));}else{fallbackCopy(text,done);}}
 function fallbackCopy(text,done){const t=document.createElement('textarea');t.value=text;t.setAttribute('readonly','');t.style.position='fixed';t.style.left='-9999px';document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);done();}
 </script>
+<script src="js/public-navigation.js"></script>
 </body>
 </html>

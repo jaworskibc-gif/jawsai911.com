@@ -9,23 +9,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
+<link rel="stylesheet" href="css/public-audit.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a href="index.html" class="logo">JAWS<span>AI</span>911</a>
-      <button class="nav-toggle" aria-label="Menu">☰</button>
-      <nav class="nav">
-        <a href="index.html">Home</a>
-        <a href="supersite.html" class="active">Shark SuperSite</a>
-        <a href="salon-supersite.html">Salon SuperSite</a>
-        <a href="demos/rivet-fade/index.html">Live Demo</a>
-        <a href="offers.html">Offers</a>
-        <a href="about.html">About</a>
-        <a href="index.html#book" class="btn btn-primary">Book a Walkthrough</a>
-      </nav>
-    </div>
-  </header>
+  <header class="audit-header"><a class="audit-brand" href="index.html">JAWS<span>AI</span>911</a><button class="audit-menu" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="public-navigation">☰</button><div class="audit-links" id="public-navigation" role="navigation" aria-label="Main navigation"><a href="index.html">Home</a><a href="about.html">About</a><a href="solutions.html">Solutions</a><a href="platform.html">CCM Platform</a><a href="supersite.html" aria-current="page">Portfolio</a><a href="contact.html">Contact</a><a href="contact.html#demo-form">Request Demo</a></div></header>
 
   <main>
     <section class="hero hero-compact">
@@ -122,7 +109,7 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <div>© 2026 JAWSAI911 · Bryan "Jaws" Jaworski · Founder · Leave the Scool Behind</div>
+      <div>© 2026 JAWSAI911 · Bryan "Jaws" Jaworski · Founder · Leave the School Behind</div>
       <div class="footer-links">
         <a href="index.html">Home</a>
         <a href="offers.html">Offers</a>
@@ -131,21 +118,7 @@
     </div>
   </footer>
 
-  <button type="button" id="shark-portal" class="shark-portal-trigger" aria-label="Portal">🦈</button>
-  <div id="portal-modal" class="portal-modal" role="dialog" aria-modal="true" aria-hidden="true">
-    <div class="portal-box">
-      <h3>JAWSAI911 Portal</h3>
-      <p>Enter your access code to open the CRM dashboard.</p>
-      <div id="portal-error" class="error">Incorrect code. Try again.</div>
-      <form id="portal-form">
-        <input type="password" id="portal-code" placeholder="Access code" autocomplete="off" />
-        <div class="portal-actions">
-          <button type="submit" class="btn btn-primary">Enter Portal</button>
-          <button type="button" id="portal-close" class="btn btn-outline">Cancel</button>
-        </div>
-      </form>
-    </div>
-  </div>
   <script src="js/main.js"></script>
+<script src="js/public-navigation.js"></script>
 </body>
 </html>
