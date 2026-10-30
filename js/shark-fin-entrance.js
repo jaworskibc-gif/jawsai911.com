@@ -33,7 +33,9 @@
     }
     measure() {
       const width = this.stage.clientWidth, height = this.stage.clientHeight;
-      const scale = this.original ? height / 512 : height / 280;
+      // Scale the crop against both dimensions so the fin remains visible when
+      // the hero grows for the commercial preview instead of being constrained.
+      const scale = this.original ? Math.min(height / 512, width / 1024) : height / 280;
       const w = 320 * scale, h = 265 * scale;
       const rest = this.options.restPosition || (this.original ? { x: width - 468 * scale, y: 125 * scale } : { x: (width - w) * .42, y: 8 * scale });
       Object.assign(this.move.style, { width: w + 'px', height: h + 'px', left: rest.x + 'px', top: rest.y + 'px' });
