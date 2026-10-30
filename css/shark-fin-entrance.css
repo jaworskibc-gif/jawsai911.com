@@ -6,7 +6,7 @@
 .shark-fin-wake{position:absolute;left:-12%;right:-12%;bottom:0;height:1px;background:linear-gradient(90deg,transparent,#d2b27677,transparent);opacity:0;transform-origin:center}
 .shark-fin-stage.is-swimming>.shark-fin-motion{visibility:visible;will-change:transform}
 .shark-fin-stage.is-swimming .shark-fin-rotation{will-change:transform}
-.shark-fin-stage.is-swimming>img{opacity:.42}.shark-fin-stage.is-preparing>img{opacity:0}
+.shark-fin-stage.is-swimming>img{opacity:.18}.shark-fin-stage.is-preparing>img{opacity:0}
 /* Dedicated quiet strip above landing-page copy; no overlay on text, CTAs or video. */
 .funnel-fin-stage{position:relative;width:220px;height:112px;overflow:hidden;margin:0 0 24px;pointer-events:none}
 .funnel-fin-stage>.shark-fin-motion{visibility:visible}

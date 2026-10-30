@@ -114,7 +114,7 @@
       ], {duration,fill:'both'}));
       // Reveal the stationary environment only during the settle; never move the banner's text or globe.
       if (this.original) this.animations.push(this.original.animate([
-        {opacity:.42},{offset:.8214,opacity:.42},{opacity:1}
+        {opacity:.18},{offset:.8214,opacity:.18},{opacity:1}
       ], {duration,fill:'both'}));
       Promise.all(this.animations.map(a => a.finished)).then(() => this.stop()).catch(() => {});
     }
