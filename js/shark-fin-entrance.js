@@ -37,7 +37,7 @@
       // the hero grows for the commercial preview instead of being constrained.
       const scale = this.original ? Math.min(height / 512, width / 1024) : height / 280;
       const w = 260 * scale, h = 215 * scale;
-      const rest = this.options.restPosition || (this.original ? { x: width * .04, y: Math.max(8 * scale, height - h + 20) } : { x: (width - w) * .42, y: 8 * scale });
+      const rest = this.options.restPosition || (this.original ? { x: width * .04, y: Math.max(8 * scale, height - h - 20) } : { x: (width - w) * .42, y: 8 * scale });
       Object.assign(this.move.style, { width: w + 'px', height: h + 'px', left: rest.x + 'px', top: rest.y + 'px' });
       for (const art of [this.art, this.outboundArt]) {
         art.style.backgroundSize = `${2048 * scale}px ${512 * scale}px`;
