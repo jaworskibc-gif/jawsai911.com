@@ -1,6 +1,8 @@
 (() => {
   'use strict';
-  const SESSION_KEY = 'jaws:fin-entrance:v1';
+  // Bump the key when the entrance choreography changes so visitors who saw
+  // an earlier build get one fresh entrance on the next deployment.
+  const SESSION_KEY = 'jaws:fin-entrance:v2';
   const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
   let claimed = false;
   const seen = () => { try { return sessionStorage.getItem(SESSION_KEY) === 'played'; } catch { return claimed; } };
@@ -38,7 +40,9 @@
       }
       const sign = 1; // The approved artwork faces left on the return; rest is never mirrored.
       const room = sign > 0 ? width - rest.x - w - 12 : rest.x - 12;
-      this.distance = sign * Math.max(0, Math.min(room, width * .19, 115));
+      // Give the swim enough travel to read clearly on a real screen while
+      // remaining bounded inside the hero animation layer.
+      this.distance = sign * Math.max(0, Math.min(room, width * .32, 220));
       this.rest = rest;
       this.constrained = !!this.original && rest.x < -w * .15;
     }
