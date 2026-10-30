@@ -43,3 +43,19 @@
 .hero-commercial{display:flex;align-items:center;gap:10px;width:min(100%,320px);margin-top:22px;padding:6px 9px 6px 6px;border:1px solid #c7a46555;border-radius:7px;background:linear-gradient(90deg,#08131e88,#08131e35);backdrop-filter:blur(2px);color:#f1eee8!important;text-decoration:none;transition:border-color .18s,background .18s,transform .18s}.hero-commercial:hover{border-color:#e0c187;background:#101e2c88;transform:translateY(-2px)}.hero-commercial-thumb{position:relative;display:block;flex:0 0 72px;aspect-ratio:16/9;overflow:hidden;border-radius:3px;background:#050b12aa}.hero-commercial-thumb img{display:block;width:100%;height:100%;object-fit:cover}.hero-commercial-thumb>span{position:absolute;inset:0;display:grid;place-items:center;color:#f5dfad;font-size:14px;text-shadow:0 2px 8px #000}.hero-commercial-copy{display:grid;gap:2px;min-width:0}.hero-commercial-copy strong{font-size:11px;font-weight:600;letter-spacing:.01em}.hero-commercial-copy small{color:#c5ccd5;font-size:9px;line-height:1.35}.hero-commercial-arrow{margin-left:auto;color:#d7b778;font-size:16px}
 @media(max-width:700px){.hero-commercial{width:100%;margin-top:18px}.hero-commercial-thumb{flex-basis:96px}.hero-commercial-copy strong{font-size:12px}.hero-commercial-copy small{font-size:10px}}
 @media(max-width:700px){.hero-commercial{width:72%;min-width:240px}.hero-commercial-thumb{flex-basis:68px}}
+
+/* Full-width editorial photo bands between sections */
+.photo-band{position:relative;width:100%;min-height:380px;overflow:hidden;isolation:isolate;border-top:1px solid var(--premium-line);border-bottom:1px solid var(--premium-line)}
+.photo-band::before{content:"";position:absolute;inset:-10% 0;background-image:var(--band-img);background-size:cover;background-position:center;background-repeat:no-repeat;background-attachment:fixed;z-index:-2;filter:grayscale(.25) contrast(1.05)}
+.photo-band::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,11,18,.80) 0%,rgba(5,11,18,.58) 50%,rgba(5,11,18,.84) 100%),linear-gradient(90deg,rgba(5,11,18,.78) 0%,rgba(5,11,18,.30) 60%,rgba(5,11,18,.60) 100%);z-index:-1}
+.photo-band>.container{position:relative;z-index:1;padding:84px 32px;display:flex;flex-direction:column;gap:14px;max-width:1200px;margin:0 auto}
+.photo-band .band-rule{display:block;width:48px;height:2px;background:var(--premium-gold);margin-bottom:6px}
+.photo-band .band-eyebrow{color:var(--premium-gold);font-size:11px;letter-spacing:.19em;font-weight:600;text-transform:uppercase}
+.photo-band .band-title{color:var(--premium-light);font-size:clamp(26px,3vw,38px);font-weight:600;letter-spacing:-.035em;line-height:1.2;max-width:720px;margin:0}
+.photo-band .band-title em{font-style:italic;background:linear-gradient(120deg,#f1dfb8,#c5a05c 70%,#eed5a1);background-clip:text;-webkit-background-clip:text;color:transparent}
+.photo-band .band-sub{color:#cfd4db;font-size:15px;line-height:1.65;max-width:640px;margin:0}
+@media(max-width:900px){.photo-band::before{background-attachment:scroll;inset:0}.photo-band{min-height:300px}.photo-band>.container{padding:60px 22px}}
+
+/* Subtle gold hover-glow on existing cards */
+.premium-site :is(.ccm-tier,.growth-price-card,.premium-development-grid article){transition:border-color .22s ease,transform .22s ease,box-shadow .35s ease}
+.premium-site :is(.ccm-tier,.growth-price-card,.premium-development-grid article):hover{box-shadow:0 0 28px rgba(210,178,118,.10)}
