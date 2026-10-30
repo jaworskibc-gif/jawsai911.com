@@ -37,7 +37,7 @@
       // the hero grows for the commercial preview instead of being constrained.
       const scale = this.original ? Math.min(height / 512, width / 1024) : height / 280;
       const w = 320 * scale, h = 265 * scale;
-      const rest = this.options.restPosition || (this.original ? { x: width - 468 * scale, y: 125 * scale } : { x: (width - w) * .42, y: 8 * scale });
+      const rest = this.options.restPosition || (this.original ? { x: width * .04, y: 125 * scale } : { x: (width - w) * .42, y: 8 * scale });
       Object.assign(this.move.style, { width: w + 'px', height: h + 'px', left: rest.x + 'px', top: rest.y + 'px' });
       for (const art of [this.art, this.outboundArt]) {
         art.style.backgroundSize = `${2048 * scale}px ${512 * scale}px`;
@@ -47,7 +47,9 @@
       const room = sign > 0 ? width - rest.x - w - 12 : rest.x - 12;
       // Give the swim enough travel to read clearly on a real screen while
       // remaining bounded inside the hero animation layer.
-      this.distance = sign * Math.max(0, Math.min(room, width * .32, 220));
+      // Use the full hero so the primary fin crosses the water clearly before
+      // turning and settling back into the banner.
+      this.distance = sign * Math.max(0, Math.min(room, width * .55));
       this.rest = rest;
       this.constrained = !!this.original && rest.x < -w * .15;
     }
@@ -100,10 +102,10 @@
       // Blend the two headings at maximum perspective narrowing, avoiding an
       // edge-on disappearance or a 180-degree coin flip of a flat image plane.
       this.animations.push(this.art.animate([
-        {offset:0,opacity:0},{offset:.4107,opacity:0},{offset:.49,opacity:1},{offset:1,opacity:1}
+        {offset:0,opacity:1},{offset:1,opacity:1}
       ], {duration,fill:'both'}));
       this.animations.push(this.outboundArt.animate([
-        {offset:0,opacity:1},{offset:.4107,opacity:1},{offset:.49,opacity:0},{offset:1,opacity:0}
+        {offset:0,opacity:0},{offset:1,opacity:0}
       ], {duration,fill:'both'}));
       this.animations.push(this.wake.animate([
         {opacity:0,transform:'scaleX(.6)'},{offset:.25,opacity:.3,transform:'scaleX(1)'},
