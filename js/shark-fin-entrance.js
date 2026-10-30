@@ -10,7 +10,10 @@
   class SharkFinEntrance {
     constructor(stage, options = {}) {
       this.stage = stage;
-      this.options = { enabled: true, duration: 2800, playOnce: true, reducedMotion: false, ...options };
+      // The public-site default is a fresh entrance on each page navigation.
+      // Integrations can still opt into once-per-session playback with
+      // { playOnce: true }.
+      this.options = { enabled: true, duration: 2800, playOnce: false, reducedMotion: false, ...options };
       this.animations = [];
       this.original = stage.querySelector(':scope > img');
       stage.classList.add('shark-fin-stage');
@@ -59,7 +62,7 @@
         this.stage.dataset.finState = 'static'; return;
       }
       if (this.constrained || Math.abs(this.distance) < 12) { this.stage.dataset.finState = 'static-constrained'; return; }
-      claim(); this.running = true; this.stage.classList.add('is-swimming'); this.stage.dataset.finState = 'swimming';
+      if (this.options.playOnce) claim(); this.running = true; this.stage.classList.add('is-swimming'); this.stage.dataset.finState = 'swimming';
       const d = this.distance;
       // Coordinate frames describe a shallow arc while the child changes heading.
       // Outbound is reflected so the leading tip faces travel; return restores the original artwork.
