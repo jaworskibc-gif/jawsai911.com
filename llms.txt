@@ -1,0 +1,45 @@
+# JAWSAI911
+
+> Insurance AI and operations expertise. I build AI systems that actually work — specifically agentic AI, multi-LLM orchestration, and full-stack software for Medicare, ACA, and final-expense insurance operations. Operated by Bryan Jaworski, Royal Palm Beach FL. Phone: 786-761-2950.
+
+Founder background: Medicare telesales leadership, agent coaching, closing assistance, compliance oversight, and performance management across US and international call centers.
+
+## Core offerings
+
+- **CCM Intelligent Enrollment Platform** — unified agent workspace with Compliance Lock™ configurable compliance enforcement, real-time agent guidance, and call review/scorecards. Designed and tested for insurance agencies.
+- **Agentic AI development** — custom agents for business workflows, task coordination, and practical automation.
+- **Multi-LLM orchestration** — model routing and MCP-based tool connections for coordinated AI applications.
+- **Full-stack software** — web experiences, automation, and operational tools across insurance, automotive, beauty, and real estate.
+- **Shark SuperSite** — two-layer system combining public site and backend operations platform for dealerships, barbershops, nail salons, and local operators.
+
+## Pricing (self-serve platform tiers, 15% below market leader)
+
+- **Mako** — $82/mo ($820/yr). Solo operators and small teams. 3 sub-accounts, full CRM/funnels/email/SMS/calling, Conversation AI + Voice AI, agentic AI starter workflows, compliance guardrails.
+- **Hammer Head** — $252/mo ($2,520/yr). Agencies. Unlimited sub-accounts, phone/email rebill at cost, API access, multi-LLM orchestration (MCP), custom automation builder, Shark SuperSite deployment.
+- **Great White** — $422/mo ($4,220/yr). SaaS resellers and enterprise. SaaS Mode with markup rebilling, full Compliance Lock™ framework, one custom AI agent build included, white-glove migration from GHL/HubSpot/Zoho, multi-industry templates.
+
+14-day free trial, no setup fee at any tier.
+
+## URL map
+
+- https://jawsai911.com/ — homepage
+- https://jawsai911.com/about.html — founder background
+- https://jawsai911.com/solutions.html — AI solutions overview
+- https://jawsai911.com/platform.html — CCM platform details
+- https://jawsai911.com/offers.html — pricing (Mako / Hammer Head / Great White)
+- https://jawsai911.com/supersite.html — Shark SuperSite portfolio
+- https://jawsai911.com/contact.html — contact and booking
+- https://jawsai911.com/ccm-demo/ — CCM Intelligent Enrollment Platform demo
+- https://jawsai911.com/ai-consultation/ — AI automation consultation funnel
+
+## Common questions
+
+**Who is JAWSAI911 for?** Insurance agencies (Medicare, ACA, final expense), dealerships, salons, and local operators who need working AI systems — not demos.
+
+**What is Compliance Lock™?** A configurable compliance-control framework inside CCM's agent workspace. Agencies define required disclosures, verification steps, approval checkpoints, and enrollment conditions. The system prevents progression through workflow stages until conditions are satisfied. Tested with simulated AI-agent conversations; no known successful bypasses to date.
+
+**How is this different from GoHighLevel?** Full feature parity with the leading all-in-one platform at 15% less per month, plus agentic AI workflow engine, multi-LLM orchestration (MCP), Compliance Lock™, and insurance-operations expertise built in.
+
+**Can you migrate my existing stack?** Yes — Great White tier includes white-glove migration from GHL, HubSpot, or Zoho.
+
+**Do you build custom agents?** Yes — Great White includes one custom AI agent build per contract. Additional agents available as scoped projects.
