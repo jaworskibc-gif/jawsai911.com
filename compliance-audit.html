@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The 10-Point AI Compliance Audit for Medicare Agencies | JAWSAI911</title>
+  <meta name="description" content="Ten questions every Medicare agency owner should answer about their enrollment workflow — call recording, SOA, scripted disclosures, QA, PHI, and more. Written from inside telesales operations." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/public-audit.css">
+  <link rel="stylesheet" href="css/premium.css">
+  <style>
+    .audit-page{max-width:860px;margin:0 auto;padding:60px 32px 40px}
+    .audit-page .audit-meta{color:#8ea0b4;font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin:16px 0 24px}
+    .audit-page h1{font-size:clamp(32px,4.2vw,52px);font-weight:600;letter-spacing:-.04em;line-height:1.1;margin:0 0 20px;color:var(--premium-light)}
+    .audit-page h1 em{font-style:italic;background:linear-gradient(120deg,#f1dfb8,#c5a05c 70%,#eed5a1);background-clip:text;-webkit-background-clip:text;color:transparent}
+    .audit-page>.lead{color:#cfd4db;font-size:17px;line-height:1.65;max-width:720px;margin:0 0 40px}
+    .audit-point{background:linear-gradient(135deg,#101b28,#090f18);border:1px solid var(--premium-line);border-left:3px solid var(--premium-gold);border-radius:8px;padding:28px 30px;margin:18px 0}
+    .audit-point .ap-num{color:var(--premium-gold);font-size:11px;letter-spacing:.19em;font-weight:700;text-transform:uppercase;margin-bottom:8px}
+    .audit-point h2{color:var(--premium-light);font-size:22px;font-weight:600;letter-spacing:-.025em;line-height:1.25;margin:0 0 16px}
+    .audit-point .ap-question{color:#dec18a;font-size:15px;font-style:italic;line-height:1.6;margin:0 0 16px;padding-left:14px;border-left:2px solid #c7a46555}
+    .audit-point .ap-why,.audit-point .ap-look,.audit-point .ap-check{color:#cfd4db;font-size:14.5px;line-height:1.75;margin:14px 0}
+    .audit-point .ap-why::before,.audit-point .ap-look::before,.audit-point .ap-check::before{content:attr(data-label);display:block;color:var(--premium-gold);font-size:10px;letter-spacing:.17em;font-weight:700;text-transform:uppercase;margin-bottom:6px}
+    .audit-point ul{list-style:none;padding:0;margin:8px 0;display:flex;flex-direction:column;gap:6px}
+    .audit-point ul li{color:#cfd4db;font-size:13.5px;line-height:1.55;padding-left:16px;position:relative}
+    .audit-point ul li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:1px;background:var(--premium-gold)}
+    .audit-cta{background:radial-gradient(ellipse at 50% 100%,#283343,#0a111c 70%);border:1px solid var(--premium-line);border-radius:10px;padding:40px 32px;margin:48px 0 0;text-align:center}
+    .audit-cta h2{color:var(--premium-light);font-size:26px;font-weight:600;letter-spacing:-.025em;margin:0 0 12px}
+    .audit-cta p{color:#cfd4db;font-size:15px;line-height:1.7;margin:0 0 22px;max-width:560px;margin-left:auto;margin-right:auto}
+    .audit-print-btn{display:inline-flex;align-items:center;gap:8px;color:#8ea0b4;font-size:12px;text-decoration:none;letter-spacing:.1em;text-transform:uppercase;margin-top:10px;transition:color .18s ease}
+    .audit-print-btn:hover{color:var(--premium-gold)}
+    .audit-disclaimer{color:#8ea0b4;font-size:12px;line-height:1.6;margin:36px 0 0;padding:18px;background:#060d16;border:1px solid var(--premium-line);border-radius:6px}
+    @media print{
+      body{background:white!important;color:black!important}
+      .premium-site .audit-header,.premium-site footer,.audit-cta,.audit-print-btn{display:none!important}
+      .audit-page{padding:20px 0;max-width:none}
+      .audit-page h1,.audit-point h2{color:black!important;background:none!important;-webkit-text-fill-color:black!important}
+      .audit-point{background:white!important;border:1px solid #999!important;border-left:3px solid #333!important;color:black!important;break-inside:avoid}
+      .audit-point *{color:#222!important}
+      .audit-point .ap-num,.audit-point .ap-why::before,.audit-point .ap-look::before,.audit-point .ap-check::before{color:#555!important}
+      .audit-page>.lead{color:#333!important}
+    }
+  </style>
+</head>
+<body class="premium-site premium-interior">
+  <header class="audit-header"><a class="audit-brand" href="index.html" aria-label="JAWSAI911 home"><span class="premium-brand-name">JAWS<span>AI</span>911</span><span class="premium-brand-sub">AI SYSTEMS &amp; AUTOMATION</span></a><button class="audit-menu" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="public-navigation">☰</button><div class="audit-links" id="public-navigation" role="navigation" aria-label="Main navigation"><a href="index.html">Home</a><a href="about.html">About</a><a href="solutions.html">Solutions</a><a href="platform.html">CCM Platform</a><a href="supersite.html">Portfolio</a><a href="contact.html">Contact</a><a href="/ccm-demo/">Watch CCM Demo</a><a href="/ai-consultation/">Book AI Consultation</a></div></header>
+
+  <main>
+    <article class="audit-page">
+      <div class="audit-meta">FREE AUDIT · JAWSAI911</div>
+      <h1>The 10-Point AI Compliance Audit<br><em>for Medicare Agencies.</em></h1>
+      <p class="lead">A plain-English checklist to run against your current enrollment workflow. Written from inside telesales operations. Each point tells you the question auditors ask, why it matters, what they actually look for, and a quick check to run today.</p>
+
+      <a href="javascript:window.print()" class="audit-print-btn">⎙ Print or save as PDF</a>
+
+      <section class="audit-point">
+        <div class="ap-num">POINT 01</div>
+        <h2>Call Recording &amp; Retention</h2>
+        <p class="ap-question">Do you record every enrollment call, and can you produce any one of them on demand for the next 10 years?</p>
+        <div class="ap-why" data-label="Why it matters">CMS requires MA/PDP calls to be recorded and retained for 10 years. If you can't produce a call, you can't defend it. This is the single most common finding in Medicare agency audits.</div>
+        <div class="ap-look" data-label="What auditors look for">
+          <ul>
+            <li>100% call recording coverage (not just outbound, not just sales)</li>
+            <li>Searchable retrieval by date, agent, beneficiary name, or MBI</li>
+            <li>10-year retention policy documented in writing</li>
+            <li>Encryption at rest; access logs for recording retrieval</li>
+          </ul>
+        </div>
+        <div class="ap-check" data-label="Quick check">Pick a random enrollment from 18 months ago and try to pull the full call recording in under 2 minutes. If you can't, there's your gap.</div>
+      </section>
+
+      <section class="audit-point">
+        <div class="ap-num">POINT 02</div>
+        <h2>Scripted Disclosures</h2>
+        <p class="ap-question">Are the five required disclaimers read verbatim on every call, in the right order, before plan details are discussed?</p>
+        <div class="ap-why" data-label="Why it matters">CMS has specific scripted language that must be delivered word-for-word. "Close enough" wording is not compliant. Agents under pressure skip or paraphrase.</div>
+        <div class="ap-look" data-label="What auditors look for">
+          <ul>
+            <li>Non-exclusive agent / "I do not offer every plan available" disclosure</li>
+            <li>Number of plans and carriers you represent in the beneficiary's area</li>
+            <li>Licensed-agent identification</li>
+            <li>TPMO disclaimer when applicable</li>
+            <li>Permission to contact / do-not-call status check</li>
+          </ul>
+        </div>
+        <div class="ap-check" data-label="Quick check">Pull the last 10 enrollment calls and listen for the first 90 seconds. Count how many hit all five. If it's under 10, your script discipline is leaking.</div>
+      </section>
+
+      <section class="audit-point">
+        <div class="ap-num">POINT 03</div>
+        <h2>Scope of Appointment (SOA)</h2>
+        <p class="ap-question">Do you capture a valid SOA before discussing any Medicare Advantage or Part D plan, and can you prove it?</p>
+        <div class="ap-why" data-label="Why it matters">SOA is required before any MA/PDP discussion. The 48-hour pre-appointment rule has exceptions, but the SOA itself does not. No SOA = unauthorized marketing. Full stop.</div>
+        <div class="ap-look" data-label="What auditors look for">
+          <ul>
+            <li>Written, recorded, or electronic SOA on file for every enrollment</li>
+            <li>Scope limited to the product types the beneficiary agreed to discuss</li>
+            <li>Timestamp proving SOA precedes the sales conversation</li>
+            <li>Beneficiary signature or verbal confirmation captured</li>
+          </ul>
+        </div>
+        <div class="ap-check" data-label="Quick check">For your last 20 enrollments, is there an SOA timestamp? Does it predate the recorded sales call? Any gaps are liability.</div>
+      </section>
+
+      <section class="audit-point">
+        <div class="ap-num">POINT 04</div>
+        <h2>Agent Training &amp; Certification Logs</h2>
+        <p class="ap-question">Can you prove every agent on your floor is AHIP-certified and carrier-appointed for the plans they're selling, as of today?</p>
+        <div class="ap-why" data-label="Why it matters">Agents who sell outside their appointment produce invalid enrollments and personal liability for the agency. Expired AHIP = instant audit red flag.</div>
+        <div class="ap-look" data-label="What auditors look for">
+          <ul>
+            <li>Annual AHIP certification tracked with expiration dates</li>
+            <li>Carrier-specific product training complete per carrier</li>
+            <li>State license current for every state the agent sells in</li>
+            <li>Automated reminder workflow 60 / 30 / 7 days before expiration</li>
+          </ul>
+        </div>
+        <div class="ap-check" data-label="Quick check">Export your agent roster with cert dates. Count how many AHIP certs expire in the next 60 days. If no one owns that reminder flow, you'll have a gap at AEP.</div>
+      </section>
+
+      <section class="audit-point">
+        <div class="ap-num">POINT 05</div>
+        <h2>QA Sampling Methodology</h2>
+        <p class="ap-question">What percentage of calls do you grade, who grades them, and does the scorecard reflect what CMS actually audits?</p>
+        <div class="ap-why" data-label="Why it matters">Random, unweighted QA misses systematic issues. If your QA sampling doesn't mirror what carriers and CMS inspect, you're grading the wrong things.</div>
+        <div class="ap-look" data-label="What auditors look for">
+          <ul>
+            <li>Sampling plan documented (random + risk-based: new agents, high-complaint)</li>
+            <li>Scorecard aligned to the carrier's own agent-oversight rubric</li>
+            <li>Pass/fail thresholds trigger coaching workflows</li>
+            <li>QA trending reports produced monthly</li>
+          </ul>
+        </div>
+        <div class="ap-check" data-label="Quick check">If you can't produce a QA scorecard for a specific agent and a specific month in under 5 minutes, your oversight story is weak.</div>
+      </section>
+
+      <section class="audit-point">
+        <div class="ap-num">POINT 06</div>
+        <h2>CMS Marketing Rules Compliance</h2>
+        <p class="ap-question">Does every piece of marketing — scripts, landing pages, lead-gen vendors, social posts — meet current CMS marketing rules?</p>
+        <div class="ap-why" data-label="Why it matters">The 2024 TPMO rule tightened everything. Non-compliant marketing from a downstream vendor still comes back to you. CMS is enforcing aggressively.</div>
+        <div class="ap-look" data-label="What auditors look for">
+          <ul>
+            <li>Pre-approved scripts filed with each carrier</li>
+            <li>TPMO disclaimer on all applicable marketing</li>
+            <li>Lead vendor attestations that leads were obtained compliantly</li>
+            <li>No prohibited superlatives or Medicare-logo misuse</li>
+            <li>48-hour callback rule honored where it applies</li>
+          </ul>
+        </div>
+        <div class="ap-check" data-label="Quick check">Pull one lead from each lead source. Can you trace exactly how it was generated and whether it meets CMS rules? If not, your vendor pipeline is a liability.</div>
+      </section>
+
+      <section class="audit-point">
+        <div class="ap-num">POINT 07</div>
+        <h2>Data Security &amp; PHI Handling</h2>
+        <p class="ap-question">Where is beneficiary PHI stored, who can access it, and do you have signed BAAs with every vendor who touches it?</p>
+        <div class="ap-why" data-label="Why it matters">PHI includes MBI, DOB, address, plan information, and call recordings themselves. HIPAA violations stack per record. Most agencies underestimate their exposure.</div>
+        <div class="ap-look" data-label="What auditors look for">
+          <ul>
+            <li>Encryption at rest and in transit for all PHI</li>
+            <li>Role-based access control (not shared logins)</li>
+            <li>Signed BAAs with CRM, dialer, recording, email, AI vendors</li>
+            <li>Breach notification plan documented</li>
+            <li>Call recordings treated as PHI (because they contain it)</li>
+          </ul>
+        </div>
+        <div class="ap-check" data-label="Quick check">List every vendor that touches a beneficiary record. Which of them have you signed a BAA with? Gaps = unquantified HIPAA liability.</div>
+      </section>
+
+      <section class="audit-point">
+        <div class="ap-num">POINT 08</div>
+        <h2>Enrollment Verification Process</h2>
+        <p class="ap-question">Before an application is submitted, do you confirm the beneficiary understands the plan, premium, provider network, and formulary impact?</p>
+        <div class="ap-why" data-label="Why it matters">Rapid disenrollment is a performance metric carriers watch. If beneficiaries don't understand what they bought, they cancel — and that hits your contract.</div>
+        <div class="ap-look" data-label="What auditors look for">
+          <ul>
+            <li>Scripted verification of plan name, premium, effective date</li>
+            <li>Provider lookup completed on the call</li>
+            <li>Formulary check for current medications</li>
+            <li>Verbal confirmation of understanding captured on the recording</li>
+          </ul>
+        </div>
+        <div class="ap-check" data-label="Quick check">What's your 90-day disenrollment rate by agent? Any agent 2x the floor average has a verification problem, not just a volume problem.</div>
+      </section>
+
+      <section class="audit-point">
+        <div class="ap-num">POINT 09</div>
+        <h2>Fraud Detection &amp; Reporting</h2>
+        <p class="ap-question">If an agent submits a fraudulent enrollment today, how would you catch it, and what's the reporting workflow?</p>
+        <div class="ap-why" data-label="Why it matters">Carriers now share agent misconduct data. One ghost enrollment can get the agent debarred and the agency flagged across every carrier. Early detection is your defense.</div>
+        <div class="ap-look" data-label="What auditors look for">
+          <ul>
+            <li>Monitoring for pattern anomalies (same address, implausible volume, same signature)</li>
+            <li>Beneficiary callback verification sample</li>
+            <li>Internal fraud reporting mechanism (hotline / form)</li>
+            <li>Carrier notification process when fraud is suspected</li>
+            <li>Documented offboarding workflow for terminated agents</li>
+          </ul>
+        </div>
+        <div class="ap-check" data-label="Quick check">Who at your agency owns fraud monitoring? If the answer is "nobody specifically," you're the backstop by default — and auditors will treat it that way.</div>
+      </section>
+
+      <section class="audit-point">
+        <div class="ap-num">POINT 10</div>
+        <h2>Vendor &amp; Technology Audit</h2>
+        <p class="ap-question">Every tool in your stack — CRM, dialer, AI, lead portal, email — is a surface area. Who audits them and how often?</p>
+        <div class="ap-why" data-label="Why it matters">AI and automation accelerate everything, including compliance drift. A new AI feature deployed Tuesday can create a disclosure gap by Thursday if no one is watching.</div>
+        <div class="ap-look" data-label="What auditors look for">
+          <ul>
+            <li>Current inventory of every tool with PHI access</li>
+            <li>Change-management log for script, workflow, or AI model changes</li>
+            <li>AI tools reviewed for PHI exposure in training data</li>
+            <li>Dialer configured for TCPA compliance (no auto-dial to cell without consent)</li>
+            <li>Vendor security questionnaires reviewed annually</li>
+          </ul>
+        </div>
+        <div class="ap-check" data-label="Quick check">List every tool that could speak to a beneficiary or touch their record. When was each last reviewed for compliance drift? Anything over 12 months is overdue.</div>
+      </section>
+
+      <div class="audit-cta">
+        <div class="section-label">BUILT TO ENFORCE THIS</div>
+        <h2>Compliance Lock™ makes nine of these automatic.</h2>
+        <p>CCM's Compliance Lock™ framework enforces disclosures, SOA capture, scripted verification, QA workflow, and vendor-tool oversight directly inside the agent workspace. The system prevents progression through enrollment stages until configured conditions are satisfied.</p>
+        <a href="/ccm-demo/" class="btn btn-primary btn-lg">Watch the CCM demo <span aria-hidden="true">↗</span></a>
+        <a href="offers.html" class="btn btn-outline btn-lg" style="margin-left:8px">See pricing <span aria-hidden="true">→</span></a>
+      </div>
+
+      <p class="audit-disclaimer"><strong>Not legal advice.</strong> This audit is a practical checklist based on CMS Medicare Communications and Marketing Guidelines current at time of writing and operational experience across US and international telesales call centers. CMS rules change. Carrier requirements vary. Consult your compliance team and legal counsel for your specific situation. Compliance Lock™ workflow controls support oversight; they do not eliminate regulatory risk or replace licensed-agent responsibilities.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© 2026 JAWSAI911 / Complete Care Marketing · Leave the School Behind <a href="login.html" style="color:inherit;text-decoration:none;opacity:.55">🦈</a></div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="offers.html">Pricing</a>
+        <a href="faq.html">FAQ</a>
+        <a href="about.html">About</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
