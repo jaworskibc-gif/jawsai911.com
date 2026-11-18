@@ -174,11 +174,7 @@ function startSalesSession(){
   location.href = 'toolkit/Sales_Console.html';
 }
 
-function logout(){
-  sessionStorage.removeItem('jaw_auth');
-  sessionStorage.removeItem('jaw_return');
-  location.href='login.html';
-}
+function logout(){ return window.JAWSHubSignOut(); }
 preloadSalesIdentity();
 </script>
 </body>

@@ -143,7 +143,7 @@ let formsData = []; // list of {id, name, fields:[{id,label,type,required}]}
 
 function statusMsg(t) { document.getElementById('statusMsg').textContent = t; }
 function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
-function escapeHtml(str) { const d = document.createElement('div'); d.textContent = str || ''; return d.innerHTML; }
+function escapeHtml(str) { const d = document.createElement('div'); d.textContent = str || ''; return d.innerHTML.replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
 function normalizeForm(row) {
   return {
     id: row.id,
@@ -184,7 +184,7 @@ async function loadClientList() {
     select.value = currentClientId;
     await loadForms();
   } catch (e) {
-    statusMsg('No clients yet — add one to get started.');
+    statusMsg('Unable to load clients: ' + e.message);
   }
 }
 
@@ -224,6 +224,11 @@ async function loadForms() {
     formsData = (data || []).map(normalizeForm);
   } catch (e) {
     formsData = [];
+    currentFormId = null;
+    renderFormSelect();
+    renderFields();
+    statusMsg('Unable to load forms: ' + e.message);
+    return;
   }
   currentFormId = formsData.length > 0 ? formsData[0].id : null;
   statusMsg('Editing forms for ' + currentClient + ' — changes save automatically.');
@@ -294,7 +299,8 @@ async function createForm() {
 async function deleteForm() {
   if (!currentFormId) return;
   if (!confirm('Delete this form and all its fields?')) return;
-  await supabaseClient.from('form_submissions').delete().eq('form_id', currentFormId);
+  const { error: submissionsError } = await supabaseClient.from('form_submissions').delete().eq('form_id', currentFormId);
+  if (submissionsError) { alert(submissionsError.message); return; }
   const { error } = await supabaseClient.from('forms').delete().eq('id', currentFormId);
   if (error) {
     alert(error.message);
@@ -377,10 +383,10 @@ function renderLiveForm() {
     const wrap = document.createElement('div');
     wrap.className = 'lf-field';
     const inputEl = field.type === 'textarea' ? 'textarea' : 'input';
-    const typeAttr = field.type === 'textarea' ? '' : `type="${field.type}"`;
+    const typeAttr = field.type === 'textarea' ? '' : `type="${['text', 'tel', 'email'].includes(field.type) ? field.type : 'text'}"`;
     wrap.innerHTML = `
       <label>${escapeHtml(field.label)}${field.required ? ' *' : ''}</label>
-      <${inputEl} ${typeAttr} data-field-id="${field.id}" data-label="${escapeHtml(field.label)}" ${field.required ? 'required' : ''}></${inputEl}>
+      <${inputEl} ${typeAttr} data-field-id="${escapeHtml(field.id)}" data-label="${escapeHtml(field.label)}" ${field.required ? 'required' : ''}></${inputEl}>
     `;
     liveForm.appendChild(wrap);
   });
@@ -396,9 +402,17 @@ function renderLiveForm() {
     liveForm.querySelectorAll('[data-field-id]').forEach(el => {
       answers[el.dataset.label] = el.value;
     });
-    await saveSubmission(form.id, answers);
-    alert('Submitted! (This would normally close/thank the customer.)');
-    liveForm.reset();
+    if (submitBtn.disabled) return;
+    submitBtn.disabled = true;
+    try {
+      await saveSubmission(form.id, answers);
+      alert('Submission saved.');
+      liveForm.reset();
+    } catch (error) {
+      alert('Submission was not saved. Your answers are still here. ' + error.message);
+    } finally {
+      submitBtn.disabled = false;
+    }
   });
 }
 
@@ -407,7 +421,7 @@ async function saveSubmission(formId, answers) {
     form_id: formId,
     answers
   });
-  if (error) alert(error.message);
+  if (error) throw error;
 }
 
 async function renderSubmissions() {
@@ -426,7 +440,7 @@ async function renderSubmissions() {
       .order('submitted_at', { ascending: false });
     if (error) throw error;
     subs = data || [];
-  } catch (e) { subs = []; }
+  } catch (e) { container.textContent = 'Unable to load submissions: ' + e.message; return; }
 
   if (subs.length === 0) {
     container.innerHTML = `<div class="empty-state">No submissions yet for "${escapeHtml(form.name)}". Go to Preview / Fill Out to test it.</div>`;

@@ -17,8 +17,8 @@ window.JAWSCRM = (function () {
   }
 
   function addDays(dateStr, days) {
-    const d = new Date(dateStr + "T00:00:00");
-    d.setDate(d.getDate() + days);
+    const d = new Date(dateStr + "T00:00:00Z");
+    d.setUTCDate(d.getUTCDate() + days);
     return d.toISOString().slice(0, 10);
   }
 
@@ -153,10 +153,10 @@ window.JAWSCRM = (function () {
       const updatePayload = {
         phone: payload.phone || existing.phone || null,
         email: payload.email || existing.email || null,
-        company: payload.company || existing.company || null,
+        company: lead.company || existing.company || null,
         city: payload.city || existing.city || null,
-        state: payload.state || existing.state || "FL",
-        status: payload.status || existing.status || "new",
+        state: lead.state || existing.state || "FL",
+        status: lead.status || existing.status || "new",
         source: existing.source || payload.source,
         assigned_to: payload.assigned_to || existing.assigned_to || null,
         last_call_at: payload.last_call_at || existing.last_call_at || null,

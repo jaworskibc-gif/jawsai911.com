@@ -608,7 +608,7 @@ async function saveImportedLeads() {
 }
 
 async function deleteLead(stageId, idx) {
-  const [lead] = pipelineData[stageId].splice(idx, 1);
+  const lead = pipelineData[stageId][idx];
   if (lead) {
     const { error } = await supabaseClient.from('crm_leads').delete().eq('id', lead.id);
     if (error) {
@@ -616,7 +616,7 @@ async function deleteLead(stageId, idx) {
       return;
     }
   }
-  await savePipeline();
+  if (lead) pipelineData[stageId] = pipelineData[stageId].filter(row => row.id !== lead.id);
   renderBoard();
 }
 

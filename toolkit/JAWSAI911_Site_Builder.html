@@ -116,6 +116,15 @@
   <div class="panel active" id="panel-editor">
     <div class="editor-wrap">
       <div class="editor-form">
+        <div class="section-card" id="listingDropZone" style="border:2px dashed #00B4FF">
+          <h4>Business Listing → Demo Site</h4>
+          <p style="font-size:12px;margin-bottom:10px">Drop selected listing text here, or paste it below. Include the business name, category, city and phone.</p>
+          <label for="listingInput">Listing details</label>
+          <textarea id="listingInput" rows="5" placeholder="Name: Example Plumbing&#10;Category: Plumbing&#10;City: West Palm Beach&#10;Phone: (561) 555-0100"></textarea>
+          <label for="listingNiche">Business niche</label><select id="listingNiche"><option value="auto">Detect from listing</option></select>
+          <button type="button" class="btn btn-teal" onclick="generateListingDemo()" style="margin-top:12px">Generate Demo</button>
+          <p id="listingResult" role="status" style="font-size:12px;margin-top:10px">Draft preview. Review suggested services before sharing.</p>
+        </div>
 
         <div class="section-card">
           <h4>Theme</h4>
@@ -179,6 +188,7 @@
   </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="listing-demo.js"></script>
 <script>
 const SUPABASE_URL = 'https://owkqfledeuetwwmlvnmb.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93a3FmbGVkZXVldHd3bWx2bm1iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxMzM5MTQsImV4cCI6MjEwMDcwOTkxNH0.lOwjIzs-DyVtvKR8-b1L6RTdlb8iY9_1chgKbY2ml3c';
@@ -200,7 +210,7 @@ let reviews = [];
 
 function statusMsg(t) { document.getElementById('statusMsg').textContent = t; }
 function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
-function escapeHtml(str) { const d = document.createElement('div'); d.textContent = str || ''; return d.innerHTML; }
+function escapeHtml(str) { return String(str || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
 function switchTab(name) {
   document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
@@ -280,18 +290,15 @@ function defaultSiteData() {
     theme: 'ocean',
     bizName: '', city: '', phone: '',
     headline: "{City}'s Trusted Team, Now Online.",
-    subhead: 'Real reviews, real work, right here.',
-    rating: 4.8, reviewCount: 0,
+    subhead: 'Explore our services and contact us for details.',
+    rating: 0, reviewCount: 0,
     services: [
       { name: 'Service One', desc: 'Short description of what you offer.' },
       { name: 'Service Two', desc: 'Short description of what you offer.' },
     ],
     galleryImages: [],
-    reviews: [
-      { author: 'Happy Customer', rating: 5, text: "Fast response, great communication, and excellent work." },
-      { author: 'Local Homeowner', rating: 5, text: "Professional team and the finished result was exactly what we hoped for." }
-    ],
-    quote: "These guys are the best in town. Wouldn't call anyone else."
+    reviews: [],
+    quote: ''
   };
 }
 
@@ -349,7 +356,7 @@ async function loadSite() {
   document.getElementById('f_phone').value = data.phone || '';
   document.getElementById('f_headline').value = data.headline || '';
   document.getElementById('f_subhead').value = data.subhead || '';
-  document.getElementById('f_rating').value = data.rating || 4.8;
+  document.getElementById('f_rating').value = data.rating || 0;
   document.getElementById('f_reviewCount').value = data.reviewCount || 0;
   document.getElementById('f_quote').value = data.quote || '';
   services = data.services || [];
@@ -535,7 +542,7 @@ function buildSiteHtml(data) {
   const phone = escapeHtml(data.phone || '(555) 555-0100');
   const headline = escapeHtml(data.headline || '').replace('{City}', city);
   const subhead = escapeHtml(data.subhead || '');
-  const rating = data.rating || 4.8;
+  const rating = data.rating || 0;
   const reviewCount = data.reviewCount || 0;
   const reviewsList = Array.isArray(data.reviews) ? data.reviews.filter(r => r && (r.author || r.text)) : [];
   const galleryList = Array.isArray(data.galleryImages) ? data.galleryImages.filter(img => img && img.src) : [];
@@ -576,6 +583,7 @@ function buildSiteHtml(data) {
 
   return `
   <div style="font-family:'Liberation Sans',Arial,sans-serif;">
+    <div style="padding:10px;background:#fff4e0;color:#714900;text-align:center;font-size:12px">Demo preview · Suggested services require business approval</div>
     <div style="background:linear-gradient(160deg, ${theme.primary} 0%, ${theme.accent} 130%); color:white; padding:40px 30px 70px 30px;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:40px;">
         <div style="font-weight:900;font-size:16px;">${bizName}</div>
@@ -587,7 +595,7 @@ function buildSiteHtml(data) {
           <div style="font-size:32px;font-weight:900;line-height:1.15;margin-bottom:14px;">${headline}</div>
           <div style="font-size:14px;color:rgba(255,255,255,0.85);max-width:400px;">${subhead}</div>
         </div>
-        <div style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:8px;padding:20px;">
+        <div style="display:${rating > 0 && reviewCount > 0 ? 'block' : 'none'};background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:8px;padding:20px;">
           <div style="font-size:10px;letter-spacing:1.5px;color:${theme.warm};font-weight:700;margin-bottom:10px;">REPUTATION</div>
           <div style="font-size:38px;font-weight:900;">${rating}<span style="font-size:14px;color:rgba(255,255,255,0.6);"> / 5.0</span></div>
           <div style="color:${theme.warm};letter-spacing:2px;margin:6px 0;">★★★★★</div>
@@ -602,7 +610,7 @@ function buildSiteHtml(data) {
     </div>
     ${galleryHtml}
     ${reviewCardsHtml}
-    <div style="max-width:640px;margin:50px auto;padding:0 30px;text-align:center;">
+    <div style="display:${data.quote ? 'block' : 'none'};max-width:640px;margin:50px auto;padding:0 30px;text-align:center;">
       <div style="color:${theme.warm};font-size:18px;letter-spacing:3px;margin-bottom:14px;">★★★★★</div>
       <div style="font-size:18px;font-weight:700;color:${theme.primary};">"${escapeHtml(data.quote || '')}"</div>
     </div>
@@ -627,6 +635,31 @@ function renderFullPreview() {
 renderThemeRow();
 renderServices();
 loadClientList();
+
+function generateListingDemo() {
+  const result=document.getElementById('listingResult');
+  const started=performance.now();
+  try {
+    const data=window.JAWSListingDemo.parseListing(document.getElementById('listingInput').value,document.getElementById('listingNiche').value);
+    currentTheme=data.theme;
+    for (const [field,key] of Object.entries({bizName:'bizName',city:'city',phone:'phone',headline:'headline',subhead:'subhead',rating:'rating',reviewCount:'reviewCount',quote:'quote'})) document.getElementById('f_'+field).value=data[key];
+    services=data.services;galleryImages=[];reviews=[];
+    renderThemeRow();renderServices();renderGalleryImages();renderReviews();renderPreview();renderFullPreview();
+    result.textContent=window.JAWSListingDemo.templates[data.niche].label+' draft generated in '+((performance.now()-started)/1000).toFixed(2)+' seconds. Review the details, then select or add the matching client before saving.';
+  } catch(error) { result.textContent=error.message; }
+}
+Object.entries(window.JAWSListingDemo.templates).forEach(([key,value])=>{
+ const option=document.createElement('option');option.value=key;option.textContent=value.label;document.getElementById('listingNiche').appendChild(option);
+});
+const dropZone=document.getElementById('listingDropZone');
+dropZone.addEventListener('dragover',event=>{event.preventDefault();event.dataTransfer.dropEffect='copy';});
+dropZone.addEventListener('drop',event=>{
+ event.preventDefault();
+ const text=event.dataTransfer.getData('text/plain') || event.dataTransfer.getData('text/uri-list');
+ document.getElementById('listingInput').value=text;
+ generateListingDemo();
+});
+
 </script>
 </body>
 </html>

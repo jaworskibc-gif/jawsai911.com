@@ -117,7 +117,7 @@
     <div class="session-stats">
       <div class="stat-box"><div class="stat-num" id="statRemaining">0</div><div class="stat-label">REMAINING</div></div>
       <div class="stat-num" id="statCalled" style="display:none;"></div>
-      <div class="stat-box"><div class="stat-num" id="statCalledDisplay">0</div><div class="stat-label">CALLED TODAY</div></div>
+      <div class="stat-box"><div class="stat-num" id="statCalledDisplay">0</div><div class="stat-label">OUTCOMES THIS SESSION</div></div>
       <div class="stat-box"><div class="stat-num" id="statConnected">0</div><div class="stat-label">CONNECTED</div></div>
     </div>
     <div id="sessionContainer"></div>
@@ -144,6 +144,8 @@ let currentClientId = null;
 let queue = [];
 let calledCount = 0;
 let connectedCount = 0;
+let outcomeSaving = false;
+const loggedQueueIds = new Set();
 
 function statusMsg(t) { document.getElementById('statusMsg').textContent = t; }
 function escapeHtml(str) { const d = document.createElement('div'); d.textContent = str || ''; return d.innerHTML; }
@@ -187,7 +189,7 @@ async function loadClientList() {
     select.value = currentClientId;
     await loadQueue();
   } catch (e) {
-    statusMsg('No clients yet — add one to get started.');
+    statusMsg('Unable to load clients. Check the connection and sign-in, then reload.');
   }
 }
 
@@ -229,7 +231,7 @@ async function loadQueue() {
       .order('position');
     if (error) throw error;
     queue = (data || []).map(normalizeQueueRow);
-  } catch (e) { queue = []; }
+  } catch (e) { queue = []; statusMsg('Unable to load the queue. Check the connection and reload before calling.'); }
   renderQueueList();
 }
 
@@ -251,16 +253,18 @@ async function addBulk() {
     const parts = line.split(',');
     const name = (parts[0] || '').trim();
     const phone = (parts.slice(1).join(',') || '').trim();
-    if (name) rows.push({ name, phone });
+    if (!name || !/^(?:\+?[0-9 ()-]+)$/.test(phone) || ![10,11].includes(phone.replace(/\D/g, '').length) || (phone.replace(/\D/g, '').length === 11 && !phone.replace(/\D/g, '').startsWith('1'))) {
+      alert('Line ' + (index + 1) + ': enter a name and a valid US phone number. Nothing has been imported.');
+      rows.push(null);
+    } else rows.push({ name, phone });
   });
-  if (rows.length === 0) return;
+  if (rows.length === 0 || rows.some(row => !row)) return;
   try {
     for (const row of rows) {
       await window.JAWSCRM.upsertCrmLead(supabaseClient, currentClientId, {
         full_name: row.name,
         company: row.name,
         phone: row.phone,
-        status: 'new',
         source: 'dialer',
         notes: ''
       });
@@ -279,7 +283,7 @@ async function importPipelineLeads() {
   if (!currentClientId) { alert('Add a client first.'); return; }
   try {
     const leads = await window.JAWSCRM.listCrmLeads(supabaseClient, currentClientId);
-    const candidates = leads.filter(lead => ['new', 'contacted', 'warm', 'nurture'].includes(lead.status));
+    const candidates = leads.filter(lead => ['new', 'contacted', 'warm', 'nurture'].includes(lead.status) && /^(1)?[2-9][0-9]{9}$/.test(String(lead.phone || '').replace(/\D/g, '')));
     for (const lead of candidates) {
       await window.JAWSCRM.upsertDialQueueLead(supabaseClient, currentClientId, {
         name: lead.full_name || lead.company || '',
@@ -359,32 +363,45 @@ function renderSession() {
 
 async function logOutcome(outcomeId) {
   const lead = queue[0];
-  if (!lead) return;
+  if (!lead || outcomeSaving) return;
+  const outcomeInfo = OUTCOMES.find(o => o.id === outcomeId);
+  if (!outcomeInfo) return;
+  outcomeSaving = true;
+  const clientId = currentClientId;
+  document.getElementById('clientSelect').disabled = true;
   const notes = document.getElementById('sessionNotes').value.trim();
   try {
-    const outcomeInfo = OUTCOMES.find(o => o.id === outcomeId);
+    if (!loggedQueueIds.has(lead.id)) {
     await window.JAWSCRM.logCrmCall(supabaseClient, {
       clientId: currentClientId,
       full_name: lead.name,
       phone: lead.phone,
       notes,
       outcome: outcomeId,
-      called_by: 'power_dialer'
+      called_by: 'power_dialer_manual'
     });
-    await supabaseClient.from('dial_queue').delete().eq('id', lead.id);
+    loggedQueueIds.add(lead.id);
+    }
+    const { error: deleteError } = await supabaseClient.from('dial_queue').delete().eq('id', lead.id).eq('client_id', clientId);
+    if (deleteError) throw new Error('Call outcome saved, but queue removal failed. Retry in this session to remove it without logging it again.');
+    loggedQueueIds.delete(lead.id);
     queue.shift();
     await loadQueue();
     calledCount++;
     if (outcomeInfo.connected) connectedCount++;
     renderSession();
-    statusMsg('Dial outcome logged. CRM updated and follow-up process evaluated automatically.');
+    statusMsg('Manual call outcome saved to the CRM.');
   } catch (e) {
     alert(e.message);
     return;
+  } finally {
+    outcomeSaving = false;
+    document.getElementById('clientSelect').disabled = false;
   }
 }
 
 async function skipLead() {
+  if (outcomeSaving) return;
   const lead = queue.shift();
   if (!lead) return;
   queue.push(lead);

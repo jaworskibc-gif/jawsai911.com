@@ -27,34 +27,48 @@ button:hover{opacity:.92}
 <div class="card">
   <img class="logo" src="jawsai911-logo-dark-hero.jpeg" alt="JAWSAI911">
   <div class="eyebrow">🦈</div>
-  <h1>Restricted Access</h1>
-  <p>Enter access code <b>911</b> to open the stack.</p>
-  <input type="password" id="pw" placeholder="........" autofocus autocomplete="current-password">
-  <div class="err" id="err"></div>
-  <button onclick="tryLogin()">Enter 🦈</button>
+  <h1>Team Sign In</h1>
+  <p>Sign in to the JAWSAI911 Command Hub and CRM.</p>
+  <form id="loginForm">
+    <label for="email">Email</label>
+    <input type="email" id="email" required autocomplete="username" autofocus style="letter-spacing:normal;text-align:left;margin:8px 0 16px">
+    <label for="pw">Password</label>
+    <input type="password" id="pw" required autocomplete="current-password" style="letter-spacing:normal;text-align:left;margin-top:8px">
+    <div class="err" id="err" role="alert" aria-live="polite"></div>
+    <button id="signIn" type="submit">Sign In</button>
+  </form>
   <a class="back" href="index.html">Back to site</a>
 </div>
+<script src="/hub-session.js"></script>
 <script>
-const HASH='a5ccb1c538e34663a658b1be28b16455ee5285efb10e6f1d4caba1f69ec9782b';
-async function sha256(str){const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(str));return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('')}
-async function tryLogin(){
-  const input=document.getElementById('pw');
-  const err=document.getElementById('err');
-  const hash=await sha256(input.value);
-  if(hash===HASH){
-    sessionStorage.setItem('jaw_auth','ok');
-    const dest=sessionStorage.getItem('jaw_return')||'dashboard.html';
-    sessionStorage.removeItem('jaw_return');
-    location.href=dest;
-    return;
-  }
-  input.classList.add('error');
-  err.textContent='Incorrect password.';
-  setTimeout(()=>input.classList.remove('error'),400);
-  input.value='';
-  input.focus();
+function safeDestination(value) {
+  try {
+    const url = new URL(value || '/dashboard.html', location.origin);
+    if (url.origin === location.origin && url.pathname !== '/login.html') return url.pathname + url.search;
+  } catch (_) {}
+  return '/dashboard.html';
 }
-document.getElementById('pw').addEventListener('keydown',e=>{if(e.key==='Enter')tryLogin()});
+async function tryLogin(event) {
+  if (event) event.preventDefault();
+  const button = document.getElementById('signIn');
+  const message = document.getElementById('err');
+  button.disabled = true; message.textContent = '';
+  try {
+    const client = await window.JAWSHubReady;
+    const {data,error} = await client.auth.signInWithPassword({email:document.getElementById('email').value.trim(), password:document.getElementById('pw').value});
+    if (error) throw new Error('Unable to sign in. Check your email and password.');
+    const member = await client.from('hub_team_members').select('active').eq('user_id',data.user.id).maybeSingle();
+    if (member.error || !member.data || !member.data.active) {
+      await client.auth.signOut({scope:'local'});
+      throw new Error('Your account does not have team access. Contact your administrator.');
+    }
+    document.getElementById('pw').value = '';
+    const destination = safeDestination(sessionStorage.getItem('jaw_return'));
+    sessionStorage.removeItem('jaw_return');
+    location.replace(destination);
+  } catch (error) { message.textContent = error.message; }
+  finally { button.disabled = false; }
+}
+document.getElementById('loginForm').addEventListener('submit',tryLogin);
 </script>
-</body>
-</html>
+</body></html>
