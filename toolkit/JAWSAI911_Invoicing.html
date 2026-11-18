@@ -124,8 +124,10 @@
     .print-sheet { border: none; }
   }
 </style>
+<link rel="stylesheet" href="/css/crm-brand.css?v=1">
+<script src="/js/crm-brand.js?v=1" defer></script>
 </head>
-<body>
+<body class="jaws-app" data-page="JAWSAI911_Invoicing">
 
   <div class="topbar">
     <div class="brand">JAWS<span>AI</span>911 <span style="font-weight:400;">Invoicing</span></div>
@@ -293,7 +295,7 @@ document.getElementById('clientSelect').addEventListener('change', async (e) => 
 
 async function loadInvoices() {
   if (!currentClientId) { invoicesData = []; newInvoice(); return; }
-  statusMsg('Working on invoices for ' + currentClient + ' — changes save automatically.');
+  statusMsg('Working on invoices for ' + currentClient + ' — click Save to store changes.');
   try {
     const { data, error } = await supabaseClient
       .from('invoices')
@@ -303,10 +305,13 @@ async function loadInvoices() {
     if (error) throw error;
     invoicesData = (data || []).map(normalizeInvoice);
   } catch (e) {
-    invoicesData = [];
+    statusMsg('Unable to load invoices: '+e.message);
+    return;
   }
   newInvoice();
   await applyLeadPrefill();
+  const requestedInvoice=params.get('invoice_id');
+  if (requestedInvoice && invoicesData.some(i=>i.id===requestedInvoice)) loadInvoiceIntoBuilder(requestedInvoice);
 }
 
 function setType(type) {

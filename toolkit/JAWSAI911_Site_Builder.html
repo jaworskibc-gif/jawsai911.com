@@ -95,8 +95,10 @@
     .editor-form { width: 100%; }
   }
 </style>
+<link rel="stylesheet" href="/css/crm-brand.css?v=1">
+<script src="/js/crm-brand.js?v=1" defer></script>
 </head>
-<body>
+<body class="jaws-app" data-page="JAWSAI911_Site_Builder">
 
   <div class="topbar">
     <div class="brand">JAWS<span>AI</span>911 <span style="font-weight:400;">Site Builder</span></div>
@@ -209,7 +211,7 @@ const THEMES = {
 };
 
 let currentClient = null;
-let currentClientId = null;
+let currentClientId = new URLSearchParams(location.search).get('client_id') || sessionStorage.getItem('jawscrm_demo_client_id') || null;
 let currentTheme = 'ocean';
 let services = [];
 let galleryImages = [];
@@ -254,6 +256,8 @@ async function loadClientList() {
       select.innerHTML = '<option value="">No clients yet</option>';
       currentClient = null;
       currentClientId = null;
+      renderPreview();
+      statusMsg('Ready. Paste business details and choose Generate Demo, or enter a business name below.');
       return;
     }
     data.forEach(client => {
@@ -335,7 +339,7 @@ function normalizeServicesBlob(value, quoteFallback) {
 async function loadSite() {
   const loadingVersion = draftVersion;
   if (!currentClientId) { renderPreview(); return; }
-  statusMsg('Editing site for ' + currentClient + ' — changes save on "Save Site."');
+  statusMsg('Editing site for ' + currentClient + ' — changes save on "Save Demo."');
   let data = defaultSiteData();
   try {
     const { data: row, error } = await supabaseClient
@@ -535,7 +539,9 @@ async function saveSite() {
   try {
     const {data: clientId, error} = await supabaseClient.rpc('hub_save_demo', {p_site: data});
     if (error) throw error;
+    if (!clientId) throw new Error('The save service did not return a business record. Please retry.');
     currentClientId = clientId; currentClient = data.bizName.trim();
+    sessionStorage.setItem('jawscrm_demo_client_id',clientId);
     const select = document.getElementById('clientSelect');
     let option = Array.from(select.options).find(o => o.value === clientId);
     if (!option) { option = document.createElement('option'); option.value = clientId; select.appendChild(option); }
@@ -577,7 +583,8 @@ function buildSiteHtml(data) {
   const theme = THEMES[data.theme] || THEMES.ocean;
   const bizName = escapeHtml(data.bizName || 'Your Business');
   const city = escapeHtml(data.city || 'Your City');
-  const phone = escapeHtml(data.phone || '(555) 555-0100');
+  const phone = escapeHtml(data.phone || 'Contact us');
+  const phoneHref = String(data.phone || '').replace(/[^0-9+]/g,'');
   const headline = escapeHtml(data.headline || '').replace('{City}', city);
   const subhead = escapeHtml(data.subhead || '');
   const rating = data.rating || 0;
@@ -623,11 +630,11 @@ function buildSiteHtml(data) {
   <div style="font-family:'Liberation Sans',Arial,sans-serif;">
     <div style="padding:10px;background:#fff4e0;color:#714900;text-align:center;font-size:12px">Demo preview · Suggested services require business approval</div>
     <div style="background:linear-gradient(160deg, ${theme.primary} 0%, ${theme.accent} 130%); color:white; padding:40px 30px 70px 30px;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:40px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;gap:12px;flex-wrap:wrap;">
         <div style="font-weight:900;font-size:16px;">${bizName}</div>
         <div style="background:${theme.warm};color:${theme.primary};padding:8px 16px;border-radius:4px;font-weight:800;font-size:12px;">${phone}</div>
       </div>
-      <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:30px;align-items:center;">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:24px;align-items:center;">
         <div>
           <div style="font-size:11px;letter-spacing:2px;color:${theme.warm};font-weight:700;margin-bottom:12px;">SERVING ${city.toUpperCase()}</div>
           <div style="font-size:32px;font-weight:900;line-height:1.15;margin-bottom:14px;">${headline}</div>
@@ -656,7 +663,7 @@ function buildSiteHtml(data) {
     <div style="background:${theme.primary};color:white;text-align:center;padding:40px 30px;">
       <div style="font-size:22px;font-weight:900;margin-bottom:8px;">Ready to get started?</div>
       <div style="font-size:14px;color:rgba(255,255,255,0.8);margin-bottom:18px;">${bizName} — ${city}</div>
-      <div style="display:inline-block;background:${theme.warm};color:${theme.primary};padding:12px 28px;border-radius:6px;font-weight:900;">${phone}</div>
+      <a ${phoneHref ? 'href="tel:'+phoneHref+'"' : 'aria-disabled="true"'} style="display:inline-block;background:${theme.warm};color:${theme.primary};padding:12px 28px;border-radius:6px;font-weight:900;text-decoration:none">${phone}</a>
     </div>
   </div>`;
 }
@@ -673,6 +680,7 @@ function renderFullPreview() {
 
 renderThemeRow();
 renderServices();
+renderPreview();
 loadClientList();
 
 function generateListingDemo() {
@@ -687,7 +695,7 @@ function generateListingDemo() {
     services=data.services;galleryImages=[];reviews=[];
     renderThemeRow();renderServices();renderGalleryImages();renderReviews();renderPreview();renderFullPreview();
     result.textContent=window.JAWSListingDemo.templates[data.niche].label+' draft generated in '+((performance.now()-started)/1000).toFixed(2)+' seconds. Review the details, then click Save Demo. The business record is created automatically.';
-  } catch(error) { result.textContent=error.message; }
+  } catch(error) { result.textContent=error.message; result.setAttribute('role','alert'); }
 }
 Object.entries(window.JAWSListingDemo.templates).forEach(([key,value])=>{
  const option=document.createElement('option');option.value=key;option.textContent=value.label;document.getElementById('listingNiche').appendChild(option);

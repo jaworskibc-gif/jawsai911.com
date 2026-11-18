@@ -78,8 +78,10 @@
   .task-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
   @media (max-width:1100px){.hero,.console,.quick-grid{grid-template-columns:1fr}}
 </style>
+<link rel="stylesheet" href="/css/crm-brand.css?v=1">
+<script src="/js/crm-brand.js?v=1" defer></script>
 </head>
-<body>
+<body class="jaws-app" data-page="Sales_Console">
   <div class="topbar">
     <div class="brand">JAWS<span>AI</span>911 <span style="font-weight:400;color:#fff">Sales Console</span></div>
     <div class="picker">
@@ -649,9 +651,9 @@
     const demoUrl = personalizedDemoUrl(lead);
     persistDemoPreviewPayload(lead);
     const previewBlock = demo.url
-      ? '<div class="preview-shell"><iframe class="preview-frame" title="SuperSite preview" loading="lazy" src="' + escapeHtml(demoUrl) + '"></iframe></div>'
+      ? '<details class="preview-shell"><summary>Demo preview</summary><iframe class="preview-frame" title="SuperSite preview" loading="lazy" src="' + escapeHtml(demoUrl) + '"></iframe></details>'
       : '<div class="preview-shell"><div class="preview-empty">No SuperSite URL is attached to this lead yet.</div></div>';
-    const workstationBlock = '<div class="workspace-shell"><iframe class="workspace-frame" title="Lead workstation" loading="lazy" src="' + escapeHtml(detailUrl) + '"></iframe></div>';
+    const workstationBlock = '<details class="workspace-shell"><summary>Lead workstation · expand to edit</summary><iframe class="workspace-frame" title="Lead workstation" loading="lazy" src="' + escapeHtml(detailUrl) + '"></iframe></details>';
     const quoteBlock = quotes.length
       ? '<div class="quote-list">' + quotes.map(function (quote) {
         return '<div class="quote-item">' + escapeHtml(quote) + '</div>';
