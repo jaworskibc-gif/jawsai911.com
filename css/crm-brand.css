@@ -16,3 +16,5 @@ body[data-page="Sales_Console"] .console{grid-template-columns:minmax(220px,.75f
 
 .jaws-app details.workspace-shell,.jaws-app details.preview-shell{background:#101c29}.jaws-app :is(.workspace-shell,.preview-shell)>summary{padding:12px 14px;cursor:pointer;color:#e0c58f;font-size:12px;font-weight:600}.jaws-app .detail-meta,.jaws-app .pipe-meta{overflow-wrap:anywhere}
 .jaws-app :is(.cc-name,.done-state .big,.funnel-count){color:#f3eee4}.jaws-app .form-card .totals-row.grand{color:#ecd5a3}.jaws-app .call-card{background:#0b1521;border-color:#35414e}.jaws-app .theme-swatch.selected{border-color:#f0d5a0}.jaws-app .section-card input,.jaws-app .section-card textarea,.jaws-app .section-card select{background:#07101b;color:#f3eee4;border-color:#52606d}.jaws-app .signin-row a{color:#d2b276}.jaws-app .field-row{background:#101c29;border-color:#35414e}
+
+.jaws-app .jaws-approved-logo{display:block;width:108px;height:64px;object-fit:contain;border-radius:4px}.jaws-app .preview-shell{background:#101c29}.jaws-app .jaws-brand-link{flex-shrink:0}

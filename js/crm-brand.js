@@ -1,5 +1,5 @@
 (()=>{
-const brand='<span class="jaws-wordmark">JAWS<span>AI</span>911</span><span class="jaws-tagline">AI SYSTEMS &amp; AUTOMATION</span>';
+const brand='<img class="jaws-approved-logo" src="/assets/jawsai911-gold-logo.jpeg" alt="JAWSAI911 — AI Systems & Automation" width="1536" height="1024">';
 const original=document.querySelector('.topbar .brand,.header .brand');
 if(original){const name=document.title.replace(/^JAWSAI911\s*/,'');original.innerHTML='<a class="jaws-brand-link" href="/dashboard.html" aria-label="JAWSAI911 dashboard">'+brand+'</a><span class="jaws-page-name"></span>';original.querySelector('.jaws-page-name').textContent=name;}
 const routes=[['Overview','/dashboard.html'],['Sales Console','/toolkit/Sales_Console.html'],['Pipeline','/toolkit/JAWSAI911_Pipeline_CRM.html'],['Lead Detail','/toolkit/Lead_Detail.html'],['Dialer','/toolkit/JAWSAI911_Power_Dialer.html'],['Build Demo','/toolkit/JAWSAI911_Site_Builder.html'],['Documents','/toolkit/Sales_Documents.html']];

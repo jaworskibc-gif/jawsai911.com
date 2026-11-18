@@ -76,8 +76,8 @@
   .empty { padding:20px; text-align:center; color:var(--ink-soft); font-size:12px; }
   @media (max-width:1000px) { .hero,.grid,.doc-form,.smartsite-grid,.proof-grid,.workspace-grid,.review-grid,.workflow-grid { grid-template-columns:1fr; } }
 </style>
-<link rel="stylesheet" href="/css/crm-brand.css?v=1">
-<script src="/js/crm-brand.js?v=1" defer></script>
+<link rel="stylesheet" href="/css/crm-brand.css?v=20261118-logo">
+<script src="/js/crm-brand.js?v=20261118-logo" defer></script>
 </head>
 <body class="jaws-app" data-page="Lead_Detail">
   <div class="topbar">
@@ -429,7 +429,7 @@
               <a class="btn" id="reviewProposalBtn" href="#">Generate Proposal</a>
               <a class="btn" id="reviewInvoiceBtn" href="#">Create Invoice</a>
               <a class="btn" id="reviewEstimateBtn" href="#">Create Estimate</a>
-              <a class="btn" id="reviewDocsBtn" href="#">Attach Receipt / Doc</a>
+              <a class="btn" id="reviewDocsBtn" href="#">Receipts & Sales Documents</a>
             </div>
             <div class="edit-grid" style="margin-top:14px">
               <div class="field">
@@ -775,12 +775,12 @@ function renderLead() {
 
   document.getElementById('callBtn').href = telHref(lead.phone);
   document.getElementById('textBtn').href = smsHref(lead.phone);
-  document.getElementById('invoiceBtn').href = 'JAWSAI911_Invoicing.html?client_id=' + encodeURIComponent(currentClientId) + '&lead_id=' + encodeURIComponent(currentLeadId) + '&type=invoice';
+  document.getElementById('invoiceBtn').href = 'Sales_Documents.html?client_id=' + encodeURIComponent(currentClientId) + '&lead_id=' + encodeURIComponent(currentLeadId) + '&kind=invoice';
   document.getElementById('docsBtn').href = 'Sales_Documents.html?client_id=' + encodeURIComponent(currentClientId) + '&lead_id=' + encodeURIComponent(currentLeadId);
   document.getElementById('telegramConsoleBtn').href = 'Telegram_Grok_Console.html?client_id=' + encodeURIComponent(currentClientId) + '&lead_id=' + encodeURIComponent(currentLeadId);
-  document.getElementById('newInvoiceBtn').href = 'JAWSAI911_Invoicing.html?client_id=' + encodeURIComponent(currentClientId) + '&lead_id=' + encodeURIComponent(currentLeadId) + '&type=invoice';
+  document.getElementById('newInvoiceBtn').href = 'Sales_Documents.html?client_id=' + encodeURIComponent(currentClientId) + '&lead_id=' + encodeURIComponent(currentLeadId) + '&kind=invoice';
   document.getElementById('reviewProposalBtn').href = proposalTemplateUrl();
-  document.getElementById('reviewInvoiceBtn').href = 'JAWSAI911_Invoicing.html?client_id=' + encodeURIComponent(currentClientId) + '&lead_id=' + encodeURIComponent(currentLeadId) + '&type=invoice';
+  document.getElementById('reviewInvoiceBtn').href = 'Sales_Documents.html?client_id=' + encodeURIComponent(currentClientId) + '&lead_id=' + encodeURIComponent(currentLeadId) + '&kind=invoice';
   document.getElementById('reviewEstimateBtn').href = 'JAWSAI911_Invoicing.html?client_id=' + encodeURIComponent(currentClientId) + '&lead_id=' + encodeURIComponent(currentLeadId) + '&type=estimate';
   document.getElementById('reviewDocsBtn').href = '#documentsList';
   document.getElementById('leadStatus').value = lead.status || 'new';
